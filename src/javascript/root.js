@@ -2,28 +2,29 @@ import '../stylesheet/root.less';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Route, Switch } from 'react-router-dom';
 
-import UAParser from 'ua-parser-js';
-
-import { path as commonPath } from './commons/configs';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
-import { ConnectedRouter as Router, routerReducer, routerMiddleware } from 'react-router-redux';
+import { routerReducer, routerMiddleware } from 'react-router-redux';
 import { Provider } from 'react-redux';
 import thunkMiddleware from 'redux-thunk';
 import {createLogger} from 'redux-logger';
+import { Mobile, Desktop } from './commons/components/response';
 
 import { createBrowserHistory } from 'history';
 import * as reducers from './redux/reducers';
-
-import App from './App';
-import Web from './Web';
 
 import registerServiceWorker from './registerServiceWorker';
 
 import { Page404, Page500 } from './layout';
 
-const parser = new UAParser();
+import App from './App';
+import Web from './Web';
+
+import { LocaleProvider as LocaleProviderDesktop } from 'antd';
+import { addLocaleData, IntlProvider } from 'react-intl';
+import { locale } from './locales';
+
+import { LocaleProvider as LocaleProviderMobile } from 'antd-mobile';
 
 const history = createBrowserHistory({});
 
@@ -44,16 +45,31 @@ const store = createStore(
     )
 );
 
+const lang = locale.init('en-US');
+
+
+addLocaleData(lang.data);
+
+
+
 const Root = () => {
-
-    const type = parser.getDevice().type;
-
-    console.log("tes", type);
-
     return (
-        <Provider store={store}>
-            { type === 'mobile' ? <App history={history} /> : <Web history={history}/> }
-        </Provider>
+        <div className="app">
+            <Desktop>
+                <LocaleProviderDesktop locale={lang.antd}>
+                    <IntlProvider locale={lang.locale} messages={lang.messages}>
+                        <Web />
+                    </IntlProvider>
+                </LocaleProviderDesktop>
+            </Desktop>
+            <Mobile>
+                <LocaleProviderMobile locale={lang.locale === 'zh-Hans-CN' ? null : lang.antd }>
+                    <IntlProvider locale={lang.locale} messages={lang.messages}>
+                        <App />
+                    </IntlProvider>
+                </LocaleProviderMobile>
+            </Mobile>
+        </div>
     );
 };
 

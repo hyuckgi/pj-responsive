@@ -47,6 +47,17 @@ const postCssOpts = {
   ],
 };
 
+const babelImportOptions = [
+    {
+        'libraryName':'antd',
+        'style': true
+    },
+    {
+        'libraryName': 'antd-mobile',
+        'style': true
+    }
+];
+
 // This is the development configuration.
 // It is focused on developer experience and fast rebuilds.
 // The production configuration is different and lives in a separate file.
@@ -163,8 +174,7 @@ module.exports = {
                 plugins: [
                     'react-hot-loader/babel',
                     ["transform-runtime", { polyfill: false }],
-                    ['import', { libraryName: 'antd-mobile', style: true }],
-                    ["import", { "libraryName": "antd", "style": true }],
+                    ["import", babelImportOptions],
                 ],
               // This is a feature of `babel-loader` for webpack (not Babel itself).
               // It enables caching results in ./node_modules/.cache/babel-loader/
