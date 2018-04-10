@@ -2,17 +2,19 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import {connect} from 'react-redux';
 
-import Menu from 'antd/lib/menu';
-import {layout as action} from '../../../redux/actions';
+import { Menu } from 'antd';
+import { layout as action } from '../../../redux/actions';
+import { service } from '../../../commons/configs';
 
 
 const mapStateToProps = ({ layout, router, security}) => {
-    const pathname = router;
-    console.log("pathname", pathname);
-    // const globalMenuList = (layout.list || []).filter(item => item.level === 0);
+    const pathname = service.getValue(router, 'location.pathname', false);
+    const globalMenuList = (layout.list || []).filter(item => item.level === 0);
+    const active = pathname && globalMenuList.filter(item => pathname.indexOf(item.link) === 0)[0];
 
     return {
-        // MenuList : globalMenuList,
+        menus : globalMenuList,
+        defaultSelectedKeys: active ? active.id : undefined,
     }
 };
 
@@ -25,15 +27,15 @@ const mapDispatchProps = dispatch => ({
 class GlobalNavigationBar extends React.Component {
 
     componentDidMount(prevProps) {
-        this.props.masterLevel1();
+        // this.props.masterLevel1();
     }
 
     render() {
-        const MenuList = this.props.MenuList;
+        const menus  = service.getValue(this.props, 'menus', []);
 
         return(
             <Menu mode="horizontal" defaultSelectedKeys={[this.props.defaultSelectedKeys]} >
-                {MenuList && MenuList.map(menu => (
+                {menus.map(menu => (
                     <Menu.Item key={menu.id}>
                         <NavLink to={ menu.defaultLink } activeClassName="active" >{menu.name}</NavLink>
                     </Menu.Item>

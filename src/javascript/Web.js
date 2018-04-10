@@ -1,3 +1,4 @@
+import '../stylesheet/web.less';
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -24,34 +25,21 @@ const mapDispatchProps = dispatch => ({
 
 class Web extends React.Component {
 
-    onChange(date, dateString) {
-      console.log(date, dateString);
-    }
-
     render() {
         return (
             <Layout className="web-container">
-                <HeaderContainer />
-                <Layout>
-                    <Sider width={240} >
-                        <div className='local-navigation-bar'>
-                            <LocalNavigationBar/>
-                        </div>
-                    </Sider>
-                    <Layout className='wrapper'>
-                        <Layout className="section">
-                            <Content >
-                                <Switch>
-                                    <Route exact path="/" component={MainContainer}/>
-                                </Switch>
-                            </Content>
-                        </Layout>
-                    </Layout>
+                <HeaderContainer {...this.props}/>
+                <Layout className='wrapper'>
+                    <Content className="section">
+                        <Switch>
+                            <Route exact path="/" component={MainContainer}/>
+                        </Switch>
+                    </Content>
                 </Layout>
 
-                <BackTop >
+                {/* <BackTop >
                     <div className="ant-back-top-inner"><Icon type="arrow-up" />TOP</div>
-                </BackTop>
+                </BackTop> */}
                 <Spinner spinning={this.props.spinning}/>
             </Layout>
         );

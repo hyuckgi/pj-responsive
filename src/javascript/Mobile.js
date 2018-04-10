@@ -1,3 +1,4 @@
+import '../stylesheet/mobile.less';
 import React from 'react';
 import { DatePicker, List } from 'antd-mobile';
 

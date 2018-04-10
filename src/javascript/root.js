@@ -1,4 +1,3 @@
-import '../stylesheet/root.less';
 import React from 'react';
 import UAParser from 'ua-parser-js';
 import ReactDOM from 'react-dom';
@@ -25,6 +24,7 @@ import { locale } from './locales';
 import registerServiceWorker from './registerServiceWorker';
 
 import { DesktopLayout, MobileLayout } from './commons/components/response';
+import { path } from './commons/configs';
 import App from './App';
 
 import { LocaleProvider as LocaleProviderMobile } from 'antd-mobile';
@@ -59,9 +59,9 @@ const Inner = () => {
             <Provider store={store}>
                 <Router history={history}>
                     <Switch>
-                        <Route exact path="/404" name="Page 404" component={Page404}/>
-                        <Route exact path="/500" name="Page 500" component={Page500}/>
-                        <Route path='/' name="main" component={App}/>
+                        <Route exact path={path.notFound} name="notFound" component={Page404}/>
+                        <Route exact path={path.serverError} name="serverError" component={Page500}/>
+                        <Route path={path.home} name="home" component={App}/>
                     </Switch>
                 </Router>
             </Provider>

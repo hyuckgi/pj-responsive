@@ -2,16 +2,9 @@ import React from 'react';
 
 import { GlobalNavigationBar } from '../index';
 
-import Layout from 'antd/lib/layout';
-import Row from 'antd/lib/row';
-import Col from 'antd/lib/col';
-import Dropdown from 'antd/lib/dropdown';
-import Button from 'antd/lib/button';
-import Menu from 'antd/lib/menu';
-import Icon from 'antd/lib/icon';
+import { Row, Col, Dropdown, Layout, Button, Menu, Icon } from 'antd';
+
 const { Header } = Layout;
-
-
 const menu = (
     <Menu>
         <Menu.Item>
@@ -30,16 +23,16 @@ const menu = (
 class HeaderContainer extends React.Component {
 
 
-    goHome() {
+    onClick() {
         this.props.history.push('/');
     }
 
     render() {
         return (
-            <Header>
-                <Row>
+            <Header >
+                <Row type="flex" justify="space-between" align="middle">
                     <Col span={4} className="logo" >
-                        <img src="https://s.wink.co.kr/images/wink_admin/logo.png" alt="logo" onClick={this.goHome.bind(this)}/>
+                        <img src="https://s.wink.co.kr/images/wink_admin/logo.png" alt="logo" onClick={this.onClick.bind(this)}/>
                     </Col>
 
                     <Col span={16}>
@@ -51,7 +44,6 @@ class HeaderContainer extends React.Component {
                           <Button>다른 관리자센터<Icon type="down" /></Button>
                         </Dropdown>
                     </Col>
-
                 </Row>
             </Header>
         );

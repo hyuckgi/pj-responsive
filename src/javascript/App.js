@@ -10,10 +10,10 @@ class App extends React.Component {
         return (
             <div className="app-container">
                 <DesktopLayout>
-                    <Web />
+                    <Web {...this.props}/>
                 </DesktopLayout>
                 <MobileLayout>
-                    <Mobile />
+                    <Mobile {...this.props}/>
                 </MobileLayout>
             </div>
         );
