@@ -22,6 +22,7 @@ export const locale = {
     init : (lang) => {
         switch (lang) {
             case 'en-US':
+                moment.locale('en');
                 return{
                     messages: {
                        ...enMessages,
@@ -51,6 +52,7 @@ export const locale = {
                     data: krAppLocaleData,
                 }
             default:
+                moment.locale('en');
                 return{
                     messages: {
                        ...enMessages,

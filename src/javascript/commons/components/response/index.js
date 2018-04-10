@@ -1,7 +1,6 @@
-import { Desktop, Mobile, Tablet } from './Platform';
+import { DesktopLayout, MobileLayout } from './Platform';
 
 export {
-    Desktop,
-    Mobile,
-    Tablet
+    DesktopLayout,
+    MobileLayout,
 }

@@ -1,32 +1,36 @@
 import '../stylesheet/root.less';
-
 import React from 'react';
+import UAParser from 'ua-parser-js';
 import ReactDOM from 'react-dom';
 
+import { Route, Switch } from 'react-router-dom';
+
 import { createStore, combineReducers, applyMiddleware } from 'redux';
-import { routerReducer, routerMiddleware } from 'react-router-redux';
+import { ConnectedRouter as Router, routerReducer, routerMiddleware } from 'react-router-redux';
+
 import { Provider } from 'react-redux';
 import thunkMiddleware from 'redux-thunk';
 import {createLogger} from 'redux-logger';
-import { Mobile, Desktop } from './commons/components/response';
+import { MainContainer } from './main/web';
 
 import { createBrowserHistory } from 'history';
 import * as reducers from './redux/reducers';
 
-import registerServiceWorker from './registerServiceWorker';
-
 import { Page404, Page500 } from './layout';
-
-import App from './App';
-import Web from './Web';
 
 import { LocaleProvider as LocaleProviderDesktop } from 'antd';
 import { addLocaleData, IntlProvider } from 'react-intl';
 import { locale } from './locales';
 
+import registerServiceWorker from './registerServiceWorker';
+
+import { DesktopLayout, MobileLayout } from './commons/components/response';
+import App from './App';
+
 import { LocaleProvider as LocaleProviderMobile } from 'antd-mobile';
 
-const history = createBrowserHistory({});
+const parser = new UAParser();
+const history = createBrowserHistory({forceRefresh: true});
 
 const middleware = routerMiddleware(history);
 const loggerMiddleware = createLogger({
@@ -47,28 +51,52 @@ const store = createStore(
 
 const lang = locale.init('en-US');
 
-
 addLocaleData(lang.data);
 
+const Inner = () => {
+    return(
+        <IntlProvider locale={lang.locale} messages={lang.messages}>
+            <Provider store={store}>
+                <Router history={history}>
+                    <Switch>
+                        <Route exact path="/404" name="Page 404" component={Page404}/>
+                        <Route exact path="/500" name="Page 500" component={Page500}/>
+                        <Route path='/' name="main" component={App}/>
+                    </Switch>
+                </Router>
+            </Provider>
+        </IntlProvider>
+    )
+}
 
+// const Provider = () => {
+//     return(
+//         <div className="provider">
+//             <DesktopLayout>
+//                 <LocaleProviderDesktop locale={lang.antd}></LocaleProviderDesktop>
+//             </DesktopLayout>
+//             <MobileLayout>
+//                 <LocaleProviderMobile locale={lang.locale === 'zh-Hans-CN' ? null : lang.antd }>
+//                     {Inner()}
+//                 </LocaleProviderMobile>
+//             </MobileLayout>
+//         </div>
+//     )
+// }
 
 const Root = () => {
     return (
-        <div className="app">
-            <Desktop>
+        <div className="container">
+            <DesktopLayout>
                 <LocaleProviderDesktop locale={lang.antd}>
-                    <IntlProvider locale={lang.locale} messages={lang.messages}>
-                        <Web />
-                    </IntlProvider>
+                    {Inner()}
                 </LocaleProviderDesktop>
-            </Desktop>
-            <Mobile>
+            </DesktopLayout>
+            <MobileLayout>
                 <LocaleProviderMobile locale={lang.locale === 'zh-Hans-CN' ? null : lang.antd }>
-                    <IntlProvider locale={lang.locale} messages={lang.messages}>
-                        <App />
-                    </IntlProvider>
+                    {Inner()}
                 </LocaleProviderMobile>
-            </Mobile>
+            </MobileLayout>
         </div>
     );
 };
