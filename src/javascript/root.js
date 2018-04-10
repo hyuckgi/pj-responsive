@@ -69,35 +69,29 @@ const Inner = () => {
     )
 }
 
-// const Provider = () => {
-//     return(
-//         <div className="provider">
-//             <DesktopLayout>
-//                 <LocaleProviderDesktop locale={lang.antd}></LocaleProviderDesktop>
-//             </DesktopLayout>
-//             <MobileLayout>
-//                 <LocaleProviderMobile locale={lang.locale === 'zh-Hans-CN' ? null : lang.antd }>
-//                     {Inner()}
-//                 </LocaleProviderMobile>
-//             </MobileLayout>
-//         </div>
-//     )
-// }
-
-const Root = () => {
-    return (
+const LocaleProvider = (props) => {
+    return(
         <div className="container">
             <DesktopLayout>
                 <LocaleProviderDesktop locale={lang.antd}>
-                    {Inner()}
+                    {props.children}
                 </LocaleProviderDesktop>
             </DesktopLayout>
             <MobileLayout>
                 <LocaleProviderMobile locale={lang.locale === 'zh-Hans-CN' ? null : lang.antd }>
-                    {Inner()}
+                    {props.children}
                 </LocaleProviderMobile>
             </MobileLayout>
         </div>
+    )
+}
+
+const Root = () => {
+    return (
+        <LocaleProvider>
+            {Inner()}
+        </LocaleProvider>
+
     );
 };
 
