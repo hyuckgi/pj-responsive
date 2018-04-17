@@ -1,5 +1,6 @@
 import '../stylesheet/web.less';
 import React from 'react';
+
 import { Switch, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -13,7 +14,7 @@ notification.config({placement: 'topRight'});
 
 
 const mapStateToProps = ({ fetch }) => ({
-    // spinning : fetch.isFetching || fetch.isPosting,
+    spinning : fetch.isFetching || fetch.isPosting,
     // show: !fetch.isPosting,
     // error: fetch.error
 });
@@ -29,13 +30,13 @@ class Web extends React.Component {
         return (
             <Layout className="web-container">
                 <HeaderContainer {...this.props}/>
-                <Layout className='wrapper'>
-                    <Content className="section">
-                        <Switch>
-                            <Route exact path="/" component={MainContainer}/>
-                        </Switch>
-                    </Content>
-                </Layout>
+
+                <Content className="section">
+                    <Switch>
+                        <Route exact path="/" component={MainContainer}/>
+                    </Switch>
+                </Content>
+
 
                 {/* <BackTop >
                     <div className="ant-back-top-inner"><Icon type="arrow-up" />TOP</div>

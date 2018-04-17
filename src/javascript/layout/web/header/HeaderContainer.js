@@ -1,8 +1,10 @@
 import React from 'react';
+import { Sticky } from 'react-sticky';
 
 import { GlobalNavigationBar } from '../index';
-
 import { Row, Col, Dropdown, Layout, Button, Menu, Icon } from 'antd';
+
+import imgLogo from '../../../../resource/commons/logo.png'
 
 const { Header } = Layout;
 const menu = (
@@ -27,24 +29,38 @@ class HeaderContainer extends React.Component {
         this.props.history.push('/');
     }
 
+    renderTabBar(){
+        return(
+            <Sticky topOffset={80}>
+                {({style}) => {
+                    return(
+                        <div style={{...style, zIndex: 1 }}>
+                            <Row type="flex" justify="center" align="middle" className="global-navigation-wrap"  >
+                                <Col span={12}>
+                                    <GlobalNavigationBar />
+                                </Col>
+                            </Row>
+                        </div>
+                    )
+                }}
+            </Sticky>
+        )
+    }
+
     render() {
         return (
-            <Header >
-                <Row type="flex" justify="space-between" align="middle">
+            <Header className="header-container">
+                <Row type="flex" justify="space-between" align="middle" className="header-wrap" >
                     <Col span={4} className="logo" >
-                        <img src="https://s.wink.co.kr/images/wink_admin/logo.png" alt="logo" onClick={this.onClick.bind(this)}/>
+                        <img src={imgLogo} alt="logo" onClick={this.onClick.bind(this)}/>
                     </Col>
-
-                    <Col span={16}>
-                        <GlobalNavigationBar />
-                    </Col>
-
                     <Col className="dropdown" span={4}>
                         <Dropdown overlay={menu} placement="bottomLeft">
                           <Button>다른 관리자센터<Icon type="down" /></Button>
                         </Dropdown>
                     </Col>
                 </Row>
+                {this.renderTabBar()}
             </Header>
         );
     }
