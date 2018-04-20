@@ -5,7 +5,7 @@ class MainContainer extends React.Component {
     render() {
         return (
             <div className="main-container">
-                sds
+                <img src="https://s.wink.co.kr/pc/images/wink/wink_looks_01.jpg" alt=""/>
             </div>
         );
     }

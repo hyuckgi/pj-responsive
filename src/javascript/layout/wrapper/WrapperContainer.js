@@ -1,11 +1,7 @@
 import React from 'react';
-
 import { Switch, Route } from 'react-router-dom';
-
-import { path } from '../../../commons/configs';
-
-import { Main } from '../../../routes';
-
+import { path } from '../../commons/configs';
+import { Main } from '../../routes';
 
 class WrapperContainer extends React.Component {
 

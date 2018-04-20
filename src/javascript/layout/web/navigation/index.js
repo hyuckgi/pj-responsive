@@ -1,7 +1,7 @@
-import GlobalNavigationBar from './GlobalNavigationBar';
+import GlobalNavigation from './GlobalNavigation';
 import LocalNavigationBar from './LocalNavigationBar';
 
 export {
-    GlobalNavigationBar,
+    GlobalNavigation,
     LocalNavigationBar
 }

@@ -1,11 +1,8 @@
 import { HeaderContainer } from './header';
-import { GlobalNavigation, LocalNavigationBar } from './navigation';
-
-
+import { GlobalNavigation, SubNavigation } from './navigation';
 
 export{
     HeaderContainer,
     GlobalNavigation,
-    LocalNavigationBar,
-
+    SubNavigation,
 };

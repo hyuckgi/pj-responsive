@@ -1,3 +1,5 @@
+import '../stylesheet/root.less';
+
 import React from 'react';
 import UAParser from 'ua-parser-js';
 import ReactDOM from 'react-dom';

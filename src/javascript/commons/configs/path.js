@@ -6,8 +6,6 @@ export const path = {
     login : '/login',
     notFound : '/notFound',
     serverError : '/serverError',
-
-
 };
 
 export default {

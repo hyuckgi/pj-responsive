@@ -1,7 +1,7 @@
 import React from 'react';
 import { Sticky } from 'react-sticky';
 
-import { GlobalNavigationBar } from '../index';
+import { GlobalNavigation } from '../index';
 import { Row, Col, Dropdown, Layout, Button, Menu, Icon } from 'antd';
 
 import imgLogo from '../../../../resource/commons/logo.png'
@@ -37,7 +37,7 @@ class HeaderContainer extends React.Component {
                         <div style={{...style, zIndex: 1 }}>
                             <Row type="flex" justify="center" align="middle" className="global-navigation-wrap"  >
                                 <Col span={12}>
-                                    <GlobalNavigationBar />
+                                    <GlobalNavigation />
                                 </Col>
                             </Row>
                         </div>

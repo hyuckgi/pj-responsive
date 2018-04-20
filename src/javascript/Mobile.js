@@ -1,16 +1,16 @@
-import '../stylesheet/mobile.less';
-
 import React from 'react';
 import { connect } from 'react-redux';
 
-
 import Gesture from 'rc-gesture';
+import { StickyContainer } from 'react-sticky';
 
+import { Spinner, WrapperContainer, MobileWrapper } from './layout';
+import { HeaderContainer } from './layout/mobile';
 
-import { List, ActivityIndicator } from 'antd-mobile';
+import { List } from 'antd-mobile';
 
 const mapStateToProps = ({ fetch }) => ({
-    spinning : fetch.isFetching || fetch.isPosting,
+    // spinning : fetch.isFetching || fetch.isPosting,
 
 });
 
@@ -28,11 +28,6 @@ class Mobile extends React.Component {
         };
 
         this.onSwipe = this.onSwipe.bind(this);
-    }
-
-    componentDidMount() {
-        // this.props.initialize();
-
     }
 
     componentDidUpdate(prevProps) {
@@ -55,17 +50,16 @@ class Mobile extends React.Component {
                 <div className="mobile-container">
                     <HeaderContainer />
 
-                    <WrapperContainer {...this.props} swipeObj={this.state.swipeObj}>
-                        <Wrapper {...this.props}/>
-                    </WrapperContainer>
+                    <StickyContainer className="section">
+                        <MobileWrapper {...this.props} swipeObj={this.state.swipeObj}>
+                            <WrapperContainer {...this.props}/>
+                        </MobileWrapper>
+                    </StickyContainer>
 
-                    <FooterContainer />
-                    <FooterNavigation />
-
-                    <ActivityIndicator
-                        toast
-                        text="Loading..."
-                        animating={this.props.spinning}
+                    <Spinner
+                        toast={true}
+                        tip="Loading..."
+                        spinning={this.props.spinning}
                     />
                 </div>
             </Gesture>
@@ -74,4 +68,4 @@ class Mobile extends React.Component {
 
 }
 
-export default Mobile;
+export default  connect(mapStateToProps, mapDispatchProps)(Mobile);
