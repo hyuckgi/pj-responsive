@@ -1,5 +1,5 @@
 export const path = {
-    home : '/',
+    home : '',
     main : '/main',
 
     // service
@@ -7,7 +7,7 @@ export const path = {
     notFound : '/notFound',
     serverError : '/serverError',
 
-    
+
 };
 
 export default {
