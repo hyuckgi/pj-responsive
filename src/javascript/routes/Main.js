@@ -2,7 +2,7 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import { path } from '../commons/configs';
-import { MainContainer } from '../main/web';
+import { MainContainer } from '../main';
 
 class Main extends React.Component {
 

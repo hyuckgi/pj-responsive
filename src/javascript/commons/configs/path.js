@@ -1,5 +1,5 @@
 export const path = {
-    home : '',
+    home : '/',
     main : '/main',
 
     // service

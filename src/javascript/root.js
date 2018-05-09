@@ -12,7 +12,6 @@ import { ConnectedRouter as Router, routerReducer, routerMiddleware } from 'reac
 import { Provider } from 'react-redux';
 import thunkMiddleware from 'redux-thunk';
 import {createLogger} from 'redux-logger';
-import { MainContainer } from './main/web';
 
 import { createBrowserHistory } from 'history';
 import * as reducers from './redux/reducers';
