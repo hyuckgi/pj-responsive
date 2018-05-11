@@ -31,8 +31,11 @@ class ItemList extends React.Component {
     constructor(props) {
         super(props);
 
+        const list = this.props.data.filter(item => item.mark === this.props.mark);
+
         this.state = {
             dataSource : dataSource,
+            list : list
         };
 
         this.renderCard = this.renderCard.bind(this);
@@ -42,13 +45,13 @@ class ItemList extends React.Component {
 
     componentDidMount() {
         this.setState({
-            dataSource : this.state.dataSource.cloneWithRows(this.props.data)
+            dataSource : this.state.dataSource.cloneWithRows(this.state.list)
         })
     }
 
     renderCard(){
-        const { mark, count, data } = this.props;
-        const list = data.filter(item => item.mark === mark);
+        const { mark, count } = this.props;
+        const { list } = this.state;
 
         if(list.length){
             return list.map(item => {
@@ -63,8 +66,9 @@ class ItemList extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.data !== this.props.data) {
+            const list = nextProps.data.filter(item => item.mark === nextProps.mark);
             return this.setState({
-                dataSource: this.state.dataSource.cloneWithRows(nextProps.data)
+                dataSource: this.state.dataSource.cloneWithRows(list)
             });
         }
     }
@@ -85,11 +89,14 @@ class ItemList extends React.Component {
         );
     }
 
+    onEndReached(){
+
+    }
+
 
     render() {
         const { dataSource } = this.state;
-        console.log("dataSource", dataSource);
-
+        // Todo 리스트의 카테고리 네임, 정렬, 레이아웃 변화, 모바일 isFetching
         return (
             <div className="list-container">
                 <DesktopLayout>

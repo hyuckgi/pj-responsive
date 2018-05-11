@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 
 import { DesktopLayout, MobileLayout } from '../response';
 
@@ -8,6 +10,9 @@ import { Card as MobileCard, WingBlank, WhiteSpace } from 'antd-mobile';
 
 import { values, service } from '../../configs';
 
+const mapDispatchProps = dispatch => ({
+    move: (location) => dispatch(push(location)),
+});
 
 class Item extends React.Component {
 
@@ -42,9 +47,9 @@ class Item extends React.Component {
             )
         }
         return(
-            <WingBlank size="sm" >
-                <WhiteSpace size="lg" />
+            <div>
                 <MobileCard
+                    full
                     onClick={this.onClick.bind(this, item)}
                 >
                     <MobileCard.Header
@@ -58,10 +63,10 @@ class Item extends React.Component {
                     <MobileCard.Footer content="footer" extra={<span>footer ds</span>}/>
                 </MobileCard>
                 <WhiteSpace size="lg" />
-            </WingBlank>
+            </div>
         )
     }
 
 }
 
-export default Item;
+export default connect(null, mapDispatchProps)(Item);

@@ -29,7 +29,7 @@ class MainContainer extends React.Component {
                 <CommonLank />
 
                 <CommonSlider data={eventList} />
-                <ItemList mark="main" count={3}/>
+                <ItemList mark="main" count={4}/>
             </div>
         );
     }
