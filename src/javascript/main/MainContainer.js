@@ -2,8 +2,12 @@ import React from 'react';
 
 import { CommonSlider } from '../commons/components/slider'
 import { CommonLank } from '../commons/components/rank';
+import { ItemList } from '../commons/components/item';
 
-// import { mock }
+import { values } from '../commons/configs';
+
+
+console.log("values", values.mock);
 const mainImages = [
     {id : '1', url : 'https://picsum.photos/1280/600', text : "hi-1", link : 'https://www.yahoo.com/'},
     {id : '2', url : 'https://picsum.photos/1280/600/?random', text : "hi-2", link : 'http://www.naver.com'},
@@ -16,8 +20,6 @@ const eventList = [
     {id : '2', url : 'https://picsum.photos/1280/80/?random', text : "hi-2", link : 'http://www.google.com'},
 ]
 
-console.log('eventList', eventList);
-
 class MainContainer extends React.Component {
 
     render() {
@@ -27,7 +29,7 @@ class MainContainer extends React.Component {
                 <CommonLank />
 
                 <CommonSlider data={eventList} />
-                
+                <ItemList mark="main" count={3}/>
             </div>
         );
     }

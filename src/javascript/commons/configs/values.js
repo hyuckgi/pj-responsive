@@ -7,24 +7,47 @@ export const format = {
     DAY_FORMAT: 'ddd',
 };
 
+export const platform = {
+    MOBILE : 'mobile',
+    PC : 'desktop',
+}
+
 export const mock = {
-    item : {
-        id: '1',
-        title : 'test1',
-        src : 'https://picsum.photos/480/320',
-        descript : '테스트 샘플 입니다. 테스트 샘플 입니다. 테스트 샘플 입니다. 테스트 샘플 입니다. 테스트 샘플 입니다.',
-        auth : '마크 주커버그',
-        price : {
-            total : 1000000,
-            present : 50000,
-            count : 30,
-        },
-        mainList : true,
-    },
-    stories : Array(10).fill('').map(item => item),
+    stories : Array(50).fill('').map((item, inx) => {
+        if(inx % 2 === 0){
+            return{
+                id: inx + 1,
+                title : `test_${inx}`,
+                src : 'https://picsum.photos/480/320?random',
+                descript : `테스트 샘플 입니다.${inx} 테스트 샘플 입니다. 테스트 샘플 입니다. 테스트 샘플 입니다. 테스트 샘플 입니다.`,
+                auth : `마크 주커버그_${inx}`,
+                price : {
+                    total : `${(inx + 1) * 10000} `,
+                    present : `${(inx + 1) * 1000} `,
+                    count : inx + 10,
+                },
+                mark : 'main',
+            }
+        }else{
+            return{
+                id: inx + 1,
+                title : `test_${inx}`,
+                src : 'https://picsum.photos/480/320?gravity=east',
+                descript : `테스트 샘플 입니다.${inx} 테스트 샘플 입니다. 테스트 샘플 입니다. 테스트 샘플 입니다. 테스트 샘플 입니다.`,
+                auth : `마크 주커버그_${inx}`,
+                price : {
+                    total : `${(inx + 1) * 10000} `,
+                    present : `${(inx + 1) * 1000} `,
+                    count : inx + 10,
+                },
+                mark : '',
+            }
+        }
+    }),
 }
 
 export default {
     format,
     mock,
+    platform
 };
