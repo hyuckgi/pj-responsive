@@ -1,13 +1,30 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
+import { ItemList } from '../../commons/components/item';
+
+import { values, service } from '../../commons/configs';
+
+// const mapStateToProps = ({fetch}) => {
+//     return {
+//
+//     }
+// };
+
+const mapDispatchProps = dispatch => ({
+    multipleList: (list) => dispatch(fetch.multipleList(list)),
+});
 
 class StoryList extends React.Component {
 
     render() {
+        const { type } = service.getValue(this.props, 'match.params');
+
         return (
-            <div>StoryList</div>
+            <ItemList count={4} category={type} />
         );
     }
 
 }
 
-export default StoryList;
+export default connect(null, mapDispatchProps)(StoryList);

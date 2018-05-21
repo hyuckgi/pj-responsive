@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 
 import { DesktopLayout, MobileLayout } from '../response';
 
@@ -9,6 +10,7 @@ import { ListView } from 'antd-mobile';
 
 import { values, service } from '../../configs';
 import Item from './Item';
+
 
 const mapStateToProps = ({fetch}) => {
     const data = service.getValue(values, 'mock.stories', []);
@@ -19,6 +21,7 @@ const mapStateToProps = ({fetch}) => {
 
 const mapDispatchProps = dispatch => ({
     multipleList: (list) => dispatch(fetch.multipleList(list)),
+    move: (location) => dispatch(push(location)),
 });
 
 const dataSource = new ListView.DataSource({
@@ -31,10 +34,12 @@ class ItemList extends React.Component {
     constructor(props) {
         super(props);
 
-        const list = this.props.data.filter(item => item.mark === this.props.mark);
+        const list = this.props.mark === 'main'
+                    ? this.props.data.filter(item => item.mark === this.props.mark)
+                    : this.props.data.filter(item => item.category === this.props.category);
 
         this.state = {
-            dataSource : dataSource,
+            dataSource : dataSource.cloneWithRows(list),
             list : list
         };
 
@@ -42,11 +47,12 @@ class ItemList extends React.Component {
         this.renderMCard = this.renderMCard.bind(this);
     }
 
-
     componentDidMount() {
-        this.setState({
-            dataSource : this.state.dataSource.cloneWithRows(this.state.list)
-        })
+        const { category } = this.props || false;
+
+        if(!category){
+            return;
+        };
     }
 
     renderCard(){
@@ -66,7 +72,9 @@ class ItemList extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.data !== this.props.data) {
-            const list = nextProps.data.filter(item => item.mark === nextProps.mark);
+            const list = nextProps.mark === 'main'
+                        ? this.props.data.filter(item => item.mark === nextProps.mark)
+                        : this.props.data.filter(item => item.category === nextProps.category)
             return this.setState({
                 dataSource: this.state.dataSource.cloneWithRows(list)
             });
@@ -90,7 +98,7 @@ class ItemList extends React.Component {
     }
 
     onEndReached(){
-
+        // API more call
     }
 
 

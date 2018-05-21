@@ -3,12 +3,15 @@ export const path = {
     main : '/main',
 
     story : '/story',
-    list : '/story/list',
+    storyList : '/story/list',
     progress : '/story/list/progress',
     complete : '/story/list/complete',
     drop : '/story/list/drop',
 
-
+    // List
+    list : (list) => (`${list}/:type`),
+    item : (list) => (`${list}/:type/:id`),
+    listItem : (path, id) => (`${path}/${id}`),
 
     // service
     login : '/login',
@@ -17,5 +20,5 @@ export const path = {
 };
 
 export default {
-    path,
+    path
 };

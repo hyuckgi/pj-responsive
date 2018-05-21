@@ -27,6 +27,7 @@ export const mock = {
                     count : inx + 10,
                 },
                 mark : 'main',
+                category : 'progress'
             }
         }else{
             return{
@@ -41,6 +42,7 @@ export const mock = {
                     count : inx + 10,
                 },
                 mark : '',
+                category : inx % 3 === 0 ? 'complete' : 'drop'
             }
         }
     }),

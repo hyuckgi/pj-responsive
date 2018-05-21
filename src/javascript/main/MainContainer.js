@@ -4,10 +4,8 @@ import { CommonSlider } from '../commons/components/slider'
 import { CommonLank } from '../commons/components/rank';
 import { ItemList } from '../commons/components/item';
 
-import { values } from '../commons/configs';
+import { values, service } from '../commons/configs';
 
-
-console.log("values", values.mock);
 const mainImages = [
     {id : '1', url : 'https://picsum.photos/1280/600', text : "hi-1", link : 'https://www.yahoo.com/'},
     {id : '2', url : 'https://picsum.photos/1280/600/?random', text : "hi-2", link : 'http://www.naver.com'},
@@ -29,7 +27,7 @@ class MainContainer extends React.Component {
                 <CommonLank />
 
                 <CommonSlider data={eventList} />
-                <ItemList mark="main" count={4}/>
+                <ItemList count={4} mark="main"/>
             </div>
         );
     }

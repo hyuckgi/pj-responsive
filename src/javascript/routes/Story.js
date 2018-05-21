@@ -10,9 +10,9 @@ class Story extends React.Component {
         return (
             <Switch>
                 <Route exact path={path.story}  render={() => {
-                    return <Redirect to={path.list} />
+                    return <Redirect to={path.list(path.storyList)} />
                 }}/>
-                <Route path={path.list} component={StoryListContainer} />
+                <Route path={path.list(path.storyList)} component={StoryListContainer} />
             </Switch>
         );
     }

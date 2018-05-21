@@ -10,6 +10,14 @@ import { Card as MobileCard, WingBlank, WhiteSpace } from 'antd-mobile';
 
 import { values, service } from '../../configs';
 
+const mapStateToProps = ({layout, router}) => {
+    const pathname = service.getValue(router, 'location.pathname', false);
+
+    return {
+        pathname
+    }
+};
+
 const mapDispatchProps = dispatch => ({
     move: (location) => dispatch(push(location)),
 });
@@ -24,7 +32,15 @@ class Item extends React.Component {
 
     onClick(item, e){
         e.preventDefault();
-        console.log('onClick', item );
+        console.log("item", item);
+        const { pathname } = this.props;
+
+        console.log("pathname", pathname);
+        if(!pathname){
+            return;
+        }
+
+        return this.props.move(`${pathname}/${item.id}`);
     }
 
     render() {
@@ -35,7 +51,6 @@ class Item extends React.Component {
                 <div className="item" onClick={this.onClick.bind(this, item)}>
                      <WebCard
                         hoverable
-
                         cover={<img alt={item.title} src={item.src}/>}
                     >
                         <WebCard.Meta
@@ -69,4 +84,4 @@ class Item extends React.Component {
 
 }
 
-export default connect(null, mapDispatchProps)(Item);
+export default connect(mapStateToProps, mapDispatchProps)(Item);
