@@ -1,11 +1,11 @@
 import {layout as type, security as securityType} from '../types';
 
 const list = [
-    {id: '1000000', name: '윙크소개',  level: 0,  link:'/wink', defaultLink: '/wink/lookview', idx : 2},
-    {id: '1010000', name: '윙크 한눈에 보기', link: '/wink/lookview', level: 1, parent: '1000000'},
-    {id: '1020000', name: '과목별 학습', link: '/wink/subject', level: 1, parent: '1000000'},
-    {id: '1030000', name: '연령별 학습', link: '/wink/age', level: 1, parent: '1000000'},
-    {id: '1040000', name: '사용자 후기', link: '/wink/review', level: 1, parent: '1000000'},
+    {id: '1000000', name: '윙크소개',  level: 0,  link:'/story', defaultLink: '/story/list/progress', idx : 2},
+    {id: '1010000', name: '윙크 한눈에 보기', link: '/story/list/progress', level: 1, parent: '1000000'},
+    {id: '1020000', name: '과목별 학습', link: '/story/list/complete', level: 1, parent: '1000000'},
+    {id: '1030000', name: '연령별 학습', link: '/story/list/drop', level: 1, parent: '1000000'},
+    {id: '1040000', name: '사용자 후기', link: '/story/make', level: 1, parent: '1000000'},
     {id: '1040000', name: '학습·체험신청', level: 1, parent: '1000000', defaultLink : '/wink/request/free', hasChild : true},
     {id: '1040100', name: '무료 체험학습 신청', link: '/wink/request/free', level: 2, parent: '1040000'},
     {id: '1040200', name: '유료 학습 신청', link: '/wink/request/paid', level: 2, parent: '1040000'},
