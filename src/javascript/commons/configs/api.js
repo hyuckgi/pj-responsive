@@ -1,4 +1,20 @@
 export const api = {
+
+    // 회원가입
+    join : (params = null) => ({
+        url : `member/join/submit`,
+        params : {...params}
+    }),
+    checkValidate : (key, params) => ({
+        url : `member/validate/${key}`,
+        params : {...params}
+    }),
+    getTerms : () => `member/terms`,
+
+
+
+
+
     getAuth : (params = null) => ({
         url : `/account/auths/`,
         params : {...params}

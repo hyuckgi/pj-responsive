@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Button, Flex } from 'antd-mobile';
+import { Button, Flex, WhiteSpace } from 'antd-mobile';
 
 class ButtonWrapper extends React.Component {
 
@@ -15,7 +15,14 @@ class ButtonWrapper extends React.Component {
 
         return buttons.map((item, idx) => {
             return (
-                <Button key={idx} type={item.type || 'primary'} size={item.size || 'small'} inline={item.inline || true} {...item} onClick={this.onClickButton.bind(this, item)}>{item.label}</Button>
+                <Button
+                    key={idx}
+                    type={item.type || 'primary'}
+                    size={item.size || 'small'}
+                    inline={item.inline || true}
+                    onClick={this.onClickButton.bind(this, item)}
+                    {...item}
+                >{item.label}</Button>
             );
         });
     }
@@ -23,8 +30,10 @@ class ButtonWrapper extends React.Component {
     render() {
         return (
             <Flex justify="center" className="button-wrapper" >
-                <Flex.Item >
+                <Flex.Item>
+                    <WhiteSpace size="xl" />
                     {this.renderButton()}
+                    <WhiteSpace size="lg" />
                 </Flex.Item>
             </Flex>
         );

@@ -13,7 +13,6 @@
     }
 }
 
-
 .mobile-container {
 
     font-size: 12px;
@@ -108,6 +107,13 @@
     }
 }
 
+.am-badge{
+    .am-badge-dot{
+        top:-6px;
+        right: -12px;
+    }
+}
+
 .am-list{
 
 
@@ -166,14 +172,20 @@
 
         .am-list-line{
             .am-list-content{
+                font-size:0.9em;
                 white-space:pre-wrap;
             }
         }
 
         &.am-input-item{
 
+            .am-input-label{
+                font-size:1.2em;
+                text-align:center;
+            }
+
             input{
-                font-size:1em;
+                font-size:0.7em;
                 display:inline-block;
                 box-sizing:border-box;
                 border:1px solid #dadada;
@@ -269,4 +281,12 @@ html:not([data-scale]) .wink-mobile-wrap .am-button::before{
 
 html:not([data-scale]) .wink-mobile-wrap .am-button{
     border:1px solid #dadada;
+}
+
+
+
+#root{
+    .ant-layout{
+        background:#fff;
+    }
 }

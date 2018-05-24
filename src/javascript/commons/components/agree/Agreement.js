@@ -1,10 +1,24 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { createForm } from 'rc-form';
 
-import { values } from '../../configs';
-import { Accordion, List, Checkbox, Button } from 'antd-mobile';
+
+import { APICaller } from '../../api';
+import { values, api, service } from '../../configs';
+import { Accordion, List, Checkbox, Button, Badge } from 'antd-mobile';
 
 const CheckboxItem = Checkbox.CheckboxItem;
+
+const mapStateToProps = ({fetch}) => {
+
+    return {
+
+    }
+};
+
+const mapDispatchToProps = (dispatch) => ({
+
+});
 
 class Agreement extends React.Component {
 
@@ -12,41 +26,78 @@ class Agreement extends React.Component {
         super(props);
 
         this.state = {
-            winkTermsAgreement : true,
-            privateInfoAgreement : true,
+            list : [],
+            terms : {},
         }
 
         this.onChange = this.onChange.bind(this);
         this.renderExtra = this.renderExtra.bind(this);
         this.onChangeAllTerms = this.onChangeAllTerms.bind(this);
+        this.getTerms = this.getTerms.bind(this);
     }
 
+    componentDidMount() {
+        this.getTerms();
+    }
+
+    getTerms(){
+        APICaller.get(api.getTerms(), {})
+        .then(({data}) => {
+            const { agreementValue } = values;
+            const list = service.getValue(data, 'list', []);
+            const codes = list.map(item => item.code).reduce((result, item) => {
+                result[item] = true;
+                return result;
+            }, {})
+
+            if(list){
+                return this.setState({
+                    list,
+                    terms : codes
+                })
+            }
+            return;
+        })
+    }
+
+
     onChange(e, item){
+        console.log("item", item);
+
         return this.setState({
-            [item.name] : e.target.checked
+            terms : {
+                ...this.state.terms,
+                [item.code] : e.target.checked
+            }
         });
     }
 
     onChangeAllTerms(e){
         const { form } = this.props;
+        const { terms, list } = this.state;
+        const codes = list.map(item => item.code).reduce((result, item) => {
+            result[item] = true;
+            return result;
+        }, {});
+
 
         if(e.target.checked){
             form.setFieldsValue({
-                winkTermsAgreement : true,
-                privateInfoAgreement : true,
+                usedAgreement : true,
+                privateAgreement : true,
             })
             return this.setState({
-                winkTermsAgreement : true,
-                privateInfoAgreement : true,
+                ...this.state,
+                ...codes,
             })
         }else{
             form.setFieldsValue({
-                winkTermsAgreement : false,
-                privateInfoAgreement : false,
+                usedAgreement : false,
+                privateAgreement : false,
             })
             return this.setState({
-                winkTermsAgreement : false,
-                privateInfoAgreement : false,
+                usedAgreement : false,
+                privateAgreement : false,
             })
         }
     }
@@ -59,31 +110,30 @@ class Agreement extends React.Component {
 
     renderHeader(){
         return(
-            <p className="title">학습기, 교재 배송과 무료 학습을 위한 윙크 이용약관과 개인정보 수집 및 활용에 동의합니다.</p>
+            <p className="title"><Badge dot>이용약관, 개인정보 수집 및 활용 동의</Badge></p>
         )
     }
 
     render() {
         const { form } = this.props;
-        const { winkTermsAgreement, privateInfoAgreement } = this.state;
-        const allTerms = winkTermsAgreement && privateInfoAgreement;
-        const { agreementValue } = values;
+        const { list, terms } = this.state;
+        const allTerms = Object.keys(terms).length > 0 && Object.keys(terms).some(item => terms[item] === true);
 
         return (
             <Accordion defaultActiveKey="0" className="agreement-accordion" >
                 <Accordion.Panel header={this.renderHeader()}>
                     <List className="my-list">
                         <CheckboxItem checked={allTerms} key={'allTerms'} onChange={this.onChangeAllTerms} >전체 동의합니다.</CheckboxItem>
-                        {agreementValue.map((item, idx) => {
+                        {list.length && list.map((item, idx) => {
                             return(
                                 <List.Item
                                     key={idx}
                                     extra={this.renderExtra(item)}
                                 >
-                                    <form >
-                                        {form.getFieldDecorator(`${item.name}`, {
+                                    <form>
+                                        {form.getFieldDecorator(`${item.code}`, {
                                             initialValue : true,
-                                        })(<CheckboxItem checked={this.state[item.name]} key={item.name} onChange={(e) => this.onChange(e, item)}>{item.label}</CheckboxItem>)}
+                                        })(<CheckboxItem checked={terms[item.code]} key={item.code} onChange={(e) => this.onChange(e, item)}>{item.terms}</CheckboxItem>)}
                                     </form>
                                 </List.Item>
                             )
@@ -96,4 +146,4 @@ class Agreement extends React.Component {
 
 }
 
-export default createForm()(Agreement);
+export default connect(mapStateToProps, mapDispatchToProps)(createForm()(Agreement));

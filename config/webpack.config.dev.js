@@ -242,7 +242,10 @@ module.exports = {
                     },
                     {
                         loader: require.resolve('less-loader'),
-                        options: {javascriptEnabled: true},
+                        options: {
+                            javascriptEnabled: true,
+                            modifyVars: theme,
+                        },
                     }
                 ],
             }),

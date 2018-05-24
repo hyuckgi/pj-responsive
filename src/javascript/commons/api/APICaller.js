@@ -13,7 +13,7 @@ const getAPIHost = () => {
 		if (config.hostName) {
 			return config.hostName;
 		}
-		return 'http://server.local.danbi:8080';
+		return 'http://api.shell.pe.kr/api/';
 	} else if (process.env.NODE_ENV === 'test') {
 		return '';
 	} else {
@@ -24,12 +24,11 @@ const getAPIHost = () => {
 const APIHost = getAPIHost();
 
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
-axios.defaults.withCredentials = true;
+axios.defaults.withCredentials = false;
 
 const getMakeURL = (url) => {
-	const postfix = url.substr(0, 1) === '/' ? '' : '/';
 	const prefix = url.indexOf('http') === 0 ? '' : APIHost;
-	return `${prefix}${url}${postfix}`;
+	return `${prefix}${url}`;
 };
 
 const convertCamel = (str) => (str.replace(/_([a-z])/g, (m, w) => w.toUpperCase()));
@@ -53,7 +52,7 @@ const makeMapper = (item, isCamelcase = true) => {
     }, {});
     return { keys, mappingObj };
 };
-const exceptionList = ['contentsStepInfo', 'contentsStepCount', 'PostCategoryTag', 'PostAgeTag', 'PostAttributeTag'];
+
 const convertObject = (item, mapper, isCamelcase = true) => {
 	const defaultObj = {};
 	if(!isObject(item)) {
@@ -68,7 +67,7 @@ const convertObject = (item, mapper, isCamelcase = true) => {
     return mapper.keys.reduce((obj, key) => {
         const newKey = mapper.mappingObj[key];
         // Worst case, LCMS 미디어 정보 관련
-        if(!isCamelcase && exceptionList.find(item => item === key)) {
+        if(!isCamelcase) {
         	obj[key] = item[key];
         	return obj;
 		}
@@ -128,58 +127,6 @@ const jsonToParams = (obj = {}) => {
     }, '');
 }
 
-class APIMonitor {
-	static initialize() {
-		this._errorTime = null;
-		this._isLive = true;
-
-		this.timerGate();
-	}
-
-	static timerGate() {
-		if (this.instanceTimer) {
-			clearTimeout(this.instanceTimer);
-			this.instanceTimer = undefined;
-		}
-		this.instanceTimer = setTimeout(() => {
-			this.instanceTimer = undefined;
-			APIMonitor.timerHealthCheck();
-		}, config.healthCheckTime);
-	}
-	static timerHealthCheck() {
-		if (config.caching === true) {
-			const fullUrl = getMakeURL('/health.txt');
-			axios.get(fullUrl)
-				.then((response) => {
-					this._isLive = true;
-					return true;
-				})
-				.catch((e) => {
-					if (e.message === 'Network error') {
-						this._isLive = false;
-						this.networkError();
-					}
-					return false;
-				})
-				.then((result) => {
-					this.timerGate();
-				});
-		}
-	}
-	static networkError() {
-		this._errorTime = Date.now();
-		this._isLive = false;
-	}
-
-	static get isLive() {
-		return this._isLive;
-	}
-
-	static defaults = {
-		set healthCheckTime(value) {config.healthCheckTime = value;}
-	}
-}
-
 class APICaller {
 	static post(url, params = {}, options = {}) {
 		const fullUrl = getMakeURL(url);
@@ -205,36 +152,7 @@ class APICaller {
 			    return {...response};
 		    }));
 	}
-	static defaults = {
-		set debug(value) { config.debug = value; },
-		get debug() { return config.debug },
 
-		set caching(value) {
-			if (config.offlineMode === false) {
-				config.caching = value;
-			} else {
-				config.caching = true;
-			}
-			if (config.caching === true) {
-				APIMonitor.initialize();
-			}
-		},
-		get caching() { return config.caching; },
-
-		set offlineMode(value) {
-			config.offlineMode = value;
-			if (value === true) {
-				this.defaults.caching = true;
-			}
-		},
-		get offlineMode() { return config.offlineMode; },
-
-		set timeout(value) { axios.defaults.timeout = value; },
-		get timeout() { return axios.defaults.timeout; },
-
-		set hostName(value) { config.hostName = value;},
-		get hostName() { return APIHost}
-    };
     static upload(file) {
         const options = {headers: getCSRFToken(), 'content-type': 'multipart/form-data', withCredentials: true}
 
@@ -244,38 +162,6 @@ class APICaller {
 
         return APICaller.post('/aux/files/', formData, options);
     }
-}
-
-// if (process.env.NODE_ENV !== 'production') {
-if (true) {
-	axios.interceptors.request.use(
-		(req) => {
-			if (config.debug === true) {
-				console.log('%c Request:', 'color: #4CAF50; font-weight: bold', req);
-			}
-			return req;
-		},
-		(err) => {
-			if (config.debug === true) {
-				console.log('%c Request:', 'color: #EC6060; font-weight: bold', err);
-			}
-			return Promise.reject(err);
-		}
-	);
-	axios.interceptors.response.use(
-		(res) => {
-			if (config.debug === true) {
-				console.log('%c Response:', 'color: #3d62e5; font-weight: bold', res);
-			}
-			return res;
-		},
-		(err) => {
-			if (config.debug === true) {
-				console.log('%c Response:', 'color: #EC6060; font-weight: bold', err);
-			}
-			return Promise.reject(err);
-		}
-	);
 }
 
 const getCSRFToken = () => {
@@ -302,4 +188,4 @@ const upload = {
 };
 
 export default APICaller
-export {APIMonitor, APICaller, APIHost, axios, upload}
+export {APICaller, APIHost, axios, upload}

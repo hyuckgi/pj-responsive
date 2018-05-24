@@ -5,7 +5,8 @@ import CustomIcon from './CustomIcon';
 // import UserInfo from './UserInfo';
 // import LevelCheck from './LevelCheck';
 // import CertifyPhone from './CertifyPhone';
-// import { ButtonWrapper, CertifyButton } from './buttons';
+import { ButtonWrapper, CertifyButton } from './buttons';
+import { Agreement } from './agree';
 // import { Address } from './address'
 
 export{
@@ -15,8 +16,9 @@ export{
     // RequestStudy,
     // UserInfo,
     // LevelCheck,
-    // ButtonWrapper,
+    ButtonWrapper,
+    Agreement,
     // Address,
     // CertifyPhone,
-    // CertifyButton,
+    CertifyButton,
 }

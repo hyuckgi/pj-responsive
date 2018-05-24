@@ -48,8 +48,27 @@ export const mock = {
     }),
 }
 
+export const requestType = {
+    'FIRST' : {
+        label: '배송정보 입력', step: 1,
+    },
+    'SECOND' : {
+        label: '아이정보 입력', step: 2,
+    },
+    'THRID' : {
+        label: '학습단계 설정', step: 3,
+    },
+};
+
+export const agreementValue = [
+    { value: true, label: '이용약관', url : 'http://www.naver.com', name : 'usedAgreement' },
+    { value: true, label: '개인정보보호', url : 'http://www.daum.net', name : 'privateAgreement'},
+];
+
+
 export default {
     format,
     mock,
-    platform
+    platform,
+    requestType
 };

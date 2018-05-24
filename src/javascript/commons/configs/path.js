@@ -15,6 +15,7 @@ export const path = {
 
     // service
     login : '/login',
+    join : '/join',
     notFound : '/notFound',
     serverError : '/serverError',
 };
