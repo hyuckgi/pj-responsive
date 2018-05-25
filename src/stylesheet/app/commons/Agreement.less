@@ -1,5 +1,6 @@
 .agreement-accordion{
     &.am-accordion{
+        border-top:none;
         .am-accordion-item{
             .am-accordion-header{
                 font-size:1.2em;
@@ -10,13 +11,25 @@
             }
 
             .am-accordion-content{
-                .am-list-body{
-                    border-bottom:none;
+                .am-list{
+                    .am-list-body{
+                        border-bottom:none;
 
-                    & > .am-list-item{
-                        & > .am-list-line{
-                            & > .am-list-content{
-                                padding:0;
+                        & > .am-checkbox-item{
+                            border-bottom:1px solid #ddd;
+                        }
+
+                        & > .am-list-item:not(.am-checkbox-item){
+                            & > .am-list-line{
+                                & > .am-list-content{
+                                    padding:0;
+                                }
+                            }
+
+                            &:not(:last-child){
+                                & > .am-list-line{
+                                    border-bottom:1px solid #ddd;
+                                }
                             }
                         }
                     }
@@ -31,16 +44,6 @@
             }
         }
 
-        form{
-            .am-list-item{
-                .am-list-line{
-                    border-bottom:none;
 
-                    .am-list-extra{
-                        max-width:85px;
-                    }
-                }
-            }
-        }
     }
 }

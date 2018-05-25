@@ -46,7 +46,8 @@ class Agreement extends React.Component {
             const { agreementValue } = values;
             const list = service.getValue(data, 'list', []);
             const codes = list.map(item => item.code).reduce((result, item) => {
-                result[item] = true;
+                const key = `terms_${item}`;
+                result[key] = true;
                 return result;
             }, {})
 
@@ -62,42 +63,39 @@ class Agreement extends React.Component {
 
 
     onChange(e, item){
-        console.log("item", item);
-
+        const key = `terms_${item.code}`;
         return this.setState({
             terms : {
                 ...this.state.terms,
-                [item.code] : e.target.checked
+                [key] : e.target.checked
             }
         });
     }
 
-    onChangeAllTerms(e){
-        const { form } = this.props;
-        const { terms, list } = this.state;
-        const codes = list.map(item => item.code).reduce((result, item) => {
-            result[item] = true;
+    getAllTerms(value){
+        const { terms } = this.state;
+
+        return Object.keys(terms).reduce((result, item) => {
+            result[item] = value;
             return result;
         }, {});
+    }
 
+    onChangeAllTerms(e){
+        const { form } = this.props;
+        const { terms } = this.state;
 
         if(e.target.checked){
-            form.setFieldsValue({
-                usedAgreement : true,
-                privateAgreement : true,
-            })
+            const checked = this.getAllTerms(true);
+            form.setFieldsValue(checked);
             return this.setState({
-                ...this.state,
-                ...codes,
+                terms : checked
             })
         }else{
-            form.setFieldsValue({
-                usedAgreement : false,
-                privateAgreement : false,
-            })
+            const unChecked = this.getAllTerms(false);
+            form.setFieldsValue(unChecked);
             return this.setState({
-                usedAgreement : false,
-                privateAgreement : false,
+                terms : unChecked
             })
         }
     }
@@ -116,14 +114,19 @@ class Agreement extends React.Component {
 
     render() {
         const { form } = this.props;
+        const { getFieldProps, getFieldError } = form;
         const { list, terms } = this.state;
-        const allTerms = Object.keys(terms).length > 0 && Object.keys(terms).some(item => terms[item] === true);
+        const allTerms = Object.keys(terms).length > 0 && Object.keys(terms).some(item => !terms[item]);
 
         return (
             <Accordion defaultActiveKey="0" className="agreement-accordion" >
                 <Accordion.Panel header={this.renderHeader()}>
                     <List className="my-list">
-                        <CheckboxItem checked={allTerms} key={'allTerms'} onChange={this.onChangeAllTerms} >전체 동의합니다.</CheckboxItem>
+                        <CheckboxItem
+                            checked={!allTerms}
+                            key={'allTerms'}
+                            onChange={this.onChangeAllTerms}
+                        >전체 동의합니다.</CheckboxItem>
                         {list.length && list.map((item, idx) => {
                             return(
                                 <List.Item
@@ -131,9 +134,9 @@ class Agreement extends React.Component {
                                     extra={this.renderExtra(item)}
                                 >
                                     <form>
-                                        {form.getFieldDecorator(`${item.code}`, {
+                                        {form.getFieldDecorator(`terms_${item.code}`, {
                                             initialValue : true,
-                                        })(<CheckboxItem checked={terms[item.code]} key={item.code} onChange={(e) => this.onChange(e, item)}>{item.terms}</CheckboxItem>)}
+                                        })(<CheckboxItem checked={terms[`terms_${item.code}`]} key={`terms_${item.code}`} onChange={(e) => this.onChange(e, item)}>{item.terms}</CheckboxItem>)}
                                     </form>
                                 </List.Item>
                             )

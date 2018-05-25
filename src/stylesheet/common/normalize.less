@@ -166,11 +166,18 @@
             }
         }
 
+        .am-list-item{
+            .am-list-line{
+                border-bottom:none;
+            }
+        }
+
     }
 
     .am-list-item{
 
         .am-list-line{
+
             .am-list-content{
                 font-size:0.9em;
                 white-space:pre-wrap;
@@ -178,6 +185,13 @@
         }
 
         &.am-input-item{
+
+            &.confirmation{
+                input{
+                    border:1px solid #00bbd4;
+                    color: #00bbd4;
+                }
+            }
 
             .am-input-label{
                 font-size:1.2em;
@@ -193,7 +207,14 @@
                 padding:7px 10px;
             }
 
+            .am-input-clear{
+                margin-left:6px;
+            }
+
             &.am-input-disabled{
+                .am-input-label{
+                    color:#000;
+                }
                 input{
                     -webkit-opacity:1 !important;
                     -webkit-text-fill-color:#bbbbbb;

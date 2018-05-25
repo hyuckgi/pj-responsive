@@ -13,18 +13,44 @@ class JoinStep01 extends React.Component {
 
     constructor(props) {
         super(props);
-
-
+        this.state = {
+            confirmation : false
+        };
+        this.errorToast = this.errorToast.bind(this);
     }
 
+    errorToast(errors = null){
+        const { getFieldError } = this.props.form;
+        if(!errors){
+            return;
+        }
+
+        const messages = Object.keys(errors)
+            .map(item => {
+                return getFieldError(item);
+            })
+            .reduce((result, item, idx) => {
+                return result.concat(item);
+            }, []);
+
+        return this.makeToast(messages);
+    }
 
     onSubmit(){
         const { stepProps, form } = this.props;
 
         form.validateFields((errors, value) => {
 
-            if(Object.keys(value).length){
-                const check = Object.keys(value).some(item => !value[item]);
+            const terms = Object.keys(value).filter(item => item.indexOf('terms') === 0)
+                        .reduce((result, item) => {
+                            const key = item.replace('terms_', "")
+                            result[key] = value[item];
+                            return result;
+                        }, {});
+
+            if(Object.keys(terms).length){
+                const check = Object.keys(terms).some(item => !terms[item]);
+
                 if(check){
                     return Toast.fail('이용약관과 개인정보 수집 및 활용에 동의해주세요.', 1)
                 }
@@ -32,15 +58,12 @@ class JoinStep01 extends React.Component {
 
             if(!errors){
                 let data = {};
-                data = {...value};
-                return stepProps.onSubmit(data);
+                data = {...value, terms : terms};
+                return stepProps.onClickNext(data);
             }
-        });
-    }
 
-    onClickNext(params){
-        const { stepProps } = this.props;
-        return stepProps.onClickNext(params);
+            return this.errorToast(errors);
+        });
     }
 
     getButtons(){
@@ -68,40 +91,61 @@ class JoinStep01 extends React.Component {
             return APICaller.post(obj.url, obj.params)
                 .then(({data}) => {
                     if(data.resultCode !== 200){
-                        Toast.fail(data.resultMsg, 1.5);
+                        Toast.fail(data.resultMsg, 1);
                         form.resetFields(key);
                         return this[key].focus();
+                    }else{
+                        Toast.success(data.resultMsg, 1);
+                        return this.setState({
+                            confirmation : true,
+                        })
                     }
                 });
         }
     }
 
+    makeToast(messages){
+        const duration = messages.length;
+        return Toast.fail(
+            (<div>
+                {messages.map((message, idx) => {
+                    return (<p key={idx}>{message}</p>)
+                })}
+            </div>)
+            , duration
+        );
+    }
+
     render() {
         const { form } = this.props;
         const { getFieldProps, getFieldError } = form;
+        const { confirmation } = this.state;
 
         return (
             <div className="join-step-wrapper step-01">
                 <List full="true">
+                    <WhiteSpace size="md"/>
                     <InputItem
                         {...getFieldProps('userid', {
                             rules: [{ required: true, message: 'ID를 입력하세요'}],
                         })}
+                        className={confirmation ? "confirmation" : ""}
                         ref={el => this.userid = el}
-                        placeholder="ID를 입력하세요"
+                        placeholder="UserID"
                         clear
                         onBlur={this.onBlur.bind(this, 'userid')}
                         error={!!getFieldError('userid')}
                         onErrorClick={() => {
-                          alert(getFieldError('userid').join('、'));
+                          Toast.fail(getFieldError('userid').join('、'), 1);
                         }}
-                    ><Badge dot>ID</Badge></InputItem>
+                    />
+                    <WhiteSpace size="md"/>
                 </List>
 
                 <WhiteSpace size="lg"/>
 
                 <Agreement
-                    form={this.props.form}
+                    form={form}
                 />
 
                 <ButtonWrapper buttons={this.getButtons()} onClickButton={this.onClickButton.bind(this)}/>

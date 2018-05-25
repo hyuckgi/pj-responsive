@@ -65,10 +65,27 @@ export const agreementValue = [
     { value: true, label: '개인정보보호', url : 'http://www.daum.net', name : 'privateAgreement'},
 ];
 
+export const countries = [
+    {
+        label : '대한민국',
+        value : 'KR'
+    },
+    {
+        label : '미국',
+        value : 'US'
+    },
+    {
+        label : '일본',
+        value : 'JP'
+    },
+
+];
+
 
 export default {
     format,
     mock,
     platform,
-    requestType
+    requestType,
+    countries
 };

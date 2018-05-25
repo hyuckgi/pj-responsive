@@ -7,18 +7,21 @@ import CustomIcon from './CustomIcon';
 // import CertifyPhone from './CertifyPhone';
 import { ButtonWrapper, CertifyButton } from './buttons';
 import { Agreement } from './agree';
+import { SelectCountry } from './country';
 // import { Address } from './address'
 
 export{
-    CustomIcon,
+
     // EventCarousel,
     // CommonEditor,
     // RequestStudy,
     // UserInfo,
     // LevelCheck,
-    ButtonWrapper,
-    Agreement,
     // Address,
     // CertifyPhone,
+    CustomIcon,
+    ButtonWrapper,
+    Agreement,
     CertifyButton,
+    SelectCountry,
 }

@@ -126,8 +126,9 @@ class Join extends React.Component {
     }
 
     render() {
-        const { current, visible } = this.state;
+        const { current, visible, params } = this.state;
         const stepProps = {
+            userid : service.getValue(params, 'userid', ""),
             onClickNext : this.onClickNext,
             onClickPrev : this.onClickPrev,
             onSubmit : this.onSubmit
