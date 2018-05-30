@@ -50,13 +50,13 @@ export const mock = {
 
 export const requestType = {
     'FIRST' : {
-        label: '배송정보 입력', step: 1,
+        label: '약관동의', step: 1,
     },
     'SECOND' : {
-        label: '아이정보 입력', step: 2,
+        label: '계정정보 입력', step: 2,
     },
     'THRID' : {
-        label: '학습단계 설정', step: 3,
+        label: '회원정보 입력', step: 3,
     },
 };
 

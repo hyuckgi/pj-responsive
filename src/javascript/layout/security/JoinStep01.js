@@ -3,11 +3,11 @@ import { createForm } from 'rc-form';
 
 import { APICaller } from '../../commons/api';
 
-import { Toast, List, InputItem, Badge, WhiteSpace } from 'antd-mobile';
+import { Toast, List, InputItem, WhiteSpace } from 'antd-mobile';
 
 import { FormButton } from '../../commons/types';
 import { Agreement, ButtonWrapper } from '../../commons/components';
-import { service, api } from '../../commons/configs';
+import { api } from '../../commons/configs';
 
 class JoinStep01 extends React.Component {
 
@@ -17,6 +17,7 @@ class JoinStep01 extends React.Component {
             confirmation : false
         };
         this.errorToast = this.errorToast.bind(this);
+        this.onClickNext = this.onClickNext.bind(this);
     }
 
     errorToast(errors = null){
@@ -36,7 +37,7 @@ class JoinStep01 extends React.Component {
         return this.makeToast(messages);
     }
 
-    onSubmit(){
+    onClickNext(){
         const { stepProps, form } = this.props;
 
         form.validateFields((errors, value) => {
@@ -56,10 +57,10 @@ class JoinStep01 extends React.Component {
                 }
             }
 
+            const termsCodes = Object.keys(terms).filter(item => terms[item] === true);
+
             if(!errors){
-                let data = {};
-                data = {...value, terms : terms};
-                return stepProps.onClickNext(data);
+                return stepProps.onClickNext({userid : value.userid, terms_codes : termsCodes});
             }
 
             return this.errorToast(errors);
@@ -75,7 +76,7 @@ class JoinStep01 extends React.Component {
     onClickButton(id){
         switch (id) {
             case FormButton.NEXT:
-                return this.onSubmit();
+                return this.onClickNext();
             default:
                 break;
         }
@@ -95,7 +96,7 @@ class JoinStep01 extends React.Component {
                         form.resetFields(key);
                         return this[key].focus();
                     }else{
-                        Toast.success(data.resultMsg, 1);
+                        Toast.success('사용가능한 아이디 입니다.', 1);
                         return this.setState({
                             confirmation : true,
                         })
@@ -129,7 +130,7 @@ class JoinStep01 extends React.Component {
                         {...getFieldProps('userid', {
                             rules: [{ required: true, message: 'ID를 입력하세요'}],
                         })}
-                        className={confirmation ? "confirmation" : ""}
+                        className={confirmation ? 'confirmation' : ''}
                         ref={el => this.userid = el}
                         placeholder="UserID"
                         clear

@@ -1,7 +1,6 @@
 import '../stylesheet/root.less';
 
 import React from 'react';
-import UAParser from 'ua-parser-js';
 import ReactDOM from 'react-dom';
 
 import { Route, Switch } from 'react-router-dom';
@@ -30,7 +29,6 @@ import App from './App';
 
 import { LocaleProvider as LocaleProviderMobile } from 'antd-mobile';
 
-const parser = new UAParser();
 const history = createBrowserHistory({forceRefresh: true});
 
 const middleware = routerMiddleware(history);

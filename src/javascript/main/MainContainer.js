@@ -1,8 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-
-import { APICaller } from '../commons/api';
 import { fetch } from '../redux/actions';
 import { values, service } from '../commons/configs';
 
@@ -36,10 +34,6 @@ const mapDispatchProps = dispatch => ({
 
 
 class MainContainer extends React.Component {
-
-    componentDidMount() {
-        this.props.getItem('member/terms', {});
-    }
 
     render() {
         return (

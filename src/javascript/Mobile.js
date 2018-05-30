@@ -7,8 +7,6 @@ import { StickyContainer } from 'react-sticky';
 import { Spinner, WrapperContainer, MobileWrapper } from './layout';
 import { HeaderContainer } from './layout/mobile';
 
-import { List } from 'antd-mobile';
-
 const mapStateToProps = ({ fetch }) => ({
     // spinning : fetch.isFetching || fetch.isPosting,
 

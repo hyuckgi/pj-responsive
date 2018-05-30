@@ -2,15 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
-import {security, fetch } from '../../redux/actions';
-import {fetch as creators } from '../../redux/creators';
+import { APICaller } from '../../commons/api';
 
-import { api, service, values, path } from '../../commons/configs';
-import { CustomIcon } from '../../commons/components';
+import { service, values, path, api } from '../../commons/configs';
 
-import { List, Tabs, Flex, Steps, WingBlank, Modal, WhiteSpace } from 'antd-mobile';
-
-import logo from '../../../resource/commons/logo.png';
+import { Tabs, Flex, Steps, WingBlank, Modal, WhiteSpace } from 'antd-mobile';
 
 import { JoinStep01, JoinStep02, JoinStep03 } from './';
 
@@ -18,22 +14,7 @@ import { JoinStep01, JoinStep02, JoinStep03 } from './';
 const Step = Steps.Step;
 
 
-const mapStateToProps = ({fetch}) => {
-
-    return {
-
-    }
-};
-
 const mapDispatchToProps = (dispatch) => ({
-    silentUpdateMultipleList : (list) => dispatch(fetch.silentUpdateMultipleList(list)),
-    simpleSilentUpdateList: (list) => dispatch(fetch.simpleSilentUpdateList(list)),
-    postStart : () => dispatch(creators.postStart()),
-    postEnd : () => dispatch(creators.postEnd()),
-    move: (location) => dispatch(push(location)),
-    silentMultipleList : (list) => dispatch(fetch.silentMultipleList(list)),
-    login: (params) => dispatch(security.login(params)),
-    multipleList : (list) => dispatch(fetch.multipleList(list)),
 
     moveHome: () => dispatch(push('/')),
 });
@@ -73,7 +54,36 @@ class Join extends React.Component {
     }
 
     onSubmit(data){
-        console.log("data", data);
+        const { params } = this.state
+
+        const obj = api.join({...data, ...params});
+
+        console.log('obj', obj);
+
+        APICaller.post(obj.url, obj.params)
+        .then((...args) => {
+            console.log("args", args);
+        })
+        // const postData = {}
+        //
+        // if(!service.getValue(params, 'userid', false)){
+        //     console.log("다시 진행하세요.");
+        //     return;
+        // }
+        // postData['userid'] = params.userid;
+        // postData['passwd'] = params.passwd;
+        // postData['username'] = data.username;
+        // postData['nickname'] = data.nickname;
+        // postData['cellphone'] = data.cellphone;
+        // postData['email'] = data.cellphone;
+        //
+        // const obj = api.join({
+        //
+        // })
+
+
+
+
     }
 
     onChange(tab, idx){
@@ -81,6 +91,7 @@ class Join extends React.Component {
     }
 
     onClickNext(params){
+        console.log("params", params);
         const type = service.getValue(values, 'requestType', {});
         const { current } = this.state;
         const next = (current + 1) > (Object.keys(type).length - 1) ? (Object.keys(type).length - 1) : current + 1;
@@ -101,6 +112,10 @@ class Join extends React.Component {
         return this.setState({
             current : prev,
         })
+    }
+
+    onTabClick(){
+        return;
     }
 
     onCloseModal(){
@@ -128,7 +143,7 @@ class Join extends React.Component {
     render() {
         const { current, visible, params } = this.state;
         const stepProps = {
-            userid : service.getValue(params, 'userid', ""),
+            data : params,
             onClickNext : this.onClickNext,
             onClickPrev : this.onClickPrev,
             onSubmit : this.onSubmit
@@ -164,6 +179,9 @@ class Join extends React.Component {
                                 tabBarBackgroundColor='transparent'
                                 tabBarTextStyle={{fontSize:'13px'}}
                                 tabBarUnderlineStyle={{display : 'none'}}
+                                destroyInactiveTab={true}
+                                prerenderingSiblingsNumber={0}
+                                onTabClick={this.onTabClick}
                             >
                                 <JoinStep01
                                     stepProps={stepProps}
@@ -196,4 +214,4 @@ class Join extends React.Component {
 
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Join);
+export default connect(null, mapDispatchToProps)(Join);

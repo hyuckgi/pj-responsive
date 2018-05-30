@@ -3,12 +3,12 @@ import { createForm } from 'rc-form';
 
 import { APICaller } from '../../commons/api';
 
-import { service, api, values } from '../../commons/configs';
+import { service, api } from '../../commons/configs';
 import { FormButton } from '../../commons/types';
 
-import { ButtonWrapper, SelectCountry } from '../../commons/components';
+import { ButtonWrapper } from '../../commons/components';
 
-import { List, InputItem, Radio, WhiteSpace, Toast, Flex, Badge } from 'antd-mobile';
+import { List, InputItem, WhiteSpace, Toast } from 'antd-mobile';
 
 class JoinStep02 extends React.Component {
 
@@ -19,6 +19,7 @@ class JoinStep02 extends React.Component {
         };
 
         this.errorToast = this.errorToast.bind(this);
+        this.matchPass = this.matchPass.bind(this);
     }
 
     makeToast(messages){
@@ -59,33 +60,13 @@ class JoinStep02 extends React.Component {
         const { stepProps, form } = this.props;
 
         form.validateFields((errors, value) => {
-
-            // if(value.birthday.trim().length !== 8){
-            //     return Toast.fail('생년월일을 8자리로 입력해주세요.', 1);
-            // }
-            // const isBetween = moment(value.birthday, values.format.DATE_FORMAT).isBetween(startDate, endDate);
-            // if(!isBetween){
-            //     Toast.fail('가입가능한 연령이 아닙니다.', 1);
-            //     form.resetFields('birthday');
-            //     return this.birthday.focus();
-            // }
-            //
-            // if(!errors){
-            //     let params = {...value, isMale};
-            //     this.setState({
-            //         defaultValue : params,
-            //     })
-            //     return stepProps.onClickNext(params);
-            // }
-            // return this.errorToast(errors);
+            
+            if(!errors){
+                return stepProps.onClickNext({passwd : value.passwd});
+            }
+            return this.errorToast(errors);
         });
     }
-    //
-    // onChange(value){
-    //     return this.setState({
-    //         isMale : value
-    //     });
-    // }
 
     onClickButton(id){
         switch (id) {
@@ -101,6 +82,15 @@ class JoinStep02 extends React.Component {
     checkPass(key, value){
         const { form } = this.props;
         const newValue = value.replace(/ /gi, "");
+        let txt;
+
+        switch (key) {
+            case 'passwd':
+                txt = '비밀번호';
+                break;
+            default:
+
+        }
 
         if(newValue.trim()){
             const obj = api.checkValidate(key, {[key] : newValue.trim()});
@@ -111,15 +101,45 @@ class JoinStep02 extends React.Component {
                         Toast.fail(data.resultMsg, 1);
                         form.resetFields(key);
                         return this[key].focus();
+                    }else{
+                        Toast.success(`사용가능한 ${txt}입니다.`, 1);
+                        return this.setState({
+                            [key] : true,
+                        })
                     }
                 });
+        }
+    }
+
+    matchPass(key, value){
+        const { form } = this.props;
+        const pass = form.getFieldValue('passwd');
+
+        if(!value){
+            return
+        }
+
+        if(value === pass){
+            return this.setState({
+                [key] : true,
+            })
+        }else{
+            Toast.fail('비밀번호가 일치하지 않습니다.', 1);
+            this.setState({
+                [key] : false,
+            });
+            form.resetFields(key);
+            return this[key].focus();
         }
     }
 
     onBlur(key, value){
         switch (key) {
             case 'passwd':
-                return this.checkPass(key, value);
+                this.checkPass(key, value);
+                break;
+            case 'confirmPasswd':
+                this.matchPass(key, value);
                 break;
             default:
         }
@@ -135,7 +155,7 @@ class JoinStep02 extends React.Component {
     render() {
         const { form, stepProps } = this.props;
         const { getFieldProps, getFieldError } = form;
-        const { isMale } = this.state;
+        const { passwd, confirmPasswd } = this.state;
 
         return (
             <div className="join-step-wrapper step-02">
@@ -144,7 +164,7 @@ class JoinStep02 extends React.Component {
 
                     <InputItem
                         disabled={true}
-                        value={service.getValue(stepProps, 'userid', "")}
+                        value={service.getValue(stepProps, 'data.userid', '')}
                     />
 
                     <WhiteSpace size="sm"/>
@@ -156,6 +176,7 @@ class JoinStep02 extends React.Component {
                         type="password"
                         ref={el => this.passwd = el}
                         placeholder="Password"
+                        className={passwd ? 'confirmation' : ''}
                         clear
                         onBlur={this.onBlur.bind(this, 'passwd')}
                         error={!!getFieldError('passwd')}
@@ -167,14 +188,16 @@ class JoinStep02 extends React.Component {
                     <WhiteSpace size="sm"/>
 
                     <InputItem
+                        {...getFieldProps('confirmPasswd', {
+                            rules: [{ required: true, message: '비밀번호를 재입력하세요!'}],
+                        })}
                         type="password"
                         ref={el => this.confirmPasswd = el}
                         placeholder="Confirm Password"
+                        className={confirmPasswd ? 'confirmation' : ''}
                         clear
                         onBlur={this.onBlur.bind(this, 'confirmPasswd')}
                     />
-
-                    <SelectCountry form={form} />
 
                     <WhiteSpace size="md"/>
                 </List>

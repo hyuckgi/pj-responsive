@@ -6,7 +6,7 @@ import { DesktopLayout, MobileLayout } from '../response';
 
 import { Carousel as WebCarousel } from 'antd';
 
-import { Carousel as MobileCarousel, WingBlank } from 'antd-mobile';
+import { Carousel as MobileCarousel } from 'antd-mobile';
 
 
 // {this.state.data.map(val => (

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { ItemList } from '../../commons/components/item';
 
-import { values, service } from '../../commons/configs';
+import { service } from '../../commons/configs';
 
 // const mapStateToProps = ({fetch}) => {
 //     return {

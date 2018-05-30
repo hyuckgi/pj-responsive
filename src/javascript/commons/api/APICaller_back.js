@@ -1,8 +1,4 @@
 import axios from 'axios';
-import Async from './Async';
-
-axios.defaults.xsrfHeaderName = 'X-CSRFToken';
-axios.defaults.withCredentials = false;
 
 const config = {
 	debug : false,
@@ -27,7 +23,8 @@ const getAPIHost = () => {
 
 const APIHost = getAPIHost();
 
-const simpleAxios = axios.create();
+axios.defaults.xsrfHeaderName = 'X-CSRFToken';
+axios.defaults.withCredentials = false;
 
 const getMakeURL = (url) => {
 	const prefix = url.indexOf('http') === 0 ? '' : APIHost;
@@ -120,7 +117,9 @@ const paramsToUnderscore = (params = {}) => {
     if(params instanceof FormData) {
         return params;
     }
-    return convertObject(params, makeMapper(params, isCamelcase), isCamelcase);
+    const test =  convertObject(params, makeMapper(params, isCamelcase), isCamelcase);
+	console.log('test', test);
+	return ;
 };
 
 const jsonToParams = (obj = {}) => {
@@ -130,92 +129,24 @@ const jsonToParams = (obj = {}) => {
     }, '');
 }
 
-class APIMonitor {
-	static initialize() {
-		this._errorTime = null;
-		this._isLive = true;
-
-		this.timerGate();
-	}
-
-	static timerGate() {
-		if (this.instanceTimer) {
-			clearTimeout(this.instanceTimer);
-			this.instanceTimer = undefined;
-		}
-		this.instanceTimer = setTimeout(() => {
-			this.instanceTimer = undefined;
-			APIMonitor.timerHealthCheck();
-		}, config.healthCheckTime);
-	}
-	static timerHealthCheck() {
-		if (config.caching === true) {
-			const fullUrl = getMakeURL('/health.txt');
-			axios.get(fullUrl)
-				.then((response) => {
-					this._isLive = true;
-					return true;
-				})
-				.catch((e) => {
-					if (e.message === 'Network error') {
-						this._isLive = false;
-						this.networkError();
-					}
-					return false;
-				})
-				.then((result) => {
-					this.timerGate();
-				});
-		}
-	}
-	static networkError() {
-		this._errorTime = Date.now();
-		this._isLive = false;
-	}
-
-	static get isLive() {
-		return this._isLive;
-	}
-
-	static defaults = {
-		set healthCheckTime(value) {config.healthCheckTime = value;}
-	}
-}
-
 class APICaller {
-	static post(url, params = {}, options = {}, isPlainAxios = false, notToConvert = false) {
+	static post(url, params = {}, options = {}) {
 		const fullUrl = getMakeURL(url);
-		const instance = isPlainAxios ? simpleAxios : axios;
-
-        return instance.post(fullUrl, notToConvert ? params : paramsToUnderscore(params), options).then(docsToCamelCase);
+		return axios.post(fullUrl, paramsToUnderscore(params), options).then(docsToCamelCase);
 	}
-	static get(url, params = null,  isPlainAxios = false) {
+	static get(url, params = null,  isNoWarning = false) {
 		const fullUrl = getMakeURL(url);
+
 		const str = jsonToParams(paramsToUnderscore(params));
-		const instance = isPlainAxios ? simpleAxios : axios;
-		return instance.get(fullUrl + (str === '' ? '' : '?') + str)
+		if(isNoWarning){
+			const instance = axios.create();
+			return instance.get(fullUrl + (str === '' ? '' : '?') + str)
+		}
+		return axios.get(fullUrl + (str === '' ? '' : '?') + str)
 			.then((response)=> {
 				return response;
 			})
 			.then(docs => docsToCamelCase(docs, params));
-	}
-	static getCache(url) {
-		return Async(function* (url) {
-			let result;
-			const cacheData = sessionStorage.getItem(url);
-			if (cacheData) {
-				result = JSON.parse(cacheData);
-				if (Date.now() - result.time > (60 * 60 * 1000) ) {
-					result = undefined;
-				}
-			}
-			if (!result) {
-				result = yield APICaller.get(url);
-				result.time = Date.now();
-				sessionStorage.setItem(url, JSON.stringify(result));
-			}
-			return result;
-		}, url);
 	}
 	static all(list) {
 		return axios.all(list)
@@ -223,36 +154,7 @@ class APICaller {
 			    return {...response};
 		    }));
 	}
-	static defaults = {
-		set debug(value) { config.debug = value; },
-		get debug() { return config.debug },
 
-		set caching(value) {
-			if (config.offlineMode === false) {
-				config.caching = value;
-			} else {
-				config.caching = true;
-			}
-			if (config.caching === true) {
-				APIMonitor.initialize();
-			}
-		},
-		get caching() { return config.caching; },
-
-		set offlineMode(value) {
-			config.offlineMode = value;
-			if (value === true) {
-				this.defaults.caching = true;
-			}
-		},
-		get offlineMode() { return config.offlineMode; },
-
-		set timeout(value) { axios.defaults.timeout = value; },
-		get timeout() { return axios.defaults.timeout; },
-
-		set hostName(value) { config.hostName = value;},
-		get hostName() { return APIHost}
-    };
     static upload(file) {
         const options = {headers: getCSRFToken(), 'content-type': 'multipart/form-data', withCredentials: true}
 
@@ -262,38 +164,6 @@ class APICaller {
 
         return APICaller.post('/aux/files/', formData, options);
     }
-}
-
-// if (process.env.NODE_ENV !== 'production') {
-if (true) {
-	axios.interceptors.request.use(
-		(req) => {
-			if (config.debug === true) {
-				console.log('%c Request:', 'color: #4CAF50; font-weight: bold', req);
-			}
-			return req;
-		},
-		(err) => {
-			if (config.debug === true) {
-				console.log('%c Request:', 'color: #EC6060; font-weight: bold', err);
-			}
-			return Promise.reject(err);
-		}
-	);
-	axios.interceptors.response.use(
-		(res) => {
-			if (config.debug === true) {
-				console.log('%c Response:', 'color: #3d62e5; font-weight: bold', res);
-			}
-			return res;
-		},
-		(err) => {
-			if (config.debug === true) {
-				console.log('%c Response:', 'color: #EC6060; font-weight: bold', err);
-			}
-			return Promise.reject(err);
-		}
-	);
 }
 
 const getCSRFToken = () => {
@@ -320,4 +190,4 @@ const upload = {
 };
 
 export default APICaller
-export {APIMonitor, APICaller, APIHost, axios, upload}
+export {APICaller, APIHost, axios, upload}

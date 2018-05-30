@@ -1,13 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { Layout, BackTop, Icon, notification } from 'antd';
+import { Layout, notification } from 'antd';
 import { StickyContainer } from 'react-sticky';
 
 import { Spinner, WrapperContainer } from './layout';
 import { HeaderContainer } from './layout/web';
-
-
 
 notification.config({placement: 'topRight'});
 
@@ -33,7 +31,7 @@ class Web extends React.Component {
                         <HeaderContainer {...this.props}/>
 
                         <Content className="section">
-                            
+
                             <WrapperContainer />
                         </Content>
                     </Layout>

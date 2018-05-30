@@ -56,7 +56,7 @@ class ItemList extends React.Component {
     }
 
     renderCard(){
-        const { mark, count } = this.props;
+        const { count } = this.props;
         const { list } = this.state;
 
         if(list.length){

@@ -7,7 +7,6 @@ import { layout as action } from '../../../redux/actions';
 import { service } from '../../../commons/configs';
 
 const SubMenu = Menu.SubMenu;
-const MenuItemGroup = Menu.ItemGroup;
 
 const mapStateToProps = ({ layout, router, security}) => {
     const allMenu = Object.keys(layout).reduce((result, item) => {

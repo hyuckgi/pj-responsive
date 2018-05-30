@@ -2,10 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
-import { DesktopLayout, MobileLayout } from '../response';
-
-import { Card as WebCard, Col } from 'antd';
-import { Card as MobileCard, WingBlank, WhiteSpace } from 'antd-mobile';
+import { Card as WebCard } from 'antd';
+import { Card as MobileCard, WhiteSpace } from 'antd-mobile';
 
 
 import { values, service } from '../../configs';
@@ -23,12 +21,6 @@ const mapDispatchProps = dispatch => ({
 });
 
 class Item extends React.Component {
-
-    constructor(props) {
-        super(props);
-
-        // this.onClick = this.onClick.bind(this);
-    }
 
     onClick(item, e){
         e.preventDefault();

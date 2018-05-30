@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { StickyContainer } from 'react-sticky';
 
 import { DesktopLayout, MobileLayout } from './commons/components/response';
 

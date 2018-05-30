@@ -2,15 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { createForm } from 'rc-form';
 
-
 import { APICaller } from '../../api';
-import { values, api, service } from '../../configs';
+import { api, service } from '../../configs';
+
 import { Accordion, List, Checkbox, Button, Badge } from 'antd-mobile';
 
 const CheckboxItem = Checkbox.CheckboxItem;
 
 const mapStateToProps = ({fetch}) => {
-
     return {
 
     }
@@ -43,7 +42,7 @@ class Agreement extends React.Component {
     getTerms(){
         APICaller.get(api.getTerms(), {})
         .then(({data}) => {
-            const { agreementValue } = values;
+
             const list = service.getValue(data, 'list', []);
             const codes = list.map(item => item.code).reduce((result, item) => {
                 const key = `terms_${item}`;
@@ -83,7 +82,6 @@ class Agreement extends React.Component {
 
     onChangeAllTerms(e){
         const { form } = this.props;
-        const { terms } = this.state;
 
         if(e.target.checked){
             const checked = this.getAllTerms(true);
@@ -114,7 +112,6 @@ class Agreement extends React.Component {
 
     render() {
         const { form } = this.props;
-        const { getFieldProps, getFieldError } = form;
         const { list, terms } = this.state;
         const allTerms = Object.keys(terms).length > 0 && Object.keys(terms).some(item => !terms[item]);
 

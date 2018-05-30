@@ -217,11 +217,11 @@
                 }
                 input{
                     -webkit-opacity:1 !important;
-                    -webkit-text-fill-color:#bbbbbb;
+                    -webkit-text-fill-color: #00bbd4;
 
-                    color:#bbb;
-                    background-color:#dfdfdf;
-                    border:1px solid #ccc;
+                    color: #00bbd4;
+                    background-color:#eafbfd;
+                    border:1px solid #00bbd4;
                 }
             }
         }
@@ -309,5 +309,29 @@ html:not([data-scale]) .wink-mobile-wrap .am-button{
 #root{
     .ant-layout{
         background:#fff;
+    }
+
+    .app-container{
+        .Select{
+            .Select-control{
+                border:1px solid #dadada;
+                height:32px;
+
+                .Select-placeholder{
+                    text-align:left;
+                }
+
+                .Select-input{
+                    height:30px;
+                }
+
+                & ~ .Select-menu-outer{
+                    z-index:1000;
+                }
+                .Select-value{
+                    text-align:left;
+                }
+            }
+        }
     }
 }

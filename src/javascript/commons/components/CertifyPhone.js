@@ -246,7 +246,7 @@ class CertifyPhone extends React.Component {
         const { form, duration, humanName, actor, mode, onShop } = this.props;
         const { getFieldProps, getFieldError } = form;
         const readonly = mode === FormMode.READ ? true : (onShop ? true : false);
-        const mdn = service.getValue(actor, 'authHumanMdn', null) && service.getValue(actor, 'authHumanMdn', null).replace(/\-/g,'');
+        const mdn = service.getValue(actor, 'authHumanMdn', null) && service.getValue(actor, 'authHumanMdn', null).replace(/-/g,'');
 
         return (
             <List className="certify-phone-wrapper">

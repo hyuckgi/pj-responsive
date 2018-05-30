@@ -6,18 +6,14 @@ import { createForm } from 'rc-form';
 
 import {security as action} from '../../redux/actions';
 
-import { api, service } from '../../commons/configs';
+import { service } from '../../commons/configs';
 
-import { Flex, WhiteSpace, InputItem, Button, Tabs, Checkbox, List, WingBlank } from 'antd-mobile';
+import { Flex, WhiteSpace, InputItem, Button, Checkbox, List, WingBlank } from 'antd-mobile';
 
 const CheckboxItem = Checkbox.CheckboxItem;
 
 const localStorage = window.localStorage;
 
-const tabs = [
-    { title: '아이디 로그인' },
-    // { title: '휴대폰번호 로그인' },
-];
 
 const mapDispatchToProps = (dispatch) => {
     return {
