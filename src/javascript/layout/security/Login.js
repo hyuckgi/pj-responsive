@@ -1,24 +1,18 @@
 import React from 'react';
-import logo from '../../../resource/commons/logo.png';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import { createForm } from 'rc-form';
 
 import {security as action} from '../../redux/actions';
 
-import { service } from '../../commons/configs';
+import { Flex, WhiteSpace, InputItem, Button, List, WingBlank, Toast} from 'antd-mobile';
 
-import { Flex, WhiteSpace, InputItem, Button, Checkbox, List, WingBlank } from 'antd-mobile';
-
-const CheckboxItem = Checkbox.CheckboxItem;
-
-const localStorage = window.localStorage;
-
+import logo from '../../../resource/commons/logo.png';
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        login: ({username, password}) => {
-            return dispatch(action.login({username, password}));
+        login: (params) => {
+            return dispatch(action.login(params));
         },
         fail: () => {
             return dispatch(action.loginFail());
@@ -29,76 +23,72 @@ const mapDispatchToProps = (dispatch) => {
 
 class Login extends React.Component {
 
-    state = {
-
-    }
-
     constructor(props){
         super(props);
+        this.state = {
 
+        };
+
+        this.errorToast = this.errorToast.bind(this);
+        this.makeToast = this.makeToast.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
-        this.showModal = this.showModal.bind(this);
-    }
-
-    componentDidMount() {
-        const adminMobile = JSON.parse(localStorage.getItem("adminMobile"));
-        if(service.getValue(adminMobile, 'autoLogin')) {
-            this.login(adminMobile);
-        }
     }
 
     login(params) {
-        this.props.login(params)
-            .then(docs => {
-                console.log(params);
-                if(service.getValue(params, 'autoLogin')) {
-                    localStorage.removeItem("adminMobile");
-                    localStorage.setItem("adminMobile", JSON.stringify(params));
-                }
-                this.props.moveHome('/');
-            })
-            .catch(err => {
-                //TODO : 로그인 실패 메시지 출력
-                console.log('error message =========== ', err);
-                localStorage.removeItem("adminMobile");
+        console.log("params", params);
 
-                this.props.form.resetFields();
-                this.props.fail();
-
-                this.showModal();
+        return this.props.login(params)
+            .then((...args) => {
+                console.log("args", args);
             });
     }
 
-    onSubmit(event) {
-        event.preventDefault();
-        this.props.form.validateFields((err, values) => {
-            if (err) {
-                this.setState({
-                    usernameError: err.username ? true : false,
-                    passwordError: err.password ? true : false,
-                });
-                console.log(err);
-                return;
+    makeToast(messages){
+        const duration = messages.length;
+        return Toast.fail(
+            (<div>
+                {messages.map((message, idx) => {
+                    return (<p key={idx}>{message}</p>)
+                })}
+            </div>)
+            , duration
+        );
+    }
+
+    errorToast(errors = null){
+        const { getFieldError } = this.props.form;
+        if(!errors){
+            return;
+        }
+
+        const messages = Object.keys(errors)
+            .map(item => {
+                return getFieldError(item);
+            })
+            .reduce((result, item, idx) => {
+                return result.concat(item);
+            }, []);
+
+        return this.makeToast(messages);
+    }
+
+    onSubmit(e) {
+        e.preventDefault();
+        const { form } = this.props;
+
+        form.validateFields((errors, values) => {
+            if(!errors){
+                return this.login(values);
             }
-            this.login(values);
+
+            return this.errorToast(errors);
         });
     }
 
-    onRequestCertificationNumber() {
-        console.log('onRequestCertificationNumber');
-    }
-
-    showModal(){
-        alert('일치하는 아이디, 패스워드가 없습니다.');
-
-        this.setState({
-            usernameError: false,
-            passwordError: false
-        });
-    }
     render() {
-        const { getFieldProps } = this.props.form;
-        const {usernameError, passwordError} = this.state;
+        const { form } = this.props;
+        const { getFieldProps } = form;
+
         return (
             <WingBlank className="login-container">
                 <Flex justify="start" direction="column" wrap="nowrap" className="login-wrapper" align="center">
@@ -106,30 +96,25 @@ class Login extends React.Component {
                         <Flex.Item>
                             <img src={logo} alt="logo" className="logo"/>
                         </Flex.Item>
-                        <WhiteSpace size="xl"/>
                         <Flex.Item>
+                            <WhiteSpace size="lg"/>
                             <List>
                                 <InputItem
-                                    {...getFieldProps('username', {
+                                    {...getFieldProps('userid', {
                                         rules: [{ required: true, message: '아이디를 입력하세요!'}]
                                     })}
-                                    placeholder="아이디"
-                                    error={usernameError}
-                                >아이디</InputItem>
+                                    placeholder="UserID"
+                                />
                                 <InputItem
-                                    {...getFieldProps('password', {
+                                    {...getFieldProps('passwd', {
                                         rules: [{ required: true, message: '비밀번호를 입력하세요!'}]
                                     })}
                                     type="password"
-                                    placeholder="비밀번호"
-                                    error={passwordError}
-                                >비밀번호</InputItem>
-                                <CheckboxItem {...getFieldProps('autoLogin')}>
-                                    자동로그인
-                                </CheckboxItem>
+                                    placeholder="Password"
+                                />
                             </List>
-                            <WhiteSpace  size="xl"/>
-                            <Button type="primary" onClick={this.onSubmit.bind(this)} >로그인</Button>
+                            <WhiteSpace size="lg"/>
+                            <Button type="primary" onClick={this.onSubmit} >로그인</Button>
                         </Flex.Item>
                     </Flex>
                 </Flex>

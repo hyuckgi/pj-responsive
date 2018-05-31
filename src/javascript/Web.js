@@ -24,8 +24,10 @@ const mapDispatchProps = dispatch => ({
 class Web extends React.Component {
 
     render() {
+        const { spinning } = this.props;
+
         return (
-            <Spinner spinning={this.props.spinning} tip={'Loading...'} >
+            <Spinner spinning={spinning} tip={'Loading...'} >
                 <StickyContainer>
                     <Layout className="web-container">
                         <HeaderContainer {...this.props}/>

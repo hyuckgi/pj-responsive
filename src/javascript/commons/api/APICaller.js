@@ -115,7 +115,6 @@ const docsToCamelCase = (docs, params = {}) => {
 };
 
 const paramsToUnderscore = (params = {}) => {
-    let mapper;
     const isCamelcase = false;
     if(params instanceof FormData) {
         return params;

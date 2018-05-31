@@ -1,4 +1,5 @@
 export const path = {
+    baseName : '/html',
     home : '/',
     main : '/main',
 

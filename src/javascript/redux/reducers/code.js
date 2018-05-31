@@ -44,28 +44,28 @@ const getTag = (list) => {
         }, {});
 };
 
-const getWorkType = (list) => {
-    return list.filter(item => item.id < 0 || (item.name && item.data && Array.isArray(item.data.routes)))
-        .map(item => ({
-            id: item.id,
-            name: item.name,
-            routes: item.data ? item.data.routes : []
-        }))
-        .reduce((obj, item) => {
-            obj[item.id] = item;
-            return obj;
-        }, {});
-};
-
-const getSubject = (code) => {
-    return {
-        'K_M_E': code['K_M_E'].id,
-        'K_M': code['K_M'].id,
-        'E': code['E'].id,
-        'E_P': code['E_P'].id,
-        'E_S': code['E_S'].id,
-    }
-};
+// const getWorkType = (list) => {
+//     return list.filter(item => item.id < 0 || (item.name && item.data && Array.isArray(item.data.routes)))
+//         .map(item => ({
+//             id: item.id,
+//             name: item.name,
+//             routes: item.data ? item.data.routes : []
+//         }))
+//         .reduce((obj, item) => {
+//             obj[item.id] = item;
+//             return obj;
+//         }, {});
+// };
+//
+// const getSubject = (code) => {
+//     return {
+//         'K_M_E': code['K_M_E'].id,
+//         'K_M': code['K_M'].id,
+//         'E': code['E'].id,
+//         'E_P': code['E_P'].id,
+//         'E_S': code['E_S'].id,
+//     }
+// };
 
 export const code = (state = initialState, action) => {
     switch(action.type)	 {
@@ -87,9 +87,7 @@ export const code = (state = initialState, action) => {
         case type.CODE:
             return {
                 ...state,
-                tag: getTag(action.payload.code.tag),
-                workType: getWorkType(action.payload.code.workType),
-                subject: getSubject(action.payload.code),
+                ...action.payload.code
             };
         default:
             return state;

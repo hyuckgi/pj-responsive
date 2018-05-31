@@ -1,6 +1,6 @@
 export const api = {
 
-    // 회원가입
+    // join
     join : (params = null) => ({
         url : `member/join/submit`,
         params : {...params}
@@ -10,6 +10,9 @@ export const api = {
         params : {...params}
     }),
     getTerms : () => `member/terms`,
+
+    // category
+
 
 
 

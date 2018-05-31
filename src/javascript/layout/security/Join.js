@@ -6,7 +6,7 @@ import { APICaller } from '../../commons/api';
 
 import { service, values, path, api } from '../../commons/configs';
 
-import { Tabs, Flex, Steps, WingBlank, Modal, WhiteSpace } from 'antd-mobile';
+import { Tabs, Flex, Steps, WingBlank, Modal, WhiteSpace, Toast } from 'antd-mobile';
 
 import { JoinStep01, JoinStep02, JoinStep03 } from './';
 
@@ -15,7 +15,6 @@ const Step = Steps.Step;
 
 
 const mapDispatchToProps = (dispatch) => ({
-
     moveHome: () => dispatch(push('/')),
 });
 
@@ -54,36 +53,20 @@ class Join extends React.Component {
     }
 
     onSubmit(data){
-        const { params } = this.state
-
+        const { params } = this.state;
         const obj = api.join({...data, ...params});
 
-        console.log('obj', obj);
-
         APICaller.post(obj.url, obj.params)
-        .then((...args) => {
-            console.log("args", args);
+        .then(({data}) => {
+            if(data.resultCode === 200){
+                return Toast.success(`회원가입을 축하합니다.`, 2, this.props.moveHome());
+            }
         })
-        // const postData = {}
-        //
-        // if(!service.getValue(params, 'userid', false)){
-        //     console.log("다시 진행하세요.");
-        //     return;
-        // }
-        // postData['userid'] = params.userid;
-        // postData['passwd'] = params.passwd;
-        // postData['username'] = data.username;
-        // postData['nickname'] = data.nickname;
-        // postData['cellphone'] = data.cellphone;
-        // postData['email'] = data.cellphone;
-        //
-        // const obj = api.join({
-        //
-        // })
-
-
-
-
+        .catch((err) => {
+            if(err){
+                return Toast.fail(`회원가입에 실패했습니다. 다시 진행해 주세요`, 2, window.location.reload());
+            }
+        })
     }
 
     onChange(tab, idx){
@@ -91,7 +74,6 @@ class Join extends React.Component {
     }
 
     onClickNext(params){
-        console.log("params", params);
         const type = service.getValue(values, 'requestType', {});
         const { current } = this.state;
         const next = (current + 1) > (Object.keys(type).length - 1) ? (Object.keys(type).length - 1) : current + 1;

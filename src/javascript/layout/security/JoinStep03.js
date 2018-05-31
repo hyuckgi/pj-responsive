@@ -62,7 +62,9 @@ class JoinStep03 extends React.Component {
                 const { nickname, email, cellphone, country, username } = value;
                 return stepProps.onSubmit({
                     cellphone : cellphone.replace(/ /gi, ""),
-                    country_code : country.value,
+                    // TODO 서버 오탈자
+                    // country_code : country.value,
+                    contry_code : country.value,
                     email : email,
                     nickname : nickname,
                     username : username,

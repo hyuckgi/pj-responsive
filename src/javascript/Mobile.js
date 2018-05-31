@@ -40,6 +40,7 @@ class Mobile extends React.Component {
     }
 
     render() {
+        const { spinning } = this.props;
         return (
             <Gesture
                 direction='all'
@@ -57,7 +58,7 @@ class Mobile extends React.Component {
                     <Spinner
                         toast={true}
                         tip="Loading..."
-                        spinning={this.props.spinning}
+                        spinning={spinning}
                     />
                 </div>
             </Gesture>

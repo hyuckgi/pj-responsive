@@ -3,16 +3,16 @@
 const autoprefixer = require('autoprefixer');
 const path = require('path');
 const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const ManifestPlugin = require('webpack-manifest-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
+const ManifestPlugin = require('webpack-manifest-plugin');
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
-const paths = require('./paths');
 const getClientEnvironment = require('./env');
-const pxtorem = require('postcss-pxtorem');
+const paths = require('./paths');
 const theme = require('../package.json').theme;
 
 // Webpack uses `publicPath` to determine where the app is being served from.
@@ -39,7 +39,7 @@ if (env.stringified['process.env'].NODE_ENV !== '"production"') {
 // Note: defined here because it will be used more than once.
 const cssFilename = 'static/css/[name].[contenthash:8].css';
 
-const postcssOpts = {
+const postCssOpts = {
   ident: 'postcss', // https://webpack.js.org/guides/migrating/#complex-options
 
   plugins: () => [
@@ -178,7 +178,7 @@ module.exports = {
                       ["transform-runtime", { polyfill: false }],
                       ['import', babelImportOptions],
                   ],
-                  compact: true,
+                compact: true,
             },
           },
           {
@@ -267,17 +267,17 @@ module.exports = {
           // When you `import` an asset, you get its filename.
           // This loader doesn't use a "test" so it will catch all modules
           // that fall through the other loaders.
-          {
-            loader: require.resolve('file-loader'),
-            // Exclude `js` files to keep "css" loader working as it injects
-            // it's runtime that would otherwise processed through "file" loader.
-            // Also exclude `html` and `json` extensions so they get processed
-            // by webpacks internal loaders.
-            exclude: [/\.(js|jsx|mjs)$/, /\.html$/, /\.json$/],
-            options: {
-              name: 'static/media/[name].[hash:8].[ext]',
-            },
-          },
+          // {
+          //   loader: require.resolve('file-loader'),
+          //   // Exclude `js` files to keep "css" loader working as it injects
+          //   // it's runtime that would otherwise processed through "file" loader.
+          //   // Also exclude `html` and `json` extensions so they get processed
+          //   // by webpacks internal loaders.
+          //   exclude: [/\.(js|jsx|mjs)$/, /\.html$/, /\.json$/],
+          //   options: {
+          //     name: 'static/media/[name].[hash:8].[ext]',
+          //   },
+          // },
           // ** STOP ** Are you adding a new loader?
           // Make sure to add the new loader(s) before the "file" loader.
         ],

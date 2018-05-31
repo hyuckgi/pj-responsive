@@ -68,15 +68,15 @@ export const agreementValue = [
 export const countries = [
     {
         label : '대한민국',
-        value : 'KR'
+        value : 'EN'
     },
     {
         label : '미국',
-        value : 'US'
+        value : 'EN'
     },
     {
         label : '일본',
-        value : 'JP'
+        value : 'EN'
     },
 
 ];

@@ -29,7 +29,7 @@ import App from './App';
 
 import { LocaleProvider as LocaleProviderMobile } from 'antd-mobile';
 
-const history = createBrowserHistory({forceRefresh: true});
+const history = createBrowserHistory({basename: path.baseName});
 
 const middleware = routerMiddleware(history);
 const loggerMiddleware = createLogger({
