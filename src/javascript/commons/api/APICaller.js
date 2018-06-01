@@ -17,11 +17,11 @@ const getAPIHost = () => {
 		if (config.hostName) {
 			return config.hostName;
 		}
-		return 'http://api.shell.pe.kr/api/';
+		return 'http://api.shell.pe.kr';
 	} else if (process.env.NODE_ENV === 'test') {
 		return '';
 	} else {
-		return '';
+		return 'http://api.shell.pe.kr';
 	}
 };
 
@@ -69,11 +69,7 @@ const convertObject = (item, mapper, isCamelcase = true) => {
     }
     return mapper.keys.reduce((obj, key) => {
         const newKey = mapper.mappingObj[key];
-        // Worst case, LCMS 미디어 정보 관련
-        if(!isCamelcase) {
-        	obj[key] = item[key];
-        	return obj;
-		}
+
         if(item[key]) {
             if(Array.isArray(item[key])) {
                 item[key] = convertList(item[key], null, isCamelcase);
@@ -309,9 +305,11 @@ const getCSRFToken = () => {
 
 const upload = {
     getProps : (fileList) => ({
-        action: `${APIHost}/aux/files/`,
+        action: `${APIHost}/api/files/upload`,
         headers: getCSRFToken(),
-        data: {model_type: 3},
+        data: {
+			model_type: 3
+		},
         withCredentials: true,
         defaultFileList : [...fileList]
     }),

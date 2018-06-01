@@ -58,13 +58,19 @@ class JoinStep03 extends React.Component {
 
         form.validateFields((errors, value) => {
 
+            const { nickname, email, cellphone, country, username } = value;
+
+            if(!country){
+                return;
+            }
+
             if(!errors){
-                const { nickname, email, cellphone, country, username } = value;
+
                 return stepProps.onSubmit({
                     cellphone : cellphone.replace(/ /gi, ""),
                     // TODO 서버 오탈자
-                    // country_code : country.value,
-                    contry_code : country.value,
+                    // countryCode : country.value,
+                    contryCode : country.value,
                     email : email,
                     nickname : nickname,
                     username : username,

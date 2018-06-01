@@ -1,5 +1,5 @@
 export const api = {
-    login : () => ('member/login/submit'),
+    login : () => ('/api/member/login/submit'),
 };
 
 export default api;

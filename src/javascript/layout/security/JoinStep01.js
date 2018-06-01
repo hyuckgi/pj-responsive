@@ -60,7 +60,7 @@ class JoinStep01 extends React.Component {
             const termsCodes = Object.keys(terms).filter(item => terms[item] === true);
 
             if(!errors){
-                return stepProps.onClickNext({userid : value.userid, terms_codes : termsCodes});
+                return stepProps.onClickNext({userid : value.userid, termsCodes});
             }
 
             return this.errorToast(errors);

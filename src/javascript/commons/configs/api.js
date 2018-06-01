@@ -2,14 +2,14 @@ export const api = {
 
     // join
     join : (params = null) => ({
-        url : `member/join/submit`,
+        url : `/api/member/join/submit`,
         params : {...params}
     }),
     checkValidate : (key, params) => ({
-        url : `member/validate/${key}`,
+        url : `/api/member/validate/${key}`,
         params : {...params}
     }),
-    getTerms : () => `member/terms`,
+    getTerms : () => `/api/member/terms`,
 
     // category
 

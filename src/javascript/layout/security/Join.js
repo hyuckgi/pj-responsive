@@ -58,15 +58,16 @@ class Join extends React.Component {
 
         APICaller.post(obj.url, obj.params)
         .then(({data}) => {
+            console.log("data", data);
             if(data.resultCode === 200){
                 return Toast.success(`회원가입을 축하합니다.`, 2, this.props.moveHome());
             }
         })
-        .catch((err) => {
-            if(err){
-                return Toast.fail(`회원가입에 실패했습니다. 다시 진행해 주세요`, 2, window.location.reload());
-            }
-        })
+        // .catch((err) => {
+        //     if(err){
+        //         return Toast.fail(`회원가입에 실패했습니다. 다시 진행해 주세요`, 2, window.location.reload());
+        //     }
+        // })
     }
 
     onChange(tab, idx){
