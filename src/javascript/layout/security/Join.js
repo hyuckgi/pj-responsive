@@ -40,14 +40,21 @@ class Join extends React.Component {
     getSteps(){
         const { current } = this.state;
         const type = service.getValue(values, 'requestType', {});
-        return Object.keys(type)
-            .map((item, idx) => (<Step className={current === idx ? 'active' : 'inactive'} key={idx} title={type[item].label} />));
+        return Object.keys(type).map((item, inx) => {
+            return (
+                <Step
+                    className={current === inx ? 'active' : 'inactive'}
+                    key={inx}
+                    title={type[item].label}
+                />
+            );
+        });
     }
 
     getTabs(){
         const type = service.getValue(values, 'requestType', {});
         return Object.keys(type)
-            .map((item, idx) => {
+            .map((item, inx) => {
                 return {title : ''}
             })
     }

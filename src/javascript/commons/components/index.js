@@ -8,6 +8,7 @@ import CertifyPhone from './CertifyPhone';
 import { ButtonWrapper, CertifyButton } from './buttons';
 import { Agreement } from './agree';
 import { SelectCountry } from './country';
+import { CustomPicker } from './picker';
 // import { Address } from './address'
 
 export{
@@ -24,4 +25,5 @@ export{
     Agreement,
     CertifyButton,
     SelectCountry,
+    CustomPicker
 }

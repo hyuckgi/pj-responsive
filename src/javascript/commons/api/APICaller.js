@@ -304,14 +304,13 @@ const getCSRFToken = () => {
 };
 
 const upload = {
-    getProps : (fileList) => ({
+    getProps : (fileList, type) => ({
         action: `${APIHost}/api/files/upload`,
         headers: getCSRFToken(),
         data: {
-			model_type: 3
+			type : type,
 		},
-        withCredentials: true,
-        defaultFileList : [...fileList]
+        withCredentials: true
     }),
     convertObject
 };

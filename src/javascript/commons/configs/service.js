@@ -59,7 +59,21 @@ export const service = {
         const hh = ('00' + (time % 60)).substr(-2);
 
         return {hh, mm, ss, ms};
-    }
+    },
+
+    mappingKey : (list) => {
+        if(Array.isArray(list)){
+            return list.map((item, inx) => {
+                item['key'] = inx;
+                if(item.list){
+                    const newList = service.mappingKey(item.list);
+                    console.log("newList", newList);
+                    item.list = newList;
+                }
+                return item;
+            })
+        }
+    },
 };
 export default {
     service

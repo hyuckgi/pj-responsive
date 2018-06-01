@@ -1,4 +1,4 @@
-export const format = {
+const format = {
     FULL_DATETIME_FORMAT: 'YYYY-MM-DD HH:mm:ss',
     DATETIME_FORMAT: 'YYYY-MM-DD HH:mm',
     DATE_FORMAT: 'YYYY-MM-DD',
@@ -7,12 +7,12 @@ export const format = {
     DAY_FORMAT: 'ddd',
 };
 
-export const platform = {
+const platform = {
     MOBILE : 'mobile',
     PC : 'desktop',
 }
 
-export const mock = {
+const mock = {
     stories : Array(50).fill('').map((item, inx) => {
         if(inx % 2 === 0){
             return{
@@ -48,7 +48,7 @@ export const mock = {
     }),
 }
 
-export const requestType = {
+const requestType = {
     'FIRST' : {
         label: '약관동의', step: 1,
     },
@@ -60,12 +60,12 @@ export const requestType = {
     },
 };
 
-export const agreementValue = [
+const agreementValue = [
     { value: true, label: '이용약관', url : 'http://www.naver.com', name : 'usedAgreement' },
     { value: true, label: '개인정보보호', url : 'http://www.daum.net', name : 'privateAgreement'},
 ];
 
-export const countries = [
+const countries = [
     {
         label : '대한민국',
         value : 'EN'
@@ -78,14 +78,30 @@ export const countries = [
         label : '일본',
         value : 'EN'
     },
-
 ];
+const propose = {
+    steps : [
+        {
+            id : 1,
+            label : '1단계',
+        },
+        {
+            id : 2,
+            label : '2단계',
+        },
+        {
+            id : 3,
+            label : '3단계',
+        }
+    ],
+}
 
 
-export default {
+export {
     format,
     mock,
     platform,
     requestType,
-    countries
+    countries,
+    propose
 };

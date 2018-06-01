@@ -19,13 +19,14 @@ const getValues = (item) => {
             return result;
         }, {});
 };
-const getOptions = (target) => {
-    if(!Array.isArray(target.members)) {
+
+const getOptions = (target, key) => {
+    if(!Array.isArray(target.list)) {
         return null;
     }
-    return target.members.map(item => {
-        let result = {value: item.id + '', label: item.name};
-        let children = getOptions(item);
+    return target.list.map(item => {
+        let result = {value: item[`${key}No`], label: item[`${key}Name`], ...item};
+        let children = getOptions(item, key);
         if(children) {
             result.children = children;
         }
@@ -87,7 +88,7 @@ export const code = (state = initialState, action) => {
         case type.CODE:
             return {
                 ...state,
-                ...action.payload.code
+                categories : getOptions(action.payload.code.categories, 'category')
             };
         default:
             return state;

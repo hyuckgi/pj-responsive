@@ -2,7 +2,7 @@ import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
 import { path } from '../commons/configs';
-import { StoryListContainer } from '../story';
+import { StoryListContainer, ProposeContainer } from '../story';
 
 class Story extends React.Component {
 
@@ -13,6 +13,7 @@ class Story extends React.Component {
                     return <Redirect to={path.list(path.storyList)} />
                 }}/>
                 <Route path={path.list(path.storyList)} component={StoryListContainer} />
+                <Route path={path.propose} component={ProposeContainer} />
             </Switch>
         );
     }

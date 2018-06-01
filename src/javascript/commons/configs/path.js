@@ -8,6 +8,7 @@ export const path = {
     progress : '/story/list/progress',
     complete : '/story/list/complete',
     drop : '/story/list/drop',
+    propose : '/story/propose',
 
     // List
     list : (list) => (`${list}/:type`),
