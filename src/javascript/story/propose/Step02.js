@@ -30,6 +30,7 @@ const formItemLayout = {
 	}
 };
 
+
 const mapStateToProps = ({fetch, code}) => {
     const categories = service.getValue(code, 'categories', [])
 
@@ -42,7 +43,7 @@ const mapDispatchProps = dispatch => ({
     multipleList: (list) => dispatch(fetch.multipleList(list)),
 });
 
-class Step01 extends React.Component {
+class Step02 extends React.Component {
 
     constructor(props) {
         super(props);
@@ -57,8 +58,16 @@ class Step01 extends React.Component {
         stepProps.onClickNext();
     }
 
+    onClickPrev(){
+        const { stepProps } = this.props;
+
+        stepProps.onClickPrev();
+    }
+
     onClickButton(id){
         switch (id) {
+            case FormButton.PREV:
+                return this.onClickPrev();
             case FormButton.NEXT:
                 return this.onClickNext();
             default:
@@ -72,7 +81,8 @@ class Step01 extends React.Component {
 
     getButtons(){
         return [
-            { id : FormButton.NEXT, label : "다음" }
+            { id : FormButton.PREV, label : "이전" },
+            { id : FormButton.NEXT, label : "다음", style : { marginLeft: '5px'}},
         ];
     }
 
@@ -81,57 +91,53 @@ class Step01 extends React.Component {
         const { getFieldDecorator, getFieldError } = form;
 
         return (
-            <div className="propose-step-wrapper step-01">
+            <div className="propose-step-wrapper step-02">
                 <Form>
                     <FormItem
                         {...formItemLayout}
-                        label="카테고리"
+                        label="스토리 제목"
                     >
-                        {getFieldDecorator('category', {
-                            rules: [{ type: 'array', required: true, message: '카테고리를 선택하세요' }],
+                        {getFieldDecorator('title', {
+                            rules: [{ required: true, message: '제목을 입력하세요' }],
                         })(
-                            <Cascader
-                                options={categories}
-                                placeholder="카테고리 선택"
-                            />
+                            <Input placeholder="스토리 제목" />
                         )}
                     </FormItem>
                     <FormItem
                         {...formItemLayout}
-                        label="해시태그"
+                        label="소제목"
                     >
-                        {getFieldDecorator('hash', {
+                        {getFieldDecorator('sub-title', {
                         })(
-                            <Select
-                                mode="tags"
-                                style={{ width: '100%' }}
-                                onChange={this.onChange}
-                                tokenSeparators={[',']}
-                                dropdownStyle={{display:'none'}}
-                            >
-                                <Option key='1'>{1}</Option>
-                            </Select>
+                            <Input placeholder="첫 문장이 가장 중요!" />
                         )}
                     </FormItem>
                     <FormItem
-                        wrapperCol={{xs:{span: 24, offset: 0}, sm : {span : 20, offset : 4}}}
-                    >
-                        {getFieldDecorator('agree', {
-                            valuePropName: 'checked',
-                            initialValue: true,
-                        })(
-                            <Checkbox>스토리 등록 기준 동의</Checkbox>
-                        )}
-                    </FormItem>
-                    <FormItem
-                        wrapperCol={{xs:{span: 24, offset: 0}, sm : {span : 20, offset : 4}}}
+                        {...formItemLayout}
+                        label="본문"
                     >
                         <TextArea
-                            autosize={false}
                             rows={4}
-                            disabled
-                            defaultValue={'dwewadasfsdfsdfsdgkmbmdbldflvs,dl'}
+                            defaultValue={'본문'}
                         />
+                    </FormItem>
+                    <FormItem
+                        {...formItemLayout}
+                        label="관련사진"
+                    >
+                        {getFieldDecorator('pic', {
+                        })(
+                            <Input placeholder="첫 문장이 가장 중요!" />
+                        )}
+                    </FormItem>
+                    <FormItem
+                        {...formItemLayout}
+                        label="동영상"
+                    >
+                        {getFieldDecorator('mov', {
+                        })(
+                            <Input placeholder="첫 문장이 가장 중요!" />
+                        )}
                     </FormItem>
                 </Form>
 
@@ -142,4 +148,4 @@ class Step01 extends React.Component {
 
 }
 
-export default connect(mapStateToProps, mapDispatchProps)(Form.create()(Step01));
+export default connect(mapStateToProps, mapDispatchProps)(Form.create()(Step02));

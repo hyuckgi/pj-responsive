@@ -1,13 +1,15 @@
 import React from 'react';
 
 import { DesktopLayout, MobileLayout } from '../../commons/components/response';
-import { service, values } from '../../commons/configs'
+import { service, values as CommonValues } from '../../commons/configs'
+import { values } from '../configs';
 
-import { Tabs, Flex, Steps, WingBlank, Modal, WhiteSpace, Toast } from 'antd-mobile';
+import { Row, Col, Steps, Tabs } from 'antd';
 
-import { Step01 } from './'
+import { Step01, Step02, Step03 } from './'
 
 const Step = Steps.Step;
+const { TabPane } = Tabs;
 
 class ProposeContainer extends React.Component {
 
@@ -69,18 +71,6 @@ class ProposeContainer extends React.Component {
         });
     }
 
-    onTabClick(){
-        return;
-    }
-
-    getTabs(){
-        const steps = service.getValue(values, 'propose.steps', []);
-
-        return steps.map((item, inx) => {
-                return {title : ''}
-            });
-    }
-
     render() {
         const { current, params } = this.state;
         const stepProps = {
@@ -91,44 +81,33 @@ class ProposeContainer extends React.Component {
         };
 
         return (
-            <WingBlank className="propose-container">
-                <Flex justify="start" direction="column" wrap="nowrap" className="propose-wrapper" align="center" >
-                    <Flex justify="center" direction="row" wrap="wrap" >
-                        <Flex.Item>
-                            <Steps
-                                current={current}
-                                direction="horizontal"
-                                className="propose-steps"
-                            >
-                                {this.getSteps()}
-                            </Steps>
-                        </Flex.Item>
+            <Row type="flex" justify="center" className="propose-container">
+                <Col className="propose-wrapper">
+                    <Steps
+                        current={current}
+                        className="propose-steps"
+                    >
+                        {this.getSteps()}
+                    </Steps>
 
-                        <Flex.Item>
-                            <Tabs
-                                tabs={this.getTabs()}
-                                initialPage={0}
-                                page={current}
-                                swipeable={false}
-                                onChange={this.onChange.bind(this)}
-                                tabBarBackgroundColor='transparent'
-                                tabBarTextStyle={{fontSize:'13px'}}
-                                tabBarUnderlineStyle={{display : 'none'}}
-                                destroyInactiveTab={true}
-                                prerenderingSiblingsNumber={0}
-                                onTabClick={this.onTabClick}
-                            >
-                                <Step01 stepProps={stepProps}/>
+                    <Tabs
+                        activeKey={(current + 1).toString()}
+                        defaultActiveKey={"1"}
+                        tabBarStyle={{display : 'none'}}
+                    >
+                        <TabPane tab="" key="1">
+                            {(<Step01 stepProps={stepProps} />)}
+                        </TabPane>
+                        <TabPane tab="" key="2">
+                            {(<Step02 stepProps={stepProps} />)}
+                        </TabPane>
+                        <TabPane tab="" key="3">
+                            {(<Step03 stepProps={stepProps} />)}
+                        </TabPane>
 
-                                <div>ddd222</div>
-
-                                <div>ddd333</div>
-                            </Tabs>
-                        </Flex.Item>
-                    </Flex>
-                </Flex>
-
-            </WingBlank>
+                    </Tabs>
+                </Col>
+            </Row>
         );
     }
 

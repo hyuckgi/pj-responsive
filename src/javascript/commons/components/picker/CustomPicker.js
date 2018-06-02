@@ -23,7 +23,7 @@ class CustomPicker extends React.Component {
 
 
     render() {
-        const { options, key } = this.props;
+        const { options, key, label } = this.props;
 
         console.log("options", options);
         return (
