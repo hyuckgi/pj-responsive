@@ -5,7 +5,7 @@ import { ButtonWrapper } from '../../commons/components';
 import { service } from '../../commons/configs';
 import { FormButton } from '../../commons/types';
 
-import { Form, Cascader, Select, Checkbox, Input} from 'antd';
+import { Form, Cascader, Select, Checkbox, Input, Modal} from 'antd';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -49,12 +49,56 @@ class Step01 extends React.Component {
 
 
         this.onChange = this.onChange.bind(this);
+		this.errorToast = this.errorToast.bind(this);
+		this.makeModal = this.makeModal.bind(this);
+		this.onModalOk = this.onModalOk.bind(this);
     }
 
-    onClickNext(){
-        const { stepProps } = this.props;
+	makeModal(messages){
+        const duration = messages.length;
+        return Modal.error({
+			title : '오류가 발생했습니다.',
+			content : (<div>
+                {messages.map((message, idx) => {
+                    return (<p key={idx}>{message}</p>)
+                })}
+            </div>),
+			onOk : this.onModalOk,
+		});
+    }
 
-        stepProps.onClickNext();
+	onModalOk(){
+		console.log("aaaaa");
+	}
+
+	errorToast(errors = null){
+		const { getFieldError } = this.props.form;
+        if(!errors){
+            return;
+        }
+
+        const messages = Object.keys(errors)
+            .map(item => {
+                return getFieldError(item);
+            })
+            .reduce((result, item, idx) => {
+                return result.concat(item);
+            }, []);
+
+        return this.makeModal(messages);
+	}
+
+    onClickNext(){
+        const { stepProps, form } = this.props;
+
+		form.validateFields((errors, value) => {
+
+			if(!errors){
+				return stepProps.onClickNext(value);
+			}
+
+			return this.errorToast(errors);
+		});
     }
 
     onClickButton(id){

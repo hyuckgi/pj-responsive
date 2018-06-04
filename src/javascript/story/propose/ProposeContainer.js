@@ -4,7 +4,8 @@ import { DesktopLayout, MobileLayout } from '../../commons/components/response';
 import { service, values as CommonValues } from '../../commons/configs'
 import { values } from '../configs';
 
-import { Row, Col, Steps, Tabs } from 'antd';
+import { Row, Col,  Tabs } from 'antd';
+import { Steps } from 'antd-mobile';
 
 import { Step01, Step02, Step03 } from './'
 
@@ -85,6 +86,7 @@ class ProposeContainer extends React.Component {
                 <Col className="propose-wrapper">
                     <Steps
                         current={current}
+                        direction="horizontal"
                         className="propose-steps"
                     >
                         {this.getSteps()}

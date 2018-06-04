@@ -6,7 +6,7 @@ import { APICaller } from '../../commons/api';
 
 import { service, values, path, api } from '../../commons/configs';
 
-import { Tabs, Flex, Steps, WingBlank, Modal, WhiteSpace, Toast } from 'antd-mobile';
+import { Tabs, Flex, Steps, Modal, WhiteSpace, Toast } from 'antd-mobile';
 
 import { JoinStep01, JoinStep02, JoinStep03 } from './';
 
@@ -24,12 +24,6 @@ class Join extends React.Component {
         super(props);
         this.state = {
             current : 0,
-            visible : false,
-            modalContent : {
-                title : "",
-                contents : "",
-                url : "",
-            },
         };
 
         this.onClickNext = this.onClickNext.bind(this);
@@ -78,7 +72,7 @@ class Join extends React.Component {
     }
 
     onChange(tab, idx){
-        console.log("idx", idx);
+        return
     }
 
     onClickNext(params){
@@ -108,28 +102,6 @@ class Join extends React.Component {
         return;
     }
 
-    onCloseModal(){
-        const { modalContent } = this.state;
-        this.setState({
-            visible : false,
-        });
-
-        if(modalContent.url === path.home){
-            return window.location.reload();
-        }
-        return this.props.move(modalContent.url);
-    }
-
-    getModalTitle(){
-        const { modalContent } = this.state;
-        return modalContent.title;
-    }
-
-    getModalContents(){
-        const { modalContent } = this.state;
-        return modalContent.contents;
-    }
-
     render() {
         const { current, visible, params } = this.state;
         const stepProps = {
@@ -140,7 +112,7 @@ class Join extends React.Component {
         };
 
         return (
-            <WingBlank className="join-container">
+            <div className="join-container">
                 <Flex justify="start" direction="column" wrap="nowrap" className="join-wrapper" align="center" >
                     <Flex justify="center" direction="row" wrap="wrap">
                         <Flex.Item>
@@ -189,16 +161,7 @@ class Join extends React.Component {
                     </Flex>
                 </Flex>
 
-                <Modal
-                    visible={visible}
-                    transparent
-                    maskClosable={false}
-                    title={this.getModalTitle()}
-                    footer={[{ text: 'Ok', onPress: this.onCloseModal}]}
-                >
-                    {this.getModalContents()}
-                </Modal>
-            </WingBlank>
+            </div>
         );
     }
 

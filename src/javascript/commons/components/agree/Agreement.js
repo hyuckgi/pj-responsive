@@ -5,7 +5,7 @@ import { createForm } from 'rc-form';
 import { APICaller } from '../../api';
 import { api, service } from '../../configs';
 
-import { Accordion, List, Checkbox, Button, Badge } from 'antd-mobile';
+import { Accordion, List, Checkbox, Button, Badge, Toast } from 'antd-mobile';
 
 const CheckboxItem = Checkbox.CheckboxItem;
 
@@ -40,28 +40,31 @@ class Agreement extends React.Component {
     }
 
     getTerms(){
-        APICaller.get(api.getTerms(), {})
-        .then(({data}) => {
+        return APICaller.get(api.getTerms(), {})
+            .then(({data}) => {
+                const list = service.getValue(data, 'list', []);
+                const codes = list.map(item => item.code).reduce((result, item) => {
+                    const key = `terms_${item}`;
+                    result[key] = true;
+                    return result;
+                }, {})
 
-            const list = service.getValue(data, 'list', []);
-            const codes = list.map(item => item.code).reduce((result, item) => {
-                const key = `terms_${item}`;
-                result[key] = true;
-                return result;
-            }, {})
-
-            if(list){
-                return this.setState({
-                    list,
-                    terms : codes
-                })
-            }
-            return;
-        })
+                if(list){
+                    return this.setState({
+                        list,
+                        terms : codes
+                    })
+                }
+                return;
+            })
+            .catch(e => {
+                return Toast.fail('잠시 후에 다시 시도하세요.', 1);
+            });
     }
 
-
     onChange(e, item){
+        e.preventDefault();
+        e.stopPropagation();
         const key = `terms_${item.code}`;
         return this.setState({
             terms : {
@@ -110,37 +113,46 @@ class Agreement extends React.Component {
         )
     }
 
-    render() {
-        const { form } = this.props;
+    renderTerms(){
         const { list, terms } = this.state;
+        const { form } = this.props;
+
+        if(!list.length){
+            return;
+        }
+
+        return list.map((item, idx) => {
+            return (
+                <List.Item
+                    key={idx}
+                >
+                    <Accordion>
+                        <Accordion.Panel header={
+                            form.getFieldDecorator(`terms_${item.code}`, {
+                                initialValue : true,
+                            })(<CheckboxItem checked={terms[`terms_${item.code}`]} key={`terms_${item.code}`} onChange={(e) => this.onChange(e, item)}>{item.title}</CheckboxItem>)
+                        }>
+                            <div>{item.terms}</div>
+                        </Accordion.Panel>
+                    </Accordion>
+                </List.Item>
+            )
+        });
+    }
+
+    render() {
+        const { terms } = this.state;
         const allTerms = Object.keys(terms).length > 0 && Object.keys(terms).some(item => !terms[item]);
 
         return (
-            <Accordion defaultActiveKey="0" className="agreement-accordion" >
-                <Accordion.Panel header={this.renderHeader()}>
-                    <List className="my-list">
-                        <CheckboxItem
-                            checked={!allTerms}
-                            key={'allTerms'}
-                            onChange={this.onChangeAllTerms}
-                        >전체 동의합니다.</CheckboxItem>
-                        {list.length && list.map((item, idx) => {
-                            return(
-                                <List.Item
-                                    key={idx}
-                                    extra={this.renderExtra(item)}
-                                >
-                                    <form>
-                                        {form.getFieldDecorator(`terms_${item.code}`, {
-                                            initialValue : true,
-                                        })(<CheckboxItem checked={terms[`terms_${item.code}`]} key={`terms_${item.code}`} onChange={(e) => this.onChange(e, item)}>{item.terms}</CheckboxItem>)}
-                                    </form>
-                                </List.Item>
-                            )
-                        })}
-                    </List>
-                </Accordion.Panel>
-            </Accordion>
+            <List className="agreement-wrapper" renderHeader={this.renderHeader}>
+                <CheckboxItem
+                    checked={!allTerms}
+                    key={'allTerms'}
+                    onChange={this.onChangeAllTerms}
+                >전체 동의합니다.</CheckboxItem>
+                {this.renderTerms()}
+            </List>
         );
     }
 

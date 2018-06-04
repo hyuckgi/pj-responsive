@@ -10,6 +10,7 @@ export const api = {
         params : {...params}
     }),
     getTerms : () => `/api/member/terms`,
+    getCountry : () => `/api/member/country/code`,
 
     // category
 
