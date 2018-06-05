@@ -7,6 +7,7 @@ export const security = (state = {}, action) => {
                 ...state
             }
         case type.LOGIN_SUCCESS:
+            localStorage.setItem('token', JSON.stringify(action.payload.token));
             return {
                 ...state,
                 ...action.payload

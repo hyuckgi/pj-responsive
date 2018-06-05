@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
 import { APICaller } from '../../commons/api';
-
+import { security as action } from '../../redux/actions';
 import { service, values, path, api } from '../../commons/configs';
 
 import { Tabs, Flex, Steps, Modal, WhiteSpace, Toast } from 'antd-mobile';
@@ -16,6 +16,7 @@ const Step = Steps.Step;
 
 const mapDispatchToProps = (dispatch) => ({
     moveHome: () => dispatch(push('/')),
+    login: (params) => dispatch(action.login(params)),
 });
 
 class Join extends React.Component {
@@ -60,9 +61,11 @@ class Join extends React.Component {
 
         APICaller.post(obj.url, obj.params)
         .then(({data}) => {
-            console.log("data", data);
             if(data.resultCode === 200){
-                return Toast.success(`회원가입을 축하합니다.`, 2, this.props.moveHome());
+                return this.props.login(obj.params)
+                    .then(() => {
+                        return Toast.success(`회원가입을 축하합니다.`, 2, this.props.moveHome());
+                    })
             }
         })
         .catch((err) => {
