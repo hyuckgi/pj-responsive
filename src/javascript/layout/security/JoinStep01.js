@@ -7,7 +7,7 @@ import { Toast, List, InputItem, WhiteSpace } from 'antd-mobile';
 
 import { FormButton } from '../../commons/types';
 import { Agreement, ButtonWrapper } from '../../commons/components';
-import { api } from '../../commons/configs';
+import { api, service } from '../../commons/configs';
 
 class JoinStep01 extends React.Component {
 
@@ -121,7 +121,7 @@ class JoinStep01 extends React.Component {
     }
 
     render() {
-        const { form } = this.props;
+        const { form, stepProps } = this.props;
         const { getFieldProps, getFieldError } = form;
         const { confirmation } = this.state;
 
@@ -132,6 +132,7 @@ class JoinStep01 extends React.Component {
                     <InputItem
                         {...getFieldProps('userid', {
                             rules: [{ required: true, message: 'ID를 입력하세요'}],
+                            initialValue : service.getValue(stepProps, 'data.userid', null)
                         })}
                         className={confirmation ? 'confirmation' : ''}
                         ref={el => this.userid = el}

@@ -35,12 +35,20 @@ class Login extends React.Component {
     }
 
     login(params) {
-        console.log("params", params);
-
         return this.props.login(params)
-            .then((...args) => {
-                console.log("args", args);
-            });
+            .then(({token}) => {
+                if(token){
+                    localStorage.setItem('token', JSON.stringify(token));
+                    return Toast.success(`로그인 되었습니다.`, 2, this.props.moveHome());
+                }else{
+                    return Toast.fail(`회원정보가 없습니다`, 1, window.location.reload());
+                }
+            })
+            .catch((err) => {
+                if(err){
+                    return Toast.fail(`로그인에 실패했습니다. 다시 진행해 주세요`, 1, window.location.reload());
+                }
+            })
     }
 
     makeToast(messages){

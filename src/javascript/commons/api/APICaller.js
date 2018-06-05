@@ -3,6 +3,7 @@ import Async from './Async';
 
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 axios.defaults.withCredentials = false;
+axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
 
 const config = {
 	debug : false,

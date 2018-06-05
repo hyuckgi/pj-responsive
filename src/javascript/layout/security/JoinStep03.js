@@ -12,7 +12,7 @@ class JoinStep03 extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            disabled : true,
         };
 
         this.errorToast = this.errorToast.bind(this);
@@ -57,9 +57,6 @@ class JoinStep03 extends React.Component {
         const { stepProps, form } = this.props;
 
         form.validateFields((errors, value) => {
-
-            console.log("value", value);
-
             const { nickname, email, cellphone, country, username } = value;
 
             if(!country){
@@ -67,7 +64,6 @@ class JoinStep03 extends React.Component {
             }
 
             if(!errors){
-
                 return stepProps.onSubmit({
                     cellphone : cellphone.replace(/ /gi, ""),
                     countryCode : country.value,
@@ -101,11 +97,13 @@ class JoinStep03 extends React.Component {
         if(regex.test(value)){
             Toast.success(`사용가능한 이메일입니다.`, 1);
             return this.setState({
+                disabled: false,
                 [key] : true,
             })
         }else{
             Toast.fail('올바른 이메일 주소를 입력해주세요', 1);
             this.setState({
+                disabled: true,
                 [key] : false,
             });
             return this[key].focus();
@@ -122,9 +120,10 @@ class JoinStep03 extends React.Component {
     }
 
     getButtons(){
+        const { disabled } = this.state;
         return [
             { id : FormButton.PREV, label : '이전', type : 'default' },
-            { id : FormButton.NEXT, label : '가입', style : { marginLeft: '5px'} },
+            { id : FormButton.NEXT, label : '가입', style : { marginLeft: '5px'}, disabled : disabled  },
         ];
     }
 

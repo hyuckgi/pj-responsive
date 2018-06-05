@@ -91,8 +91,6 @@ class SelectCountry extends React.Component {
     getFilter(value, flag='code'){
         const { countries } = this.state;
 
-        console.log("value", value);
-
         if(flag === 'name'){
             return countries.filter(item => (item.name.toUpperCase()).indexOf(value.toUpperCase()) !== -1)
         }
@@ -139,7 +137,6 @@ class SelectCountry extends React.Component {
     }
 
     onOK(values){
-        console.log("values", values);
         const { form } = this.props;
         const item = this.getFilter(values[1]);
         this.setState({
