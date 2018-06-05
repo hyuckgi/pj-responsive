@@ -15,7 +15,7 @@ class JoinStep02 extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            disabled : true,
         };
 
         this.errorToast = this.errorToast.bind(this);
@@ -60,7 +60,7 @@ class JoinStep02 extends React.Component {
         const { stepProps, form } = this.props;
 
         form.validateFields((errors, value) => {
-            
+
             if(!errors){
                 return stepProps.onClickNext({passwd : value.passwd});
             }
@@ -121,11 +121,13 @@ class JoinStep02 extends React.Component {
 
         if(value === pass){
             return this.setState({
+                disabled : false,
                 [key] : true,
             })
         }else{
             Toast.fail('비밀번호가 일치하지 않습니다.', 1);
             this.setState({
+                disabled : true,
                 [key] : false,
             });
             form.resetFields(key);
@@ -146,9 +148,10 @@ class JoinStep02 extends React.Component {
     }
 
     getButtons(){
+        const { disabled } = this.state;
         return [
             { id : FormButton.PREV, label : '이전', type : 'default' },
-            { id : FormButton.NEXT, label : '다음', style : { marginLeft: '5px'} },
+            { id : FormButton.NEXT, label : '다음', style : { marginLeft: '5px'}, disabled : disabled },
         ];
     }
 

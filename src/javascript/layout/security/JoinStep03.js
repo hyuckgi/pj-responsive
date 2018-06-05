@@ -58,6 +58,8 @@ class JoinStep03 extends React.Component {
 
         form.validateFields((errors, value) => {
 
+            console.log("value", value);
+
             const { nickname, email, cellphone, country, username } = value;
 
             if(!country){
@@ -68,9 +70,7 @@ class JoinStep03 extends React.Component {
 
                 return stepProps.onSubmit({
                     cellphone : cellphone.replace(/ /gi, ""),
-                    // TODO 서버 오탈자
-                    // countryCode : country.value,
-                    contryCode : country.value,
+                    countryCode : country.value,
                     email : email,
                     nickname : nickname,
                     username : username,

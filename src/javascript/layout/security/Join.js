@@ -29,6 +29,7 @@ class Join extends React.Component {
         this.onClickNext = this.onClickNext.bind(this);
         this.onClickPrev = this.onClickPrev.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        this.onNext = this.onNext.bind(this);
     }
 
     getSteps(){
@@ -57,18 +58,20 @@ class Join extends React.Component {
         const { params } = this.state;
         const obj = api.join({...data, ...params});
 
-        APICaller.post(obj.url, obj.params)
-        .then(({data}) => {
-            console.log("data", data);
-            if(data.resultCode === 200){
-                return Toast.success(`회원가입을 축하합니다.`, 2, this.props.moveHome());
-            }
-        })
-        .catch((err) => {
-            if(err){
-                return Toast.fail(`회원가입에 실패했습니다. 다시 진행해 주세요`, 2, window.location.reload());
-            }
-        })
+        console.log("obj", obj);
+
+        // APICaller.post(obj.url, obj.params)
+        // .then(({data}) => {
+        //     console.log("data", data);
+        //     if(data.resultCode === 200){
+        //         return Toast.success(`회원가입을 축하합니다.`, 2, this.props.moveHome());
+        //     }
+        // })
+        // .catch((err) => {
+        //     if(err){
+        //         return Toast.fail(`회원가입에 실패했습니다. 다시 진행해 주세요`, 2, window.location.reload());
+        //     }
+        // })
     }
 
     onChange(tab, idx){
@@ -76,16 +79,22 @@ class Join extends React.Component {
     }
 
     onClickNext(params){
-        const type = service.getValue(values, 'requestType', {});
-        const { current } = this.state;
-        const next = (current + 1) > (Object.keys(type).length - 1) ? (Object.keys(type).length - 1) : current + 1;
-
-        return this.setState({
-            current : next,
+        this.setState({
             params : {
                 ...this.state.params,
                 ...params
             }
+        });
+        return this.onNext();
+    }
+
+    onNext(){
+        const { current } = this.state;
+        const type = service.getValue(values, 'requestType', {});
+        const next = (current + 1) > (Object.keys(type).length - 1) ? (Object.keys(type).length - 1) : current + 1;
+
+        return this.setState({
+            current : next,
         })
     }
 

@@ -14,7 +14,8 @@ class JoinStep01 extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            confirmation : false
+            confirmation : false,
+            disabled : true,
         };
         this.errorToast = this.errorToast.bind(this);
         this.onClickNext = this.onClickNext.bind(this);
@@ -68,8 +69,9 @@ class JoinStep01 extends React.Component {
     }
 
     getButtons(){
+        const { disabled } = this.state;
         return [
-            { id : FormButton.NEXT, label : '다음' }
+            { id : FormButton.NEXT, label : '다음', disabled : disabled  }
         ];
     }
 
@@ -99,6 +101,7 @@ class JoinStep01 extends React.Component {
                         Toast.success('사용가능한 아이디 입니다.', 1);
                         return this.setState({
                             confirmation : true,
+                            disabled : false,
                         })
                     }
                 });
