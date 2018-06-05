@@ -3,14 +3,14 @@ import Async from './Async';
 
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 axios.defaults.withCredentials = false;
-axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
+axios.defaults.headers.common['X-Auth-Token'] = localStorage.getItem('token');
 
 const config = {
 	debug : false,
 	caching: false,
 	offlineMode : false,
 	healthCheckTime : 10000,
-	hostName: null
+	hostName: null,
 }
 
 const getAPIHost = () => {
