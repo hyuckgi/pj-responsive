@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { Layout, notification } from 'antd';
-import { StickyContainer } from 'react-sticky';
+import { StickyContainer, Sticky } from 'react-sticky';
 
 import { Spinner, WrapperContainer } from './layout';
 import { HeaderContainer, LocalNavigationBar } from './layout/web';
@@ -40,10 +40,19 @@ class Web extends React.Component {
         }
 
         return(
-            <div className="local-navigation-wrap">
-                <LocalNavigationBar {...this.props} subMenu={subMenu} />
-            </div>
-
+            <Sticky topOffset={1}>
+                {({style}) => {
+                    const newStyle = {
+                        ...style,
+                        top: 80,
+                    }
+                    return (
+                        <div className="local-navigation-wrap" style={{...newStyle, zIndex : 1}}>
+                            <LocalNavigationBar {...this.props} subMenu={subMenu} />
+                        </div>
+                    )
+                }}
+            </Sticky>
         )
     }
 

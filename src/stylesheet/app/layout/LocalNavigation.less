@@ -1,13 +1,41 @@
 .web-container{
     .local-navigation-wrap{
+        background:#1691a5;
+
         .local-navigation{
             width:1280px;
             margin:0 auto;
             max-width:1280px;
+            background:transparent;
 
-            .ant-menu-item{
-                a{
+            &.ant-menu{
+                background-color: transparent;
+                border-bottom:none;
+
+                .ant-menu-item{
+                    color:#fff;
+                    top:0;
+                    margin-top:0;
+                    border-bottom:0;
+                    font-size:1.2em;
                     text-align:center;
+                }
+
+                .ant-menu-item{
+                    &:hover,
+                    &-active,
+                    &.on{
+                        color:#fff;
+                        background-color:#106f7d;
+                    }
+
+                    a{
+                        color:inherit;
+
+                        &::before{
+                            display:none;
+                        }
+                    }
                 }
             }
         }

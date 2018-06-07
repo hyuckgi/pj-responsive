@@ -39,25 +39,15 @@ class LocalNavigationBar extends React.Component {
         const { subMenu } = this.props;
 
         return (
-            <Sticky topOffset={1}>
-                {({style}) => {
-                    const newStyle = {
-                        ...style,
-                        top: 80,
-                    }
-                    return(
-                        <Menu
-                            mode="horizontal"
-                            className="local-navigation"
-                            style={{...newStyle, zIndex : 1}}>
-                            {subMenu.map(menu => {
-                                const width = 100 / subMenu.length;
-                                return this.renderMenu(menu, {width : width})
-                            })}
-                        </Menu>
-                    )
-                }}
-            </Sticky>
+            <Menu
+                mode="horizontal"
+                className="local-navigation"
+            >
+                {subMenu.map(menu => {
+                    const width = 100 / subMenu.length;
+                    return this.renderMenu(menu, {width : width})
+                })}
+            </Menu>
         );
     }
 }
