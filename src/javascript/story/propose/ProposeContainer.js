@@ -1,7 +1,6 @@
 import React from 'react';
 
-import { DesktopLayout, MobileLayout } from '../../commons/components/response';
-import { service, values as CommonValues } from '../../commons/configs'
+import { service } from '../../commons/configs'
 import { values } from '../configs';
 
 import { Row, Col,  Tabs } from 'antd';

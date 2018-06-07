@@ -3,7 +3,7 @@ import { createForm } from 'rc-form';
 import UAParser from 'ua-parser-js';
 
 import { APICaller } from '../../api';
-import { api, values, service } from '../../configs';
+import { api, service } from '../../configs';
 
 import { DesktopLayout, MobileLayout } from '../response';
 

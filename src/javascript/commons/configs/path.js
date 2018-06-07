@@ -7,7 +7,7 @@ export const path = {
     storyList : '/story/list',
     progress : '/story/list/progress',
     complete : '/story/list/complete',
-    drop : '/story/list/drop',
+    ready : '/story/list/ready',
     propose : '/story/propose',
 
     // List

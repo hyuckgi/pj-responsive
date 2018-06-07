@@ -7,9 +7,26 @@ import { code as action } from './redux/actions';
 import Mobile from './Mobile';
 import Web from './Web';
 
-const mapStateToProps = ({ fetch, code }) => ({
-    spinning : fetch.isFetching || fetch.isPosting || !code.isInitialized,
-});
+import { service } from './commons/configs';
+
+const mapStateToProps = ({ fetch, code, router, layout }) => {
+    const spinning = fetch.isFetching || fetch.isPosting || !code.isInitialized;
+
+    const allMenu = Object.keys(layout).reduce((result, item) => {
+        result = result.concat(layout[item]);
+        return result;
+    }, []);
+    const globalMenu = service.getValue(layout, 'list', []).filter(item => item.level === 0);
+    const currentPath = service.getValue(router, 'location.pathname', "/main");
+    const currentMenu = allMenu.filter(item => item.link === currentPath).find(item => item);
+
+    return{
+        spinning,
+        globalMenu,
+        currentMenu,
+        allMenu
+    }
+};
 
 const mapDispatchProps = dispatch => ({
     initialize: () => dispatch(action.tag()),

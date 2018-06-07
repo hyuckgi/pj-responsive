@@ -31,37 +31,33 @@ class HeaderContainer extends React.Component {
 
     renderTabBar(){
         return(
-            <Sticky topOffset={80}>
-                {({style}) => {
-                    return(
-                        <div style={{...style, zIndex: 1 }}>
-                            <Row type="flex" justify="center" align="middle" className="global-navigation-wrap"  >
-                                <Col span={12}>
-                                    <GlobalNavigation />
-                                </Col>
-                            </Row>
-                        </div>
-                    )
-                }}
-            </Sticky>
+            <GlobalNavigation {...this.props}/>
         )
     }
 
     render() {
         return (
-            <Header className="header-container">
-                <Row type="flex" justify="space-between" align="middle" className="header-wrap" >
-                    <Col span={4} className="logo" >
-                        <img src={imgLogo} alt="logo" onClick={this.onClick.bind(this)}/>
-                    </Col>
-                    <Col className="dropdown" span={4}>
-                        <Dropdown overlay={menu} placement="bottomLeft">
-                          <Button>다른 관리자센터<Icon type="down" /></Button>
-                        </Dropdown>
-                    </Col>
-                </Row>
-                {this.renderTabBar()}
-            </Header>
+            <Sticky topOffset={1}>
+                {({style}) => {
+                    return(
+                        <Header id="header" className="header-container" style={{...style, zIndex: 1 }}>
+                            <Row type="flex" justify="space-between" align="middle" className="header-wrap" >
+                                <Col span={4} className="logo" >
+                                    <img src={imgLogo} alt="logo" onClick={this.onClick.bind(this)}/>
+                                </Col>
+                                <Col span={13} offset={1} className="global-navigation-wrap">
+                                    {this.renderTabBar()}
+                                </Col>
+                                <Col className="dropdown" span={5} offset={1}>
+                                    <Dropdown overlay={menu} placement="bottomLeft">
+                                      <Button>다른 관리자센터<Icon type="down" /></Button>
+                                    </Dropdown>
+                                </Col>
+                            </Row>
+                        </Header>
+                    );
+                }}
+            </Sticky>
         );
     }
 

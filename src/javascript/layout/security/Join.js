@@ -4,9 +4,9 @@ import { push } from 'react-router-redux';
 
 import { APICaller } from '../../commons/api';
 import { security as action } from '../../redux/actions';
-import { service, values, path, api } from '../../commons/configs';
+import { service, values, api } from '../../commons/configs';
 
-import { Tabs, Flex, Steps, Modal, WhiteSpace, Toast } from 'antd-mobile';
+import { Tabs, Flex, Steps, WhiteSpace, Toast } from 'antd-mobile';
 
 import { JoinStep01, JoinStep02, JoinStep03 } from './';
 
@@ -113,7 +113,7 @@ class Join extends React.Component {
     }
 
     render() {
-        const { current, visible, params } = this.state;
+        const { current, params } = this.state;
         const stepProps = {
             data : params,
             onClickNext : this.onClickNext,

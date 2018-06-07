@@ -55,7 +55,6 @@ class Step01 extends React.Component {
     }
 
 	makeModal(messages){
-        const duration = messages.length;
         return Modal.error({
 			title : '오류가 발생했습니다.',
 			content : (<div>
@@ -122,7 +121,7 @@ class Step01 extends React.Component {
 
     render() {
         const { form, categories } = this.props;
-        const { getFieldDecorator, getFieldError } = form;
+        const { getFieldDecorator } = form;
 
         return (
             <div className="propose-step-wrapper step-01">

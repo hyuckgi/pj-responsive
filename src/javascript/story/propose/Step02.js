@@ -2,13 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { ButtonWrapper } from '../../commons/components';
-import { service } from '../../commons/configs';
+// import { service } from '../../commons/configs';
 import { FormButton } from '../../commons/types';
 
-import { Form, Cascader, Select, Checkbox, Input} from 'antd';
+import { Form, Input} from 'antd';
 
 const FormItem = Form.Item;
-const Option = Select.Option;
 const { TextArea } = Input;
 
 const formItemLayout = {
@@ -32,10 +31,10 @@ const formItemLayout = {
 
 
 const mapStateToProps = ({fetch, code}) => {
-    const categories = service.getValue(code, 'categories', [])
+    // const categories = service.getValue(code, 'categories', [])
 
     return {
-        categories
+        // categories
     }
 };
 
@@ -87,8 +86,8 @@ class Step02 extends React.Component {
     }
 
     render() {
-        const { form, categories } = this.props;
-        const { getFieldDecorator, getFieldError } = form;
+        const { form } = this.props;
+        const { getFieldDecorator } = form;
 
         return (
             <div className="propose-step-wrapper step-02">

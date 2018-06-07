@@ -5,23 +5,47 @@ import { Layout, notification } from 'antd';
 import { StickyContainer } from 'react-sticky';
 
 import { Spinner, WrapperContainer } from './layout';
-import { HeaderContainer } from './layout/web';
+import { HeaderContainer, LocalNavigationBar } from './layout/web';
+
+import { service } from './commons/configs';
 
 notification.config({placement: 'topRight'});
 
 const { Content } = Layout;
 
-const mapStateToProps = ({ fetch }) => ({
-    // spinning : fetch.isFetching || fetch.isPosting,
-    // show: !fetch.isPosting,
-    // error: fetch.error
-});
+const mapStateToProps = ({ fetch }) => {
+    return{}
+}
 
-const mapDispatchProps = dispatch => ({
-    // initialize: (cookies) => dispatch(action.tag(cookies)),
-});
+const mapDispatchProps = dispatch => {
+    return{}
+};
 
 class Web extends React.Component {
+    constructor(props) {
+        super(props);
+        this.renderSubMenu = this.renderSubMenu.bind(this);
+    }
+
+    renderSubMenu(){
+        const { currentMenu, allMenu, globalMenu } = this.props;
+        const parent = service.getValue(currentMenu, 'parent', false);
+        const parentMenu = globalMenu.filter(item => item.id === parent).find(item => item);
+        const subMenu = (parentMenu && !service.getValue(parentMenu, 'hasChild', false))
+            ? allMenu.filter(item => item.parent === service.getValue(currentMenu, 'parent'))
+            : [];
+
+        if(!subMenu.length){
+            return null;
+        }
+
+        return(
+            <div className="local-navigation-wrap">
+                <LocalNavigationBar {...this.props} subMenu={subMenu} />
+            </div>
+
+        )
+    }
 
     render() {
         const { spinning } = this.props;
@@ -31,9 +55,8 @@ class Web extends React.Component {
                 <StickyContainer>
                     <Layout className="web-container">
                         <HeaderContainer {...this.props}/>
-
+                        {this.renderSubMenu()}
                         <Content className="section">
-
                             <WrapperContainer />
                         </Content>
                     </Layout>

@@ -42,7 +42,7 @@ const mock = {
                     count : inx + 10,
                 },
                 mark : '',
-                category : inx % 3 === 0 ? 'complete' : 'drop'
+                category : inx % 3 === 0 ? 'complete' : 'ready'
             }
         }
     }),
@@ -59,11 +59,6 @@ const requestType = {
         label: '회원정보 입력', step: 3,
     },
 };
-
-const agreementValue = [
-    { value: true, label: '이용약관', url : 'http://www.naver.com', name : 'usedAgreement' },
-    { value: true, label: '개인정보보호', url : 'http://www.daum.net', name : 'privateAgreement'},
-];
 
 const countries = [
     {

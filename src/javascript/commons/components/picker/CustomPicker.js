@@ -8,7 +8,6 @@ import { Cascader } from 'antd';
 
 class CustomPicker extends React.Component {
 
-
     onChange(){
         const { onChange } = this.props;
 
@@ -23,9 +22,8 @@ class CustomPicker extends React.Component {
 
 
     render() {
-        const { options, key, label } = this.props;
+        const { options } = this.props;
 
-        console.log("options", options);
         return (
             <div className="custom-picker">
                 <DesktopLayout>

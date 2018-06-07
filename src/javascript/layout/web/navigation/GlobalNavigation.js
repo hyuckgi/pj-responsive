@@ -8,21 +8,8 @@ import { service } from '../../../commons/configs';
 
 const SubMenu = Menu.SubMenu;
 
-const mapStateToProps = ({ layout, router, security}) => {
-    const allMenu = Object.keys(layout).reduce((result, item) => {
-        result = result.concat(layout[item]);
-        return result;
-    }, []);
-
-    const globalMenu = service.getValue(layout, 'list', []).filter(item => item.level === 0);
-    const currentPath = service.getValue(router, 'location.pathname', "/main");
-    const currentMenu = globalMenu.filter(item => item.link.indexOf(currentPath.split("/")[1]) === 1).find(item => item);
-
-    return {
-        globalMenu,
-        currentMenu,
-        allMenu
-    }
+const mapStateToProps = () => {
+    return {}
 };
 
 const mapDispatchProps = dispatch => ({
@@ -33,48 +20,73 @@ const mapDispatchProps = dispatch => ({
 
 class GlobalNavigation extends React.Component {
 
-    componentDidMount(prevProps) {
+    constructor(props) {
+        super(props);
+
+        this.getCurrent = this.getCurrent.bind(this);
+        this.renderSubMenu = this.renderSubMenu.bind(this);
+        this.renderItem = this.renderItem.bind(this);
+        this.renderMenu = this.renderMenu.bind(this);
+    }
+
+    componentDidMount() {
         // this.props.masterLevel1();
     }
 
-    renderChild(menu){
-        const { allMenu } = this.props;
+    renderSubMenu(menu){
+        const child = service.getValue(this.props, 'allMenu', []).filter(item => item.parent === menu.id);
 
-        return allMenu.filter(item => item.parent === menu.id).map((item, idx) => {
-            if(item.hasChild){
-                return this.renderSubMenu(item);
-            }
-            return(
-                <Menu.Item key={idx}>
-                    <NavLink to={item.link} activeClassName="selected">{item.name}</NavLink>
-                </Menu.Item>
-            );
-        })
+        return(
+            <SubMenu
+                key={menu.id}
+                title={menu.name}
+                className={`${this.getCurrent(menu)}`}
+            >
+                {child.map(item => {
+                    return this.renderMenu(item);
+                })}
+            </SubMenu>
+        )
     }
 
-    renderSubMenu(menu, opt = null){
+    renderItem(menu){
+        return(
+            <Menu.Item
+                key={menu.id}
+                className={`${this.getCurrent(menu)}`}
+            >
+                <NavLink to={menu.defaultLink || menu.link}>{menu.name}</NavLink>
+            </Menu.Item>
+        )
+    }
+
+    getCurrent(menu){
+        return service.getValue(this.props, 'currentMenu.link', false)
+            ? (service.getValue(this.props, 'currentMenu.link').indexOf(menu.link) === 0 ? 'on' : '')
+            : '';
+    }
+
+    renderMenu(menu){
         if(!menu){
             return;
         }
-        const { currentMenu } = this.props;
-        const width = opt ? opt.width : 100;
-        const crruent = currentMenu && menu.id === currentMenu.id ? 'on' : ''
 
-        return(
-            <SubMenu key={menu.id}  title={menu.name} style={{width : `${width}%`}} className={`${crruent}`}>
-                {this.renderChild(menu)}
-            </SubMenu>
-        )
+        if(service.getValue(menu, 'hasChild', false)){
+            return this.renderSubMenu(menu);
+        }
+        return this.renderItem(menu)
     }
 
     render() {
         const { globalMenu } = this.props;
 
         return(
-            <Menu mode="horizontal" className="global-navigation" multiple={true}>
+            <Menu
+                mode="horizontal"
+                className="global-navigation"
+            >
                 {globalMenu.map(menu => {
-                    const width = 100 / globalMenu.length;
-                    return this.renderSubMenu(menu, {width : width})
+                    return this.renderMenu(menu)
                 })}
             </Menu>
         );

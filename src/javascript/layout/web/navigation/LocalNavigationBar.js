@@ -1,63 +1,63 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { push } from 'react-router-redux';
 
-import Menu from 'antd/lib/menu';
-import Icon from 'antd/lib/icon';
-const { SubMenu } = Menu;
+import { Sticky } from 'react-sticky';
+import { Menu } from 'antd';
+import { service } from '../../../commons/configs';
 
-const mapStateToProps = ({ layout, router}) => {
-    const pathname = router.location.pathname;
-    const parentMenu = layout.list.filter(item => pathname.indexOf(item.link) === 0)[0];
-    const childList = parentMenu && layout.list.filter(item => item.parent === parentMenu.id );
-    const menuList = layout.list;
-
-    return {
-        menuList,
-        childList,
-        menu : menuList.filter(menu => menu.link === pathname)[0]
-    };
+const mapStateToProps = () => {
+    return {};
 }
 
 const mapDispatchProps = dispatch => ({
-    move: (location) => dispatch(push(location))
+
 });
 
 class LocalNavigationBar extends React.Component {
 
-    isSubMenu(item) {
-        return item.link ? false : true;
-    }
+    renderMenu(menu, opt = null){
 
-    getMenu(item) {
-        return (
-            <Menu.Item key={item.id}>
-                <NavLink to={ item.defaultLink ? item.defaultLink : item.link } activeClassName="active" >{item.name}</NavLink>
-            </Menu.Item>);
-    }
+        const width = opt ? opt.width : 100;
+        const crruent = service.getValue(this.props, 'currentMenu.id', false)
+            ?  (service.getValue(this.props, 'currentMenu.id') === menu.id ? 'on' : '')
+            : '';
 
-    getSubMenu(target) {
-        const subMenuId = target.id;
-        const childMenuList = this.props.menuList.filter(item => item.parent === subMenuId);
-        return (
-            <SubMenu key={subMenuId} title={<span><Icon type="user" />{target.name}</span>} >
-                {childMenuList.map(item => this.getMenu(item))}
-            </SubMenu>
+        return(
+            <Menu.Item
+                key={menu.id}
+                title={menu.name}
+                style={{width : `${width}%`}}
+                className={`${crruent}`}
+            >
+                <NavLink to={menu.link}>{menu.name}</NavLink>
+            </Menu.Item>
         )
     }
 
     render() {
-        const childList = this.props.childList;
-        const selectedKeys = this.props.menu ? this.props.menu.id : null;
-        const openKeys = this.props.menu ? this.props.menu.parent : null;
+        const { subMenu } = this.props;
 
         return (
-            <Menu mode="inline" defaultSelectedKeys={[selectedKeys]} defaultOpenKeys={[openKeys]} >
-                {childList && childList.map((item) => {
-                    return this.isSubMenu(item) ? (this.getSubMenu(item)) : (this.getMenu(item));
-                })}
-            </Menu>
+            <Sticky topOffset={1}>
+                {({style}) => {
+                    const newStyle = {
+                        ...style,
+                        top: 80,
+                    }
+                    return(
+                        <Menu
+                            mode="horizontal"
+                            className="local-navigation"
+                            style={{...newStyle, zIndex : 1}}>
+                            {subMenu.map(menu => {
+                                const width = 100 / subMenu.length;
+                                return this.renderMenu(menu, {width : width})
+                            })}
+                        </Menu>
+                    )
+                }}
+            </Sticky>
         );
     }
 }
