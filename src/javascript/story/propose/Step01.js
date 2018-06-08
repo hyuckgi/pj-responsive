@@ -47,8 +47,6 @@ class Step01 extends React.Component {
     constructor(props) {
         super(props);
 
-
-        this.onChange = this.onChange.bind(this);
 		this.errorToast = this.errorToast.bind(this);
 		this.makeModal = this.makeModal.bind(this);
 		this.onModalOk = this.onModalOk.bind(this);
@@ -109,10 +107,6 @@ class Step01 extends React.Component {
         }
     }
 
-    onChange(...args){
-        console.log("args", args);
-    }
-
     getButtons(){
         return [
             { id : FormButton.NEXT, label : "다음" }
@@ -130,7 +124,7 @@ class Step01 extends React.Component {
                         {...formItemLayout}
                         label="카테고리"
                     >
-                        {getFieldDecorator('category', {
+                        {getFieldDecorator('categoryNo', {
                             rules: [{ type: 'array', required: true, message: '카테고리를 선택하세요' }],
                         })(
                             <Cascader
@@ -143,12 +137,11 @@ class Step01 extends React.Component {
                         {...formItemLayout}
                         label="해시태그"
                     >
-                        {getFieldDecorator('hash', {
+                        {getFieldDecorator('hashTags', {
                         })(
                             <Select
                                 mode="tags"
                                 style={{ width: '100%' }}
-                                onChange={this.onChange}
                                 tokenSeparators={[',']}
                                 dropdownStyle={{display:'none'}}
                             >
@@ -159,7 +152,7 @@ class Step01 extends React.Component {
                     <FormItem
                         wrapperCol={{xs:{span: 24, offset: 0}, sm : {span : 20, offset : 4}}}
                     >
-                        {getFieldDecorator('agree', {
+                        {getFieldDecorator('isRegAgree', {
                             valuePropName: 'checked',
                             initialValue: true,
                         })(

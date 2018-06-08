@@ -6,6 +6,8 @@ import { Row, Col, Dropdown, Layout, Button, Menu, Icon } from 'antd';
 
 import imgLogo from '../../../../resource/commons/logo.png'
 
+import { path } from '../../../commons/configs';
+
 const { Header } = Layout;
 const menu = (
     <Menu>
@@ -26,7 +28,7 @@ class HeaderContainer extends React.Component {
 
 
     onClick() {
-        this.props.history.push('/');
+        this.props.history.push(path.main);
     }
 
     renderTabBar(){

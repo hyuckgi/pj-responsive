@@ -2,10 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { ButtonWrapper } from '../../commons/components';
-// import { service } from '../../commons/configs';
+import { upload } from '../../commons/api';
 import { FormButton } from '../../commons/types';
 
-import { Form, Input} from 'antd';
+import { Form, Input, Upload, Button, Icon } from 'antd';
 
 const FormItem = Form.Item;
 const { TextArea } = Input;
@@ -85,6 +85,14 @@ class Step02 extends React.Component {
         ];
     }
 
+	onChangeThumnail(...args){
+		console.log("args", args);
+	}
+
+	onRemove(...args){
+		console.log("args", args);
+	}
+
     render() {
         const { form } = this.props;
         const { getFieldDecorator } = form;
@@ -102,11 +110,22 @@ class Step02 extends React.Component {
                             <Input placeholder="스토리 제목" />
                         )}
                     </FormItem>
+					<FormItem
+                        {...formItemLayout}
+                        label="대표사진"
+                    >
+                        {getFieldDecorator('image', {
+                            rules: [{ required: true, message: '제목을 입력하세요' }],
+                        })(
+                            <Input placeholder="스토리 제목" />
+                        )}
+                    </FormItem>
                     <FormItem
                         {...formItemLayout}
                         label="소제목"
                     >
-                        {getFieldDecorator('sub-title', {
+                        {getFieldDecorator('contentsList.title', {
+							rules: [{ required: true, message: '소제목을 입력하세요' }],
                         })(
                             <Input placeholder="첫 문장이 가장 중요!" />
                         )}
@@ -115,25 +134,45 @@ class Step02 extends React.Component {
                         {...formItemLayout}
                         label="본문"
                     >
-                        <TextArea
-                            rows={4}
-                            defaultValue={'본문'}
-                        />
+						{getFieldDecorator('contentsList.contents', {
+							rules: [{ required: true, message: '본문을 입력하세요' }],
+							initialValue : '본문'
+                        })(
+							<TextArea
+	                            rows={4}
+	                        />
+                        )}
                     </FormItem>
                     <FormItem
                         {...formItemLayout}
                         label="관련사진"
                     >
-                        {getFieldDecorator('pic', {
+                        {getFieldDecorator('contentsList.images', {
                         })(
-                            <Input placeholder="첫 문장이 가장 중요!" />
+							<Upload
+								action="http://api.shell.pe.kr/api/files/upload"
+								headers={{
+									'X-Auth-Token' : localStorage.getItem('token'),
+									'Content-Type': 'multipart/form-data',
+								}}
+								listType="picture-card"
+								fileList={[]}
+								onChange={this.onChangeThumnail}
+								onPreview={this.handlePreview}
+								onRemove={this.onRemove}
+							>
+								<div>
+							        <Icon type="plus" />
+							        <div className="ant-upload-text">Upload</div>
+								</div>
+							</Upload>
                         )}
                     </FormItem>
                     <FormItem
                         {...formItemLayout}
                         label="동영상"
                     >
-                        {getFieldDecorator('mov', {
+                        {getFieldDecorator('contentsList.videos', {
                         })(
                             <Input placeholder="첫 문장이 가장 중요!" />
                         )}

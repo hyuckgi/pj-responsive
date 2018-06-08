@@ -307,7 +307,9 @@ const getCSRFToken = () => {
 const upload = {
     getProps : (fileList, type) => ({
         action: `${APIHost}/api/files/upload`,
-        headers: getCSRFToken(),
+        headers: {
+			'X-Auth-Token' : localStorage.getItem('token'),
+		},
         data: {
 			type : type,
 		},

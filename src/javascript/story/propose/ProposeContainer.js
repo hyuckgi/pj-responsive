@@ -26,6 +26,7 @@ class ProposeContainer extends React.Component {
     }
 
     onClickNext(params){
+        console.log("params", params);
         const steps = service.getValue(values, 'propose.steps', []);
         const { current } = this.state;
         const next = (current + 1) > (steps.length - 1) ? (steps.length - 1) : current + 1;

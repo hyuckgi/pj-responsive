@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
+import { withRouter } from 'react-router';
 import { DesktopLayout, MobileLayout } from './commons/components/response';
 import { code as action } from './redux/actions';
 
@@ -39,6 +39,14 @@ class App extends React.Component {
         this.props.initialize();
     }
 
+    componentDidUpdate(prevProps) {
+        if(JSON.parse(JSON.stringify(prevProps.location)) !==  JSON.parse(JSON.stringify(this.props.location))){
+            if(prevProps.location.pathname !== this.props.location.pathname){
+                window.scrollTo(0, 0);
+            }
+        }
+    }
+
     render() {
         return (
             <div className="app-container">
@@ -53,4 +61,4 @@ class App extends React.Component {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchProps)(App);
+export default withRouter(connect(mapStateToProps, mapDispatchProps)(App));
