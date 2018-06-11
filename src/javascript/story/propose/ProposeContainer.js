@@ -16,7 +16,7 @@ class ProposeContainer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            current : 0,
+            current : 2,
         };
 
         this.onClickNext = this.onClickNext.bind(this);

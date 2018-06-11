@@ -27,7 +27,8 @@ const formItemLayout = {
 		sm: {
 			span: 20
 		}
-	}
+	},
+	colon : false
 };
 
 const mapStateToProps = ({fetch, code}) => {
@@ -46,6 +47,10 @@ class Step01 extends React.Component {
 
     constructor(props) {
         super(props);
+
+		this.state = {
+			disabled : true,
+		}
 
 		this.errorToast = this.errorToast.bind(this);
 		this.makeModal = this.makeModal.bind(this);
@@ -73,6 +78,9 @@ class Step01 extends React.Component {
         if(!errors){
             return;
         }
+		this.setState({
+			disabled : true,
+		})
 
         const messages = Object.keys(errors)
             .map(item => {
@@ -90,8 +98,23 @@ class Step01 extends React.Component {
 
 		form.validateFields((errors, value) => {
 
+			if(!value.isRegAgree){
+				return Modal.warning({
+					title: '스토리 등록 기준 동의',
+					content: '스토리 등록 기준에 동의해주세요.',
+				});
+			}
+
 			if(!errors){
-				return stepProps.onClickNext(value);
+				this.setState({
+					disabled : false,
+				})
+				const newValue = {
+					...value,
+					categoryNo : value.category.slice(-1).find((item) => item),
+				};
+				delete newValue['category'];
+				return stepProps.onClickNext(newValue);
 			}
 
 			return this.errorToast(errors);
@@ -108,8 +131,9 @@ class Step01 extends React.Component {
     }
 
     getButtons(){
+		const { disabled } = this.state;
         return [
-            { id : FormButton.NEXT, label : "다음" }
+            { id : FormButton.NEXT, label : "다음", disabled : disabled}
         ];
     }
 
@@ -124,7 +148,7 @@ class Step01 extends React.Component {
                         {...formItemLayout}
                         label="카테고리"
                     >
-                        {getFieldDecorator('categoryNo', {
+                        {getFieldDecorator('category', {
                             rules: [{ type: 'array', required: true, message: '카테고리를 선택하세요' }],
                         })(
                             <Cascader

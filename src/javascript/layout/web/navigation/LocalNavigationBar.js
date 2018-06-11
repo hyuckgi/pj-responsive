@@ -2,7 +2,6 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { Sticky } from 'react-sticky';
 import { Menu } from 'antd';
 import { service } from '../../../commons/configs';
 

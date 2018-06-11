@@ -317,8 +317,8 @@ const upload = {
         action: `${APIHost}/api/file/upload`,
         headers: {
 			'X-Auth-Token' : localStorage.getItem('token'),
-            'content-type' : 'multipart/form-data',
 		},
+		showUploadList : {showPreviewIcon : false},
         withCredentials: false
     }),
     convertObject

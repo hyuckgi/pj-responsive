@@ -10,8 +10,7 @@ import { Agreement } from './agree';
 import { SelectCountry } from './country';
 import { CustomPicker } from './picker';
 // import { Address } from './address'
-
-// import { CustomUpload } from './upload';
+import { AccountContainer } from './account';
 
 export{
 
@@ -28,5 +27,5 @@ export{
     CertifyButton,
     SelectCountry,
     CustomPicker,
-    // CustomUpload
+    AccountContainer
 }

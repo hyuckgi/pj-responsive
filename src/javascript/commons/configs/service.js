@@ -21,6 +21,19 @@ export const service = {
         return value;
     },
 
+    getFileNo : (fileList) => {
+        if(!fileList.length){
+            return [];
+        }
+
+        return fileList.map(item => {
+            const fileNo = service.getValue(item, 'response.data.temp_file_no', false);
+            if(fileNo){
+                return fileNo;
+            }
+        })
+    },
+
     getUserName : (actor) => {
         if(!Object.keys(actor).length){
             return '';

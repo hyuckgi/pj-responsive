@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { ButtonWrapper } from '../../commons/components';
-import { APICaller, upload } from '../../commons/api';
+import { upload } from '../../commons/api';
+import { service } from '../../commons/configs';
 import { FormButton } from '../../commons/types';
 
 import { Form, Input, Button, Upload, Icon } from 'antd';
@@ -26,7 +27,8 @@ const formItemLayout = {
 		sm: {
 			span: 20
 		}
-	}
+	},
+	colon : false
 };
 
 
@@ -47,39 +49,65 @@ class Step02 extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+			file : {},
             image : [],
-            fileList : []
+			images : [],
+			videos : [],
+			disabled : true,
         }
 
+
         this.onChange = this.onChange.bind(this);
-        this.onProgress = this.onProgress.bind(this);
-        this.customRequest = this.customRequest.bind(this);
-        this.getData = this.getData.bind(this);
         this.beforeUpload = this.beforeUpload.bind(this);
-        // this.onSuccess = this.onSuccess.bind(this);
+		this.onRemove = this.onRemove.bind(this);
     }
 
     onChange(type, params) {
-
-        console.log("onChange", params);
-        const file = params.file;
-        const newState = {};
-        if(file.response) {
-            newState[type] = [];
-        } else {
-            newState[type] = params.fileList;
-        }
-        this.setState(newState);
+        return this.setState({
+			[type] : params.fileList
+		});
     }
 
-    onSuccess(data){
-        console.log('onSuccess', data);
-    }
+	onRemove(type, file){
+		const target = service.getValue(this.state, `${type}`, false);
+
+		if(!target){
+			return;
+		}
+		return true;
+	}
 
     onClickNext(){
-        const { stepProps } = this.props;
+        const { stepProps, form } = this.props;
+		form.validateFields((errors, value) => {
 
-        stepProps.onClickNext();
+			if(!errors){
+
+				this.setState({
+					disabled : false,
+				})
+
+				const newContent = {
+					...value.contentsList,
+					imageNoList : service.getFileNo(service.getValue(value, 'contentsList.images.fileList'), []),
+					videoNoList : service.getFileNo(service.getValue(value, 'contentsList.videos.fileList'), []),
+				};
+				delete newContent['images'];
+				delete newContent['videos'];
+
+				const newValue = {
+					contentsList : [newContent],
+					imageNo : service.getFileNo(service.getValue(value, 'image.fileList'), []).find(item => item),
+					title : value.title,
+				}
+
+				return stepProps.onClickNext(newValue);
+			}else{
+				this.setState({
+					disabled : true,
+				})
+			}
+		});
     }
 
     onClickPrev(){
@@ -88,56 +116,16 @@ class Step02 extends React.Component {
         stepProps.onClickPrev();
     }
 
-    getData(file){
-        console.log("file", file);
-        return {
-            type : 11,
-            file : file,
-            filename : file.name
-        }
-    }
+    beforeUpload(type, params){
+		const file = params.file;
 
-    beforeUpload(file){
         this.setState({
-            file : file,
-            filename : file.name
+            file : {
+				...this.state.file,
+				[type] : file,
+			},
         });
-
         return true;
-    }
-
-    onProgress(...args){
-        // console.log('onProgress', `${percent}%`, file.name);
-        console.log('onProgress', args);
-    }
-
-    customRequest2(params){
-        console.log('customRequest', params);
-    }
-
-    customRequest(params){
-
-        console.log('customRequest', params);
-        const { file } = params;
-        params.onSuccess = this.onSuccess;
-
-        APICaller.upload(file, {
-            ...params.header,
-            ...params.withCredentials,
-            onUploadProgress : this.onProgress.bind(this)
-        })
-        .then(({data}) => {
-            this.onSuccess(data)
-        })
-        .catch((err) => {
-            console.log("err", err);
-        })
-
-        return {
-            abort(...args){
-                console.log('obj', args);
-            }
-        }
     }
 
     onClickButton(id){
@@ -152,14 +140,16 @@ class Step02 extends React.Component {
     }
 
     getButtons(){
+		const { disabled } = this.state;
         return [
-            { id : FormButton.PREV, label : "이전" },
-            { id : FormButton.NEXT, label : "다음", style : { marginLeft: '5px'}},
+            { id : FormButton.PREV, label : "이전", type : 'default'  },
+            { id : FormButton.NEXT, label : "다음", style : { marginLeft: '5px'}, disabled : disabled},
         ];
     }
 
     render() {
         const { form } = this.props;
+		const { file, image, images, videos } = this.state;
         const { getFieldDecorator } = form;
 
         return (
@@ -180,9 +170,29 @@ class Step02 extends React.Component {
                         label="대표사진"
                     >
                         {getFieldDecorator('image', {
-                            rules: [{ required: true, message: '제목을 입력하세요' }],
                         })(
-                            <Input placeholder="스토리 제목" />
+							<Upload
+								{...upload.getProps(image)}
+								accept='image/*'
+                                fileList={image}
+								listType="picture-card"
+                                onChange={(params) => this.onChange('image', params)}
+                                beforeUpload={(params) => this.beforeUpload('image', params)}
+								onRemove={(params) => this.onRemove('image', params)}
+                                data={{
+                                    type : 11,
+									file : file['image'],
+									filename : service.getValue(file, 'image.name', '')
+                                }}
+							>
+								{image.length < 1
+									? (<div>
+								        <Icon type="plus" />
+								        <div className="ant-upload-text">Upload</div>
+									 </div>)
+									: null
+								}
+							</Upload>
                         )}
                     </FormItem>
                     <FormItem
@@ -192,7 +202,7 @@ class Step02 extends React.Component {
                         {getFieldDecorator('contentsList.title', {
 							rules: [{ required: true, message: '소제목을 입력하세요' }],
                         })(
-                            <Input placeholder="첫 문장이 가장 중요!" />
+                            <Input placeholder="소제목을 입력하세요" />
                         )}
                     </FormItem>
                     <FormItem
@@ -200,61 +210,70 @@ class Step02 extends React.Component {
                         label="본문"
                     >
 						{getFieldDecorator('contentsList.contents', {
-							rules: [{ required: true, message: '본문을 입력하세요' }],
-							initialValue : '본문'
+							rules: [{ required: true, message: '본문을 입력하세요' }]
                         })(
 							<TextArea
-	                            rows={4}
+								placeholder="본문을 입력하세요"
+	                            rows={8}
 	                        />
                         )}
                     </FormItem>
-                    <FormItem
+					<FormItem
                         {...formItemLayout}
                         label="관련사진"
                     >
                         {getFieldDecorator('contentsList.images', {
                         })(
 							<Upload
+								{...upload.getProps(images)}
 								accept='image/*'
-                                fileList={this.state.image}
+                                fileList={images}
 								listType="picture-card"
-                                onChange={(params) => this.onChange('image', params)}
-                                onSuccess={this.onSuccess}
-                                name={this.state.filename}
-                                beforeUpload={this.beforeUpload.bind(this)}
+                                onChange={(params) => this.onChange('images', params)}
+                                beforeUpload={(params) => this.beforeUpload('images', params)}
+								onRemove={(params) => this.onRemove('images', params)}
                                 data={{
                                     type : 11,
-                                    file : this.state.file,
-                                    filename : this.state.filename
+									file : this.state.file['images'],
+									filename : service.getValue(this.state, 'file.images.name', '')
                                 }}
-                                {...upload.getProps(this.state.image)}
 							>
-								<div>
-							        <Icon type="plus" />
-							        <div className="ant-upload-text">Upload</div>
-								</div>
+								{images.length < 4
+									? (<div>
+								        <Icon type="plus" />
+								        <div className="ant-upload-text">Upload</div>
+									 </div>)
+									: null
+								}
 							</Upload>
                         )}
                     </FormItem>
-                    <FormItem
+					<FormItem
                         {...formItemLayout}
-                        label="관련사진"
+                        label="동영상"
                     >
-                        {getFieldDecorator('contentsList.image', {
+                        {getFieldDecorator('contentsList.videos', {
                         })(
 							<Upload
-                                {...upload.getProps([])}
-                                customRequest={this.customRequest}
-                                fileList={this.state.image}
-								accept='image/*'
-								listType="picture-card"
-                                onChange={(params) => this.onChange('image', params)}
-                                data={this.getData}
+								{...upload.getProps(videos)}
+								accept='video/*'
+                                fileList={videos}
+								listType="text"
+                                onChange={(params) => this.onChange('videos', params)}
+                                beforeUpload={(params) => this.beforeUpload('videos', params)}
+								onRemove={(params) => this.onRemove('videos', params)}
+                                data={{
+                                    type : 12,
+									file : this.state.file['videos'],
+									filename : service.getValue(this.state, 'file.videos.name', '')
+                                }}
 							>
-								<div>
-							        <Icon type="plus" />
-							        <div className="ant-upload-text">Upload</div>
-								</div>
+								{videos.length < 4
+									? (<Button>
+								        <Icon type="upload" />Upload
+									 </Button>)
+									: null
+								}
 							</Upload>
                         )}
                     </FormItem>

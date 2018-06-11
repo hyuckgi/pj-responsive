@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { ButtonWrapper } from '../../commons/components';
-// import { service } from '../../commons/configs';
+import { ButtonWrapper, AccountContainer } from '../../commons/components';
+import { service } from '../../commons/configs';
 import { FormButton } from '../../commons/types';
 
 import { Form, Input, Radio} from 'antd';
@@ -17,7 +17,7 @@ const formItemLayout = {
 			span: 24
 		},
 		sm: {
-			span: 4
+			span: 6
 		}
 	},
 	wrapperCol: {
@@ -25,9 +25,10 @@ const formItemLayout = {
 			span: 24
 		},
 		sm: {
-			span: 20
+			span: 18
 		}
-	}
+	},
+	colon : false
 };
 
 
@@ -47,19 +48,44 @@ class Step03 extends React.Component {
 
     constructor(props) {
         super(props);
-
+		this.state = {
+			disabled : true,
+		}
 
         this.onChange = this.onChange.bind(this);
+		this.onSubmit = this.onSubmit.bind(this);
+		this.onClickPrev = this.onClickPrev.bind(this);
     }
 
     onSubmit(){
-        const { stepProps } = this.props;
+        const { stepProps, form } = this.props;
+		form.validateFields((errors, value) => {
+			console.log("value", value);
+			if(!errors){
+				this.setState({
+					disabled : false
+				})
+			}else{
+				this.setState({
+					disabled : true
+				})
+			}
+
+		});
 
         stepProps.onSubmit();
     }
 
+	onClickPrev(){
+		const { stepProps } = this.props;
+
+		stepProps.onClickPrev();
+	}
+
     onClickButton(id){
         switch (id) {
+			case FormButton.PREV:
+                return this.onClickPrev();
             case FormButton.CONFIRM:
                 return this.onSubmit();
             default:
@@ -72,8 +98,10 @@ class Step03 extends React.Component {
     }
 
     getButtons(){
+		const { disabled } = this.state;
         return [
-            { id : FormButton.CONFIRM, label : "설정완료"},
+			{ id : FormButton.PREV, label : '이전', type : 'default' },
+            { id : FormButton.CONFIRM, label : "설정완료",  style : { marginLeft: '5px'}, disabled : disabled},
         ];
     }
 
@@ -88,14 +116,14 @@ class Step03 extends React.Component {
                         {...formItemLayout}
                         label="희망 모금기간"
                     >
-                        {getFieldDecorator('period', {
-                            initialValue : "a",
-                            rules: [{ required: true, message: '제목을 입력하세요' }],
+                        {getFieldDecorator('fundraisingPeriod', {
+                            initialValue : "30",
+                            rules: [{ required: true, message: '희망 모금기간을 선택하세요' }],
                         })(
                             <RadioGroup>
-                                <Radio value="a">30일</Radio>
-                                <Radio value="b">60일</Radio>
-                                <Radio value="c">90일</Radio>
+                                <Radio value="30">30일</Radio>
+                                <Radio value="60">60일</Radio>
+                                <Radio value="90">90일</Radio>
                             </RadioGroup>
                         )}
                     </FormItem>
@@ -103,25 +131,25 @@ class Step03 extends React.Component {
                         {...formItemLayout}
                         label="희망 모금금액"
                     >
-                        {getFieldDecorator('price', {
+                        {getFieldDecorator('goalDonation', {
+							rules: [{ required: true, message: '희망 모금금액을 입력하세요' }],
                         })(
-                            <Input type="number" placeholder="" />
+                            <Input type="number" placeholder="희망 모금금액" />
                         )}
                     </FormItem>
                     <FormItem
                         {...formItemLayout}
                         label="계좌번호"
                     >
-                        {getFieldDecorator('account', {
-                        })(
-                            <Input placeholder="첫 문장이 가장 중요!" />
-                        )}
+						<AccountContainer form={form} decorator="accountData" />
+
                     </FormItem>
                     <FormItem
                         {...formItemLayout}
                         label="대표 전화번호"
                     >
-                        {getFieldDecorator('phone', {
+                        {getFieldDecorator('telno', {
+							rules: [{ required: true, message: '대표 전화번호를 입력하세요' }],
                         })(
                             <Input placeholder="첫 문장이 가장 중요!" />
                         )}
