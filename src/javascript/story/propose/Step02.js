@@ -53,9 +53,7 @@ class Step02 extends React.Component {
             image : [],
 			images : [],
 			videos : [],
-			disabled : true,
         }
-
 
         this.onChange = this.onChange.bind(this);
         this.beforeUpload = this.beforeUpload.bind(this);
@@ -82,11 +80,6 @@ class Step02 extends React.Component {
 		form.validateFields((errors, value) => {
 
 			if(!errors){
-
-				this.setState({
-					disabled : false,
-				})
-
 				const newContent = {
 					...value.contentsList,
 					imageNoList : service.getFileNo(service.getValue(value, 'contentsList.images.fileList'), []),
@@ -102,10 +95,6 @@ class Step02 extends React.Component {
 				}
 
 				return stepProps.onClickNext(newValue);
-			}else{
-				this.setState({
-					disabled : true,
-				})
 			}
 		});
     }
@@ -140,10 +129,10 @@ class Step02 extends React.Component {
     }
 
     getButtons(){
-		const { disabled } = this.state;
+
         return [
             { id : FormButton.PREV, label : "이전", type : 'default'  },
-            { id : FormButton.NEXT, label : "다음", style : { marginLeft: '5px'}, disabled : disabled},
+            { id : FormButton.NEXT, label : "다음", style : { marginLeft: '5px'}},
         ];
     }
 

@@ -48,9 +48,6 @@ class Step01 extends React.Component {
     constructor(props) {
         super(props);
 
-		this.state = {
-			disabled : true,
-		}
 
 		this.errorToast = this.errorToast.bind(this);
 		this.makeModal = this.makeModal.bind(this);
@@ -78,9 +75,6 @@ class Step01 extends React.Component {
         if(!errors){
             return;
         }
-		this.setState({
-			disabled : true,
-		})
 
         const messages = Object.keys(errors)
             .map(item => {
@@ -106,9 +100,6 @@ class Step01 extends React.Component {
 			}
 
 			if(!errors){
-				this.setState({
-					disabled : false,
-				})
 				const newValue = {
 					...value,
 					categoryNo : value.category.slice(-1).find((item) => item),
@@ -131,9 +122,8 @@ class Step01 extends React.Component {
     }
 
     getButtons(){
-		const { disabled } = this.state;
         return [
-            { id : FormButton.NEXT, label : "다음", disabled : disabled}
+            { id : FormButton.NEXT, label : "다음"}
         ];
     }
 

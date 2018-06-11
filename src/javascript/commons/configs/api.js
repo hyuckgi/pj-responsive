@@ -28,6 +28,12 @@ export const api = {
         }
     },
 
+    postStory : (params = null) => ({
+        url : `/api/story/`,
+        params : {...params}
+    }),
+
+
 
 
 

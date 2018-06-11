@@ -5,7 +5,7 @@ import { ButtonWrapper, AccountContainer } from '../../commons/components';
 import { service } from '../../commons/configs';
 import { FormButton } from '../../commons/types';
 
-import { Form, Input, Radio} from 'antd';
+import { Form, Input, Radio, InputNumber } from 'antd';
 
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
@@ -48,11 +48,7 @@ class Step03 extends React.Component {
 
     constructor(props) {
         super(props);
-		this.state = {
-			disabled : true,
-		}
 
-        this.onChange = this.onChange.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
 		this.onClickPrev = this.onClickPrev.bind(this);
     }
@@ -62,18 +58,9 @@ class Step03 extends React.Component {
 		form.validateFields((errors, value) => {
 			console.log("value", value);
 			if(!errors){
-				this.setState({
-					disabled : false
-				})
-			}else{
-				this.setState({
-					disabled : true
-				})
+				return stepProps.onSubmit(value);
 			}
-
 		});
-
-        stepProps.onSubmit();
     }
 
 	onClickPrev(){
@@ -93,15 +80,11 @@ class Step03 extends React.Component {
         }
     }
 
-    onChange(...args){
-        console.log("args", args);
-    }
-
     getButtons(){
-		const { disabled } = this.state;
+
         return [
 			{ id : FormButton.PREV, label : '이전', type : 'default' },
-            { id : FormButton.CONFIRM, label : "설정완료",  style : { marginLeft: '5px'}, disabled : disabled},
+            { id : FormButton.CONFIRM, label : "설정완료",  style : { marginLeft: '5px'}},
         ];
     }
 
@@ -117,13 +100,13 @@ class Step03 extends React.Component {
                         label="희망 모금기간"
                     >
                         {getFieldDecorator('fundraisingPeriod', {
-                            initialValue : "30",
+                            initialValue : 30,
                             rules: [{ required: true, message: '희망 모금기간을 선택하세요' }],
                         })(
                             <RadioGroup>
-                                <Radio value="30">30일</Radio>
-                                <Radio value="60">60일</Radio>
-                                <Radio value="90">90일</Radio>
+                                <Radio value={30}>30일</Radio>
+                                <Radio value={60}>60일</Radio>
+                                <Radio value={90}>90일</Radio>
                             </RadioGroup>
                         )}
                     </FormItem>
@@ -134,7 +117,14 @@ class Step03 extends React.Component {
                         {getFieldDecorator('goalDonation', {
 							rules: [{ required: true, message: '희망 모금금액을 입력하세요' }],
                         })(
-                            <Input type="number" placeholder="희망 모금금액" />
+                            <InputNumber
+								formatter={value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+								min={0}
+								step={10000}
+								style={{width : '100%'}}
+								parser={value => value.replace(/\$\s?|(,*)/g, '')}
+								placeholder="희망 모금금액"
+							/>
                         )}
                     </FormItem>
                     <FormItem

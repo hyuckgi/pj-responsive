@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { service } from '../../commons/configs'
+import { APICaller } from '../../commons/api'
+import { service, api } from '../../commons/configs'
 import { values } from '../configs';
 
 import { Row, Col,  Tabs } from 'antd';
@@ -16,7 +17,7 @@ class ProposeContainer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            current : 2,
+            current : 0,
         };
 
         this.onClickNext = this.onClickNext.bind(this);
@@ -26,7 +27,6 @@ class ProposeContainer extends React.Component {
     }
 
     onClickNext(params){
-        console.log("params", params);
         const steps = service.getValue(values, 'propose.steps', []);
         const { current } = this.state;
         const next = (current + 1) > (steps.length - 1) ? (steps.length - 1) : current + 1;
@@ -51,6 +51,14 @@ class ProposeContainer extends React.Component {
 
     onSubmit(data){
         console.log("onSubmit", data);
+
+        const { params } = this.state;
+        const obj = api.postStory({...params, ...data});
+        return APICaller.post(obj.url, obj.params)
+            .then((...args) => {
+                console.log("args", args);
+            })
+        
     }
 
     onChange(tab, idx){
