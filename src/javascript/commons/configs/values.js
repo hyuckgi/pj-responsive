@@ -48,6 +48,23 @@ const mock = {
     }),
 }
 
+const story = {
+    status : [
+        {
+            path : 'ready',
+            status : 1
+        },
+        {
+            path : 'progress',
+            status : 2
+        },
+        {
+            path : 'complete',
+            status : 3
+        }
+    ]
+}
+
 const requestType = {
     'FIRST' : {
         label: '약관동의', step: 1,
@@ -98,5 +115,6 @@ export {
     platform,
     requestType,
     countries,
-    propose
+    propose,
+    story
 };

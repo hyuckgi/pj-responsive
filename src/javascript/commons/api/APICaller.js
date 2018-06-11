@@ -249,14 +249,22 @@ class APICaller {
 		set hostName(value) { config.hostName = value;},
 		get hostName() { return APIHost}
     };
-    static upload(file) {
-        const options = {headers: getCSRFToken(), 'content-type': 'multipart/form-data', withCredentials: true}
+    static upload(file, option = {}) {
+        const options = {
+            ...option,
+            // headers: {
+    		// 	'X-Auth-Token' : localStorage.getItem('token'),
+            //     'Content-Type' : 'multipart/form-data',
+    		// },
+            // withCredentials: false
+        }
 
         const formData = new FormData();
-        formData.append('file', file, file.name);
-        formData.append('model_type', 3);
+        formData.append('file', file);
+        formData.append('filename', file.name);
+        formData.append('type', 11);
 
-        return APICaller.post('/aux/files/', formData, options);
+        return APICaller.post('/api/file/upload', formData, options);
     }
 }
 
@@ -293,27 +301,25 @@ if (true) {
 }
 
 const getCSRFToken = () => {
-    let token;
-    for (let cookie of document.cookie.split('; ')) {
-        let [name, value] = cookie.split("=");
-        if(name === 'XSRF-TOKEN') {
-            token = decodeURIComponent(value);
-            break;
-        }
-    }
-    return {'X-CSRFToken' : token};
+    // let token;
+    // for (let cookie of document.cookie.split('; ')) {
+    //     let [name, value] = cookie.split("=");
+    //     if(name === 'XSRF-TOKEN') {
+    //         token = decodeURIComponent(value);
+    //         break;
+    //     }
+    // }
+    return {'X-Auth-Token' : localStorage.getItem('token')};
 };
 
 const upload = {
-    getProps : (fileList, type) => ({
-        action: `${APIHost}/api/files/upload`,
+    getProps : (fileList) => ({
+        action: `${APIHost}/api/file/upload`,
         headers: {
 			'X-Auth-Token' : localStorage.getItem('token'),
+            'content-type' : 'multipart/form-data',
 		},
-        data: {
-			type : type,
-		},
-        withCredentials: true
+        withCredentials: false
     }),
     convertObject
 };

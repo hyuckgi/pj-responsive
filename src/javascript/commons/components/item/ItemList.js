@@ -7,19 +7,20 @@ import { DesktopLayout, MobileLayout } from '../response';
 
 import { Row, Col } from 'antd';
 import { ListView } from 'antd-mobile';
-
-import { values, service } from '../../configs';
+import { fetch } from '../../../redux/actions';
+import { values, service, api } from '../../configs';
 import Item from './Item';
 
 
 const mapStateToProps = ({fetch}) => {
-    const data = service.getValue(values, 'mock.stories', []);
+    const data = service.getValue(fetch, 'list.list', []);
     return {
         data
     }
 };
 
 const mapDispatchProps = dispatch => ({
+    getList : (url, params) => dispatch(fetch.list(url, params)),
     multipleList: (list) => dispatch(fetch.multipleList(list)),
     move: (location) => dispatch(push(location)),
 });
@@ -40,7 +41,11 @@ class ItemList extends React.Component {
 
         this.state = {
             dataSource : dataSource.cloneWithRows(list),
-            list : list
+            list : list,
+            query : {
+                page : 1,
+                size : 10
+            }
         };
 
         this.renderCard = this.renderCard.bind(this);
@@ -48,11 +53,26 @@ class ItemList extends React.Component {
     }
 
     componentDidMount() {
-        const { category } = this.props || false;
+        const { path } = this.props || false;
 
-        if(!category){
+        if(!path){
             return;
         };
+
+        this.getList();
+    }
+
+    getList(){
+        const { path } = this.props;
+        const { query } = this.state;
+        const { status } = values.story.status.filter(item => item.path === path).find(item => item);
+
+        const obj = api.getList({
+            status : status,
+            order : 0,
+        }, ...query);
+
+        return this.props.getList(obj.url, obj.params);
     }
 
     renderCard(){
@@ -109,11 +129,10 @@ class ItemList extends React.Component {
             <div className="list-container">
                 <DesktopLayout>
                     <Row type="flex" justify="start" gutter={16}>
-                        {this.renderCard(values.platform.PC)}
+                        {this.renderCard()}
                     </Row>
                 </DesktopLayout>
                 <MobileLayout>
-
                     <ListView
                         initialListSize={5}
                         dataSource={dataSource}

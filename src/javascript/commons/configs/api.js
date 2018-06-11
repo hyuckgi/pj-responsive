@@ -14,6 +14,19 @@ export const api = {
 
     // category
 
+    //list
+    getList : (params = null, page = 1, size = 10, categoryNo = null) => {
+        if(categoryNo){
+            return {
+                url : `/api/story/category/${categoryNo}/page/${page}/size/${size}`,
+                params : {...params}
+            }
+        }
+        return{
+            url : `/api/story/page/${page}/size/${size}`,
+            params : {...params}
+        }
+    },
 
 
 

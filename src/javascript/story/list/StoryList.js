@@ -21,7 +21,7 @@ class StoryList extends React.Component {
         const { type } = service.getValue(this.props, 'match.params');
 
         return (
-            <ItemList count={4} category={type} />
+            <ItemList count={4} path={type} />
         );
     }
 

@@ -6425,7 +6425,7 @@ rc-trigger@^2.2.0, rc-trigger@^2.2.2, rc-trigger@^2.3.0:
     rc-animate "2.x"
     rc-util "^4.4.0"
 
-rc-upload@~2.4.0:
+rc-upload@^2.4.4, rc-upload@~2.4.0:
   version "2.4.4"
   resolved "https://registry.yarnpkg.com/rc-upload/-/rc-upload-2.4.4.tgz#28e1e6a3e44d1b1f92e57e21927cfa2763ac2a21"
   dependencies:

@@ -11,6 +11,8 @@ import { SelectCountry } from './country';
 import { CustomPicker } from './picker';
 // import { Address } from './address'
 
+// import { CustomUpload } from './upload';
+
 export{
 
     // EventCarousel,
@@ -25,5 +27,6 @@ export{
     Agreement,
     CertifyButton,
     SelectCountry,
-    CustomPicker
+    CustomPicker,
+    // CustomUpload
 }
