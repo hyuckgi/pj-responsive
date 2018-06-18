@@ -38,6 +38,8 @@ class Item extends React.Component {
     render() {
         const { item, platform } = this.props;
 
+        console.log("item", item);
+
         if(platform === values.platform.PC){
             return(
                 <div className="item" onClick={this.onClick.bind(this, item)}>

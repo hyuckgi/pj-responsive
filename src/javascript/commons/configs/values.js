@@ -51,6 +51,10 @@ const mock = {
 const story = {
     status : [
         {
+            path : 'all',
+            status : 0
+        },
+        {
             path : 'ready',
             status : 1
         },
@@ -62,7 +66,21 @@ const story = {
             path : 'complete',
             status : 3
         }
-    ]
+    ],
+    order : [
+        {
+            label : '추천순',
+            value : 1,
+        },
+        {
+            label : '최신순',
+            value : 0,
+        },
+        {
+            label : '종료임박',
+            value : 2,
+        },
+    ],
 }
 
 const requestType = {

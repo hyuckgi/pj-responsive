@@ -1,11 +1,10 @@
 import {layout as type, security as securityType} from '../types';
 
 const list = [
-    {id: '1000000', name: '윙크소개',  level: 0,  link:'/story', defaultLink: '/story/list/progress', idx : 2},
-    {id: '1010000', name: '연령별 학습', link: '/story/list/ready', level: 1, parent: '1000000'},
-    {id: '1020000', name: '윙크 한눈에 보기', link: '/story/list/progress', level: 1, parent: '1000000'},
-    {id: '1030000', name: '과목별 학습', link: '/story/list/complete', level: 1, parent: '1000000'},
-
+    {id: '1000000', name: '윙크소개',  level: 0,  link:'/story', defaultLink: '/story/list/progress/0', idx : 2},
+    {id: '1010000', name: '연령별 학습', link: '/story/list/ready/0', level: 1, parent: '1000000'},
+    {id: '1020000', name: '윙크 한눈에 보기', link: '/story/list/progress/0', level: 1, parent: '1000000'},
+    {id: '1030000', name: '과목별 학습', link: '/story/list/complete/0', level: 1, parent: '1000000'},
 
     {id: '2000000', name: '우리아이 현황',  level: 0, link:'/mykids', idx : 3, defaultLink : '/mykids/abc'},
     {id: '2010000', name: '우리아이 현황1',  level: 1, link:'/mykids/abc', parent: '2000000'},

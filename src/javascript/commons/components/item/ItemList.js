@@ -7,21 +7,16 @@ import { DesktopLayout, MobileLayout } from '../response';
 
 import { Row, Col } from 'antd';
 import { ListView } from 'antd-mobile';
-import { fetch } from '../../../redux/actions';
 import { values, service, api } from '../../configs';
 import Item from './Item';
 
 
 const mapStateToProps = ({fetch}) => {
-    const data = service.getValue(fetch, 'list.list', []);
     return {
-        data
     }
 };
 
 const mapDispatchProps = dispatch => ({
-    getList : (url, params) => dispatch(fetch.list(url, params)),
-    multipleList: (list) => dispatch(fetch.multipleList(list)),
     move: (location) => dispatch(push(location)),
 });
 
@@ -29,50 +24,20 @@ const dataSource = new ListView.DataSource({
     rowHasChanged: (row1, row2) => row1 !== row2,
 });
 
-
 class ItemList extends React.Component {
 
     constructor(props) {
         super(props);
 
-        const list = this.props.mark === 'main'
-                    ? this.props.data.filter(item => item.mark === this.props.mark)
-                    : this.props.data.filter(item => item.category === this.props.category);
+        const list = service.getValue(this.props, 'data.list', []);
 
         this.state = {
             dataSource : dataSource.cloneWithRows(list),
             list : list,
-            query : {
-                page : 1,
-                size : 10
-            }
         };
 
         this.renderCard = this.renderCard.bind(this);
         this.renderMCard = this.renderMCard.bind(this);
-    }
-
-    componentDidMount() {
-        const { path } = this.props || false;
-
-        if(!path){
-            return;
-        };
-
-        this.getList();
-    }
-
-    getList(){
-        const { path } = this.props;
-        const { query } = this.state;
-        const { status } = values.story.status.filter(item => item.path === path).find(item => item);
-
-        const obj = api.getList({
-            status : status,
-            order : 0,
-        }, ...query);
-
-        return this.props.getList(obj.url, obj.params);
     }
 
     renderCard(){
@@ -80,10 +45,16 @@ class ItemList extends React.Component {
         const { list } = this.state;
 
         if(list.length){
-            return list.map(item => {
-                return <Col span={24 / count} key={item.id}><Item item={item} platform={values.platform.PC} /></Col>
+            return list.map((item, inx) => {
+                return(
+                    <Col
+                        span={24 / count}
+                        key={inx}
+                    >
+                        <Item item={item} platform={values.platform.PC} />
+                    </Col>
+                );
             });
-
         }
         return(
             <div className="list-none">리스트가 없습니다</div>
@@ -92,10 +63,10 @@ class ItemList extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.data !== this.props.data) {
-            const list = nextProps.mark === 'main'
-                        ? this.props.data.filter(item => item.mark === nextProps.mark)
-                        : this.props.data.filter(item => item.category === nextProps.category)
+            const list = service.getValue(nextProps, 'data.list', []);
+
             return this.setState({
+                list : list,
                 dataSource: this.state.dataSource.cloneWithRows(list)
             });
         }
@@ -157,12 +128,12 @@ class ItemList extends React.Component {
 }
 
 ItemList.propTypes = {
-    mark : PropTypes.string,
+    data : PropTypes.object,
     count : PropTypes.number,
 };
 
 ItemList.defaultProps = {
-    mark : 'cate',
+    data : {},
     count : 4,
 };
 

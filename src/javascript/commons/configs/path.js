@@ -5,15 +5,19 @@ export const path = {
 
     story : '/story',
     storyList : '/story/list',
-    progress : '/story/list/progress',
-    complete : '/story/list/complete',
-    ready : '/story/list/ready',
+    progress : '/story/list/progress/0',
+    complete : '/story/list/complete/0',
+    ready : '/story/list/ready/0',
     propose : '/story/propose',
 
     // List
-    list : (list) => (`${list}/:type`),
-    item : (list) => (`${list}/:type/:id`),
-    listItem : (path, id) => (`${path}/${id}`),
+    // recieve
+    list : (path) => (`${path}/:type/:categoryNo`),
+    item : (path) => (`${path}/:id`),
+
+    // move
+    moveList : (path, type, categoryNo = 0) => (`${path}/${type}/${categoryNo}`),
+    moveItem : (path, id) => (`${path}/${id}`),
 
     // service
     login : '/login',
