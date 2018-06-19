@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
@@ -28,6 +29,7 @@ class ListTop extends React.Component {
         super(props);
 
         this.renderWebOrder = this.renderWebOrder.bind(this);
+        this.onClick = this.onClick.bind(this);
         this.onChange = this.onChange.bind(this);
     }
 
@@ -38,22 +40,27 @@ class ListTop extends React.Component {
         this.props.onChange({order : order});
     }
 
-    onChange(...args){
-        console.log("onChangeargs", args);
-    }
+    onChange(value){
+        const { basePath, match } = this.props;
+        const type = service.getValue(match, 'params.type', false);
 
-    onSelect(...args){
-        console.log("onSelectargs", args);
+        if(type){
+            return this.props.move(`${path.moveList(basePath, type, value.slice(-1).find(item => item))}`)
+        }
     }
 
     renderWebCategory(){
-        const { categories } = this.props;
+        const { categories, match } = this.props;
+        const categoryNo = service.getValue(match, 'params.categoryNo', "0");
 
         return(
-            <Col span={4}>
+            <Col span={6}>
                 <Cascader
-                    defaultValue={[this.props]}
+                    defaultValue={[parseInt(categoryNo, 10)]}
                     options={categories}
+                    onChange={this.onChange}
+                    placeholder="카테고리를 선택하세요"
+                    style={{width : '100%'}}
                 />
             </Col>
         )
@@ -109,4 +116,4 @@ ListTop.defaultProps = {
     order : 0,
 };
 
-export default connect(mapStateToProps, mapDispatchProps)(ListTop);
+export default withRouter(connect(mapStateToProps, mapDispatchProps)(ListTop));

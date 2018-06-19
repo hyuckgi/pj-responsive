@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { ItemList, ListTop } from '../../commons/components/item';
 
 import { fetch } from '../../redux/actions';
-import { service, values, api } from '../../commons/configs';
+import { service, values, api, path } from '../../commons/configs';
 
 import { WhiteSpace } from 'antd-mobile';
 
@@ -53,6 +53,7 @@ class StoryList extends React.Component {
     }
 
     onChangeParams(params){
+        console.log("params", params);
         this.setState({
             ...this.state,
             ...params,
@@ -91,7 +92,7 @@ class StoryList extends React.Component {
         return (
             <div className='story-list-wrapper'>
                 <WhiteSpace size="xl" />
-                <ListTop order={order} onChange={this.onChangeParams}/>
+                <ListTop order={order} onChange={this.onChangeParams} basePath={path.storyList}/>
                 <ItemList count={4} data={stories} />
             </div>
 

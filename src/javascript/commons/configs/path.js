@@ -12,12 +12,12 @@ export const path = {
 
     // List
     // recieve
-    list : (path) => (`${path}/:type/:categoryNo`),
-    item : (path) => (`${path}/:id`),
+    list : (basePath) => (`${basePath}/:type/:categoryNo`),
+    item : (basePath) => (`${basePath}/:id`),
 
     // move
-    moveList : (path, type, categoryNo = 0) => (`${path}/${type}/${categoryNo}`),
-    moveItem : (path, id) => (`${path}/${id}`),
+    moveList : (basePath, type, categoryNo = 0) => (`${basePath}/${type}/${categoryNo}`),
+    moveItem : (basePath, id) => (`${basePath}/${id}`),
 
     // service
     login : '/login',
