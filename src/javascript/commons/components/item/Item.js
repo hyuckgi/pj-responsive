@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
-import { Card as WebCard } from 'antd';
+import { Card as WebCard, Progress as WebProgress } from 'antd';
 import { Card as MobileCard, WhiteSpace } from 'antd-mobile';
 
 
@@ -22,17 +22,76 @@ const mapDispatchProps = dispatch => ({
 
 class Item extends React.Component {
 
+    constructor(props) {
+        super(props);
+
+        this.renderDescription = this.renderDescription.bind(this);
+        this.renderDonation = this.renderDonation.bind(this);
+        this.renderProgressBar = this.renderProgressBar.bind(this);
+
+    }
+
     onClick(item, e){
         e.preventDefault();
         console.log("item", item);
         const { pathname } = this.props;
 
-        console.log("pathname", pathname);
         if(!pathname){
             return;
         }
 
         return this.props.move(`${pathname}/${item.id}`);
+    }
+
+    renderProgressBar(status){
+        const { platform } = this.props;
+        if(!status || status === 1){
+            return (<div></div>);
+        }
+
+        if(platform === values.platform.PC){
+            return(
+                <WebProgress percent={50} showInfo={false} status={status === 2 ? 'active' : 'normal'} size='small'/>
+            )
+        }
+    }
+
+    renderText(status, item){
+
+        const percent = item.totalDonation !== 0
+            ? service.toPercentage(item.goalDonation / item.totalDonation)
+            : '0%'
+
+        return(
+            <div className="donation-price">
+                <div className="price-wrapper">
+                    <p>{status === 1 ? '목표금액' : percent}</p>
+                    <p>{status === 1
+                        ? service.amount(service.getValue(item, 'goalDonation', 0))
+                        : service.amount(service.getValue(item, 'totalDonation', 0))} 원</p>
+                </div>
+            </div>
+        )
+    }
+
+    renderDonation(item){
+        const status = service.getValue(item, 'status', false);
+
+        return(
+            <div className="donations">
+                {this.renderProgressBar(status, item)}
+                {this.renderText(status, item)}
+            </div>
+        )
+    }
+
+    renderDescription(item){
+        return(
+            <div className="story-descript">
+                <p className="username">{service.getValue(item, 'username', '')}</p>
+                {this.renderDonation(item)}
+            </div>
+        )
     }
 
     render() {
@@ -45,11 +104,11 @@ class Item extends React.Component {
                 <div className="item" onClick={this.onClick.bind(this, item)}>
                      <WebCard
                         hoverable
-                        cover={<img alt={item.title} src={item.src}/>}
+                        cover={<img alt={item.title} src='https://picsum.photos/480/320?random'/>}
                     >
                         <WebCard.Meta
                             title={item.title}
-                            description={item.descript}
+                            description={this.renderDescription(item)}
                         />
                     </WebCard>
                 </div>
@@ -63,7 +122,7 @@ class Item extends React.Component {
                 >
                     <MobileCard.Header
                         title={item.title}
-                        thumb={item.src}
+                        thumb='https://picsum.photos/480/320?random'
                         extra={<span>extra</span>}
                     />
                     <MobileCard.Body>

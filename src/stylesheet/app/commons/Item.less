@@ -1,0 +1,49 @@
+.item{
+    .ant-card{
+        .ant-card-meta-title{
+            height:48px;
+            overflow:hidden;
+            white-space:normal;
+        }
+
+        .ant-card-meta-description{
+            .donations{
+                min-height:50px;
+                display:flex;
+                flex-flow:column wrap;
+                justify-content:center;
+
+                & > div{
+                    flex : 1 1 auto;
+                    align-self:center;
+                    width:100%;
+                }
+
+                .donation-price{
+                    .price-wrapper{
+                        display:flex;
+                        flex-flow: row nowrap;
+                        justify-content:space-between;
+
+                        p{
+                            flex:1 1 auto;
+                            flex-basis:50%;
+                            overflow-x:hidden;
+                            margin-bottom:0;
+
+                            &:last-child{
+                                text-align: right;
+                            }
+                        }
+                    }
+                }
+
+                .ant-progress-status-normal{
+                    .ant-progress-bg{
+                        background-color:#8b9a9c;
+                    }
+                }
+            }
+        }
+    }
+}

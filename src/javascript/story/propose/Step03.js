@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { ButtonWrapper, AccountContainer } from '../../commons/components';
-import { service } from '../../commons/configs';
 import { FormButton } from '../../commons/types';
 
 import { Form, Input, Radio, InputNumber } from 'antd';
@@ -56,7 +55,6 @@ class Step03 extends React.Component {
     onSubmit(){
         const { stepProps, form } = this.props;
 		form.validateFields((errors, value) => {
-			console.log("value", value);
 			if(!errors){
 				return stepProps.onSubmit(value);
 			}
@@ -132,8 +130,8 @@ class Step03 extends React.Component {
                         label="계좌번호"
                     >
 						<AccountContainer form={form} decorator="accountData" />
-
                     </FormItem>
+
                     <FormItem
                         {...formItemLayout}
                         label="대표 전화번호"
@@ -141,7 +139,7 @@ class Step03 extends React.Component {
                         {getFieldDecorator('telno', {
 							rules: [{ required: true, message: '대표 전화번호를 입력하세요' }],
                         })(
-                            <Input placeholder="첫 문장이 가장 중요!" />
+                            <Input placeholder="-생략" type="number" />
                         )}
                     </FormItem>
                 </Form>

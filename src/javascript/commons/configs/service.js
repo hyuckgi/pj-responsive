@@ -21,6 +21,13 @@ export const service = {
         return value;
     },
 
+    amount : (value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+
+    toPercentage : (value)  => {
+        console.log('value', value);
+        return isNaN(value) ? '' : value.toFixed(0) + '%';
+    },
+
     getFileNo : (fileList) => {
         if(!fileList.length){
             return [];
@@ -31,6 +38,7 @@ export const service = {
             if(fileNo){
                 return fileNo;
             }
+            return null
         })
     },
 

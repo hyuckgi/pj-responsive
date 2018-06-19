@@ -1,7 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 
 import { APICaller } from '../../commons/api'
-import { service, api } from '../../commons/configs'
+import { fetch } from '../../redux/creators'
+import { service, api, path } from '../../commons/configs'
 import { values } from '../configs';
 
 import { Row, Col,  Tabs } from 'antd';
@@ -11,6 +14,17 @@ import { Step01, Step02, Step03 } from './'
 
 const Step = Steps.Step;
 const { TabPane } = Tabs;
+
+const mapStateToProps = ({fetch}) => {
+    return {
+    }
+};
+
+const mapDispatchProps = dispatch => ({
+    move: (location) => dispatch(push(location)),
+    postStart : () => dispatch(fetch.postStart()),
+    postEnd : () => dispatch(fetch.postEnd()),
+});
 
 class ProposeContainer extends React.Component {
 
@@ -50,19 +64,21 @@ class ProposeContainer extends React.Component {
     }
 
     onSubmit(data){
-        console.log("onSubmit", data);
-
         const { params } = this.state;
         const obj = api.postStory({...params, ...data});
-        return APICaller.post(obj.url, obj.params)
-            .then((...args) => {
-                console.log("args", args);
-            })
-        
-    }
 
-    onChange(tab, idx){
-        console.log("idx", idx);
+        this.props.postStart();
+        return APICaller.post(obj.url, obj.params)
+            .then(({data}) => {
+                const id = service.getValue(data, 'storyNo', false);
+                if(id){
+                    this.props.postEnd();
+                    return this.props.move(path.moveItem(path.storyList, id));
+                }
+            })
+            .catch((err) => {
+                console.log('err', err);
+            })
     }
 
     getSteps(){
@@ -123,4 +139,4 @@ class ProposeContainer extends React.Component {
 
 }
 
-export default ProposeContainer;
+export default connect(mapStateToProps, mapDispatchProps)(ProposeContainer);

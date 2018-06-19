@@ -3,14 +3,13 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
+import queryString from 'query-string';
 
 import { DesktopLayout, MobileLayout } from '../response';
 
-import { Row, Col, Select, Button, Cascader } from 'antd';
+import { Row, Col, Button, Cascader } from 'antd';
 
 import { values, service, path } from '../../configs';
-
-const Option = Select.Option;
 
 const mapStateToProps = ({code, fetch}) => {
     const categories = service.getValue(code, 'categories', []);
@@ -35,7 +34,6 @@ class ListTop extends React.Component {
 
     onClick(item, e){
         e.preventDefault();
-        const { onChange } = this.props;
         const order = service.getValue(item, 'value', 0);
         this.props.onChange({order : order});
     }
@@ -45,18 +43,21 @@ class ListTop extends React.Component {
         const type = service.getValue(match, 'params.type', false);
 
         if(type){
-            return this.props.move(`${path.moveList(basePath, type, value.slice(-1).find(item => item))}`)
+            return this.props.move(`${path.moveCate(basePath, type, value.slice(-1).find(item => item))}`)
         }
     }
 
     renderWebCategory(){
-        const { categories, match } = this.props;
-        const categoryNo = service.getValue(match, 'params.categoryNo', "0");
+        const { categories, location } = this.props;
+        const query = queryString.parse(location.search);
+        const categoryNo = service.getValue(query, 'category', false);
+        const defaultValue = categoryNo ? [parseInt(categoryNo, 10)] : [];
 
         return(
             <Col span={6}>
                 <Cascader
-                    defaultValue={[parseInt(categoryNo, 10)]}
+                    defaultValue={defaultValue}
+                    value={defaultValue ? defaultValue : null}
                     options={categories}
                     onChange={this.onChange}
                     placeholder="카테고리를 선택하세요"
@@ -67,8 +68,13 @@ class ListTop extends React.Component {
     }
 
     renderWebOrder(){
-        const { order } = this.props;
+        const { order, match } = this.props;
         const options = service.getValue(values, 'story.order');
+        const { type } = match.params;
+
+        if(type !== 'progress'){
+            return;
+        }
 
         return(
             <Col span={5}>

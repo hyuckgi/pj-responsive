@@ -7,7 +7,7 @@ import { DesktopLayout, MobileLayout } from '../response';
 
 import { Row, Col } from 'antd';
 import { ListView } from 'antd-mobile';
-import { values, service, api } from '../../configs';
+import { values, service } from '../../configs';
 import Item from './Item';
 
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import queryString from 'query-string';
 
 import { ItemList, ListTop } from '../../commons/components/item';
 
@@ -28,7 +29,7 @@ class StoryList extends React.Component {
         this.state = {
             order : 0,
             page : 1,
-            size : 10
+            size : 10,
         }
 
         this.getList = this.getList.bind(this);
@@ -36,24 +37,16 @@ class StoryList extends React.Component {
     }
 
     componentDidMount() {
-        return this.getList();
+        this.getList();
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if(prevProps.match.params.type !== this.props.match.params.type){
-            this.getList();
-        }
-        if(prevProps.match.params.categoryNo !== this.props.match.params.categoryNo){
-            this.getList();
-        }
-
-        if(prevState !== this.state){
+        if(prevProps.match.params.type !== this.props.match.params.type || prevProps.location.search !== this.props.location.search || prevState !== this.state){
             this.getList();
         }
     }
 
     onChangeParams(params){
-        console.log("params", params);
         this.setState({
             ...this.state,
             ...params,
@@ -61,24 +54,22 @@ class StoryList extends React.Component {
     }
 
     getList(){
-        const { match } = this.props;
+        const { match, location } = this.props;
         const { order, page, size } = this.state;
 
+        const query = queryString.parse(location.search);
+        const categoryNo = service.getValue(query, 'category', 0);
         const type = service.getValue(match, 'params.type', 'all');
-        const categoryNo = service.getValue(match, 'params.categoryNo', 0);
         const current = service.getValue(values,  'story.status')
             .filter(item => item.path === type)
             .find(item => item);
 
-        console.log("categoryNo", categoryNo);
         const obj = api.getList(
             {status : current.status, order : order},
             page,
             size,
             parseInt(categoryNo, 10)
         );
-
-        console.log("obj", obj);
 
         return this.props.multipleList([
             {id : 'stories', url : obj.url, params : obj.params }

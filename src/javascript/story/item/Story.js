@@ -7,7 +7,6 @@ class Story extends React.Component {
             <div>Story</div>
         );
     }
-
 }
 
 export default Story;
