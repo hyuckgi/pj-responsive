@@ -11,6 +11,7 @@ import { SelectCountry } from './country';
 import { CustomPicker } from './picker';
 // import { Address } from './address'
 import { AccountContainer } from './account';
+import { DesktopLayout, MobileLayout } from './response';
 
 export{
 
@@ -27,5 +28,7 @@ export{
     CertifyButton,
     SelectCountry,
     CustomPicker,
-    AccountContainer
+    AccountContainer,
+    DesktopLayout,
+    MobileLayout
 }

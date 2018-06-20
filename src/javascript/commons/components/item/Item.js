@@ -6,7 +6,7 @@ import { Card as WebCard, Progress as WebProgress } from 'antd';
 import { Card as MobileCard, WhiteSpace } from 'antd-mobile';
 
 
-import { values, service } from '../../configs';
+import { values, service, path } from '../../configs';
 
 const mapStateToProps = ({layout, router}) => {
     const pathname = service.getValue(router, 'location.pathname', false);
@@ -33,14 +33,13 @@ class Item extends React.Component {
 
     onClick(item, e){
         e.preventDefault();
-        console.log("item", item);
-        const { pathname } = this.props;
+        const { prefixUrl, prefix } = this.props;
 
-        if(!pathname){
+        if(!prefixUrl){
             return;
         }
 
-        return this.props.move(`${pathname}/${item.id}`);
+        return this.props.move(path.moveItem(prefixUrl, item[`${prefix}No`] ));
     }
 
     renderProgressBar(status){

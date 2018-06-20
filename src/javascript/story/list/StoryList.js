@@ -97,8 +97,8 @@ class StoryList extends React.Component {
             <div className='story-list-wrapper'>
                 <WhiteSpace size="md" />
                 {this.renderCategory()}
-                <ListTop order={order} onChange={this.onChangeParams} basePath={path.storyList}/>
-                <ItemList count={4} data={stories} />
+                <ListTop order={order} onChange={this.onChangeParams} prefixUrl={path.storyList}/>
+                <ItemList count={4} data={stories} prefixUrl={path.storyitem} prefix="story"/>
             </div>
 
         );

@@ -1,7 +1,9 @@
-import { StoryListContainer } from './list';
+import { StoryList } from './list';
 import { ProposeContainer } from './propose';
+import { Story } from './item';
 
 export {
-    StoryListContainer,
-    ProposeContainer
+    ProposeContainer,
+    StoryList,
+    Story
 }

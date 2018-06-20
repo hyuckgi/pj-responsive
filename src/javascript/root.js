@@ -23,7 +23,7 @@ import { locale } from './locales';
 
 import registerServiceWorker from './registerServiceWorker';
 
-import { DesktopLayout, MobileLayout } from './commons/components/response';
+import { DesktopLayout, MobileLayout } from './commons/components';
 import { path } from './commons/configs';
 import App from './App';
 

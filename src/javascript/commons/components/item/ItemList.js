@@ -1,7 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { push } from 'react-router-redux';
 
 import { DesktopLayout, MobileLayout } from '../response';
 
@@ -9,16 +7,6 @@ import { Row, Col } from 'antd';
 import { ListView } from 'antd-mobile';
 import { values, service } from '../../configs';
 import Item from './Item';
-
-
-const mapStateToProps = ({fetch}) => {
-    return {
-    }
-};
-
-const mapDispatchProps = dispatch => ({
-    move: (location) => dispatch(push(location)),
-});
 
 const dataSource = new ListView.DataSource({
     rowHasChanged: (row1, row2) => row1 !== row2,
@@ -41,7 +29,7 @@ class ItemList extends React.Component {
     }
 
     renderCard(){
-        const { count } = this.props;
+        const { count, prefixUrl, prefix } = this.props;
         const { list } = this.state;
 
         if(list.length){
@@ -51,7 +39,7 @@ class ItemList extends React.Component {
                         span={24 / count}
                         key={inx}
                     >
-                        <Item item={item} platform={values.platform.PC} />
+                        <Item item={item} platform={values.platform.PC} prefixUrl={prefixUrl} prefix={prefix}/>
                     </Col>
                 );
             });
@@ -82,9 +70,11 @@ class ItemList extends React.Component {
     }
 
     renderMCard(rowData, sectionID, rowID){
+        const { prefixUrl, prefix } = this.props;
+
         console.log("rowData", rowData);
         return(
-            <Item item={rowData}/>
+            <Item item={rowData} prefixUrl={prefixUrl} prefix={prefix} />
         );
     }
 
@@ -137,4 +127,4 @@ ItemList.defaultProps = {
     count : 4,
 };
 
-export default connect(mapStateToProps, mapDispatchProps)(ItemList);
+export default ItemList;

@@ -1,24 +1,24 @@
+import {service} from './';
+
 export const path = {
     baseName : '/html',
     home : '/',
     main : '/main',
 
     story : '/story',
+    storyitem : '/story/item',
     storyList : '/story/list',
-    progress : '/story/list/progress',
-    complete : '/story/list/complete',
-    ready : '/story/list/ready',
     propose : '/story/propose',
 
-    // List
     // recieve
-    list : (basePath) => (`${basePath}/:type`),
-    item : (basePath) => (`${basePath}/:id`),
+    list: (prefix, params = null) => {
+        return `${prefix}/:type/${service.toQuery(params)}`;
+    },
+    item : (prefix) => (`${prefix}/:id/:mode`),
 
     // move
-    moveList : (basePath, type) => (`${basePath}/${type}`),
-    moveCate : (basePath, type, categoryNo = 0) => (`${basePath}/${type}?category=${categoryNo}`),
-    moveItem : (basePath, id) => (`${basePath}/${id}`),
+    moveCate : (prefix, type, categoryNo = 0) => (`${prefix}/${type}?category=${categoryNo}`),
+    moveItem : (prefix, id, mode = 'read') => (`${prefix}/${id}/${mode}`),
 
     // service
     login : '/login',

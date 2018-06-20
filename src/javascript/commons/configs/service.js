@@ -21,6 +21,18 @@ export const service = {
         return value;
     },
 
+    toQuery: (params) => {
+        if(!params) {
+            return '';
+        }
+        return '?' + Object.keys(params)
+            .filter(key => key === 'offset' || (params[key] && params[key] !== ''))
+            .map(key => {
+                return encodeURIComponent(key) + '=' + encodeURIComponent(params[key]);
+            })
+            .join('&');
+    },
+
     amount : (value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ','),
 
     toPercentage : (value)  => {

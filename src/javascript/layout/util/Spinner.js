@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { DesktopLayout, MobileLayout } from '../../commons/components/response';
+import { DesktopLayout, MobileLayout } from '../../commons/components';
 
 import { Spin, Icon } from 'antd';
 import { ActivityIndicator } from 'antd-mobile';

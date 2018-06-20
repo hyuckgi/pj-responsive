@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { DesktopLayout, MobileLayout } from './commons/components/response';
+import { DesktopLayout, MobileLayout } from './commons/components';
 import { code as action } from './redux/actions';
 
 import Mobile from './Mobile';

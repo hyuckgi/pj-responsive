@@ -40,11 +40,11 @@ class ListTop extends React.Component {
     }
 
     onChange(value){
-        const { basePath, match } = this.props;
+        const { prefixUrl, match } = this.props;
         const type = service.getValue(match, 'params.type', false);
 
         if(type){
-            return this.props.move(`${path.moveCate(basePath, type, value.slice(-1).find(item => item))}`)
+            return this.props.move(`${path.moveCate(prefixUrl, type, value.slice(-1).find(item => item))}`)
         }
     }
 

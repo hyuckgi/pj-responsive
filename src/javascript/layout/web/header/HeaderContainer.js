@@ -42,7 +42,7 @@ class HeaderContainer extends React.Component {
             <Sticky topOffset={1}>
                 {({style}) => {
                     return(
-                        <Header id="header" className="header-container" style={{...style, zIndex: 1 }}>
+                        <Header id="header" className="header-container" style={{...style, zIndex: 100 }}>
                             <Row type="flex" justify="space-between" align="middle" className="header-wrap" >
                                 <Col span={4} className="logo" >
                                     <img src={imgLogo} alt="logo" onClick={this.onClick.bind(this)}/>

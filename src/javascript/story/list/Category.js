@@ -29,9 +29,9 @@ class Category extends React.Component {
                             className="category-inner"
                         >
                             <h2>{item.categoryName}</h2>
-                            <p><CustomIcon type="FaListAlt" roots="FontAwesome" />등록된 스토리 - {item.totalStory}개</p>
-                            <p><CustomIcon type="FaHeartbeat" roots="FontAwesome" />기부금 - {item.totalDonation}원</p>
-                            <p><CustomIcon type="FaGroup" roots="FontAwesome" /> 참여자 - {item.sponsorCount}명</p>
+                            <p><CustomIcon type="MdCollections"  />등록된 스토리 - {item.totalStory}개</p>
+                            <p><CustomIcon type="MdMonetizationOn" />기부금 - {service.amount(item.totalDonation)}원</p>
+                            <p><CustomIcon type="FaGroup" roots="FontAwesome"/> 참여자 - {item.sponsorCount}명</p>
                         </div>
                     )
                 })}
