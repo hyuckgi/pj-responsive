@@ -8,6 +8,7 @@ import { fetch } from '../../redux/actions';
 import { service, values, api, path } from '../../commons/configs';
 
 import { WhiteSpace } from 'antd-mobile';
+import { Category } from './';
 
 const mapStateToProps = ({fetch}) => {
     const stories = service.getValue(fetch, 'multipleList.stories', {});
@@ -34,6 +35,7 @@ class StoryList extends React.Component {
 
         this.getList = this.getList.bind(this);
         this.onChangeParams = this.onChangeParams.bind(this);
+        this.renderCategory = this.renderCategory.bind(this);
     }
 
     componentDidMount() {
@@ -46,6 +48,18 @@ class StoryList extends React.Component {
         }
     }
 
+    renderCategory(){
+        const { location } = this.props;
+        const query = queryString.parse(location.search);
+        const categoryNo = service.getValue(query, 'category', 0);
+
+        if(!categoryNo){
+            return (<WhiteSpace size="md" />);
+        }
+
+        return(<Category category={categoryNo} />)
+    }
+
     onChangeParams(params){
         this.setState({
             ...this.state,
@@ -56,7 +70,6 @@ class StoryList extends React.Component {
     getList(){
         const { match, location } = this.props;
         const { order, page, size } = this.state;
-
         const query = queryString.parse(location.search);
         const categoryNo = service.getValue(query, 'category', 0);
         const type = service.getValue(match, 'params.type', 'all');
@@ -82,7 +95,8 @@ class StoryList extends React.Component {
 
         return (
             <div className='story-list-wrapper'>
-                <WhiteSpace size="xl" />
+                <WhiteSpace size="md" />
+                {this.renderCategory()}
                 <ListTop order={order} onChange={this.onChangeParams} basePath={path.storyList}/>
                 <ItemList count={4} data={stories} />
             </div>
