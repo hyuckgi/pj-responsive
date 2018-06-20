@@ -3,9 +3,10 @@
     flex-flow: row nowrap;
     background-color:#E2F2F4;
     justify-content:center;
-    border: 2px solid #c1e7e6;
-    border-radius: 6px;
+    border-top: 2px solid #c1e7e6;
+    border-bottom: 2px solid #c1e7e6;
     margin-bottom:18px;
+    padding:40px 0 31px;
 
     .category-inner{
         h2{
@@ -16,13 +17,36 @@
         p{
             text-align:right;
 
-
             .am-icon{
                 font-size:1.5em;
                 margin-right:8px;
                 color:#2290A2;
             }
+        }
+    }
+}
 
+.mobile-container{
+    .category-wrapper{
+        padding:20px 0 11px;
+        border-top: 1px solid #c1e7e6;
+        border-bottom: 1px solid #c1e7e6;
+
+        .category-inner{
+            h2{
+                margin-bottom:1em;
+            }
+            p{
+                margin-bottom:.5em;
+                .am-icon{
+                    font-size:1em;
+
+                    & > svg{
+                        vertical-align: top !important;
+                        margin-top: 3px;
+                    }
+                }
+            }
         }
     }
 }

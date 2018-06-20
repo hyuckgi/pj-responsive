@@ -8,6 +8,7 @@ import queryString from 'query-string';
 import { DesktopLayout, MobileLayout } from '../response';
 
 import { Row, Col, Button, Cascader } from 'antd';
+import { WhiteSpace } from 'antd-mobile';
 
 import { values, service, path } from '../../configs';
 
@@ -107,6 +108,7 @@ class ListTop extends React.Component {
                         {this.renderWebCategory()}
                         {this.renderWebOrder()}
                     </Row>
+                    <WhiteSpace />
                 </DesktopLayout>
             </div>
         );
