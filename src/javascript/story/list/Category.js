@@ -17,24 +17,34 @@ const mapDispatchProps = dispatch => ({
 
 class Category extends React.Component {
 
+    getCategory(category, arr = []){
+        return arr.reduce((result, item) => {
+            const child = service.getValue(item, 'children', false);
+            if(item.categoryNo === Number(category)){
+                result.push(item);
+            }else{
+                if(child){
+                    result.push(this.getCategory(category, child))
+                }
+            }
+            return result;
+        }, []).find(item => item);
+    }
+
     render() {
         const { category, categories } = this.props;
+        const current = this.getCategory(category, categories);
 
         return (
             <div className="category-wrapper">
-                {categories.filter(item => item.categoryNo === Number(category)).map((item, inx) => {
-                    return (
-                        <div
-                            key={inx}
-                            className="category-inner"
-                        >
-                            <h2>{item.categoryName}</h2>
-                            <p><CustomIcon type="MdCollections"  />등록된 스토리 - {item.totalStory}개</p>
-                            <p><CustomIcon type="MdMonetizationOn" />기부금 - {service.amount(item.totalDonation)}원</p>
-                            <p><CustomIcon type="FaGroup" roots="FontAwesome"/> 참여자 - {item.sponsorCount}명</p>
-                        </div>
-                    )
-                })}
+                { current &&
+                <div className="category-inner">
+                    <h2>{current.categoryName}</h2>
+                    <p><CustomIcon type="MdCollections"  />등록된 스토리 - {current.totalStory}개</p>
+                    <p><CustomIcon type="MdMonetizationOn" />기부금 - {service.amount(current.totalDonation)}원</p>
+                    <p><CustomIcon type="FaGroup" roots="FontAwesome"/> 참여자 - {current.sponsorCount}명</p>
+                </div>
+                }
             </div>
         );
     }

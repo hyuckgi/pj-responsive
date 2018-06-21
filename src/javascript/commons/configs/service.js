@@ -36,7 +36,6 @@ export const service = {
     amount : (value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ','),
 
     toPercentage : (value)  => {
-        console.log('value', value);
         return isNaN(value) ? '' : value.toFixed(0) + '%';
     },
 
@@ -107,6 +106,19 @@ export const service = {
             })
         }
     },
+
+    getIosUrl : (url) => {
+        if(url.endsWith('.webm')){
+            return url.replace('/u/', '/ut/') + '.mp4';
+        }
+        return url;
+    },
+    getIosPoster : (url) => {
+        if(url.endsWith('.webm')){
+            return url.replace('/u/', '/ut/') + '.jpg';
+        }
+        return url;
+    }
 };
 export default {
     service

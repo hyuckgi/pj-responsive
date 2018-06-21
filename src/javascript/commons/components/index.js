@@ -1,26 +1,28 @@
-import CustomIcon from './CustomIcon';
+
 // import EventCarousel from './EventCarousel';
-// import CommonEditor from './CommonEditor';
+
 // import RequestStudy from './request';
 // import UserInfo from './UserInfo';
 // import LevelCheck from './LevelCheck';
+// import { Address } from './address'
+import CommonEditor from './CommonEditor';
+import CustomIcon from './CustomIcon';
 import CertifyPhone from './CertifyPhone';
 import { ButtonWrapper, CertifyButton } from './buttons';
 import { Agreement } from './agree';
 import { SelectCountry } from './country';
 import { CustomPicker } from './picker';
-// import { Address } from './address'
 import { AccountContainer } from './account';
 import { DesktopLayout, MobileLayout } from './response';
+import { FooterUtil } from './utils'
 
 export{
-
     // EventCarousel,
-    // CommonEditor,
     // RequestStudy,
     // UserInfo,
     // LevelCheck,
     // Address,
+    CommonEditor,
     CertifyPhone,
     CustomIcon,
     ButtonWrapper,
@@ -30,5 +32,6 @@ export{
     CustomPicker,
     AccountContainer,
     DesktopLayout,
-    MobileLayout
+    MobileLayout,
+    FooterUtil
 }

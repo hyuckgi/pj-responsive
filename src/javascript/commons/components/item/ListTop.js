@@ -42,9 +42,13 @@ class ListTop extends React.Component {
     onChange(value){
         const { prefixUrl, match } = this.props;
         const type = service.getValue(match, 'params.type', false);
+        let queryValue = value.reduce((result, item) => {
+            result = result.concat(`${item}/`);
+            return result;
+        }, '');
 
         if(type){
-            return this.props.move(`${path.moveCate(prefixUrl, type, value.slice(-1).find(item => item))}`)
+            return this.props.move(`${path.moveCate(prefixUrl, type, queryValue.slice(0, -1))}`)
         }
     }
 
@@ -52,13 +56,12 @@ class ListTop extends React.Component {
         const { categories, location } = this.props;
         const query = queryString.parse(location.search);
         const categoryNo = service.getValue(query, 'category', false);
-        const defaultValue = categoryNo ? [parseInt(categoryNo, 10)] : [];
+        const defaultValue = categoryNo ? [categoryNo.split('/').map(item => Number(item))] : [];
 
         return(
             <Col span={6}>
                 <Cascader
                     defaultValue={defaultValue}
-                    value={defaultValue ? defaultValue : null}
                     options={categories}
                     onChange={this.onChange}
                     placeholder="카테고리를 선택하세요"

@@ -51,13 +51,13 @@ class StoryList extends React.Component {
     renderCategory(){
         const { location } = this.props;
         const query = queryString.parse(location.search);
-        const categoryNo = service.getValue(query, 'category', 0);
+        const categoryNo = service.getValue(query, 'category', false);
 
         if(!categoryNo){
             return (<WhiteSpace size="md" />);
         }
 
-        return(<Category category={categoryNo} />)
+        return(<Category category={categoryNo.split('/').slice(-1).find(item => item)} />)
     }
 
     onChangeParams(params){

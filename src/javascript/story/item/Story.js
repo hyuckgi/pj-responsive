@@ -1,17 +1,22 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { StickyContainer, Sticky } from 'react-sticky';
+import UAParser from 'ua-parser-js';
 
-import { DesktopLayout, MobileLayout } from '../../commons/components';
+import { DesktopLayout, MobileLayout, FooterUtil } from '../../commons/components';
 import { service, api } from '../../commons/configs';
 import { fetch } from '../../redux/actions';
 import { Tabs, WhiteSpace } from 'antd-mobile';
 
 import { StoryTop } from './';
+import Detail from './Detail';
+import Review from './Review';
+
+const parser = new UAParser();
 
 const tabs = [
-    {title : '상세보기'},
-    {title : '후기보기'},
+    {title : '상세보기', child : (<Detail />), key : 1,},
+    {title : '후기보기', child : (<Review />), key : 2,},
 ];
 
 
@@ -34,6 +39,8 @@ class Story extends React.Component {
 
 
         this.getItem = this.getItem.bind(this);
+        this.renderContent = this.renderContent.bind(this);
+        this.renderUtils = this.renderUtils.bind(this);
     }
 
     componentDidMount() {
@@ -43,17 +50,50 @@ class Story extends React.Component {
         }
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        if(prevProps.match.params.id !== this.props.match.params.id){
+            const itemId = service.getValue(this.props, 'match.params.id', false);
+            if(itemId){
+                this.getItem(itemId);
+            }
+        }
+    }
+
     getItem(id){
         return this.props.getItem(api.getStory(id))
     }
 
-    renderTabBar(props){
+    renderUtils(){
         return (
-            <Sticky>
+            <Sticky >
                 {({ style }) => {
                     const newStyle = {
                         ...style,
-                        top: 80,
+                        top: 'auto',
+                        bottom : 0,
+                    }
+                    return(
+                        <div style={{ ...newStyle, zIndex: 998 }}>
+                            <FooterUtil />
+                        </div>
+                    )
+                }}
+            </Sticky>);
+    }
+
+    renderTabBar(props){
+        const device = parser.getDevice();
+        const type = service.getValue(device, 'type', false);
+
+        return (
+            <Sticky topOffset={0}>
+                {({ style }) => {
+                    const newStyle = {
+                        ...style,
+                        top: type === 'mobile' ? 45 : 80,
+                        left:0,
+                        width: '100%',
+                        boxShadow : '1px 1px 1px rgba(0,0,0,0.2)'
                     }
                     return(
                         <div style={{ ...newStyle, zIndex: 998 }}>
@@ -66,12 +106,17 @@ class Story extends React.Component {
             </Sticky>);
     }
 
-    onTabClick(tab, inx){
-        console.log('onTabClick', tab, inx);
+    onTabClick(tab){
+        window.scrollTo(0, 0);
+    }
+
+    renderContent(tab){
+        return React.createElement('div', {}, tab.child);
     }
 
     render() {
         const { item } = this.props;
+        
         return (
             <div className="story-detail">
                 <WhiteSpace size="xs"/>
@@ -79,19 +124,15 @@ class Story extends React.Component {
                 <StickyContainer>
                     <Tabs
                         tabs={tabs}
-                        initalPage={2}
-                        prerenderingSiblingsNumber={0}
+                        initalPage={0}
                         destroyInactiveTab={true}
+                        prerenderingSiblingsNumber={0}
                         onTabClick={this.onTabClick}
                         renderTabBar={this.renderTabBar}
                     >
-                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '250px', backgroundColor: '#fff' }}>
-                            Content of first tab
-                        </div>
-                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '250px', backgroundColor: '#fff' }}>
-                            Content of second tab
-                        </div>
+                        {this.renderContent}
                     </Tabs>
+                    {this.renderUtils()}
                 </StickyContainer>
             </div>
         );
