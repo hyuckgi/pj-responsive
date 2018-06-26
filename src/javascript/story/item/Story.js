@@ -63,7 +63,10 @@ class Story extends React.Component {
         return this.props.getItem(api.getStory(id))
     }
 
-    renderUtils(){
+    renderUtils(item){
+        if(!Object.keys(item).length){
+            return;
+        }
         return (
             <Sticky >
                 {({ style }) => {
@@ -74,7 +77,7 @@ class Story extends React.Component {
                     }
                     return(
                         <div style={{ ...newStyle, zIndex: 998 }}>
-                            <FooterUtil />
+                            <FooterUtil item={item}/>
                         </div>
                     )
                 }}
@@ -116,7 +119,7 @@ class Story extends React.Component {
 
     render() {
         const { item } = this.props;
-        
+
         return (
             <div className="story-detail">
                 <WhiteSpace size="xs"/>
@@ -132,7 +135,7 @@ class Story extends React.Component {
                     >
                         {this.renderContent}
                     </Tabs>
-                    {this.renderUtils()}
+                    {this.renderUtils(item)}
                 </StickyContainer>
             </div>
         );

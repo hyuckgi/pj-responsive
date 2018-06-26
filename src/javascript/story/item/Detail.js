@@ -6,6 +6,7 @@ import { service, api } from '../../commons/configs';
 import { CommonEditor } from '../../commons/components';
 
 import UAParser from 'ua-parser-js';
+import { Info, Comment } from './';
 
 const parser = new UAParser();
 
@@ -55,6 +56,7 @@ class Detail extends React.Component {
                 {
                     videos.map((item, idx) => {
                         const os = parser.getOS();
+                        // TODO 임시 src
                         // const src = os.name === 'iOS' ? service.getIosUrl(item) : item;
                         const src = "https://www.w3schools.com/html/mov_bbb.mp4"
                         const poster = os.name === 'iOS' ? service.getIosPoster(item) : '';
@@ -92,9 +94,13 @@ class Detail extends React.Component {
     }
 
     render() {
+        const { item } = this.props;
+
         return (
             <div className="detail-wrppper">
                 {this.renderContainer()}
+                <Info item={item}/>
+                <Comment item={item}/>
             </div>
         );
     }
