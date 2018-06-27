@@ -1,27 +1,19 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import UAParser from 'ua-parser-js';
 
-import { fetch } from '../../../redux/actions';
-import { service } from '../../configs';
+import { APICaller } from '../../api';
+
+import { service, api } from '../../configs';
 
 import { CustomIcon } from '../';
 
-import { Share } from './';
+import { Share, Sponsors, Report } from './';
 import { Flex, WhiteSpace, Button, Modal, Badge } from 'antd-mobile';
 
 
 const parser = new UAParser();
 
-const mapStateToProps = ({ fetch }) => {
-    return{
-    }
-}
-
-const mapDispatchProps = dispatch => ({
-    getItem :(url) => dispatch(fetch.get(url)),
-});
 
 class FooterUtil extends React.Component {
 
@@ -33,6 +25,7 @@ class FooterUtil extends React.Component {
                 title : "",
                 contents : "",
             },
+            likes : true,
         };
 
         this.onClickShare = this.onClickShare.bind(this);
@@ -40,6 +33,9 @@ class FooterUtil extends React.Component {
         this.getModalTitle = this.getModalTitle.bind(this);
         this.onCloseModal = this.onCloseModal.bind(this);
         this.onOpenModal = this.onOpenModal.bind(this);
+        this.onClickLike = this.onClickLike.bind(this);
+        this.onClickDonate = this.onClickDonate.bind(this);
+        this.onClickReport = this.onClickReport.bind(this);
     }
 
     getModalContents(){
@@ -73,8 +69,43 @@ class FooterUtil extends React.Component {
         })
     }
 
-    onClickLike(){
+    onClickDonate(e){
+        e.preventDefault();
+        return this.onOpenModal({
+            title : '스폰서 목록',
+            contents : (<Sponsors />)
+        })
+    }
 
+    onClickReport(e){
+        e.preventDefault();
+        return this.onOpenModal({
+            title : '신고하기',
+            contents : (<Report />)
+        })
+    }
+
+    onClickLike(e){
+        const { likes } = this.state;
+        const itemNo = service.getValue(this.props, 'item.storyNo', false);
+        if(!itemNo){
+            return;
+        }
+
+        const obj = api.postLike({storyNo : itemNo, status : likes ? 1 : 0});
+        return APICaller.post(obj.url, obj.params)
+            .then(({data}) => {
+                const result = service.getValue(data, 'resultCode', 400);
+                if(result === 200){
+                    const { onEvent } = this.props;
+                    this.setState({
+                        likes : false,
+                    });
+                    if(onEvent){
+                        onEvent({events: 'success', params : 'update'});
+                    }
+                }
+            });
     }
 
     render() {
@@ -82,17 +113,36 @@ class FooterUtil extends React.Component {
         const { visible } = this.state;
         const isMobile = parser.getDevice().type;
 
+
         return (
             <div className="footer-utils-wapper">
                 <Flex className="footer-utils" justify="around">
                     <Flex.Item>
-                        <Button icon={(<CustomIcon type="FaThumbsUp" roots="FontAwesome" style={{color: '#fff'}}/>)} onClick={this.onClickLike}>
+                        <Button
+                            icon={(<CustomIcon type="FaThumbsUp" roots="FontAwesome"/>)}
+                            onClick={this.onClickLike}
+                        >
                             <Badge text={item.likeCount + 1} style={{ marginLeft: 10 }} overflowCount={10000}>좋아요</Badge>
                         </Button>
                     </Flex.Item>
-                    <Flex.Item><Button icon={(<CustomIcon type="MdShare" style={{color: '#fff'}}/>)} onClick={this.onClickShare}>공유하기</Button></Flex.Item>
-                    <Flex.Item><Button icon={(<CustomIcon type="MdFavorite" style={{color: '#fff'}}/>)} >기부하기</Button></Flex.Item>
-                    <Flex.Item><Button icon={(<CustomIcon type="FaThumbsDown" roots="FontAwesome" style={{color: 'red'}}/>)}>신고하기</Button></Flex.Item>
+                    <Flex.Item>
+                        <Button
+                            icon={(<CustomIcon type="MdShare"/>)}
+                            onClick={this.onClickShare}
+                        >공유하기</Button>
+                    </Flex.Item>
+                    <Flex.Item>
+                        <Button
+                            icon={(<CustomIcon type="MdFavorite"/>)}
+                            onClick={this.onClickDonate}
+                        >기부하기</Button>
+                    </Flex.Item>
+                    <Flex.Item>
+                        <Button
+                            icon={(<CustomIcon type="FaThumbsDown" roots="FontAwesome" />)}
+                            onClick={this.onClickReport}
+                        >신고하기</Button>
+                    </Flex.Item>
                 </Flex>
 
                 <Modal
@@ -125,4 +175,4 @@ FooterUtil.defaultProps = {
 };
 
 
-export default connect(mapStateToProps, mapDispatchProps)(FooterUtil);
+export default FooterUtil;

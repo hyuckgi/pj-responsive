@@ -41,6 +41,7 @@ class Story extends React.Component {
         this.getItem = this.getItem.bind(this);
         this.renderContent = this.renderContent.bind(this);
         this.renderUtils = this.renderUtils.bind(this);
+        this.onEvent = this.onEvent.bind(this);
     }
 
     componentDidMount() {
@@ -52,6 +53,16 @@ class Story extends React.Component {
 
     componentDidUpdate(prevProps, prevState) {
         if(prevProps.match.params.id !== this.props.match.params.id){
+            const itemId = service.getValue(this.props, 'match.params.id', false);
+            if(itemId){
+                this.getItem(itemId);
+            }
+        }
+    }
+
+    onEvent(obj){
+        const { events, params } = obj;
+        if(params === 'update'){
             const itemId = service.getValue(this.props, 'match.params.id', false);
             if(itemId){
                 this.getItem(itemId);
@@ -77,7 +88,7 @@ class Story extends React.Component {
                     }
                     return(
                         <div style={{ ...newStyle, zIndex: 998 }}>
-                            <FooterUtil item={item}/>
+                            <FooterUtil item={item} onEvent={this.onEvent}/>
                         </div>
                     )
                 }}

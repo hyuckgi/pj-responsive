@@ -35,6 +35,11 @@ export const api = {
         params : {...params}
     }),
 
+    postLike : (params = null) => ({
+        url : `/api/story/like`,
+        params : {...params}
+    }),
+
 
 
 
