@@ -20,6 +20,12 @@ export const path = {
     moveCate : (prefix, type, categoryNo = 0) => (`${prefix}/${type}?category=${categoryNo}`),
     moveItem : (prefix, id, mode = 'read') => (`${prefix}/${id}/${mode}`),
 
+    // rank
+    rank : '/rank',
+    userRank : '/rank/user',
+    sponsorRank : '/rank/sponsor',
+
+
     // service
     login : '/login',
     join : '/join',

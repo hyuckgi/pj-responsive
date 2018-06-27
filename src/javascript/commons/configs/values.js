@@ -12,6 +12,12 @@ const platform = {
     PC : 'desktop',
 }
 
+const sns = {
+    facebook : {
+        appId : '264915647586595',
+    }
+}
+
 const mock = {
     stories : Array(50).fill('').map((item, inx) => {
         if(inx % 2 === 0){
@@ -134,5 +140,6 @@ export {
     requestType,
     countries,
     propose,
-    story
+    story,
+    sns
 };

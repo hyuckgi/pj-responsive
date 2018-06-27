@@ -6,9 +6,9 @@ const list = [
     {id: '1020000', name: '윙크 한눈에 보기', link: '/story/list/progress', level: 1, parent: '1000000'},
     {id: '1030000', name: '과목별 학습', link: '/story/list/complete', level: 1, parent: '1000000'},
 
-    {id: '2000000', name: '우리아이 현황',  level: 0, link:'/mykids', idx : 3, defaultLink : '/mykids/abc'},
-    {id: '2010000', name: '우리아이 현황1',  level: 1, link:'/mykids/abc', parent: '2000000'},
-
+    {id: '2000000', name: '우리아이 현황',  level: 0, link:'/rank', idx : 3, defaultLink : '/rank/user'},
+    {id: '2010000', name: '우리아이 현황1',  level: 1, link:'/rank/user', parent: '2000000'},
+    {id: '2020000', name: '우리아이 현황2',  level: 1, link:'/rank/sponsor', parent: '2000000'},
 
     {id: '3000000', name: '우리아이 선생님',  level: 0, link:'/teacher', defaultLink: '/teacher/kor',  idx : 4, hasChild:true},
     {id: '3010000', name: '한글·수학', level: 1, link : '/teacher/kor', parent: '3000000'},

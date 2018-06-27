@@ -5,13 +5,11 @@ import copy from 'copy-to-clipboard';
 
 import { Button, Toast } from 'antd-mobile';
 import { KaKaoStoryButton, TwitterButton, FacebookButton } from "react-social-kr";
+import { values, service } from '../../configs';
 
 import imgKakaoPage from '../../../../resource/commons/kakaostory_icon.png';
 
 class Share extends React.Component {
-
-
-
     onClipBoard(e){
         e.preventDefault();
         copy(window.location.href);
@@ -19,7 +17,8 @@ class Share extends React.Component {
     }
 
     render() {
-        const pathname = window.location.href;
+        const pathname = window.location.pathname;
+        const appId = service.getValue(values, 'sns.facebook.appId');
         const commonStyle = {
             width : '3em',
             height : '3em'
@@ -32,8 +31,8 @@ class Share extends React.Component {
                         <img src={imgKakaoPage} alt="kakaostory"/>
                     </span>
                 </KaKaoStoryButton>
-                <FacebookButton pathname={pathname} sharer={true} appId={'dsadasew'} title="facebook">
-                    {/* TODO facebook appid */}
+
+                <FacebookButton pathname={pathname} appId={appId} title="facebook">
                     <CustomIcon
                         type='FaFacebookSquare'
                         roots="FontAwesome"
@@ -41,6 +40,7 @@ class Share extends React.Component {
                         style={ {...commonStyle, color : '#4267B2'}}
                     />
                 </FacebookButton>
+
                 <TwitterButton pathname={pathname} title="twitter">
                     <CustomIcon
                         type='FaTwitterSquare'
