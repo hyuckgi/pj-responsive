@@ -7,6 +7,7 @@ import { ItemList, ListTop } from '../../commons/components/item';
 import { fetch } from '../../redux/actions';
 import { service, values, api, path } from '../../commons/configs';
 
+
 import { WhiteSpace } from 'antd-mobile';
 import { Category } from './';
 
@@ -76,7 +77,7 @@ class StoryList extends React.Component {
         const current = service.getValue(values,  'story.status')
             .filter(item => item.path === type)
             .find(item => item);
-
+            
         const obj = api.getList(
             {status : current.status, order : order},
             page,
@@ -98,7 +99,7 @@ class StoryList extends React.Component {
                 <WhiteSpace size="md" />
                 {this.renderCategory()}
                 <ListTop order={order} onChange={this.onChangeParams} prefixUrl={path.storyList}/>
-                <ItemList count={4} data={stories} prefixUrl={path.storyitem} prefix="story"/>
+                <ItemList count={4} data={stories} prefixUrl={path.storyItem} prefix="story"/>
             </div>
 
         );

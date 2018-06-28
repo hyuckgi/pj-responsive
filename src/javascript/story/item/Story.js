@@ -130,14 +130,15 @@ class Story extends React.Component {
 
     render() {
         const { item } = this.props;
-
+        const reviewData = service.getValue(item, 'reviewData', {});
+        
         return (
             <div className="story-detail">
                 <WhiteSpace size="xs"/>
                 <StoryTop item={item}/>
                 <StickyContainer>
                     <Tabs
-                        tabs={tabs}
+                        tabs={Object.keys(reviewData).length ? tabs : tabs.slice(0, 1)}
                         initalPage={0}
                         destroyInactiveTab={true}
                         prerenderingSiblingsNumber={0}

@@ -3,8 +3,10 @@ import React from 'react';
 class Comment extends React.Component {
 
     render() {
+        const { item } = this.props;
+        console.log("item", item);
         return (
-            <div>댓글 리스트??</div>
+            <div>Comment</div>
         );
     }
 

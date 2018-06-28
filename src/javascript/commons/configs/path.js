@@ -6,7 +6,7 @@ export const path = {
     main : '/main',
 
     story : '/story',
-    storyitem : '/story/item',
+    storyItem : '/story/item',
     storyList : '/story/list',
     propose : '/story/propose',
 

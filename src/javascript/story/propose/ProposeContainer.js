@@ -73,7 +73,7 @@ class ProposeContainer extends React.Component {
                 const id = service.getValue(data, 'storyNo', false);
                 if(id){
                     this.props.postEnd();
-                    return this.props.move(path.moveItem(path.storyList, id));
+                    return this.props.move(path.moveItem(path.storyItem, id));
                 }
             })
             .catch((err) => {

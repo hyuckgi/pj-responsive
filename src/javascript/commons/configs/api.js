@@ -40,6 +40,11 @@ export const api = {
         params : {...params}
     }),
 
+    getComments : (storyNo, page = 1, size = 10, params = null) => ({
+        url : `/api/story/${storyNo}/comment/page/${page}/size/${size}`,
+        params : {...params}
+    }),
+
 
 
 

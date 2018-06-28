@@ -10,7 +10,7 @@ class Story extends React.Component {
         return (
             <Switch>
                 <Route path={path.list(path.storyList)} component={StoryList} />
-                <Route path={path.item(path.storyitem)} component={StoryItem} />
+                <Route path={path.item(path.storyItem)} component={StoryItem} />
                 <Route path={path.propose} component={ProposeContainer} />
             </Switch>
         );
