@@ -1,5 +1,8 @@
 // import moment from 'moment';
 
+const defaultPagination = {size: 'small', showSizeChanger:true, showQuickJumper: false, pageSizeOptions: ['10', '50', '100', '400'], defaultPageSize : 1};
+
+
 export const service = {
     getValue: (obj, key, defaultValue) => {
         if(!obj) {
@@ -33,6 +36,17 @@ export const service = {
             .join('&');
     },
 
+    makeList: (item) => {
+        const pagination = {...defaultPagination};
+        if(!(item && item.results && item.results.length > 0)) {
+            pagination.total = 0;
+            return {pagination, list:[], total: 0};
+        }
+
+        pagination.total = item.count;
+        return { pagination,  total: item.count, list: item.results};
+    },
+
     amount : (value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ','),
 
     toPercentage : (value)  => {
@@ -51,19 +65,6 @@ export const service = {
             }
             return null
         })
-    },
-
-    getUserName : (actor) => {
-        if(!Object.keys(actor).length){
-            return '';
-        }
-        const userName = service.getValue(actor, 'authUsername', false);
-
-        if(!userName || (userName.search('@noid') + 1)){
-            return '';
-        }
-        const masking = service.getMasking(userName);
-        return masking;
     },
 
     getMasking : (str, number = 5) => {
@@ -105,6 +106,19 @@ export const service = {
                 return item;
             })
         }
+    },
+
+    toSearchParams: (search) => {
+        const searchParams = new URLSearchParams(search);
+        const params = {size:10, page:1};
+
+        for (let key of searchParams.keys()) {
+            const value = searchParams.get(key);
+            if(value) {
+                params[key] = value;
+            }
+        }
+        return params;
     },
 
     getIosUrl : (url) => {

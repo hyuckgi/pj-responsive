@@ -12,9 +12,7 @@ export const api = {
     getTerms : () => `/api/member/terms`,
     getCountry : () => `/api/member/country/code`,
 
-    // category
-
-    //list
+    //story
     getList : (params = null, page = 1, size = 10, categoryNo = 0) => {
         if(categoryNo){
             return {
@@ -27,8 +25,6 @@ export const api = {
             params : {...params}
         }
     },
-
-
     getStory  : (id) => `/api/story/${id}`,
     postStory : (params = null) => ({
         url : `/api/story/`,
@@ -44,6 +40,19 @@ export const api = {
         url : `/api/story/${storyNo}/comment/page/${page}/size/${size}`,
         params : {...params}
     }),
+
+    // rank
+    getRank : () => `/api/donate/ranking/summary`,
+    userRankList : ({page = 1, size = 30, year = null}) => {
+        console.log("arguments", page);
+        console.log("arguments", size);
+        console.log("arguments", year);
+        if(year){
+            return `/api/donate/ranking/year/${year}/page/${page}/size/${size}`;
+        }
+        return `/api/donate/ranking/page/${page}/size/${size}`
+    },
+
 
 
 
