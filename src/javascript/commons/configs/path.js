@@ -22,8 +22,6 @@ export const path = {
 
     // rank
     rank : '/rank',
-    userRank : '/rank/user',
-    sponsorRank : '/rank/sponsor',
 
 
     // service

@@ -1,11 +1,25 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 
-
-import { service, values } from '../commons/configs';
+import { service, values, path } from '../commons/configs';
 import { Flex } from 'antd-mobile';
+
+
+const mapStateToProps = ({fetch}) => {
+    return {
+    }
+};
+
+const mapDispatchProps = dispatch => ({
+    move: (location) => dispatch(push(location)),
+});
 
 class RankTop extends React.Component {
 
+    onClick(...args){
+        console.log("args", args);
+    }
 
     renderItem(){
         const list = service.getValue(this.props, 'item.rankerList', [])
@@ -21,11 +35,11 @@ class RankTop extends React.Component {
                 <Flex.Item key={inx}>
                     <p className="title">{service.getValue(typeObj, 'title', '')}</p>
                     {thumnail ?
-                        <div className="thumnail">
+                        <div className="thumnail" onClick={this.onClick.bind(this, item)}>
                             <img src={thumnail} alt={item.userId} />
                         </div>
                         : null}
-                    <p className="user-id">{service.getMasking(service.getValue(item, 'userId', ''), 3)}</p>
+                    <p className="user-id" onClick={this.onClick.bind(this, item)}>{service.getMasking(service.getValue(item, 'userId', ''), 3)}</p>
                     <p className="count">참여 {service.getValue(item, 'donateCount', 0)}회</p>
                     <p className="price">기부 {service.amount(service.getValue(item, 'totalDonation', 0))}원</p>
                 </Flex.Item>
@@ -51,4 +65,4 @@ class RankTop extends React.Component {
 
 }
 
-export default RankTop;
+export default connect(mapStateToProps, mapDispatchProps)(RankTop);

@@ -1,10 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import { push } from 'react-router-redux';
 
 import { fetch } from '../redux/actions';
 
-import { api, service, columns } from '../commons/configs';
+import { api, service, columns, path } from '../commons/configs';
 
 import { DesktopLayout, MobileLayout } from '../commons/components';
 import { Table } from 'antd';
@@ -37,7 +38,9 @@ const mapStateToProps = ({fetch}) => {
 };
 
 const mapDispatchProps = dispatch => ({
+    resetList : () => dispatch(fetch.resetList()),
     getList: (url, params) => dispatch(fetch.list(url, params)),
+    move: (location) => dispatch(push(location)),
 });
 
 class RankList extends React.Component {
@@ -49,21 +52,30 @@ class RankList extends React.Component {
         };
     }
 
-    componentDidMount() {
+    componentWillMount() {
+        this.props.resetList();
+    }
+
+    search(params) {
+        this.props.move(path.list(path.rank, {...this.getParamsFormLocation(), ...params}));
+    }
+
+    componentDidMount(){
         this.getList(this.getParamsFormLocation());
+    }
+
+    componentDidUpdate(prevProps) {
+        const {location} = this.props;
+        if(prevProps.location.search !== location.search) {
+            this.getList(this.getParamsFormLocation())
+        }
     }
 
     getList(searchParams){
         const { from } = this.props;
         const obj = from === 'user' ? api.userRankList(...searchParams, this.state) : null;
 
-        return this.props.getList(obj, {})
-
-
-        // return this.props.getList(obj, {})
-
-
-        console.log("obj", obj);
+        return this.props.getList(obj, {});
     }
 
     getRowKey(record){
@@ -82,6 +94,7 @@ class RankList extends React.Component {
     }
 
     onChange(...args) {
+        // TODO 서버의 리스트 스키마가 변경되면 리스트 갯수맞추기 다시 해야됨
         console.log("onChange", args);
         // const limit = pagination.pageSize;
         // const params = {limit, offset: (pagination.current - 1) * limit};

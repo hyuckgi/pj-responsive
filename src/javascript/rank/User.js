@@ -8,7 +8,7 @@ import { api, service } from '../commons/configs';
 import { RankTop, RankList } from './';
 
 const mapStateToProps = ({fetch}) => {
-    const ranks = service.getValue(fetch, 'multipleList.ranks.data', {});
+    const ranks = service.getValue(fetch, 'multipleList.userRanks.data', {});
 
     return {
         ranks
@@ -32,7 +32,7 @@ class User extends React.Component {
     }
 
     getRank(){
-        return this.props.multipleList([{id : 'ranks', url : api.getRank(), params : {}}])
+        return this.props.multipleList([{id : 'userRanks', url : api.getRank(), params : {}}])
     }
 
     render() {
