@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
-import { service, values, path } from '../commons/configs';
+import { service, values, path } from '../../commons/configs';
 import { Flex } from 'antd-mobile';
 
 

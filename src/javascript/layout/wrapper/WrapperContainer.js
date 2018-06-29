@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { path } from '../../commons/configs';
-import { Main, Story, Rank } from '../../routes';
+import { Main, Story, Rank, Board, Service } from '../../routes';
 import { Join, Login } from '../';
 
 class WrapperContainer extends React.Component {
@@ -15,6 +15,8 @@ class WrapperContainer extends React.Component {
                 <Route path={path.main} component={Main} />
                 <Route path={path.story} component={Story} />
                 <Route path={path.rank} component={Rank} />
+                <Route path={path.board} component={Board} />
+                <Route path={path.service} component={Service} />
             </Switch>
         );
     }

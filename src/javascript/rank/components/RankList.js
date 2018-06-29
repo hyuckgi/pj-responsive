@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { push } from 'react-router-redux';
 
-import { fetch } from '../redux/actions';
+import { fetch } from '../../redux/actions';
 
-import { api, service, columns, path } from '../commons/configs';
+import { api, service, columns, path } from '../../commons/configs';
 
-import { DesktopLayout, MobileLayout } from '../commons/components';
+import { DesktopLayout, MobileLayout } from '../../commons/components';
 import { Table } from 'antd';
 
 const noData = '-';

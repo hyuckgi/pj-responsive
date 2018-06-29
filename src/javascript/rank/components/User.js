@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { fetch } from '../redux/actions';
+import { fetch } from '../../redux/actions';
 
-import { api, service } from '../commons/configs';
+import { api, service } from '../../commons/configs';
 
 import { RankTop, RankList } from './';
 

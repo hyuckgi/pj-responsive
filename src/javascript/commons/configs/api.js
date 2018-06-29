@@ -53,6 +53,9 @@ export const api = {
         return `/api/donate/ranking/page/${page}/size/${size}`
     },
 
+    // event & notice
+    getEventList : ({status = 'going', page = 1, size = 30}) => `/api/event/status/${status}/page/${page}/size/${size}`,
+    getNoticeList : ({page = 1, size = 30}) => `/api/notice/page/${page}/size/${size}`,
 
 
 

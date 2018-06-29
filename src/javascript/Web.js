@@ -38,6 +38,7 @@ class Web extends React.Component {
         if(!subMenu.length){
             return null;
         }
+        console.log("renderSubMenu", subMenu);
 
         return(
             <Sticky topOffset={1}>

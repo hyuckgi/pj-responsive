@@ -23,8 +23,16 @@ export const path = {
     // rank
     rank : '/rank',
 
+    // board
+    board : '/board',
 
     // service
+    service : '/service',
+    cs : '/service/cs',
+    rules : '/service/rules',
+
+
+    // utils
     login : '/login',
     join : '/join',
     notFound : '/notFound',

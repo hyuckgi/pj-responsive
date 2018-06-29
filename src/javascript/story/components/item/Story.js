@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { StickyContainer, Sticky } from 'react-sticky';
 import UAParser from 'ua-parser-js';
 
-import { DesktopLayout, MobileLayout, FooterUtil } from '../../commons/components';
-import { service, api } from '../../commons/configs';
-import { fetch } from '../../redux/actions';
+import { DesktopLayout, MobileLayout, FooterUtil } from '../../../commons/components';
+import { service, api } from '../../../commons/configs';
+import { fetch } from '../../../redux/actions';
 import { Tabs, WhiteSpace } from 'antd-mobile';
 
 import { StoryTop } from './';
@@ -131,7 +131,7 @@ class Story extends React.Component {
     render() {
         const { item } = this.props;
         const reviewData = service.getValue(item, 'reviewData', {});
-        
+
         return (
             <div className="story-detail">
                 <WhiteSpace size="xs"/>

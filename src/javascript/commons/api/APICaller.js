@@ -1,9 +1,11 @@
 import axios from 'axios';
 import Async from './Async';
 
+
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 axios.defaults.withCredentials = false;
 axios.defaults.headers.common['X-Auth-Token'] = localStorage.getItem('token');
+axios.defaults.headers.common['Accept-Language'] = window.navigator.language || 'en-US';
 
 const config = {
 	debug : false,

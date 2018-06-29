@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { service } from '../../commons/configs';
-import { CustomIcon } from '../../commons/components';
+import { service } from '../../../commons/configs';
+import { CustomIcon } from '../../../commons/components';
 
 const mapStateToProps = ({code}) => {
     const categories = service.getValue(code, 'categories', []);

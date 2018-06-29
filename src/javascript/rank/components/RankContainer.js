@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { service } from '../commons/configs';
+import { service } from '../../commons/configs';
 import { User, Sponsor } from './';
 
 class RankContainer extends React.Component {

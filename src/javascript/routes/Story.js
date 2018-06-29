@@ -2,7 +2,7 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import { path } from '../commons/configs';
-import { ProposeContainer, Story as StoryItem, StoryList } from '../story';
+import { ProposeContainer, Story as StoryItem, StoryList } from '../story/components';
 
 class Story extends React.Component {
 

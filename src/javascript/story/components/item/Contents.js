@@ -1,8 +1,8 @@
 import React from 'react';
 import { Player, BigPlayButton } from 'video-react';
 
-import { service } from '../../commons/configs';
-import { CommonEditor } from '../../commons/components';
+import { service } from '../../../commons/configs';
+import { CommonEditor } from '../../../commons/components';
 
 import UAParser from 'ua-parser-js';
 

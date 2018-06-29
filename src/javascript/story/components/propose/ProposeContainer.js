@@ -2,10 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
-import { APICaller } from '../../commons/api'
-import { fetch } from '../../redux/creators'
-import { service, api, path } from '../../commons/configs'
-import { values } from '../configs';
+import { APICaller } from '../../../commons/api'
+import { fetch } from '../../../redux/creators'
+import { service, api, path } from '../../../commons/configs'
+import { values } from '../../configs';
 
 import { Row, Col,  Tabs } from 'antd';
 import { Steps } from 'antd-mobile';

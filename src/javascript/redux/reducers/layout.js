@@ -10,21 +10,19 @@ const list = [
     {id: '2010000', name: '우리아이 현황1',  level: 1, link:'/rank/user', parent: '2000000'},
     {id: '2020000', name: '우리아이 현황2',  level: 1, link:'/rank/sponsor', parent: '2000000'},
 
-    {id: '3000000', name: '우리아이 선생님',  level: 0, link:'/teacher', defaultLink: '/teacher/kor',  idx : 4, hasChild:true},
-    {id: '3010000', name: '한글·수학', level: 1, link : '/teacher/kor', parent: '3000000'},
-    {id: '3020000', name: '영어', level: 1, link : '/teacher/en', parent: '3000000'},
+    {id: '3000000', name: '우리아이 선생님',  level: 0, link:'/board', defaultLink: '/board/event',  idx : 4},
+    {id: '3010000', name: '이벤트', level: 1, link : '/board/event', parent: '3000000'},
+    {id: '3020000', name: '공지사항', level: 1, link : '/board/notice', parent: '3000000'},
 
-    {id: '4000000', name: '육아·교육마당',  level: 0, link:'/info', defaultLink: '/info/main',  idx : 5, hasChild:true},
-    {id: '4010000', name: '육아·교육백과', link : '/info/main',  level: 1,  parent: '4000000'},
-    {id: '4020000', name: '언론보도', level: 1, link : '/info/press', parent: '4000000'},
+    {id: '4000000', name: '더보기',  level: 0, link:'/service', defaultLink: '/service/cs', idx : 5, hasChild:true},
 
-    {id: '5000000', name: '고객센터',  level: 0, link:'/cs', defaultLink: '/cs/notice', idx : 6, hasChild:true},
-    {id: '5010000', name: '공지사항', link : '/cs/notice',  level: 1,  parent: '5000000'},
-    {id: '5020000', name: '이벤트', level: 1, link : '/cs/event', parent: '5000000'},
-    {id: '5030000', name: '자주하는 질문', level: 1, link : '/cs/faq', parent: '5000000'},
-    {id: '5040000', name: '신고·건의·문의', level: 1, link : '/cs/qa', parent: '5000000'},
-    {id: '5050000', name: '앱 다운로드', level: 1, link : '/cs/download', parent: '5000000'},
-    {id: '5060000', name: '선생님 지원', level: 1, link : '/cs/recruit', parent: '5000000'},
+    {id: '4010000', name: '고객지원', link : '/service/cs', defaultLink : '/service/cs/faq', level: 1,  parent: '4000000', hasChild:true},
+    {id: '4010100', name: '도움말', link : '/service/cs/faq',  level: 2,  parent: '4010000'},
+    {id: '4010200', name: '문의하기', link : '/service/cs/qna',  level: 2,  parent: '4010000'},
+
+    {id: '4020000', name: '약관 및 정책', level: 1, link : '/service/rules',  defaultLink : '/service/rules/terms', parent: '4000000', hasChild:true},
+    {id: '4020100', name: '약관', level: 2, link : '/service/rules/terms', parent: '4020000'},
+    {id: '4020200', name: '정책', level: 2, link : '/service/rules/policy', parent: '4020000'},
 ];
 
 const footerList = [

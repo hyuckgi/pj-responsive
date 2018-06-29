@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { ButtonWrapper } from '../../commons/components';
-import { service } from '../../commons/configs';
-import { FormButton } from '../../commons/types';
+import { ButtonWrapper } from '../../../commons/components';
+import { service } from '../../../commons/configs';
+import { FormButton } from '../../../commons/types';
 
 import { Form, Cascader, Select, Checkbox, Input, Modal} from 'antd';
 

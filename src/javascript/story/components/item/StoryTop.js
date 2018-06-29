@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { service } from '../../commons/configs';
-import { CustomIcon } from '../../commons/components';
+import { service } from '../../../commons/configs';
+import { CustomIcon } from '../../../commons/components';
 
 class StoryTop extends React.Component {
 

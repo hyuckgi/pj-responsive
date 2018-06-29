@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { ButtonWrapper, AccountContainer } from '../../commons/components';
-import { FormButton } from '../../commons/types';
+import { ButtonWrapper, AccountContainer } from '../../../commons/components';
+import { FormButton } from '../../../commons/types';
 
 import { Form, Input, Radio, InputNumber } from 'antd';
 

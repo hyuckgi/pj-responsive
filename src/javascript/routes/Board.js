@@ -2,18 +2,18 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import { path } from '../commons/configs';
-import { RankContainer } from '../rank/components';
+import { BoardContainer } from '../board/components';
 
-class Rank extends React.Component {
+class Board extends React.Component {
 
     render() {
         return (
             <Switch>
-                <Route path={path.list(path.rank)} component={RankContainer} />
+                <Route path={path.list(path.board)} component={BoardContainer} />
             </Switch>
         );
     }
 
 }
 
-export default Rank;
+export default Board;

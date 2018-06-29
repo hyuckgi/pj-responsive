@@ -47,10 +47,10 @@ class HeaderContainer extends React.Component {
                                 <Col span={4} className="logo" >
                                     <img src={imgLogo} alt="logo" onClick={this.onClick.bind(this)}/>
                                 </Col>
-                                <Col span={13} offset={1} className="global-navigation-wrap">
+                                <Col span={10} offset={1} className="global-navigation-wrap">
                                     {this.renderTabBar()}
                                 </Col>
-                                <Col className="dropdown" span={5} offset={1}>
+                                <Col className="dropdown" span={8} offset={1}>
                                     <Dropdown overlay={menu} placement="bottomLeft">
                                       <Button>다른 관리자센터<Icon type="down" /></Button>
                                     </Dropdown>

@@ -2,10 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import queryString from 'query-string';
 
-import { ItemList, ListTop } from '../../commons/components/item';
+import { ItemList, ListTop } from '../../../commons/components/item';
 
-import { fetch } from '../../redux/actions';
-import { service, values, api, path } from '../../commons/configs';
+import { fetch } from '../../../redux/actions';
+import { service, values, api, path } from '../../../commons/configs';
 
 
 import { WhiteSpace } from 'antd-mobile';
@@ -77,7 +77,7 @@ class StoryList extends React.Component {
         const current = service.getValue(values,  'story.status')
             .filter(item => item.path === type)
             .find(item => item);
-            
+
         const obj = api.getList(
             {status : current.status, order : order},
             page,

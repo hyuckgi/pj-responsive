@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
-import { fetch } from '../../redux/actions';
-import { service, values, api, path } from '../../commons/configs';
+import { fetch } from '../../../redux/actions';
+import { service, values, api, path } from '../../../commons/configs';
 
 import { Comment } from './';
 
