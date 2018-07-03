@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
-import { service, values, path } from '../../commons/configs';
+import { service, values, path } from '../../../commons/configs';
 import { Flex } from 'antd-mobile';
 
 
@@ -15,10 +15,18 @@ const mapDispatchProps = dispatch => ({
     move: (location) => dispatch(push(location)),
 });
 
-class RankTop extends React.Component {
+class ListTop extends React.Component {
 
-    onClick(...args){
-        console.log("args", args);
+    onClick(item, e){
+        e.preventDefault();
+        const userNo = service.getValue(item, 'userNo', false);
+        const { type } = this.props;
+
+        if(userNo){
+            return this.props.move(path.moveItem(path.rankItem, userNo, type));
+        }
+
+
     }
 
     renderItem(){
@@ -26,10 +34,7 @@ class RankTop extends React.Component {
 
         return list.map((item, inx) => {
             const typeObj = values.rank.types.filter(type => type.type === item.type).find(item => item);
-
-            // TODO: 실제 섬네일 이미지 사용
-            // const thumnail = service.getValue(item, 'thumbnailUrl', false);
-            const thumnail = 'https://picsum.photos/150/150?random';
+            const thumnail = service.getValue(item, 'profileUrl', false);
 
             return (
                 <Flex.Item key={inx}>
@@ -65,4 +70,4 @@ class RankTop extends React.Component {
 
 }
 
-export default connect(mapStateToProps, mapDispatchProps)(RankTop);
+export default connect(mapStateToProps, mapDispatchProps)(ListTop);

@@ -47,17 +47,13 @@ export const api = {
         url : `/api/story/illegal`,
         params : {...params}
     }),
-
     // rank
-    getRank : () => `/api/donate/ranking/summary`,
-    userRankList : ({page = 1, size = 30, year = null}) => {
-        console.log("arguments", page);
-        console.log("arguments", size);
-        console.log("arguments", year);
+    getRank : (type = 'donate') => `/api/${type}/ranking/summary`,
+    getRankList : ({type = 'donate', page = 1, size = 30, year = null}) => {
         if(year){
-            return `/api/donate/ranking/year/${year}/page/${page}/size/${size}`;
+            return `/api/${type}/ranking/year/${year}/page/${page}/size/${size}`;
         }
-        return `/api/donate/ranking/page/${page}/size/${size}`
+        return `/api/${type}/ranking/page/${page}/size/${size}`
     },
 
     // event & notice

@@ -16,14 +16,10 @@ const mapDispatchProps = dispatch => ({
 class LocalNavigationBar extends React.Component {
 
     renderMenu(menu, opt = null){
-
-        console.log("menu", menu);
         const width = opt ? opt.width : 100;
         const crruent = service.getValue(this.props, 'currentMenu.id', false)
             ?  (service.getValue(this.props, 'currentMenu.id') === menu.id ? 'on' : '')
             : '';
-
-        console.log("crruent", crruent);
 
         return(
             <Menu.Item
@@ -39,9 +35,6 @@ class LocalNavigationBar extends React.Component {
 
     render() {
         const { subMenu } = this.props;
-
-        console.log("subMenu", subMenu);
-        console.log("currentMenu", this.props.currentMenu);
 
         return (
             <Menu

@@ -22,6 +22,8 @@ export const path = {
 
     // rank
     rank : '/rank',
+    rankItem : '/rank/item',
+    rankList : '/rank/list',
 
     // board
     board : '/board',

@@ -1,13 +1,8 @@
-import User from './User';
-import Sponsor from './Sponsor';
-import RankTop from './RankTop';
-import RankList from './RankList';
-import RankContainer from './RankContainer';
+
+import { RankListContainer } from './list';
+import { RankItemContainer } from './item';
 
 export {
-    User,
-    Sponsor,
-    RankTop,
-    RankList,
-    RankContainer
+    RankListContainer,
+    RankItemContainer
 }
