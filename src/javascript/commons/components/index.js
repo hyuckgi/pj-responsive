@@ -8,7 +8,7 @@
 import CommonEditor from './CommonEditor';
 import CustomIcon from './CustomIcon';
 import CertifyPhone from './CertifyPhone';
-import { ButtonWrapper, CertifyButton } from './buttons';
+import { ButtonWrapper, CertifyButton, Buttons } from './buttons';
 import { Agreement } from './agree';
 import { SelectCountry } from './country';
 import { CustomPicker } from './picker';
@@ -25,6 +25,7 @@ export{
     CommonEditor,
     CertifyPhone,
     CustomIcon,
+    Buttons,
     ButtonWrapper,
     Agreement,
     CertifyButton,

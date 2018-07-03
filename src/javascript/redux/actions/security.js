@@ -1,5 +1,5 @@
-import {security as creator}  from '../creators';
-import {SecurityService} from '../../commons/configs/security';
+import { security as creator }  from '../creators';
+import { SecurityService, SessionService } from '../../commons/configs/security';
 
 
 export const login = (params) => {
@@ -9,7 +9,7 @@ export const login = (params) => {
         return SecurityService.login(params)
             .then(data => {
                 dispatch(creator.loginSuccess(data));
-                return data;
+                SessionService.login(getState().security);
             })
     };
 };

@@ -6,8 +6,18 @@ import { createForm } from 'rc-form';
 import {security as action} from '../../redux/actions';
 
 import { Flex, WhiteSpace, InputItem, Button, List, WingBlank, Toast} from 'antd-mobile';
+import { service } from '../../commons/configs';
 
 import logo from '../../../resource/commons/logo.png';
+
+
+const mapStateToProps = ({ fetch, security }) => {
+    const token = service.getValue(security, 'token', false);
+
+    return{
+        token
+    }
+}
 
 const mapDispatchToProps = (dispatch) => {
     return {
@@ -36,7 +46,9 @@ class Login extends React.Component {
 
     login(params) {
         return this.props.login(params)
-            .then(({token}) => {
+            .then(() => {
+                const { token } = this.props;
+
                 if(token){
                     return Toast.success(`로그인 되었습니다.`, 2, this.props.moveHome());
                 }else{
@@ -131,4 +143,4 @@ class Login extends React.Component {
 
 }
 
-export default connect(null, mapDispatchToProps)(createForm()(Login));
+export default connect(mapStateToProps, mapDispatchToProps)(createForm()(Login));

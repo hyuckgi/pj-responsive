@@ -2,8 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { EditorState, convertToRaw, ContentState } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
-// import draftToHtml from 'draftjs-to-html';
+import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
+
+import { ButtonWrapper, Buttons } from './';
+import { service } from '../configs';
+import { FormButton } from '../types';
+
+import { Button, Flex, WhiteSpace } from 'antd-mobile';
 
 class CommonEditor extends React.Component {
 
@@ -14,6 +20,8 @@ class CommonEditor extends React.Component {
 
         this.onEditorStateChange = this.onEditorStateChange.bind(this);
         this.convertHtml = this.convertHtml.bind(this);
+        this.onClickButton = this.onClickButton.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
     }
 
     componentDidMount() {
@@ -50,25 +58,96 @@ class CommonEditor extends React.Component {
         })
     }
 
+    getToobars(){
+        const { toolbars } = this.props;
+
+        if(toolbars){
+            return {
+                options : ['inline', 'fontSize', 'colorPicker', 'link', 'textAlign', 'emoji', 'image', 'history'],
+            }
+        }
+        return {}
+    }
+
+    onSubmit(){
+        const { onSubmit } = this.props;
+        const { editorState } = this.state;
+
+        if(onSubmit){
+            return onSubmit({
+                events : 'submit',
+                payload : {
+                    text : draftToHtml(convertToRaw(editorState.getCurrentContent()))
+                }
+            });
+        }
+    }
+
+    onMove(){
+        const { onSubmit } = this.props;
+
+        if(onSubmit){
+            return onSubmit({
+                events : 'move',
+            });
+        }
+    }
+
+    onClickButton(id){
+        switch (id) {
+            case FormButton.SAVE:
+                return this.onSubmit();
+            case FormButton.CONFIRM:
+                return this.onMove();
+            default:
+                break;
+        }
+    }
+
+    renderButtons(buttons){
+        return buttons.map((item, inx) => {
+            return (
+                <Flex.Item>
+                    <Buttons />
+                </Flex.Item>
+            )
+        })
+    }
+
+    renderFooter(){
+        const buttons = service.getValue(this.props, 'buttons', []);
+
+        return (
+            <Flex justify="end" className="button-wrapper">
+                <Flex.Item>
+                    <WhiteSpace />
+                    <Buttons buttons={buttons} onClickButton={this.onClickButton.bind(this)}/>
+                </Flex.Item>
+            </Flex>
+        )
+    }
+
     render() {
-        const { toolbars, readOnly, wrapperClassName, editorClassName, toolbarClassName} = this.props;
+        const {placeholder, toolbars, readOnly, wrapperClassName, editorClassName, toolbarClassName} = this.props;
         const { editorState } = this.state;
 
         return (
-            <div className="common-editor">
+            <div className={`common-editor ${readOnly ? 'common-editor-read' : ''}`}>
                 <Editor
                     editorState={editorState}
                     wrapperClassName={wrapperClassName}
                     editorClassName={editorClassName}
                     toolbarClassName={toolbarClassName}
                     onEditorStateChange={this.onEditorStateChange}
-                    toolbarHidden={toolbars}
                     toolbarStyle={toolbars ? null : {display:'none'}}
+                    toolbar={this.getToobars()}
                     readOnly={readOnly}
                     localization={{
                         locale: 'ko',
                     }}
+                    placeholder={placeholder || null}
                 />
+                {this.renderFooter()}
             </div>
         );
     }
@@ -88,9 +167,9 @@ CommonEditor.defaultProps = {
     value : "텍스트가 없습니다.",
     toolbars : false,
     readOnly : true,
-    wrapperClassName : 'wink-editor-wrapper',
-    editorClassName : 'wink-editor-main',
-    toolbarClassName : 'wink-editor-toolbar',
+    wrapperClassName : 'spoons-editor-wrapper',
+    editorClassName : 'spoons-editor-main',
+    toolbarClassName : 'spoons-editor-toolbar',
 };
 
 export default CommonEditor;

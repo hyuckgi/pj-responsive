@@ -79,9 +79,10 @@ class FooterUtil extends React.Component {
 
     onClickReport(e){
         e.preventDefault();
+        const { item } = this.props;
         return this.onOpenModal({
             title : '신고하기',
-            contents : (<Report />)
+            contents : (<Report item={item}/>)
         })
     }
 

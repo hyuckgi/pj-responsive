@@ -8,6 +8,9 @@ export default class SecurityService {
             .then(({data}) => {
                 return {
                     token : data.token,
+                    countryCode : data.countryCode,
+                    role : data.role,
+                    resultCode : data.resultCode,
                 }
             });
     }

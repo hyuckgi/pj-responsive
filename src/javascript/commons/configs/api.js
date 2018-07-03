@@ -35,9 +35,16 @@ export const api = {
         url : `/api/story/like`,
         params : {...params}
     }),
-
+    postComment : (params) => ({
+        url : `/api/story/comment`,
+        params : {...params}
+    }),
     getComments : (storyNo, page = 1, size = 10, params = null) => ({
         url : `/api/story/${storyNo}/comment/page/${page}/size/${size}`,
+        params : {...params}
+    }),
+    postReport : (params = null) => ({
+        url : `/api/story/illegal`,
         params : {...params}
     }),
 

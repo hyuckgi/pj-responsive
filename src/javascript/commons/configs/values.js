@@ -5,6 +5,7 @@ const format = {
     TIME_FORMAT: 'HH:mm',
     TIME_FORMAT_SEC : 'HH:mm:ss',
     DAY_FORMAT: 'ddd',
+    LOCALE_KOR : `YYYY년 MM월 DD일`,
 };
 
 const platform = {

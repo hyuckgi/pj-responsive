@@ -1,38 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Button, Flex, WhiteSpace } from 'antd-mobile';
+import { Flex, WhiteSpace } from 'antd-mobile';
+
+import { Buttons } from './';
 
 class ButtonWrapper extends React.Component {
 
-    onClickButton(item, e){
-        e.preventDefault();
-        return this.props.onClickButton(item.id);
-    }
-
-    renderButton(){
-        const { buttons } = this.props;
-
-        return buttons.map((item, idx) => {
-            return (
-                <Button
-                    key={idx}
-                    type={item.type || 'primary'}
-                    size={item.size || 'small'}
-                    inline={item.inline || true}
-                    onClick={this.onClickButton.bind(this, item)}
-                    {...item}
-                >{item.label}</Button>
-            );
-        });
+    onClickButton(id){
+        return this.props.onClickButton(id);
     }
 
     render() {
+        const { buttons } = this.props;
+
         return (
             <Flex justify="center" className="button-wrapper" >
                 <Flex.Item>
                     <WhiteSpace size="xl" />
-                    {this.renderButton()}
+                    <Buttons buttons={buttons} onClickButton={this.onClickButton.bind(this)}/>
                     <WhiteSpace size="lg" />
                 </Flex.Item>
             </Flex>
