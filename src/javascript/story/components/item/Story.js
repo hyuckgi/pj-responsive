@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { StickyContainer, Sticky } from 'react-sticky';
 import UAParser from 'ua-parser-js';
 
-import { DesktopLayout, MobileLayout, FooterUtil } from '../../../commons/components';
+import { FooterUtil } from '../../../commons/components';
 import { service, api } from '../../../commons/configs';
 import { fetch } from '../../../redux/actions';
 import { Tabs, WhiteSpace } from 'antd-mobile';
@@ -61,8 +61,9 @@ class Story extends React.Component {
     }
 
     onEvent(obj){
-        const { events, params } = obj;
-        if(params === 'update'){
+        const { events, payload } = obj;
+        const type = service.getValue(payload, 'type', false);
+        if(type === 'update'){
             const itemId = service.getValue(this.props, 'match.params.id', false);
             if(itemId){
                 this.getItem(itemId);

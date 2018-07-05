@@ -1,6 +1,6 @@
-// import moment from 'moment';
+import moment from 'moment';
 
-const defaultPagination = {size: 'small', showSizeChanger:true, showQuickJumper: false, pageSizeOptions: ['10', '50', '100', '400'], defaultPageSize : 1};
+const defaultPagination = {size: 'small', showSizeChanger:false, showQuickJumper: false, pageSizeOptions: ['10', '50', '100', '400']};
 
 
 export const service = {
@@ -100,7 +100,6 @@ export const service = {
                 item['key'] = inx;
                 if(item.list){
                     const newList = service.mappingKey(item.list);
-                    console.log("newList", newList);
                     item.list = newList;
                 }
                 return item;
@@ -132,6 +131,18 @@ export const service = {
             return url.replace('/u/', '/ut/') + '.jpg';
         }
         return url;
+    },
+
+    makeYearOption : (length = 5) => {
+        const currentYear = moment().year();
+        const years = Array(length).fill(0).map((item, inx) => {
+            item = {};
+            item['value'] = `${currentYear - inx}`;
+            item['label'] = `${currentYear - inx}년`;
+            return item;
+        })
+
+        return [{value : 'all', label : '전체'}, ...years]
     }
 };
 export default {

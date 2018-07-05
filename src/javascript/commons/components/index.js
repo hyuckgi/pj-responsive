@@ -14,7 +14,8 @@ import { SelectCountry } from './country';
 import { CustomPicker } from './picker';
 import { AccountContainer } from './account';
 import { DesktopLayout, MobileLayout } from './response';
-import { FooterUtil } from './utils'
+import { FooterUtil } from './utils';
+import { CommentList, Comment } from './comment';
 
 export{
     // EventCarousel,
@@ -34,5 +35,7 @@ export{
     AccountContainer,
     DesktopLayout,
     MobileLayout,
-    FooterUtil
+    FooterUtil,
+    CommentList,
+    Comment
 }

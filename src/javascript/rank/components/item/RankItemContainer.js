@@ -9,7 +9,7 @@ class RankItemContainer extends React.Component {
         const { match } = this.props;
         const type = service.getValue(match, 'params.mode', false);
 
-        return type && type === 'sponsor' ? (<Sponsor />) : (<User />)
+        return type && type === 'sponsor' ? (<Sponsor type={type} />) : (<User type={type} />)
     }
 
 }

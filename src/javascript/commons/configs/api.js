@@ -47,6 +47,7 @@ export const api = {
         url : `/api/story/illegal`,
         params : {...params}
     }),
+
     // rank
     getRank : (type = 'donate') => `/api/${type}/ranking/summary`,
     getRankList : ({type = 'donate', page = 1, size = 30, year = null}) => {
@@ -55,6 +56,16 @@ export const api = {
         }
         return `/api/${type}/ranking/page/${page}/size/${size}`
     },
+
+    getDonate : (userNo) => `/api/donate/activity/${userNo}`,
+    getUserHistory : ({userNo, page = 1, size = 30, year = null}) => {
+        if(year){
+            return `/api/donate/activity/${userNo}/year/${year}/page/${page}/size/${size}`;
+        }
+        return `/api/donate/activity/${userNo}/page/${page}/size/${size}`;
+    },
+
+
 
     // event & notice
     getEventList : ({status = 'going', page = 1, size = 30}) => `/api/event/status/${status}/page/${page}/size/${size}`,

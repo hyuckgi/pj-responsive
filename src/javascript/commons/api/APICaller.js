@@ -302,18 +302,6 @@ if (true) {
 	);
 }
 
-const getCSRFToken = () => {
-    // let token;
-    // for (let cookie of document.cookie.split('; ')) {
-    //     let [name, value] = cookie.split("=");
-    //     if(name === 'XSRF-TOKEN') {
-    //         token = decodeURIComponent(value);
-    //         break;
-    //     }
-    // }
-    return {'X-Auth-Token' : localStorage.getItem('token')};
-};
-
 const upload = {
     getProps : (fileList) => ({
         action: `${APIHost}/api/file/upload`,

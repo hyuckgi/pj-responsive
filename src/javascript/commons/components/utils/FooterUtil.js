@@ -9,7 +9,7 @@ import { service, api } from '../../configs';
 import { CustomIcon } from '../';
 
 import { Share, Sponsors, Report } from './';
-import { Flex, WhiteSpace, Button, Modal, Badge } from 'antd-mobile';
+import { Flex, Button, Modal, Badge } from 'antd-mobile';
 
 
 const parser = new UAParser();
@@ -103,7 +103,7 @@ class FooterUtil extends React.Component {
                         likes : false,
                     });
                     if(onEvent){
-                        onEvent({events: 'success', params : 'update'});
+                        onEvent({events: 'success', payload : {type : 'update'}});
                     }
                 }
             });

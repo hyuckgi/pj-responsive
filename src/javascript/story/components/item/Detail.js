@@ -4,7 +4,9 @@ import { connect } from 'react-redux';
 import { fetch } from '../../../redux/actions';
 import { service, api } from '../../../commons/configs';
 
-import { Info, CommentList, Contents, Comment } from './';
+import { CommentList, Comment } from '../../../commons/components';
+
+import { Info, Contents } from './';
 
 const mapStateToProps = ({ fetch, security }) => {
     const item = service.getValue(fetch, 'item.data', {});
@@ -59,7 +61,7 @@ class Detail extends React.Component {
     }
 
     onEvents(params){
-        const { events, payload } = params;
+        const { events } = params;
         const storyNo = service.getValue(this.props, 'item.storyNo', false);
 
         switch (events) {

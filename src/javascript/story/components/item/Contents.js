@@ -54,7 +54,7 @@ class Contents extends React.Component {
                         const isVideo =  (/\.(mp4|avi|mpg|mpeg|mpe|wmv|asf|asx|flv|rm|mov|dat|webm|m3u8)$/i).test(src);
 
                         if(!isVideo){
-                            return;
+                            return null;
                         }
 
                         return(

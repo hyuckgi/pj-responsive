@@ -36,16 +36,55 @@
                     img{
                         // TODO 임시
                         height: 154px;
-                        
+
                         max-width:154px;
                         max-height:154px;
                         border-radius:50%;
                         overflow:hidden;
                         background-color:#fff;
-                        border:2px solid #2290A2;
+                        border:2px solid #ffffff;
                         box-shadow: 4px 2px 11px rgba(0, 0, 0, 0.3);
                         cursor: pointer;
                     }
+                }
+                .ant-avatar{
+                    margin:0 auto 14px;
+                    width:154px;
+                    height:154px;
+                    line-height:154px;
+                    border-radius:50%;
+                    cursor: pointer;
+                    border:2px solid #ffffff;
+                    box-shadow: 4px 2px 11px rgba(0, 0, 0, 0.3);
+
+                    &-lg.ant-avatar-icon{
+                        font-size:5em;
+                    }
+                }
+            }
+        }
+    }
+
+    .rank-list{
+
+        &-top{
+            margin-bottom:20px;
+
+            h3{
+                font-weight:bold;
+            }
+        }
+    }
+
+    &.user-detail-wrapper{
+        .am-tabs{
+            border-top:1px solid #00bbd4;
+
+            .am-tabs-tab-bar-wrap{
+                margin-bottom:20px;
+
+                .am-tabs-default-bar-tab{
+                    cursor:pointer;
                 }
             }
         }
