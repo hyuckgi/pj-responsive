@@ -66,14 +66,9 @@ export const api = {
     },
 
 
-
     // event & notice
-    getEventList : ({status = 'going', page = 1, size = 30}) => `/api/event/status/${status}/page/${page}/size/${size}`,
-    getNoticeList : ({page = 1, size = 30}) => `/api/notice/page/${page}/size/${size}`,
-
-
-
-
+    getEventList : ({status = 'going', page = 1, size = 10}) => `/api/event/status/${status}/page/${page}/size/${size}`,
+    getNoticeList : ({page = 1, size = 10}) => `/api/notice/page/${page}/size/${size}`,
 
 
     getAuth : (params = null) => ({

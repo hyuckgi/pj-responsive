@@ -10,9 +10,9 @@ const list = [
     {id: '2010000', name: '우리아이 현황1',  level: 1, link:'/rank/list/user', parent: '2000000'},
     {id: '2020000', name: '우리아이 현황2',  level: 1, link:'/rank/list/sponsor', parent: '2000000'},
 
-    {id: '3000000', name: '우리아이 선생님',  level: 0, link:'/board', defaultLink: '/board/event',  idx : 4},
-    {id: '3010000', name: '이벤트', level: 1, link : '/board/event', parent: '3000000'},
-    {id: '3020000', name: '공지사항', level: 1, link : '/board/notice', parent: '3000000'},
+    {id: '3000000', name: '우리아이 선생님',  level: 0, link:'/board/list', defaultLink: '/board/list/event',  idx : 4},
+    {id: '3010000', name: '이벤트', level: 1, link : '/board/list/event', parent: '3000000'},
+    {id: '3020000', name: '공지사항', level: 1, link : '/board/list/notice', parent: '3000000'},
 
     {id: '4000000', name: '더보기',  level: 0, link:'/service', defaultLink: '/service/cs', idx : 5, hasChild:true},
 

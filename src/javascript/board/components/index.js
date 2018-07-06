@@ -1,9 +1,8 @@
-import BoardContainer from './BoardContainer';
-import EventList from './EventList';
-import NoticeList from './NoticeList';
+import { BoardListContainer } from './list';
+import { BoardItemContainer } from './item';
+
 
 export {
-    BoardContainer,
-    EventList,
-    NoticeList
+    BoardListContainer,
+    BoardItemContainer
 }

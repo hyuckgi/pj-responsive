@@ -16,6 +16,7 @@ import { AccountContainer } from './account';
 import { DesktopLayout, MobileLayout } from './response';
 import { FooterUtil } from './utils';
 import { CommentList, Comment } from './comment';
+import BlankImage from './BlankImage'
 
 export{
     // EventCarousel,
@@ -37,5 +38,6 @@ export{
     MobileLayout,
     FooterUtil,
     CommentList,
-    Comment
+    Comment,
+    BlankImage
 }

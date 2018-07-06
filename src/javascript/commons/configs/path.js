@@ -27,6 +27,9 @@ export const path = {
 
     // board
     board : '/board',
+    boardItem : '/board/item',
+    boardList : '/board/list',
+
 
     // service
     service : '/service',
