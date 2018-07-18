@@ -8,6 +8,7 @@ import { service, values } from '../../../commons/configs';
 
 import { Tabs } from 'antd-mobile';
 
+import { Policy, Agreement, CsList, MakeCs } from '../';
 
 const mapStateToProps = ({ fetch, code, router, layout }) => {
     const allMenu = Object.keys(layout).reduce((result, item) => {
@@ -26,6 +27,7 @@ const mapStateToProps = ({ fetch, code, router, layout }) => {
         });
 
     return{
+        currentMenu,
         parentMenu,
         subMenu
     }
@@ -40,7 +42,6 @@ class ServiceTop extends React.Component {
 
     constructor(props) {
         super(props);
-
 
         this.onChange = this.onChange.bind(this);
         this.onTabClick = this.onTabClick.bind(this);
@@ -60,44 +61,40 @@ class ServiceTop extends React.Component {
         const { type } = this.props;
         const selected = service.getValue(item, 'id', false);
 
-        console.log("type", type);
-        console.log("selected", selected);
-
         if(!type || !selected){
             return;
         }
 
         switch (selected) {
             case '4010100':
-                return (<div>{selected}</div>)
+                return (<CsList />)
             case '4010200':
-                return (<div>{selected}</div>)
+                return (<MakeCs />)
             case '4020100':
-                return (<div>{selected}</div>)
+                return (<Agreement />)
             case '4020200':
-                return (<div>{selected}</div>)
+                return (<Policy />)
             default:
                 break;
         }
     }
 
     render() {
-        const { parentMenu, subMenu } = this.props;
-
-        console.log("subMenu", subMenu);
+        const { parentMenu, subMenu, currentMenu } = this.props;
 
         return (
             <div className="service-wrapper-top">
-                <p>{`${values.spoons.serviceName} ${parentMenu.name}`}</p>
+                <h2 className="title">{`${values.spoons.serviceName} ${parentMenu.name}`}</h2>
 
                 <Tabs
                     tabs={subMenu}
-                    initialPage={0}
+                    page={subMenu.findIndex(item => item.id === currentMenu.id)}
                     swipeable={false}
                     onChange={this.onChange}
                     onTabClick={this.onTabClick}
                     prerenderingSiblingsNumber={0}
                     destroyInactiveTab={true}
+                    tabBarUnderlineStyle={{display:'none'}}
                 >
                     {this.renderContent}
                 </Tabs>

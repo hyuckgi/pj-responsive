@@ -9,7 +9,8 @@ const format = {
 };
 
 const spoons = {
-    serviceName : '9spoons',
+    serviceName : '',
+    // serviceName : '9spoons',
 }
 
 const platform = {
