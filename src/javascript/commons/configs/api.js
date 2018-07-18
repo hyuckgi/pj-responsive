@@ -65,6 +65,14 @@ export const api = {
         return `/api/donate/activity/${userNo}/page/${page}/size/${size}`;
     },
 
+    getProposeList : ({page = 1, size = 30, year = null}) => {
+        if(year){
+            return `/api/stroy/history/year/${year}/page/${page}/size/${size}`;
+        }
+        return `/api/stroy/history/page/${page}/size/${size}`;
+    },
+    getMyComments : ({page = 1, size = 10}) => `/api/comment/page/${page}/size/${size}`,
+
 
     // event & notice
     getEventList : ({status = 'going', page = 1, size = 10}) => `/api/event/status/${status}/page/${page}/size/${size}`,

@@ -20,8 +20,17 @@ const donationList = [
     {title: '기부금액', dataIndex: 'totalDonation', key: 'totalDonation', width: 150},
 ];
 
+const proposeList = [
+    {title: '제안일자', dataIndex: 'proposeDate', key: 'proposeDate', width: 150},
+    {title: '제목', dataIndex: 'storyTitle', key: 'storyTitle'},
+    {title: '상태', dataIndex: 'status', key: 'status', width: 150},
+    {title: '목표금액', dataIndex: 'goalDonation', key: 'goalDonation', width: 200},
+    {title: '달성율', dataIndex: 'totalDonation', key: 'totalDonation', width: 150},
+];
+
 export {
     userRankList,
     sponsorRankList,
-    donationList
+    donationList,
+    proposeList
 }

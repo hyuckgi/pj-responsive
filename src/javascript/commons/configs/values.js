@@ -8,6 +8,10 @@ const format = {
     LOCALE_KOR : `YYYY년 MM월 DD일`,
 };
 
+const spoons = {
+    serviceName : '9spoons',
+}
+
 const platform = {
     MOBILE : 'mobile',
     PC : 'desktop',
@@ -161,5 +165,6 @@ export {
     propose,
     story,
     sns,
-    rank
+    rank,
+    spoons,
 };

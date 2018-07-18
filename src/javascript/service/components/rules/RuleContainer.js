@@ -4,9 +4,11 @@ import { ServiceTop } from '../common';
 class RuleContainer extends React.Component {
 
     render() {
+        const { type } = this.props;
+
         return (
             <div className='rules-wrapper'>
-                <ServiceTop />
+                <ServiceTop type={type} />
             </div>
         );
     }

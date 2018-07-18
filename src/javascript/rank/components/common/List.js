@@ -97,7 +97,7 @@ class List extends React.Component {
             <div className="rank-list">
                 <Flex justify="between" className="rank-list-top">
                     <Flex.Item >
-                        <h3>{title}</h3>
+                        <h3>{title} {data.total > 0 && `(${data.total} 건)`}</h3>
                     </Flex.Item>
                     <Flex.Item style={{textAlign : 'right'}}>
                         {this.renderSelect()}

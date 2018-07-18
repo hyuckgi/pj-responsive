@@ -29,7 +29,6 @@ class ListItem extends React.Component {
     }
 
     renderEvent(item){
-        console.log("renderEvent", item);
         const { type } = this.props;
         const src = service.getValue(item, 'thumbnailUrl', false);
         const startDate = service.getValue(item, 'startDate', false);
@@ -49,7 +48,6 @@ class ListItem extends React.Component {
     }
 
     renderNotice(item){
-        console.log("renderNotice", item);
         const { type } = this.props;
 
         return (
@@ -66,7 +64,6 @@ class ListItem extends React.Component {
 
     renderItem(){
         const { type, item } = this.props;
-        console.log("type", type);
         if(!Object.keys(item).length){
             return;
         }

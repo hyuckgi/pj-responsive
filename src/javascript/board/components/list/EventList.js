@@ -14,19 +14,11 @@ const dataSource = new ListView.DataSource({
 });
 
 const mapStateToProps = ({fetch}) => {
-    const event = service.getValue(fetch, 'multipleList.eventList', false);
-    const eventList = service.getValue(event, 'list', []);
-
-    const notice = service.getValue(fetch, 'multipleList.noticeList', false);
-    const noticeList = service.getValue(notice, 'list', []);
-
+    const event = service.getValue(fetch, 'multipleList.event', false);
     const isFetching = service.getValue(fetch, 'isFetching', false);
 
     return {
         event,
-        eventList,
-        notice,
-        noticeList,
         isFetching
     }
 };
@@ -44,9 +36,9 @@ class EventList extends React.Component {
         this.state = {
             status : 'all',
             dataSource : dataSource,
-            boardId : '',
-            size : 7,
+            size : 10,
             page : 1,
+            hasMore : false,
         };
 
         this.renderRow = this.renderRow.bind(this);
@@ -57,48 +49,25 @@ class EventList extends React.Component {
     }
 
     componentDidMount() {
-        const type = service.getValue(this.props, 'match.params.type', false);
-        if(type){
-            return this.setState({
-                type : type
-            }, () => {
-                return this.getList();
-            })
-        }
+        this.getList();
     }
 
-    componentDidUpdate(prevProps, prevState) {
-        const type = service.getValue(this.props, 'match.params.type', false);
+    componentWillReceiveProps(nextProps) {
+        const nextList = service.getValue(nextProps, 'event.list', []);
 
-        if(type && prevProps.match.params.type !== type){
-            return this.setState({
-                type : type
-            }, () => {
-                return this.getList();
-            })
-        }
-    }
-
-    UNSAFE_componentWillReceiveProps(nextProps) {
-        const type = service.getValue(this.props, 'match.params.type', false);
-        const list = type && `${type}List`
-
-        if (this.props[list].length !== nextProps[list].length){
-            return this.setState({
-                dataSource: this.state.dataSource.cloneWithRows(nextProps[list])
-            });
-        }
+        return this.setState({
+            dataSource: this.state.dataSource.cloneWithRows(nextList)
+        });
     }
 
     getList(){
-        const { status, page, size, type } = this.state;
-        const url = type === 'event' ? api.getEventList({status, page, size}) : api.getNoticeList({page, size});
+        const { status, page, size } = this.state;
 
-        return this.props.multipleList([{id : `${type}List`, url : url, params : {} }])
+        return this.props.multipleList([{id : `event`, url : api.getEventList({status, page, size}), params : {} }])
             .then(() => {
-                const total = service.getValue(this.props, `${type}.totalPage`, 1);
-                const current = service.getValue(this.props, `${type}.page`, 1);
-                const hasMore = total > current ? true : false;
+                const total = service.getValue(this.props, `event.totalSize`, 1);
+                const current = service.getValue(this.props, `event.list`, []);
+                const hasMore = total > current.length ? true : false;
 
                 return this.setState({
                     hasMore
@@ -107,7 +76,7 @@ class EventList extends React.Component {
     }
 
     renderRow(rowData, sectionID, rowID){
-        const { type } = this.state;
+        const { type } = this.props;
 
         return(
             <ListItem item={rowData} type={type}/>
@@ -133,12 +102,9 @@ class EventList extends React.Component {
     }
 
     renderHeader(){
-        const { type } = this.state;
-        const title = type && type === 'event' ? '이벤트 리스트' : '공지사항 리스트'
-
         return(
             <List.Item>
-                <Badge text={11}>{title}</Badge>
+                <Badge text={11}>이벤트 리스트</Badge>
             </List.Item>
         );
     }
@@ -163,10 +129,10 @@ class EventList extends React.Component {
     }
 
     render() {
-        const { dataSource, type } = this.state;
+        const { dataSource } = this.state;
 
         return (
-            <div className={`board-wrapper ${type}-board-wrapper`} >
+            <div className={`board-wrapper event-board-wrapper`} >
                 <ListView
                     initialListSize={5}
                     dataSource={dataSource}

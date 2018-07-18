@@ -5,9 +5,11 @@ import { ServiceTop } from '../common';
 class CsContainer extends React.Component {
 
     render() {
+        const { type } = this.props;
+
         return (
             <div className='cs-wrapper'>
-                <ServiceTop />
+                <ServiceTop type={type} />
             </div>
         );
     }
