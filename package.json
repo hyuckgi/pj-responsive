@@ -2,7 +2,7 @@
   "name": "spoons",
   "version": "0.1.0",
   "private": true,
-  "homepage": "/html/",
+  "homepage": "/",
   "devDependencies": {
     "babel-plugin-import": "^1.6.7",
     "less": "^3.0.1",
