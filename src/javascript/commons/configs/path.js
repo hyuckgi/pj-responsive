@@ -1,7 +1,7 @@
 import {service} from './';
 
 export const path = {
-    baseName : '/html',
+    baseName : '/',
     home : '/',
     main : '/main',
 
