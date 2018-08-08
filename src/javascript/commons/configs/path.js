@@ -40,6 +40,7 @@ export const path = {
     // utils
     login : '/login',
     join : '/join',
+    search : '/search',
     notFound : '/notFound',
     serverError : '/serverError',
 };

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Sticky } from 'react-sticky';
 
-import { GlobalNavigation } from '../index';
+import { GlobalNavigation, UtilNavigation } from '../index';
 import { Row, Col, Dropdown, Layout, Button, Menu, Icon } from 'antd';
 
 import imgLogo from '../../../../resource/commons/logo.png'
@@ -9,19 +9,6 @@ import imgLogo from '../../../../resource/commons/logo.png'
 import { path } from '../../../commons/configs';
 
 const { Header } = Layout;
-const menu = (
-    <Menu>
-        <Menu.Item>
-            <a target="_blank" rel="noopener noreferrer" href="https://teacher.wink.co.kr/client/teacher_center/"><Icon type="team"/>윙크교사센터</a>
-        </Menu.Item>
-        <Menu.Item>
-            <a target="_blank" rel="noopener noreferrer" href="https://admin.wink.co.kr/client/warehouse/"><Icon type="shopping-cart"/>물류센터</a>
-        </Menu.Item>
-        <Menu.Item>
-            <a target="_blank" rel="noopener noreferrer" href="https://admin.wink.co.kr/client/cs_center"><Icon type="customer-service"/>공감센터</a>
-        </Menu.Item>
-    </Menu>
-);
 
 
 class HeaderContainer extends React.Component {
@@ -34,6 +21,12 @@ class HeaderContainer extends React.Component {
     renderTabBar(){
         return(
             <GlobalNavigation {...this.props}/>
+        )
+    }
+
+    renderUtils(){
+        return(
+            <UtilNavigation />
         )
     }
 
@@ -51,9 +44,7 @@ class HeaderContainer extends React.Component {
                                     {this.renderTabBar()}
                                 </Col>
                                 <Col className="dropdown" span={8} offset={1}>
-                                    <Dropdown overlay={menu} placement="bottomLeft">
-                                      <Button>다른 관리자센터<Icon type="down" /></Button>
-                                    </Dropdown>
+                                    {this.renderUtils()}
                                 </Col>
                             </Row>
                         </Header>
