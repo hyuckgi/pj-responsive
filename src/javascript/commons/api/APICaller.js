@@ -5,6 +5,7 @@ axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 axios.defaults.withCredentials = false;
 axios.defaults.headers.common['X-Auth-Token'] = localStorage.getItem('token') || null;
 axios.defaults.headers.common['Accept-Language'] = window.navigator.language || 'en-US';
+axios.defaults.headers.common['Content-Type'] = 'application/json';
 
 const config = {
 	debug : false,
@@ -185,6 +186,12 @@ class APICaller {
 		const instance = isPlainAxios ? simpleAxios : axios;
 
         return instance.post(fullUrl, notToConvert ? params : paramsToUnderscore(params), options).then(docsToCamelCase);
+	}
+	static put(url, params = {}, options = {}, isPlainAxios = false, notToConvert = false) {
+		const fullUrl = getMakeURL(url);
+		const instance = isPlainAxios ? simpleAxios : axios;
+
+        return instance.put(fullUrl, notToConvert ? params : paramsToUnderscore(params), options).then(docsToCamelCase);
 	}
 	static get(url, params = null,  isPlainAxios = false) {
 		const fullUrl = getMakeURL(url);
