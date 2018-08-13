@@ -131,9 +131,9 @@
   },
   "theme": {
     "hd": "1px",
-    "color-link": "#00bbd4",
-    "primary-color": "#00bbd4",
-    "brand-primary": "#00bbd4",
+    "color-link": "#FF6E59",
+    "primary-color": "#FF6E59",
+    "brand-primary": "#FF6E59",
     "fill-body": "#ffffff"
   }
 }

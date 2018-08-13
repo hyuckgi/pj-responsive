@@ -34,7 +34,7 @@ class EventList extends React.Component {
         super(props);
 
         this.state = {
-            status : 'all',
+            status : 'going',
             dataSource : dataSource,
             size : 10,
             page : 1,

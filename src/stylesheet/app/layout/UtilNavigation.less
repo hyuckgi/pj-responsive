@@ -28,13 +28,17 @@
             &:hover,
             &-active,
             &.on{
-                color:#fff;
-                background-color:#1094a9;
-                border-color:#146b79;
+                color:#fff !important;
+                background-color:#EC3F2E;
+                border-color:#fff;
             }
 
             a{
                 color:inherit;
+
+                &:hover{
+                    color:#fff;
+                }
 
                 &::before{
                     display:none;
@@ -49,6 +53,8 @@
             color:#fff;
             margin:0 5px;
             text-align:center;
+            max-width:50px;
+            padding:0 10px;
 
             a{
                 display:inline-block;

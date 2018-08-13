@@ -3,12 +3,12 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import { createForm } from 'rc-form';
 
-import {security as action} from '../../redux/actions';
+import { security as action } from '../../redux/actions';
 
 import { Flex, WhiteSpace, InputItem, Button, List, WingBlank, Toast} from 'antd-mobile';
-import { service } from '../../commons/configs';
+import { service, path } from '../../commons/configs';
 
-import logo from '../../../resource/commons/logo.png';
+import logo from '../../../resource/commons/logo2.png';
 
 
 const mapStateToProps = ({ fetch, security }) => {
@@ -27,7 +27,7 @@ const mapDispatchToProps = (dispatch) => {
         fail: () => {
             return dispatch(action.loginFail());
         },
-        moveHome: () => dispatch(push('/')),
+        move: (location) => dispatch(push(location)),
     }
 };
 
@@ -42,6 +42,7 @@ class Login extends React.Component {
         this.errorToast = this.errorToast.bind(this);
         this.makeToast = this.makeToast.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        this.onClick = this.onClick.bind(this);
     }
 
     login(params) {
@@ -50,7 +51,7 @@ class Login extends React.Component {
                 const { token } = this.props;
 
                 if(token){
-                    return Toast.success(`로그인 되었습니다.`, 2, this.props.moveHome());
+                    return Toast.success(`로그인 되었습니다.`, 2, this.props.move(path.home));
                 }else{
                     return Toast.fail(`회원정보가 없습니다`, 1, window.location.reload());
                 }
@@ -104,6 +105,12 @@ class Login extends React.Component {
         });
     }
 
+    onClick(e){
+        e && e.preventDefault();
+
+        return this.props.move(path.join);
+    }
+
     render() {
         const { form } = this.props;
         const { getFieldProps } = form;
@@ -112,8 +119,8 @@ class Login extends React.Component {
             <WingBlank className="login-container">
                 <Flex justify="start" direction="column" wrap="nowrap" className="login-wrapper" align="center">
                     <Flex justify="center" direction="row" wrap="wrap">
-                        <Flex.Item>
-                            <img src={logo} alt="logo" className="logo"/>
+                        <Flex.Item className="logo">
+                            <img src={logo} alt="logo" /> 9Spoons
                         </Flex.Item>
                         <Flex.Item>
                             <WhiteSpace size="lg"/>
@@ -133,7 +140,8 @@ class Login extends React.Component {
                                 />
                             </List>
                             <WhiteSpace size="lg"/>
-                            <Button type="primary" onClick={this.onSubmit} >로그인</Button>
+                            <Button type="primary" onClick={this.onSubmit}  >로그인</Button>
+                            <Button onClick={this.onClick} className="btn-join" >회원가입</Button>
                         </Flex.Item>
                     </Flex>
                 </Flex>

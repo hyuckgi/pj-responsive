@@ -95,13 +95,15 @@ export const multipleList = (list) => {
         dispatch(creator.fetchStart());
         return APICaller.all(list.map(item => APICaller.get(item.url, item.params)))
             .then(docs => {
-                 const data = Object.keys(docs).reduce((result, key) => {
-                    result[list[key].id] = docs[key].data;
-                    return result;
-                 }, {});
-                 dispatch(creator.multipleList(data));
+                if(docs[0]){
+                    const data = Object.keys(docs).reduce((result, key) => {
+                       result[list[key].id] = docs[key].data;
+                       return result;
+                    }, {});
+                    dispatch(creator.multipleList(data));
+                }
             })
-            .then(docs => dispatch(creator.fetchEnd()));
+            .then(docs => dispatch(creator.fetchEnd()))
     };
 };
 

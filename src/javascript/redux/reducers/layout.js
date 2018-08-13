@@ -76,7 +76,7 @@ const masterList = [
 let list;
 
 if (process.env.NODE_ENV === 'development') {
-    list = menus;
+    list = menus2;
 }else{
     list = menus2;
 }

@@ -3,8 +3,13 @@
     .login-wrapper{
 
         .logo{
-            width:100px;
             margin-bottom: .5em;
+            font-size:2em;
+            color:#FF6E59;
+
+            img{
+                width:80px;
+            }
         }
 
         & > .am-flexbox{
@@ -13,8 +18,25 @@
             margin-top:15%;
 
             .am-flexbox-item{
-                margin-left:0;
                 flex-basis:100%;
+                margin-left:0;
+
+                .am-button{
+
+                    margin:5px 0;
+
+                    &:hover,
+                    &:active{
+                        color:#fff;
+                    }
+
+                    &.btn-join{
+                        &:hover,
+                        &:active{
+                            color:#333;
+                        }
+                    }
+                }
             }
         }
     }

@@ -15,6 +15,12 @@ const config = {
 	hostName: null,
 }
 
+const errorModal = (err) => {
+    if(err){
+        return window.alert(err)
+    }
+}
+
 const getAPIHost = () => {
 	if (process.env.NODE_ENV === 'development') {
 		if (config.hostName) {
@@ -185,13 +191,13 @@ class APICaller {
 		const fullUrl = getMakeURL(url);
 		const instance = isPlainAxios ? simpleAxios : axios;
 
-        return instance.post(fullUrl, notToConvert ? params : paramsToUnderscore(params), options).then(docsToCamelCase);
+        return instance.post(fullUrl, notToConvert ? params : paramsToUnderscore(params), options).then(docsToCamelCase).catch((err) => errorModal(err));
 	}
 	static put(url, params = {}, options = {}, isPlainAxios = false, notToConvert = false) {
 		const fullUrl = getMakeURL(url);
 		const instance = isPlainAxios ? simpleAxios : axios;
 
-        return instance.put(fullUrl, notToConvert ? params : paramsToUnderscore(params), options).then(docsToCamelCase);
+        return instance.put(fullUrl, notToConvert ? params : paramsToUnderscore(params), options).then(docsToCamelCase).catch((err) => errorModal(err));
 	}
 	static get(url, params = null,  isPlainAxios = false) {
 		const fullUrl = getMakeURL(url);
@@ -201,7 +207,8 @@ class APICaller {
 			.then((response)=> {
 				return response;
 			})
-			.then(docs => docsToCamelCase(docs, params));
+			.then(docs => docsToCamelCase(docs, params))
+            .catch((err) => errorModal(err));
 	}
 	static getCache(url) {
 		return Async(function* (url) {
@@ -225,7 +232,8 @@ class APICaller {
 		return axios.all(list)
             .then(axios.spread(function(...response) {
 			    return {...response};
-		    }));
+		    }))
+            .catch((err) => errorModal(err));
 	}
 	static defaults = {
 		set debug(value) { config.debug = value; },

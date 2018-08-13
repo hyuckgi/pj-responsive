@@ -80,7 +80,7 @@ export const api = {
 
 
     // more
-    getCslist : ({page = 1, size = 10}) => `/api/usage/page/${page}/size/${size}`,
+    getCslist : ({page = 1, size = 10}) => `/api/help/page/${page}/size/${size}`,
 
 };
 

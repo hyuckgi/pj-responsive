@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
-import imgLogo from '../../../../resource/commons/logo.png';
+import imgLogo from '../../../../resource/commons/logo2.png';
 
 import { NavBar } from 'antd-mobile';
 
@@ -65,7 +65,7 @@ class HeaderContainer extends React.Component {
                     leftContent={this.getLeftContent()}
                     rightContent={this.getRightContent()}
                 >
-                    <a onClick={this.onClick}><img src={imgLogo} alt="logo" /></a>
+                    <a onClick={this.onClick}><img src={imgLogo} alt="logo" />9Spoons</a>
                 </NavBar>
             </div>
         );
