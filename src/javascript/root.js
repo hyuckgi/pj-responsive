@@ -15,8 +15,6 @@ import {createLogger} from 'redux-logger';
 import { createBrowserHistory } from 'history';
 import * as reducers from './redux/reducers';
 
-import { Page404, Page500 } from './layout';
-
 import { LocaleProvider as LocaleProviderDesktop } from 'antd';
 import { addLocaleData, IntlProvider } from 'react-intl';
 import { locale } from './locales';
@@ -57,11 +55,7 @@ const Inner = () => {
         <IntlProvider locale={lang.locale} messages={lang.messages}>
             <Provider store={store}>
                 <Router history={history}>
-                    <Switch>
-                        <Route exact path={path.notFound} name="notFound" component={Page404}/>
-                        <Route exact path={path.serverError} name="serverError" component={Page500}/>
-                        <Route path={path.home} name="home" component={App}/>
-                    </Switch>
+                    <Route path={path.home} name="home" component={App}/>
                 </Router>
             </Provider>
         </IntlProvider>

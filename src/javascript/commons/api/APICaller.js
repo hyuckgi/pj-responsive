@@ -1,5 +1,6 @@
 import axios from 'axios';
 import Async from './Async';
+import { path, service } from '../configs';
 
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 axios.defaults.withCredentials = false;
@@ -16,8 +17,15 @@ const config = {
 }
 
 const errorModal = (err) => {
-    if(err){
-        return window.alert(err)
+    const data = service.getValue(err, 'response.data', false);
+
+    if(data){
+        let returnPath = path.serverError;
+        if(data.result_code === 404){
+            returnPath = path.notFound;
+        }
+        window.alert(data.result_msg)
+        return window.location.href = returnPath;
     }
 }
 
