@@ -1,11 +1,13 @@
 import React from 'react';
 import { createForm } from 'rc-form';
 
-import { service } from '../../commons/configs';
+import { service, values } from '../../commons/configs';
 import { FormButton } from '../../commons/types';
 
 import { ButtonWrapper, SelectCountry } from '../../commons/components';
-import { List, InputItem, WhiteSpace, Toast, WingBlank } from 'antd-mobile';
+import { List, InputItem, WhiteSpace, Toast, WingBlank, Checkbox, Button, Flex } from 'antd-mobile';
+
+const CheckboxItem = Checkbox.CheckboxItem;
 
 class JoinStep03 extends React.Component {
 
@@ -13,10 +15,23 @@ class JoinStep03 extends React.Component {
         super(props);
         this.state = {
             disabled : true,
+            userType : 11,
         };
 
         this.errorToast = this.errorToast.bind(this);
         this.validateEmail = this.validateEmail.bind(this);
+        this.onChange = this.onChange.bind(this);
+    }
+
+    onChange(item, e){
+        e && e.preventDefault();
+        const userType = service.getValue(item, 'value', false);
+        if(userType){
+            this.setState({
+                userType
+            })
+        };
+        return;
     }
 
     makeToast(messages){
@@ -57,19 +72,23 @@ class JoinStep03 extends React.Component {
         const { stepProps, form } = this.props;
 
         form.validateFields((errors, value) => {
-            const { nickname, email, cellphone, country, username } = value;
 
-            if(!country){
+            const { userType } = this.state;
+            const { nickname, email, cellphone, countryCode, username, businessNumber } = value;
+
+            if(!countryCode){
                 return;
             }
 
             if(!errors){
                 return stepProps.onSubmit({
                     cellphone : cellphone.replace(/ /gi, ""),
-                    countryCode : country.value,
+                    countryCode : countryCode,
                     email : email,
                     nickname : nickname,
                     username : username,
+                    userType : userType,
+                    businessNumber : userType === 12 ? businessNumber : ''
                 });
             }
             return this.errorToast(errors);
@@ -130,7 +149,8 @@ class JoinStep03 extends React.Component {
     render() {
         const { form, stepProps } = this.props;
         const { getFieldProps, getFieldError } = form;
-        const { email} = this.state;
+        const { email, userType } = this.state;
+        const data = service.getValue(values, 'join.userType')
 
         return (
             <div className="join-step-wrapper step-02">
@@ -184,7 +204,7 @@ class JoinStep03 extends React.Component {
                         <SelectCountry form={form} />
                     </WingBlank>
 
-                    <WhiteSpace size="sm"/>
+                    <WhiteSpace size="md"/>
 
                     <InputItem
                         {...getFieldProps('cellphone', {
@@ -215,6 +235,43 @@ class JoinStep03 extends React.Component {
                           alert(getFieldError('email').join('、'));
                         }}
                     />
+
+                    <WhiteSpace size="md"/>
+
+                    <Flex className="flex-wrapper" align="center">
+                        <Flex.Item className="plain-text" style={{maxWidth : 80, padding : 0}}>회원구분</Flex.Item>
+                        <Flex.Item>
+                            {data.map(item => {
+                                return(
+                                    <Button
+                                        key={item.value}
+                                        onClick={this.onChange.bind(this, item)}
+                                        inline size="small"
+                                        style={{marginLeft : 2, marginRight: 2, verticalAlign : 'middle'}}
+                                        type={item.value === userType ? 'primary' : ''}
+                                        onChange={this.onChange.bind(this, item)}
+                                    >
+                                        {item.label}
+                                    </Button>
+                                )
+                            })}
+                        </Flex.Item>
+                    </Flex>
+
+                    {userType === 12 && (
+                        <InputItem
+                            {...getFieldProps('businessNumber', {
+                                rules: [{ required: userType === 12 ? true : false, message: '사업자등록번호를 입력하세요'}]
+                            })}
+                            type="text"
+                            placeholder="BusinessNumber"
+                            clear
+                            error={!!getFieldError('businessNumber')}
+                            onErrorClick={() => {
+                              alert(getFieldError('businessNumber').join('、'));
+                            }}
+                        />
+                    )}
 
                     <WhiteSpace size="md"/>
                 </List>

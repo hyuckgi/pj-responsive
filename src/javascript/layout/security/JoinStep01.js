@@ -125,6 +125,7 @@ class JoinStep01 extends React.Component {
         const { getFieldProps, getFieldError } = form;
         const { confirmation } = this.state;
 
+
         return (
             <div className="join-step-wrapper step-01">
                 <List full="true">

@@ -56,6 +56,8 @@ class Join extends React.Component {
     }
 
     onSubmit(data){
+
+        console.log("data", data);
         const { params } = this.state;
         const obj = api.join({...data, ...params});
 

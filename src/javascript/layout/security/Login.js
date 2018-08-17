@@ -53,12 +53,12 @@ class Login extends React.Component {
                 if(token){
                     return Toast.success(`로그인 되었습니다.`, 2, this.props.move(path.home));
                 }else{
-                    return Toast.fail(`회원정보가 없습니다`, 1, window.location.reload());
+                    return Toast.fail(`회원정보가 없습니다`, 1);
                 }
             })
             .catch((err) => {
                 if(err){
-                    return Toast.fail(`로그인에 실패했습니다. 다시 진행해 주세요`, 1, window.location.reload());
+                    return Toast.fail(`로그인에 실패했습니다. 다시 진행해 주세요`, 1);
                 }
             })
     }

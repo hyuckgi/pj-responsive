@@ -25,14 +25,12 @@ class SelectCountry extends React.Component {
             countries : [],
             newList : [],
             selected : {},
-            onSearch : false,
         };
 
         this.getCountry = this.getCountry.bind(this);
-        this.onChange = this.onChange.bind(this);
+        // this.onChange = this.onChange.bind(this);
         this.getFilter = this.getFilter.bind(this);
-        this.onSearch = this.onSearch.bind(this);
-        this.onSelect = this.onSelect.bind(this);
+        // this.onSelect = this.onSelect.bind(this);
         this.onOK = this.onOK.bind(this);
     }
 
@@ -47,6 +45,7 @@ class SelectCountry extends React.Component {
                 const countries = list.map(item => {
                     item['value'] = item.code;
                     item['label'] = item.name;
+                    item['webLabel'] = `${item.name} / ${item.code}`;
                     return item;
                 });
 
@@ -59,33 +58,6 @@ class SelectCountry extends React.Component {
             .catch(e => {
                 return Toast.fail('잠시 후에 다시 시도하세요.', 1);
             });
-    }
-
-    filterOption(...args){
-        console.log("args", args);
-    }
-
-    onSearch(value){
-        if(value.length < 3){
-            this.setState({
-                onSearch : false,
-                newList : []
-            });
-            return;
-        }
-        const newList = this.getFilter(value, 'name');
-
-        if(newList.length){
-            this.setState({
-                onSearch : true,
-                newList : newList
-            });
-        }else{
-            this.setState({
-                onSearch : false,
-                newList : []
-            });
-        }
     }
 
     getFilter(value, flag='code'){
@@ -101,21 +73,13 @@ class SelectCountry extends React.Component {
             return result;
         }, {});
     }
-
-    onSelect(value, option){
-        const { form } = this.props;
-
-        this.setState({
-            onSearch : false,
-            newList : []
-        });
-
-        form.setFieldsValue({country : service.getValue(option, 'props.data-item', {})});
-    }
-
-    onChange(value){
-        console.log("val");
-    }
+    // onSelect(value){
+    //     console.log("value", value);
+    // }
+    //
+    // onChange(value){
+    //     console.log("val");
+    // }
 
     getMList(list){
         return list.map(item => item.name.slice(0, 1))
@@ -142,7 +106,7 @@ class SelectCountry extends React.Component {
         this.setState({
             selected : item,
         })
-        form.setFieldsValue({country : item});
+        form.setFieldsValue({countryCode : item.value});
     }
 
     render() {
@@ -151,6 +115,7 @@ class SelectCountry extends React.Component {
         const { countries, onSearch, newList, selected } = this.state;
 
         const initial = countries.length && this.getFilter(initialValue);
+
         const isMobile = parser.getDevice().type;
         const list = onSearch ? newList : countries;
         const mList = isMobile ? this.getMList(countries) : [];
@@ -158,32 +123,23 @@ class SelectCountry extends React.Component {
         return (
             <div className="select-country">
                 <DesktopLayout>
-                    {getFieldDecorator('selectCountry', {
-                        initialValue : `${initial.name} / ${initial.code}`
+                    {getFieldDecorator('countryCode', {
+                        initialValue : initial.value
                     })(
                         <Select
-                            mode="combobox"
                             placeholder="Select or Input Your Country"
                             filterOption={false}
-                            onSearch={this.onSearch}
-                            onChange={this.onChange}
                             onSelect={this.onSelect}
                             style={{ width: '100%' }}
                         >
-                            {list.map(item => (<Option key={item.code} value={`${item.name} / ${item.code}`} data-item={item}>{item.label}</Option> ))}
+                            {list.map(item => (<Option key={item.code} value={item.value} >{item.webLabel}</Option> ))}
                         </Select>
                     )}
-                    <Radio
-                        {...getFieldProps('country', {
-                            initialValue : initial,
-                        })}
-                        style={{display: 'none'}}
-                    />
                 </DesktopLayout>
                 <MobileLayout>
                     <List>
                         <Picker
-                            {...getFieldProps('country', {
+                            {...getFieldProps('countryCode', {
                             })}
                             data={mList}
                             cols={2}

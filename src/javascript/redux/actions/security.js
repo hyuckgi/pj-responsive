@@ -8,8 +8,10 @@ export const login = (params) => {
         dispatch(creator.loginRequest());
         return SecurityService.login(params)
             .then(data => {
-                dispatch(creator.loginSuccess(data));
-                SessionService.login(getState().security);
+                if(data){
+                    dispatch(creator.loginSuccess(data));
+                    SessionService.login(getState().security);
+                }
             })
     };
 };

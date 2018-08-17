@@ -24,6 +24,7 @@ const errorModal = (err) => {
         if(data.result_code === 404){
             returnPath = path.notFound;
         }
+
         window.alert(data.result_msg)
         return window.location.href = returnPath;
     }

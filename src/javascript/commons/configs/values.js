@@ -157,6 +157,13 @@ const rank = {
     },
 }
 
+const join = {
+    'userType' : [
+        { value : 11, label : '사용자'},
+        { value : 12, label : '스폰서'}
+    ],
+}
+
 export {
     format,
     mock,
@@ -168,4 +175,5 @@ export {
     sns,
     rank,
     spoons,
+    join,
 };
