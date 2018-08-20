@@ -18,7 +18,6 @@ const config = {
 
 const errorModal = (err) => {
     const data = service.getValue(err, 'response.data', false);
-
     if(data){
         let returnPath = path.serverError;
         if(data.result_code === 404){

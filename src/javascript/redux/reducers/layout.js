@@ -57,10 +57,7 @@ const footerList = [
 ];
 
 const service = [
-    {id: '400000000', name: '상세보기', link : '/boards', level: 0 },
-    {id: '500000000', name: '무료학습 신청하기', link : '/request', level: 0 },
-    {id: '600000000', name: '무료학습 신청완료', link : '/complete', level: 0 },
-    {id: '700000000', name: '회사소개', link : '/company', level: 0 },
+
 ]
 
 const masterList = [
@@ -73,6 +70,13 @@ const masterList = [
     {id: '-1000000', name: '마이페이지', link: '/home/profile', level: 1},
 ];
 
+const mypageMenus = [
+    {id: '400000000', name: '마이페이지', link : '/mypages', level: 0, defaultLink : '/mypages/history', hasChild : true},
+    {id: '401000000', name: '마이페이지', link : '/mypages/history', level: 1, parent : '400000000'  },
+    {id: '402000000', name: '프로필 설정', link : '/settings/profile', level: 1, parent : '400000000'  },
+    {id: '403000000', name: '로그아웃', link : '/logout', level: 1, parent : '400000000'  },
+]
+
 let list;
 
 if (process.env.NODE_ENV === 'development') {
@@ -81,7 +85,7 @@ if (process.env.NODE_ENV === 'development') {
     list = menus2;
 }
 
-export const layout = (state = {list, footerList, service}, action) => {
+export const layout = (state = {list, footerList, service, mypageMenus }, action) => {
 
     switch(action.type) {
         case type.MASTER_LEVEL_1:

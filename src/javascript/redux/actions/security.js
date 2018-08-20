@@ -15,3 +15,11 @@ export const login = (params) => {
             })
     };
 };
+
+
+export const logout = () => {
+    return (dispatch) => {
+        dispatch(creator.logout());
+        SessionService.logout();
+    };
+}

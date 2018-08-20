@@ -36,6 +36,16 @@ export const path = {
     cs : '/service/cs',
     rules : '/service/rules',
 
+    // user
+    mypage : '/mypages',
+    myHistory : '/mypages/history',
+    myStory : '/mypages/story',
+    myComment : '/mypages/comment',
+
+    settings : '/settings',
+    profile : '/settings/profile',
+    account : '/settings/account',
+
 
     // utils
     login : '/login',
@@ -43,6 +53,7 @@ export const path = {
     search : '/search',
     notFound : '/notFound',
     serverError : '/serverError',
+
 };
 
 export default {

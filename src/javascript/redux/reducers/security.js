@@ -1,7 +1,7 @@
 import {security as type} from '../types';
 import { SessionService } from '../../commons/configs/security';
 
-const initialState = SessionService.userInfo || {}
+const initialState = SessionService.userInfo || {};
 
 export const security = (state = initialState, action) => {
     switch(action.type)	 {
@@ -14,6 +14,8 @@ export const security = (state = initialState, action) => {
                 ...state,
                 ...action.payload
             };
+        case type.LOGOUT :
+            return {};
         default:
             return state;
     }

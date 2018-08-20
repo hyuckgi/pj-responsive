@@ -49,7 +49,7 @@ class CsList extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         const nextList = service.getValue(nextProps, 'csObj.list', []);
-        console.log('nextList', nextList);
+        // console.log('nextList', nextList);
 
         return this.setState({
             dataSource: this.state.dataSource.cloneWithRows(nextList)

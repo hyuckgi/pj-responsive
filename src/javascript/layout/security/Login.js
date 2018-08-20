@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { push } from 'react-router-redux';
+import { push, goBack } from 'react-router-redux';
 import { createForm } from 'rc-form';
 
 import { security as action } from '../../redux/actions';
@@ -9,7 +9,6 @@ import { Flex, WhiteSpace, InputItem, Button, List, WingBlank, Toast} from 'antd
 import { service, path } from '../../commons/configs';
 
 import logo from '../../../resource/commons/logo2.png';
-
 
 const mapStateToProps = ({ fetch, security }) => {
     const token = service.getValue(security, 'token', false);
@@ -28,6 +27,8 @@ const mapDispatchToProps = (dispatch) => {
             return dispatch(action.loginFail());
         },
         move: (location) => dispatch(push(location)),
+        goBack : () => dispatch(goBack()),
+        logout : () => dispatch(action.logout()),
     }
 };
 
@@ -45,15 +46,21 @@ class Login extends React.Component {
         this.onClick = this.onClick.bind(this);
     }
 
+    componentDidMount() {
+        const { token } = this.props;
+        if(token){
+            this.props.logout();
+        }
+    }
+
     login(params) {
         return this.props.login(params)
             .then(() => {
                 const { token } = this.props;
-
                 if(token){
-                    return Toast.success(`로그인 되었습니다.`, 2, this.props.move(path.home));
+                    return Toast.success(`로그인 되었습니다.`, 2, this.props.goBack());
                 }else{
-                    return Toast.fail(`회원정보가 없습니다`, 1);
+                    return Toast.fail(`아이디 또는 비밀번호를 확인해주세요.`, 1);
                 }
             })
             .catch((err) => {

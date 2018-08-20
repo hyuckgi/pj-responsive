@@ -10,5 +10,5 @@ export{
     WrapperContainer,
     MobileWrapper,
     Login,
-    Join
+    Join,
 };

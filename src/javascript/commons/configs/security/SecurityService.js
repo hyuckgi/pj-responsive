@@ -6,7 +6,7 @@ export default class SecurityService {
     static login(params) {
         return APICaller.post(api.login(), params)
             .then(({data}) => {
-                if(data.result_code === 200){
+                if(data.resultCode === 200){
                     return {
                         token : data.token,
                         countryCode : data.countryCode,
