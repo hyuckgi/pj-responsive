@@ -82,15 +82,15 @@ class Step02 extends React.Component {
 			if(!errors){
 				const newContent = {
 					...value.contentsList,
-					imageNoList : service.getFileNo(service.getValue(value, 'contentsList.images.fileList'), []),
-					videoNoList : service.getFileNo(service.getValue(value, 'contentsList.videos.fileList'), []),
+					imageNoList : service.getFileNo(service.getValue(value, 'contentsList.images.fileList', [])),
+					videoNoList : service.getFileNo(service.getValue(value, 'contentsList.videos.fileList', [])),
 				};
 				delete newContent['images'];
 				delete newContent['videos'];
 
 				const newValue = {
 					contentsList : [newContent],
-					imageNo : service.getFileNo(service.getValue(value, 'image.fileList'), []).find(item => item),
+					imageNo : service.getFileNo(service.getValue(value, 'image.fileList', [])).find(item => item),
 					title : value.title,
 				}
 
