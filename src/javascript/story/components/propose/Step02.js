@@ -6,10 +6,11 @@ import { upload } from '../../../commons/api';
 import { service } from '../../../commons/configs';
 import { FormButton } from '../../../commons/types';
 
-import { Form, Input, Button, Upload, Icon } from 'antd';
+import { Form, Input, Upload, Icon } from 'antd';
+
+import { ContentList } from './';
 
 const FormItem = Form.Item;
-const { TextArea } = Input;
 
 const formItemLayout = {
 	labelCol: {
@@ -49,10 +50,9 @@ class Step02 extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-			file : {},
             image : [],
-			images : [],
-			videos : [],
+			file : {},
+
         }
 
         this.onChange = this.onChange.bind(this);
@@ -80,20 +80,27 @@ class Step02 extends React.Component {
 		form.validateFields((errors, value) => {
 
 			if(!errors){
-				const newContent = {
-					...value.contentsList,
-					imageNoList : service.getFileNo(service.getValue(value, 'contentsList.images.fileList', [])),
-					videoNoList : service.getFileNo(service.getValue(value, 'contentsList.videos.fileList', [])),
-				};
-				delete newContent['images'];
-				delete newContent['videos'];
+                const newContent = service.getValue(value, 'contentsList', []).reduce((result, item) => {
+                    const imageNoList = service.getFileNo(service.getValue(item, 'images.fileList', []));
+                    const videoNoList = service.getFileNo(service.getValue(item, 'videos.fileList', []));
+
+                    const newItem = {
+                        ...item,
+                        imageNoList,
+                        videoNoList
+                    }
+                    delete newItem['images'];
+                    delete newItem['videos'];
+                    result.push(newItem);
+                    return result;
+                }, []);
 
 				const newValue = {
-					contentsList : [newContent],
+					contentsList : [...newContent],
 					imageNo : service.getFileNo(service.getValue(value, 'image.fileList', [])).find(item => item),
 					title : value.title,
 				}
-
+                
 				return stepProps.onClickNext(newValue);
 			}
 		});
@@ -129,7 +136,6 @@ class Step02 extends React.Component {
     }
 
     getButtons(){
-
         return [
             { id : FormButton.PREV, label : "이전", type : 'default'  },
             { id : FormButton.NEXT, label : "다음", style : { marginLeft: '5px'}},
@@ -138,7 +144,7 @@ class Step02 extends React.Component {
 
     render() {
         const { form } = this.props;
-		const { file, image, images, videos } = this.state;
+		const { file, image } = this.state;
         const { getFieldDecorator } = form;
 
         return (
@@ -184,89 +190,8 @@ class Step02 extends React.Component {
 							</Upload>
                         )}
                     </FormItem>
-                    <FormItem
-                        {...formItemLayout}
-                        label="소제목"
-                    >
-                        {getFieldDecorator('contentsList.title', {
-							rules: [{ required: true, message: '소제목을 입력하세요' }],
-                        })(
-                            <Input placeholder="소제목을 입력하세요" />
-                        )}
-                    </FormItem>
-                    <FormItem
-                        {...formItemLayout}
-                        label="본문"
-                    >
-						{getFieldDecorator('contentsList.contents', {
-							rules: [{ required: true, message: '본문을 입력하세요' }]
-                        })(
-							<TextArea
-								placeholder="본문을 입력하세요"
-	                            rows={8}
-	                        />
-                        )}
-                    </FormItem>
-					<FormItem
-                        {...formItemLayout}
-                        label="관련사진"
-                    >
-                        {getFieldDecorator('contentsList.images', {
-                        })(
-							<Upload
-								{...upload.getProps(images)}
-								accept='image/*'
-                                fileList={images}
-								listType="picture-card"
-                                onChange={(params) => this.onChange('images', params)}
-                                beforeUpload={(params) => this.beforeUpload('images', params)}
-								onRemove={(params) => this.onRemove('images', params)}
-                                data={{
-                                    type : 11,
-									file : this.state.file['images'],
-									filename : service.getValue(this.state, 'file.images.name', '')
-                                }}
-							>
-								{images.length < 4
-									? (<div>
-								        <Icon type="plus" />
-								        <div className="ant-upload-text">Upload</div>
-									 </div>)
-									: null
-								}
-							</Upload>
-                        )}
-                    </FormItem>
-					<FormItem
-                        {...formItemLayout}
-                        label="동영상"
-                    >
-                        {getFieldDecorator('contentsList.videos', {
-                        })(
-							<Upload
-								{...upload.getProps(videos)}
-								accept='video/*'
-                                fileList={videos}
-								listType="text"
-                                onChange={(params) => this.onChange('videos', params)}
-                                beforeUpload={(params) => this.beforeUpload('videos', params)}
-								onRemove={(params) => this.onRemove('videos', params)}
-                                data={{
-                                    type : 12,
-									file : this.state.file['videos'],
-									filename : service.getValue(this.state, 'file.videos.name', '')
-                                }}
-							>
-								{videos.length < 4
-									? (<Button>
-								        <Icon type="upload" />Upload
-									 </Button>)
-									: null
-								}
-							</Upload>
-                        )}
-                    </FormItem>
                 </Form>
+                <ContentList form={form}/>
 
                 <ButtonWrapper buttons={this.getButtons()} onClickButton={this.onClickButton.bind(this)}/>
             </div>

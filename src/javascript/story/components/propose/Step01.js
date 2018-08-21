@@ -48,7 +48,6 @@ class Step01 extends React.Component {
     constructor(props) {
         super(props);
 
-
 		this.errorToast = this.errorToast.bind(this);
 		this.makeModal = this.makeModal.bind(this);
 		this.onModalOk = this.onModalOk.bind(this);
@@ -100,12 +99,12 @@ class Step01 extends React.Component {
 			}
 
 			if(!errors){
-				const newValue = {
-					...value,
-					categoryNo : value.category.slice(-1).find((item) => item),
-				};
-				delete newValue['category'];
-				return stepProps.onClickNext(newValue);
+                const newValue = {
+                    ...value,
+                    categoryNo : value.category.slice(-1).find((item) => item),
+                };
+                delete newValue['category'];
+                return stepProps.onClickNext(newValue);
 			}
 
 			return this.errorToast(errors);

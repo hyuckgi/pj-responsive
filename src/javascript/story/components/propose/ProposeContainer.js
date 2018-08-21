@@ -7,8 +7,8 @@ import { fetch } from '../../../redux/creators'
 import { service, api, path } from '../../../commons/configs'
 import { values } from '../../configs';
 
-import { Row, Col,  Tabs } from 'antd';
-import { Steps, Modal } from 'antd-mobile';
+import { Row, Col } from 'antd';
+import { Steps, Modal, Tabs } from 'antd-mobile';
 
 import { Step01, Step02, Step03 } from './'
 
@@ -43,21 +43,7 @@ class ProposeContainer extends React.Component {
         this.onClickPrev = this.onClickPrev.bind(this);
         this.getSteps = this.getSteps.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
-        // this.renderModal = this.renderModal.bind(this);
     }
-
-    // renderModal(){
-    //     return alert('로그인을 해주세요.', '스토리를 제안하기 위해서는 로그인이 필요합니다.', [
-    //
-    //     ]);
-    // }
-    // componentDidMount() {
-    //     const { token } = this.props;
-    //
-    //     if(!token){
-    //
-    //     }
-    // }
 
     onClickNext(params){
         const steps = service.getValue(values, 'propose.steps', []);
@@ -86,6 +72,8 @@ class ProposeContainer extends React.Component {
         const { params } = this.state;
         const obj = api.postStory({...params, ...data});
 
+        console.log("obj", obj);
+
         this.props.postStart();
         return APICaller.post(obj.url, obj.params)
             .then(({data}) => {
@@ -96,7 +84,7 @@ class ProposeContainer extends React.Component {
                 }
             })
             .catch((err) => {
-                console.log('err', err);
+                console.log("err", err);
             })
     }
 
@@ -113,6 +101,18 @@ class ProposeContainer extends React.Component {
                 />
             );
         });
+    }
+
+    onChange(tab, idx){
+        return
+    }
+
+    getTabs(){
+        const type = service.getValue(values, 'propose.steps', []);
+        return type
+            .map((item, inx) => {
+                return {title : ''}
+            })
     }
 
     render() {
@@ -156,20 +156,21 @@ class ProposeContainer extends React.Component {
                     </Steps>
 
                     <Tabs
-                        activeKey={(current + 1).toString()}
-                        defaultActiveKey={"1"}
-                        tabBarStyle={{display : 'none'}}
+                        tabs={this.getTabs()}
+                        initialPage={0}
+                        page={current}
+                        swipeable={false}
+                        onChange={this.onChange.bind(this)}
+                        tabBarBackgroundColor='transparent'
+                        tabBarTextStyle={{fontSize:'13px'}}
+                        tabBarUnderlineStyle={{display : 'none'}}
+                        destroyInactiveTab={false}
+                        prerenderingSiblingsNumber={0}
+                        onTabClick={(tab) => console.log('tab', tab)}
                     >
-                        <TabPane tab="" key="1">
-                            {(<Step01 stepProps={stepProps} />)}
-                        </TabPane>
-                        <TabPane tab="" key="2">
-                            {(<Step02 stepProps={stepProps} />)}
-                        </TabPane>
-                        <TabPane tab="" key="3">
-                            {(<Step03 stepProps={stepProps} />)}
-                        </TabPane>
-
+                        <Step01 stepProps={stepProps} />
+                        <Step02 stepProps={stepProps} />
+                        <Step03 stepProps={stepProps} />
                     </Tabs>
                 </Col>
             </Row>
