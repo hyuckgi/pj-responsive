@@ -8,6 +8,8 @@ import { Card as MobileCard, WhiteSpace } from 'antd-mobile';
 
 import { values, service, path } from '../../configs';
 
+import NoImg from '../../../../resource/commons/no_image_available.png';
+
 const mapStateToProps = ({layout, router}) => {
     const pathname = service.getValue(router, 'location.pathname', false);
 
@@ -95,15 +97,14 @@ class Item extends React.Component {
 
     render() {
         const { item, platform } = this.props;
-
-        console.log("item", item);
+        const imgSrc = service.getValue(item, 'thumbnailUrl', NoImg);
 
         if(platform === values.platform.PC){
             return(
                 <div className="item" onClick={this.onClick.bind(this, item)}>
                      <WebCard
                         hoverable
-                        cover={<img alt={item.title} src='https://picsum.photos/480/320?random'/>}
+                        cover={<img alt={item.title} src={imgSrc} />}
                     >
                         <WebCard.Meta
                             title={item.title}
@@ -114,14 +115,14 @@ class Item extends React.Component {
             )
         }
         return(
-            <div>
+            <div className="item">
                 <MobileCard
                     full
                     onClick={this.onClick.bind(this, item)}
                 >
                     <MobileCard.Header
                         title={item.title}
-                        thumb='https://picsum.photos/480/320?random'
+                        thumb={<span className="img-area"><img src={imgSrc} alt={item.title} /></span>}
                         extra={<span>extra</span>}
                     />
                     <MobileCard.Body>

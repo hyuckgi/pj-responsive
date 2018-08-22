@@ -32,6 +32,8 @@ class Info extends React.Component {
         }
 
         const hashs = service.getValue(item, 'hashtagList', []);
+        const period = service.getValue(item, 'fundraisingPeriod', false);
+        const goal = service.getValue(item, 'goalDonation', false);
 
         return(
             <div className="story-info">
@@ -40,10 +42,9 @@ class Info extends React.Component {
                     {this.renderHash(hashs)}
                 </div>
                 <div className="info-detail">
-                    <p className="user-name">{item.username}</p>
-                    <p>모금기간 : 데이터없음</p>
-                    <p>사업기간 : 데이터없음</p>
-                    <p>모금후기 : 데이터없음</p>
+                    <p className="user-name">{service.getValue(item, 'username', '')}</p>
+                    {period ? (<p>모금기간 : {period}일</p>) : null}
+                    {goal ? (<p>목표금액 : {service.amount(goal)}원</p>) : null}
 
                     <div className="total-price">
                         <h3>총 모금액</h3>

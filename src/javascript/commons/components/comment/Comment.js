@@ -29,6 +29,7 @@ class Comment extends React.Component {
         super(props);
         this.state = {
             likes : true,
+            defaultValue : '',
         };
 
         this.renderComment = this.renderComment.bind(this);
@@ -61,13 +62,17 @@ class Comment extends React.Component {
     }
 
     postComment(payload){
-        console.log("payload", payload);
         const { item, onEvents } = this.props;
         const storyNo = service.getValue(item, 'storyNo', false);
         const comment = service.getValue(payload, 'text', false);
         if(!storyNo || !comment){
             return;
         }
+
+        this.setState({
+            defaultValue : comment,
+        });
+
         const obj = api.postComment({
             contents : comment,
             storyNo : storyNo,
@@ -77,7 +82,9 @@ class Comment extends React.Component {
             .then(({data}) => {
                 const resultCode = service.getValue(data, 'resultCode', false);
                 if(resultCode === 200){
-
+                    this.setState({
+                        defaultValue : ''
+                    })
                     if(onEvents){
                         onEvents({events : 'update', payload : data})
                     }
@@ -90,7 +97,6 @@ class Comment extends React.Component {
     }
 
     onSubmit(params){
-        console.log("params", params);
         const { events, payload } = params;
 
         switch (events) {
@@ -107,7 +113,7 @@ class Comment extends React.Component {
         const { item } = this.props;
         const { likes } = this.props;
         const updateDate = service.getValue(item, 'updateDate', false);
-        const contents = service.getValue(item, 'contents', '하이요');
+        const contents = service.getValue(item, 'contents', '');
 
         return(
             <Flex className="comment">
@@ -143,9 +149,10 @@ class Comment extends React.Component {
         )
     }
 
-    renderWrite(){
-        const { userInfo } = this.props;
+    renderWrite(userInfo){
+        const { defaultValue } = this.state;
         const token = service.getValue(userInfo, 'token', false);
+        const value = token ? defaultValue : '로그인하셔야 작성할 수 있습니다.';
 
         return(
             <Flex className="comment comment-write" align="start">
@@ -153,7 +160,7 @@ class Comment extends React.Component {
                     <Avatar icon="user" size="large"/>
                 </Flex.Item>
                 <Flex.Item>
-                    <CommonEditor value={token ? '' : '로그인하셔야 작성할 수 있습니다.'} readOnly={token ? false : true} buttons={this.getButtons()} onSubmit={this.onSubmit} placeholder="따뜻한 마음을 표현하세요"/>
+                    <CommonEditor ref="weditor" value={value} readOnly={token ? false : true} buttons={this.getButtons()} onSubmit={this.onSubmit} placeholder="따뜻한 마음을 표현하세요"/>
                 </Flex.Item>
             </Flex>
         )
@@ -163,7 +170,7 @@ class Comment extends React.Component {
         const userInfo = service.getValue(this.props, 'userInfo', false);
 
         if(userInfo){
-            return this.renderWrite();
+            return this.renderWrite(userInfo);
         }
         return this.renderRead();
     }

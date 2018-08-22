@@ -67,9 +67,9 @@ class Detail extends React.Component {
         switch (events) {
             case 'update':
                 return this.getComments(storyNo)
-                    .then(() => {
-                        return window.location.reload();
-                    });
+                    // .then(() => {
+                    //     return window.location.reload();
+                    // });
             default:
                 break;
         }

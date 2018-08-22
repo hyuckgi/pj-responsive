@@ -163,6 +163,7 @@ class Step01 extends React.Component {
                         )}
                     </FormItem>
                     <FormItem
+                        className="reg-agree-checkbox"
                         wrapperCol={{xs:{span: 24, offset: 0}, sm : {span : 20, offset : 4}}}
                     >
                         {getFieldDecorator('isRegAgree', {
@@ -173,13 +174,18 @@ class Step01 extends React.Component {
                         )}
                     </FormItem>
                     <FormItem
+                        className="text-area-box"
                         wrapperCol={{xs:{span: 24, offset: 0}, sm : {span : 20, offset : 4}}}
                     >
                         <TextArea
                             autosize={false}
                             rows={4}
                             disabled
-                            defaultValue={'dwewadasfsdfsdfsdgkmbmdbldflvs,dl'}
+                            defaultValue={`① 모금함을 중도에 중단하거나 탈퇴하시는 경우,
+    해당 시점까지 모인 모금액은 기부되지 않음에 동의합니다.
+
+② 최대 모금 가능금액은 1,000만원 미만이며,
+    최대 금액 달성 시 모금이 마감되는 조건에 동의합니다.`}
                         />
                     </FormItem>
                 </Form>

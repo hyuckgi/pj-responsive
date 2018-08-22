@@ -28,12 +28,14 @@ class Contents extends React.Component {
     }
 
     renderDom(obj, inx){
+        const title = service.getValue(obj, 'title', '');
         const contents = service.getValue(obj, 'contents', '');
         const images = service.getValue(obj, 'imageList', []);
         const videos = service.getValue(obj, 'videoList', []);
 
         return (
             <div key={inx} className="contents-area">
+                {<CommonEditor value={title} />}
                 {<CommonEditor value={contents} />}
                 {this.renderImage(images)}
                 {this.renderVideo(videos)}
