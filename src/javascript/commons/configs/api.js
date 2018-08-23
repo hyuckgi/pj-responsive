@@ -49,15 +49,15 @@ export const api = {
     }),
 
     // rank
-    getRank : (type = 'donate') => `/api/${type}/ranking/summary`,
-    getRankList : ({type = 'donate', page = 1, size = 30, year = null}) => {
-        if(year){
-            return `/api/${type}/ranking/year/${year}/page/${page}/size/${size}`;
-        }
-        return `/api/${type}/ranking/page/${page}/size/${size}`
-    },
+    getRank : (type = 'donate', term = 'all') => `/api/${type}/ranking/summary?rank_term=${term}`,
 
-    getDonate : (userNo) => `/api/donate/activity/${userNo}`,
+    getRankList : ({type = 'donate', page = 1, size = 30, term = 'all'}) => `/api/${type}/ranking/page/${page}/size/${size}?rank_term=${term}`,
+
+    getDonate : (userNo) => ({
+        url : `/api/donate/activity`,
+        params : {USER_NO : userNo}
+    }),
+    
     getUserHistory : ({userNo, page = 1, size = 30, year = null}) => {
         if(year){
             return `/api/donate/activity/${userNo}/year/${year}/page/${page}/size/${size}`;

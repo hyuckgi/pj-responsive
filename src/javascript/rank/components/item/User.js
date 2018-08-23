@@ -50,7 +50,7 @@ class User extends React.Component {
     getItem(){
         const { userNo } = this.state;
 
-        return this.props.getItem(api.getDonate(userNo));
+        return this.props.getItem(...api.getDonate(userNo));
     }
 
     componentDidUpdate(prevProps, prevState) {
