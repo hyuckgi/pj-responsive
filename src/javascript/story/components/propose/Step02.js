@@ -100,7 +100,7 @@ class Step02 extends React.Component {
 					imageNo : service.getFileNo(service.getValue(value, 'image.fileList', [])).find(item => item),
 					title : value.title,
 				}
-                
+
 				return stepProps.onClickNext(newValue);
 			}
 		});
@@ -165,6 +165,7 @@ class Step02 extends React.Component {
                         label="대표사진"
                     >
                         {getFieldDecorator('image', {
+                            rules: [{ required: true, message: '대표사진을 첨부하세요' }],
                         })(
 							<Upload
 								{...upload.getProps(image)}

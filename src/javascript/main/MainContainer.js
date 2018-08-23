@@ -4,20 +4,20 @@ import { connect } from 'react-redux';
 import { fetch } from '../redux/actions';
 import { values, service } from '../commons/configs';
 
-import { CommonSlider } from '../commons/components/slider'
+import { CommonSlider } from '../commons/components';
 import { CommonLank } from '../commons/components/rank';
 import { ItemList } from '../commons/components/item';
 
 const mainImages = [
-    {id : '1', url : 'https://picsum.photos/1280/600', text : "hi-1", link : 'https://www.yahoo.com/'},
-    {id : '2', url : 'https://picsum.photos/1280/600/?random', text : "hi-2", link : 'http://www.naver.com'},
-    {id : '3', url : 'https://picsum.photos/g/1280/600', text : "hi-3", link : 'http://www.daum.net' },
-    {id : '4', url : 'https://picsum.photos/1280/600/?gravity=east', text : "hi-4", link : 'http://www.naver.com'},
+    {url : 'https://picsum.photos/1280/600', text : "hi-1", link : 'https://www.yahoo.com/'},
+    {url : 'https://picsum.photos/1280/600/?random', text : "hi-2", link : 'http://www.naver.com'},
+    {url : 'https://picsum.photos/g/1280/600', text : "hi-3", link : 'http://www.daum.net' },
+    {url : 'https://picsum.photos/1280/600/?gravity=east', text : "hi-4", link : 'http://www.naver.com'},
 ];
 
 const eventList = [
-    {id : '1', url : 'https://picsum.photos/1280/80/?gravity=east', text : "hi-1", link : 'http://www.naver.com'},
-    {id : '2', url : 'https://picsum.photos/1280/80/?random', text : "hi-2", link : 'http://www.google.com'},
+    {url : 'https://picsum.photos/1280/80/?gravity=east', text : "hi-1", link : 'http://www.naver.com'},
+    {url : 'https://picsum.photos/1280/80/?random', text : "hi-2", link : 'http://www.google.com'},
 ]
 
 const mapStateToProps = ({fetch}) => {

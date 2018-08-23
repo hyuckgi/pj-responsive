@@ -13,7 +13,8 @@ import { FormButton } from '../../../commons/types';
 import { CustomIcon, CommonEditor } from '../../../commons/components';
 
 
-const mapStateToProps = ({ fetch }) => {
+const mapStateToProps = ({ fetch, security }) => {
+
     return{
 
     }

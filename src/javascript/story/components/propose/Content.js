@@ -151,7 +151,7 @@ class Content extends React.Component {
                                     filename : service.getValue(this.state, 'file.images.name', '')
                                 }}
                             >
-                                {images.length < 4
+                                {images.length < 9
                                     ? (<div>
                                         <Icon type="plus" />
                                         <div className="ant-upload-text">Upload</div>

@@ -1,10 +1,3 @@
-
-// import EventCarousel from './EventCarousel';
-
-// import RequestStudy from './request';
-// import UserInfo from './UserInfo';
-// import LevelCheck from './LevelCheck';
-// import { Address } from './address'
 import CommonEditor from './CommonEditor';
 import CustomIcon from './CustomIcon';
 import CertifyPhone from './CertifyPhone';
@@ -16,14 +9,13 @@ import { AccountContainer } from './account';
 import { DesktopLayout, MobileLayout } from './response';
 import { FooterUtil } from './utils';
 import { CommentList, Comment } from './comment';
-import BlankImage from './BlankImage'
+import BlankImage from './BlankImage';
+import { CommonSlider } from './slider';
+import { ItemList } from './item';
+
 
 export{
-    // EventCarousel,
-    // RequestStudy,
-    // UserInfo,
-    // LevelCheck,
-    // Address,
+    CommonSlider,
     CommonEditor,
     CertifyPhone,
     CustomIcon,
@@ -39,5 +31,6 @@ export{
     FooterUtil,
     CommentList,
     Comment,
-    BlankImage
+    BlankImage,
+    ItemList
 }

@@ -1,17 +1,15 @@
 import React from 'react';
 
 import { Flex } from 'antd-mobile';
+import NoImg from '../../../resource/commons/no_image_available.png';
 
 class BlankImage extends React.Component {
 
     render() {
         return (
-            <Flex className="blank-image" justify="center">
-                <Flex.Item>No Image</Flex.Item>
-            </Flex>
+            <img src={NoImg} alt="blank-image" className="blank-image" />
         );
     }
-
 }
 
 export default BlankImage;

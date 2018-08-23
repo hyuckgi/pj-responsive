@@ -2,7 +2,7 @@ import React from 'react';
 import { Player, BigPlayButton } from 'video-react';
 
 import { service } from '../../../commons/configs';
-import { CommonEditor } from '../../../commons/components';
+import { CommonEditor, CommonSlider } from '../../../commons/components';
 
 import UAParser from 'ua-parser-js';
 
@@ -37,7 +37,7 @@ class Contents extends React.Component {
             <div key={inx} className="contents-area">
                 {<CommonEditor value={title} />}
                 {<CommonEditor value={contents} />}
-                {this.renderImage(images)}
+                {this.renderImage(images, title)}
                 {this.renderVideo(videos)}
             </div>
         )
@@ -49,14 +49,12 @@ class Contents extends React.Component {
                 {
                     videos.map((item, idx) => {
                         const os = parser.getOS();
-                        // TODO 임시 src
-                        // const src = os.name === 'iOS' ? service.getIosUrl(item) : item;
-                        const src = "https://www.w3schools.com/html/mov_bbb.mp4"
+                        const src = os.name === 'iOS' ? service.getIosUrl(item) : item;
                         const poster = os.name === 'iOS' ? service.getIosPoster(item) : '';
                         const isVideo =  (/\.(mp4|avi|mpg|mpeg|mpe|wmv|asf|asx|flv|rm|mov|dat|webm|m3u8)$/i).test(src);
 
                         if(!isVideo){
-                            return null;
+                            return;
                         }
 
                         return(
@@ -76,12 +74,22 @@ class Contents extends React.Component {
         )
     }
 
-    renderImage(images){
+    renderImage(images, title){
+        if(!images.length){
+            return;
+        }
+        const newImages = images.reduce((result, item) => {
+            const newItem = {
+                url : item,
+                text : title,
+            }
+            result.push(newItem);
+            return result;
+        }, []);
+
         return(
             <div className="img-area">
-                {images.map((item, inx) => {
-                    return (<img src={item} alt={inx} key={inx}/>)
-                })}
+                <CommonSlider data={newImages} />
             </div>
         )
     }
