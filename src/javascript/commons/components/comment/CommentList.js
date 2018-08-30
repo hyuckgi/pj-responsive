@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { service } from '../../../commons/configs';
+import { FormMode } from '../../../commons/types';
 
 import { Comment } from './';
 
@@ -17,7 +18,7 @@ class CommentList extends React.Component {
         return (
             <div className="comment-list">
                 {list.map((item, inx) => {
-                    return (<Comment key={inx} item={item} onEvents={this.onEvents}/>)
+                    return (<Comment key={inx} item={item} onEvents={this.props.onEvents} mode={FormMode.READ}/>)
                 })}
             </div>
         )
@@ -30,7 +31,7 @@ class CommentList extends React.Component {
             <div className="comments-wrapper">
 
                 <div className="comments-top">
-                    <p>댓글  <span>{service.amount(service.getValue(comments, 'totalSize', 0))}개</span></p>
+                    <p>댓글 <span>{service.amount(service.getValue(comments, 'totalSize', 0))}개</span></p>
                 </div>
                 {comments && this.renderComments(comments)}
             </div>

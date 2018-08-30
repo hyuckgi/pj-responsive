@@ -1,4 +1,6 @@
 import React from 'react';
+import { withRouter } from 'react-router';
+import PropTypes from 'prop-types';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
@@ -6,17 +8,20 @@ import { push } from 'react-router-redux';
 import { APICaller } from '../../../commons/api';
 
 import { Avatar } from 'antd';
-import { Flex } from 'antd-mobile';
+import { Flex, Modal, Badge } from 'antd-mobile';
 
 import { service, api, values, path } from '../../../commons/configs';
-import { FormButton } from '../../../commons/types';
+import { FormButton, FormMode } from '../../../commons/types';
 import { CustomIcon, CommonEditor } from '../../../commons/components';
+
+import { Report } from './';
 
 
 const mapStateToProps = ({ fetch, security }) => {
+    const userInfo = security || {};
 
     return{
-
+        userInfo
     }
 }
 
@@ -28,9 +33,14 @@ class Comment extends React.Component {
 
     constructor(props) {
         super(props);
+
+        const isLike = service.getValue(this.props, 'item.isLike', false);
+
         this.state = {
-            likes : true,
+            isLike : isLike,
             defaultValue : '',
+            visible : false,
+            reportVisible : false,
         };
 
         this.renderComment = this.renderComment.bind(this);
@@ -39,19 +49,68 @@ class Comment extends React.Component {
         this.getButtons = this.getButtons.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.postComment = this.postComment.bind(this);
+
+        this.onOpenModal = this.onOpenModal.bind(this);
+        this.onCloseModal = this.onCloseModal.bind(this);
+
+        // likes
+        this.onClickLike = this.onClickLike.bind(this);
+
+        // report
+        this.onClickReport = this.onClickReport.bind(this);
     }
 
-    onClickReport(...args){
-        console.log("obj", args);
+    onClickReport(e){
+        e && e.preventDefault();
+        const { reportVisible } = this.state;
+        const token = service.getValue(this.props, 'userInfo.token', false);
+
+        // if(!token){
+        //     return this.onOpenModal();
+        // }
+
+        if(!reportVisible){
+            this.setState({
+                reportVisible : !reportVisible
+            })
+        }
     }
 
-    onClickLike(...args){
-        console.log("args", args);
+    onClickLike(e){
+        e && e.preventDefault();
+        const { item, match, onEvents } = this.props;
+        const { isLike } = this.state;
+        const token = service.getValue(this.props, 'userInfo.token', false);
+        const storyNo = service.getValue(match, 'params.id', false);
+        const replyNo = service.getValue(item, 'replyNo', false);
+
+        if(!token){
+            return this.onOpenModal();
+        }
+
+        if(!storyNo || !replyNo){
+            return;
+        }
+
+        const obj = api.postLike({
+            storyNo,
+            replyNo,
+            status : !isLike ? 1 : 0,
+        });
+
+        return APICaller.post(obj.url, obj.params)
+            .then(({data}) => {
+                const resultCode = service.getValue(data, 'resultCode', false);
+                if(resultCode === 200){
+                    if(onEvents){
+                        onEvents({events : 'update', payload : data})
+                    }
+                }
+            });
     }
 
     getButtons(){
-        const { userInfo } = this.props;
-        const token = service.getValue(userInfo, 'token', false);
+        const token = service.getValue(this.props, 'userInfo.token', false);
 
         let arr = [];
         if(token){
@@ -81,6 +140,7 @@ class Comment extends React.Component {
 
         return APICaller.post(obj.url, obj.params)
             .then(({data}) => {
+                console.log("data", data);
                 const resultCode = service.getValue(data, 'resultCode', false);
                 if(resultCode === 200){
                     this.setState({
@@ -93,8 +153,20 @@ class Comment extends React.Component {
             });
     }
 
-    onMove(){
-        return this.props.move(path.login);
+    onMove(path){
+        return this.props.move(path);
+    }
+
+    onCloseModal(){
+        this.setState({
+            visible : false,
+        })
+    }
+
+    onOpenModal(){
+        this.setState({
+            visible : true,
+        })
     }
 
     onSubmit(params){
@@ -104,7 +176,7 @@ class Comment extends React.Component {
             case 'submit':
                 return this.postComment(payload);
             case 'move':
-                return this.onMove();
+                return this.onOpenModal();
             default:
                 break;
         }
@@ -112,14 +184,16 @@ class Comment extends React.Component {
 
     renderRead(){
         const { item } = this.props;
-        const { likes } = this.props;
+        const { isLike } = this.state;
         const updateDate = service.getValue(item, 'updateDate', false);
         const contents = service.getValue(item, 'contents', '');
+        const profile = service.getValue(item, 'profileUrl', false);
+        const likeCount = service.getValue(item, 'likeCount', 0);
 
         return(
             <Flex className="comment">
                 <Flex.Item style={{maxWidth : 60, textAlign : 'center'}}>
-                    <Avatar src={item.profileUrl || null} />
+                    {profile ? (<Avatar src={profile} />) : (<Avatar icon="user" />) }
                 </Flex.Item>
                 <Flex.Item>
                     <p className="writer">{item.username}</p>
@@ -131,14 +205,20 @@ class Comment extends React.Component {
                             {updateDate ? moment(updateDate).format(values.format.LOCALE_KOR) : null}
                         </Flex.Item>
                         <Flex.Item className="util-area">
-                            <Flex justify="center">
+                            <Flex justify="between">
                                 <Flex.Item onClick={this.onClickLike} >
                                     <CustomIcon
-                                        type={likes ? 'FaHeart' : 'FaHeartO'}
+                                        type={isLike ? 'FaHeart' : 'FaHeartO'}
                                         roots="FontAwesome"
                                         style={{marginRight: 3, color : '#2CB9CF'}}
                                     />좋아요
                                 </Flex.Item>
+                                {likeCount > 0 ?
+                                    (<Flex.Item className="count">
+                                        <Badge text={likeCount} overflowCount={99} />
+                                    </Flex.Item>)
+                                    : null}
+
                                 <Flex.Item onClick={this.onClickReport} className="report">
                                     신고
                                 </Flex.Item>
@@ -150,9 +230,9 @@ class Comment extends React.Component {
         )
     }
 
-    renderWrite(userInfo){
+    renderWrite(){
         const { defaultValue } = this.state;
-        const token = service.getValue(userInfo, 'token', false);
+        const token = service.getValue(this.props, 'userInfo.token', false);
         const value = token ? defaultValue : '로그인하셔야 작성할 수 있습니다.';
 
         return(
@@ -168,19 +248,48 @@ class Comment extends React.Component {
     }
 
     renderComment(){
-        const userInfo = service.getValue(this.props, 'userInfo', false);
+        const { mode } = this.props;
 
-        if(userInfo){
-            return this.renderWrite(userInfo);
+        if(mode === FormMode.WRITE){
+            return this.renderWrite();
         }
+
         return this.renderRead();
     }
 
-
     render() {
-        return this.renderComment();
-    }
+        const { visible, reportVisible } = this.state;
 
+        return(
+            <div className="comment-wrapper">
+                {this.renderComment()}
+                <Modal
+                    visible={visible}
+                    transparent
+                    maskClosable={false}
+                    title="로그인이 필요한 기능입니다."
+                    footer={[
+                        {text : 'Cancel', onPress : () => this.onCloseModal()},
+                        {text : 'OK', onPress : () => this.onMove(path.login)}
+                    ]}
+                >
+                    {`로그인 하시겠습니까?`}
+                </Modal>
+                {reportVisible ? (<Report />) : null}
+            </div>
+        )
+
+
+    }
 }
 
-export default connect(mapStateToProps, mapDispatchProps)(Comment);
+Comment.propTypes = {
+    mode: PropTypes.string.isRequired,
+};
+
+Comment.defaultProps = {
+    mode : FormMode.READ,
+};
+
+
+export default withRouter(connect(mapStateToProps, mapDispatchProps)(Comment));

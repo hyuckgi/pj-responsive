@@ -5,17 +5,16 @@ import { fetch } from '../../../redux/actions';
 import { service, api } from '../../../commons/configs';
 
 import { CommentList, Comment } from '../../../commons/components';
+import { FormMode } from '../../../commons/types';
 
 import { Info, Contents } from './';
 
-const mapStateToProps = ({ fetch, security }) => {
+const mapStateToProps = ({ fetch }) => {
     const item = service.getValue(fetch, 'item.data', {});
-    const userInfo = security || {};
     const comments = service.getValue(fetch, 'multipleList.comments', false);
 
     return{
         item,
-        userInfo,
         comments
     }
 }
@@ -55,13 +54,14 @@ class Detail extends React.Component {
 
     getComments(storyNo){
         const { page, size } = this.state;
-        const obj = api.getComments(storyNo, page, size);
+        const url = api.getComments(storyNo, page, size);
 
-        return this.props.multipleList([{id : 'comments', url : obj.url, params : obj.params}]);
+        return this.props.multipleList([{id : 'comments', url : url, params : {}}]);
     }
 
     onEvents(params){
         const { events } = params;
+        console.log("params", params);
         const storyNo = service.getValue(this.props, 'item.storyNo', false);
 
         switch (events) {
@@ -76,14 +76,14 @@ class Detail extends React.Component {
     }
 
     render() {
-        const { item, userInfo, comments } = this.props;
+        const { item, comments } = this.props;
 
         return (
             <div className="detail-wrppper">
                 <Contents item={item}/>
                 <Info item={item}/>
-                <Comment item={item} userInfo={userInfo} onEvents={this.onEvents}/>
-                <CommentList comments={comments}/>
+                <Comment item={item} onEvents={this.onEvents} mode={FormMode.WRITE}/>
+                <CommentList comments={comments} onEvents={this.onEvents} />
             </div>
         );
     }

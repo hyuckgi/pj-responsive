@@ -36,13 +36,10 @@ export const api = {
         params : {...params}
     }),
     postComment : (params) => ({
-        url : `/api/story/comment`,
+        url : `/api/story/reply`,
         params : {...params}
     }),
-    getComments : (storyNo, page = 1, size = 10, params = null) => ({
-        url : `/api/story/${storyNo}/comment/page/${page}/size/${size}`,
-        params : {...params}
-    }),
+    getComments : (storyNo, page = 1, size = 10) => `/api/story/${storyNo}/reply/page/${page}/size/${size}`,
     postReport : (params = null) => ({
         url : `/api/story/illegal`,
         params : {...params}
@@ -57,7 +54,7 @@ export const api = {
         url : `/api/donate/activity`,
         params : {USER_NO : userNo}
     }),
-    
+
     getUserHistory : ({userNo, page = 1, size = 30, year = null}) => {
         if(year){
             return `/api/donate/activity/${userNo}/year/${year}/page/${page}/size/${size}`;

@@ -43,43 +43,6 @@
         margin: 20px auto 11px;
         text-align:center;
     }
-
-    .circle-radio{
-
-        .am-radio{
-            width:18px;
-            height:18px;
-            vertical-align:top;
-            margin-right:2px;
-
-            .am-radio-inner{
-                border: 1px solid #dadada;
-                background-color:#fff;
-                border-radius:8px;
-                width:16px;
-                height:16px;
-                top:1px;
-                right:1px;
-
-                &::after{
-                    width:8px;
-                    height:8px;
-                    top:50%;
-                    right:50%;
-                    margin:-4px -4px 0 0;
-                    border:none;
-                    background-color:#00bbd4;
-                    border-radius:5px;
-                }
-            }
-
-            &.am-radio-checked{
-                .am-radio-inner{
-                    border: 1px solid #00bbd4;
-                }
-            }
-        }
-    }
 }
 
 .am-icon{
@@ -191,8 +154,8 @@
 
             &.confirmation{
                 input{
-                    border:1px solid #00bbd4;
-                    color: #00bbd4;
+                    border:1px solid #FF6E59;
+                    color: #FF6E59;
                 }
             }
 
@@ -220,11 +183,11 @@
                 }
                 input{
                     -webkit-opacity:1 !important;
-                    -webkit-text-fill-color: #00bbd4;
+                    -webkit-text-fill-color: #FF6E59;
 
-                    color: #00bbd4;
+                    color: #FF6E59;
                     background-color:#eafbfd;
-                    border:1px solid #00bbd4;
+                    border:1px solid #FF6E59;
                 }
             }
         }
@@ -356,6 +319,53 @@ html:not([data-scale]) .wink-mobile-wrap .am-button{
 
     .am-button-primary{
         color:#fff !important;
+    }
+}
+
+.circle-radio{
+
+    .am-radio-wrapper{
+        vertical-align:top;
+        line-height:18px;
+
+        .am-radio{
+            width:18px;
+            height:18px;
+            vertical-align:top;
+            margin-right:2px;
+
+            .am-radio-inner{
+                top:50%;
+                right:50%;
+                border-width: 1px;
+                border-style:solid;
+                border-color: #dadada;
+                background-color:#fff;
+                border-radius:8px;
+                width:16px;
+                height:16px;
+                margin: -8px -8px 0 0;
+
+                &::after{
+                    width:8px;
+                    height:8px;
+                    top:50%;
+                    right:50%;
+                    transform:rotate(0);
+                    transform: translate(50%, -50%);
+                    border:none;
+                    background-color:#FF6E59;
+                    border-radius:5px;
+                }
+            }
+
+            &.am-radio-checked{
+                .am-radio-inner{
+                    border-width:1px;
+                    border-color:#FF6E59;
+                }
+            }
+        }
     }
 }
 

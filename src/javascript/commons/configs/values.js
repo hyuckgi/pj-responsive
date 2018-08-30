@@ -164,6 +164,19 @@ const join = {
     ],
 }
 
+const report = {
+    categories : [
+        {value : 11, label : '영리목적/홍보성'},
+        {value : 12, label : '불법정보'},
+        {value : 13, label : '음란성/선정성'},
+        {value : 14, label : '욕설/인신공격'},
+        {value : 15, label : '개인정보 노출'},
+        {value : 16, label : '같은내용 도배'},
+        {value : 17, label : '권리침해 신고'},
+        {value : 99, label : '기타'},
+    ]
+}
+
 export {
     format,
     mock,
@@ -176,4 +189,5 @@ export {
     rank,
     spoons,
     join,
+    report
 };
