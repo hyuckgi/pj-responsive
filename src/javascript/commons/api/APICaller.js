@@ -1,10 +1,14 @@
 import axios from 'axios';
 import Async from './Async';
 import { path, service } from '../configs';
+const StorageKey = 'SESSION_INFO';
+
+const userData = sessionStorage.getItem(StorageKey);
+const token = service.getValue(JSON.parse(userData), 'token', '');
 
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 axios.defaults.withCredentials = false;
-axios.defaults.headers.common['X-Auth-Token'] = localStorage.getItem('token') || null;
+axios.defaults.headers.common['X-Auth-Token'] = token;
 axios.defaults.headers.common['Accept-Language'] = window.navigator.language || 'en-US';
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 
@@ -328,7 +332,7 @@ const upload = {
     getProps : (fileList) => ({
         action: `${APIHost}/api/file/upload`,
         headers: {
-			'X-Auth-Token' : localStorage.getItem('token'),
+			'X-Auth-Token' : token,
 		},
 		showUploadList : {showPreviewIcon : false},
         withCredentials: false

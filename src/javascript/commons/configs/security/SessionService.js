@@ -25,6 +25,7 @@ class SessionService {
         sessionStorage.clear();
         this.__userInfo = null;
     };
+
 }
 
 export default SessionService;
