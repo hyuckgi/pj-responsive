@@ -1,10 +1,10 @@
 import axios from 'axios';
 import Async from './Async';
 import { path, service } from '../configs';
-const StorageKey = 'SESSION_INFO';
+import SessionService from '../configs/security/SessionService';
 
-const userData = sessionStorage.getItem(StorageKey);
-const token = service.getValue(JSON.parse(userData), 'token', '');
+const userData = SessionService.userInfo;
+const token = service.getValue(userData, 'token', '');
 
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 axios.defaults.withCredentials = false;

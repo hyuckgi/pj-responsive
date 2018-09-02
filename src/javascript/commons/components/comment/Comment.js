@@ -93,7 +93,7 @@ class Comment extends React.Component {
         }
 
         const obj = api.postLike({
-            storyNo,
+            storyNo : parseInt(storyNo, 10),
             replyNo,
             status : !isLike ? 1 : 0,
         });
