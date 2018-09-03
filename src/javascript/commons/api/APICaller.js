@@ -222,6 +222,17 @@ class APICaller {
 			.then(docs => docsToCamelCase(docs, params))
             .catch((err) => errorModal(err));
 	}
+    static delete(url, params = null,  isPlainAxios = false) {
+		const fullUrl = getMakeURL(url);
+		const str = jsonToParams(paramsToUnderscore(params));
+		const instance = isPlainAxios ? simpleAxios : axios;
+		return instance.delete(fullUrl + (str === '' ? '' : '?') + str)
+			.then((response)=> {
+				return response;
+			})
+			.then(docs => docsToCamelCase(docs, params))
+            .catch((err) => errorModal(err));
+	}
 	static getCache(url) {
 		return Async(function* (url) {
 			let result;

@@ -61,7 +61,6 @@ class Detail extends React.Component {
 
     onEvents(params){
         const { events } = params;
-        console.log("params", params);
         const storyNo = service.getValue(this.props, 'item.storyNo', false);
 
         switch (events) {

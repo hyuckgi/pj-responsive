@@ -41,6 +41,12 @@ class Comment extends React.Component {
             defaultValue : '',
             visible : false,
             reportVisible : false,
+            innerMode : FormMode.READ,
+            modal : {
+                type : '',
+                title : '',
+                content : ''
+            }
         };
 
         this.renderComment = this.renderComment.bind(this);
@@ -49,6 +55,9 @@ class Comment extends React.Component {
         this.getButtons = this.getButtons.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.postComment = this.postComment.bind(this);
+
+        this.onModify = this.onModify.bind(this);
+        this.offModify = this.offModify.bind(this);
 
         this.onOpenModal = this.onOpenModal.bind(this);
         this.onCloseModal = this.onCloseModal.bind(this);
@@ -65,9 +74,9 @@ class Comment extends React.Component {
         const { reportVisible } = this.state;
         const token = service.getValue(this.props, 'userInfo.token', false);
 
-        // if(!token){
-        //     return this.onOpenModal();
-        // }
+        if(!token){
+            return this.onOpenModal({type : 'token', title : '로그인이 필요한 기능입니다.', content : '로그인 하시겠습니까?'});
+        }
 
         if(!reportVisible){
             this.setState({
@@ -96,7 +105,7 @@ class Comment extends React.Component {
         const replyNo = service.getValue(item, 'replyNo', false);
 
         if(!token){
-            return this.onOpenModal();
+            return this.onOpenModal({type : 'token', title : '로그인이 필요한 기능입니다.', content : '로그인 하시겠습니까?'});
         }
 
         if(!storyNo || !replyNo){
@@ -132,10 +141,13 @@ class Comment extends React.Component {
         return arr;
     }
 
-    postComment(payload){
+    postComment(params){
+        const { events, payload } = params;
         const { item, onEvents } = this.props;
         const storyNo = service.getValue(item, 'storyNo', false);
+        const replyNo = service.getValue(item, 'replyNo', false);
         const comment = service.getValue(payload, 'text', false);
+
         if(!storyNo || !comment){
             return;
         }
@@ -144,18 +156,20 @@ class Comment extends React.Component {
             defaultValue : comment,
         });
 
+        const newParams = events === "submit" ? {storyNo : storyNo} : {replyNo : replyNo, storyNo : storyNo};
+
         const obj = api.postComment({
+            ...newParams,
             contents : comment,
-            storyNo : storyNo,
         });
 
-        return APICaller.post(obj.url, obj.params)
+        return APICaller[events === "submit" ? "post" : "put"](obj.url, obj.params)
             .then(({data}) => {
-                console.log("data", data);
                 const resultCode = service.getValue(data, 'resultCode', false);
                 if(resultCode === 200){
                     this.setState({
-                        defaultValue : ''
+                        defaultValue : '',
+                        innerMode : FormMode.READ,
                     })
                     if(onEvents){
                         onEvents({events : 'update', payload : data})
@@ -174,67 +188,166 @@ class Comment extends React.Component {
         })
     }
 
-    onOpenModal(){
+    onOpenModal(params){
         this.setState({
             visible : true,
+            modal : {...params}
         })
     }
 
+    onPress(){
+        const type = service.getValue(this.state, 'modal.type', false);
+
+        if(type){
+            switch (type) {
+                case 'token':
+                    return this.onMove(path.login);
+                case 'delete':
+                    return this.onDelete();
+                default:
+                    break;
+            }
+        }
+        return;
+    }
+
+    onDelete(){
+        const { item, onEvents } = this.props;
+        const replyNo = service.getValue(item, 'replyNo', false);
+        const url = api.deleteComment(replyNo);
+        return APICaller.delete(url, {})
+            .then(({data}) => {
+                const resultCode = service.getValue(data, 'resultCode', false);
+                if(resultCode === 200){
+                    this.onCloseModal();
+
+                    if(onEvents){
+                        onEvents({events : 'update', payload : data})
+                    }
+                }
+            })
+    }
+
     onSubmit(params){
-        const { events, payload } = params;
+        const { events } = params;
 
         switch (events) {
             case 'submit':
-                return this.postComment(payload);
+                return this.postComment(params);
             case 'move':
-                return this.onOpenModal();
+                return this.onOpenModal({type : 'token', title : '로그인이 필요한 기능입니다.', content : '로그인 하시겠습니까?'});
+            case 'cancel':
+                return this.offModify();
+            case 'update':
+                return this.postComment(params);
             default:
                 break;
         }
     }
 
+    offModify(){
+        this.setState({
+            innerMode : FormMode.READ
+        });
+    }
+
+    onModify(e){
+        e && e.preventDefault();
+        this.setState({
+            innerMode : FormMode.WRITE
+        })
+    }
+
+    renderInnerWrite(){
+        return(
+            <Flex.Item className="util-area">
+                <Flex justify="between">
+                    <Flex.Item onClick={() => this.onOpenModal({type : 'delete', title : '댓글 삭제', content : '댓글을 삭제하시겠습니까?'})} >
+                        <CustomIcon
+                            type="MdDeleteForever"
+                            style={{marginRight: 3, color : '#2CB9CF', fontSize : '1.5em'}}
+                        />삭제
+                    </Flex.Item>
+                    <Flex.Item onClick={this.onModify}>
+                        <CustomIcon
+                            type="MdCreate"
+                            style={{marginRight: 3, color : '#2CB9CF', fontSize : '1.5em'}}
+                        />수정
+                    </Flex.Item>
+                </Flex>
+            </Flex.Item>
+        )
+    }
+
+    renderUtils(){
+        const { item } = this.props;
+        const { isLike, innerMode } = this.state;
+        const isMine = service.getValue(item, 'isMyReply', false);
+        const likeCount = service.getValue(item, 'likeCount', 0);
+
+        if(isMine){
+            return  innerMode === FormMode.READ ? this.renderInnerWrite() : null
+        }
+
+        return(
+            <Flex.Item className="util-area">
+                <Flex justify="between">
+                    <Flex.Item onClick={this.onClickLike} >
+                        <CustomIcon
+                            type={isLike ? 'FaHeart' : 'FaHeartO'}
+                            roots="FontAwesome"
+                            style={{marginRight: 3, color : '#2CB9CF'}}
+                        />좋아요
+                    </Flex.Item>
+                    {likeCount > 0 ?
+                        (<Flex.Item className="count">
+                            <Badge text={likeCount} overflowCount={99} />
+                        </Flex.Item>)
+                        : null}
+
+                    <Flex.Item onClick={this.onClickReport} className="report">
+                        신고
+                    </Flex.Item>
+                </Flex>
+            </Flex.Item>
+        )
+    }
+
+    getInnerButtons(){
+        return [
+            { id : FormButton.CANCEL, label : '취소', type : 'normal'},
+            { id : FormButton.UPDATE, label : '수정', style : { marginLeft: '5px'}}
+        ]
+    }
+
     renderRead(){
         const { item } = this.props;
-        const { isLike } = this.state;
+        const { innerMode } = this.state;
         const updateDate = service.getValue(item, 'updateDate', false);
         const contents = service.getValue(item, 'contents', '');
         const profile = service.getValue(item, 'profileUrl', false);
-        const likeCount = service.getValue(item, 'likeCount', 0);
+        const flag = innerMode === FormMode.READ ? true : false;
 
         return(
-            <Flex className="comment">
+            <Flex className={`comment ${innerMode === FormMode.WRITE ? 'comment-write' : ''}`}>
                 <Flex.Item style={{maxWidth : 60, textAlign : 'center'}}>
                     {profile ? (<Avatar src={profile} />) : (<Avatar icon="user" />) }
                 </Flex.Item>
                 <Flex.Item>
                     <p className="writer">{item.username}</p>
                     <div>
-                        <CommonEditor value={contents} />
+                        <CommonEditor value={contents} readOnly={flag} buttons={flag ? [] : this.getInnerButtons()} onSubmit={this.onSubmit}/>
                     </div>
                     <Flex justify="between">
-                        <Flex.Item>
-                            {updateDate ? moment(updateDate).format(values.format.LOCALE_KOR) : null}
-                        </Flex.Item>
-                        <Flex.Item className="util-area">
-                            <Flex justify="between">
-                                <Flex.Item onClick={this.onClickLike} >
-                                    <CustomIcon
-                                        type={isLike ? 'FaHeart' : 'FaHeartO'}
-                                        roots="FontAwesome"
-                                        style={{marginRight: 3, color : '#2CB9CF'}}
-                                    />좋아요
+                        { innerMode === FormMode.READ
+                            ? (
+                                <Flex.Item>
+                                    {updateDate ? moment(updateDate).format(values.format.LOCALE_KOR) : null}
                                 </Flex.Item>
-                                {likeCount > 0 ?
-                                    (<Flex.Item className="count">
-                                        <Badge text={likeCount} overflowCount={99} />
-                                    </Flex.Item>)
-                                    : null}
-
-                                <Flex.Item onClick={this.onClickReport} className="report">
-                                    신고
-                                </Flex.Item>
-                            </Flex>
-                        </Flex.Item>
+                            )
+                            : null
+                        }
+                        {this.renderUtils()}
                     </Flex>
                 </Flex.Item>
             </Flex>
@@ -269,7 +382,7 @@ class Comment extends React.Component {
     }
 
     render() {
-        const { visible, reportVisible } = this.state;
+        const { visible, reportVisible, modal } = this.state;
 
         return(
             <div className="comment-wrapper">
@@ -278,13 +391,13 @@ class Comment extends React.Component {
                     visible={visible}
                     transparent
                     maskClosable={false}
-                    title="로그인이 필요한 기능입니다."
+                    title={modal.title}
                     footer={[
                         {text : 'Cancel', onPress : () => this.onCloseModal()},
-                        {text : 'OK', onPress : () => this.onMove(path.login)}
+                        {text : 'OK', onPress : () => this.onPress()}
                     ]}
                 >
-                    {`로그인 하시겠습니까?`}
+                    {modal.content}
                 </Modal>
                 {reportVisible ? (<Report />) : null}
             </div>

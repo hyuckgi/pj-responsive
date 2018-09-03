@@ -22,6 +22,7 @@ class CommonEditor extends React.Component {
         this.convertHtml = this.convertHtml.bind(this);
         this.onClickButton = this.onClickButton.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        this.onCancel = this.onCancel.bind(this);
     }
 
     componentDidMount() {
@@ -37,6 +38,7 @@ class CommonEditor extends React.Component {
             const editorState = EditorState.createWithContent(contentState);
 
             return this.setState({
+                initialValue : editorState,
                 editorState,
             })
         }
@@ -69,13 +71,13 @@ class CommonEditor extends React.Component {
         return {}
     }
 
-    onSubmit(){
+    onSubmit(flag){
         const { onSubmit } = this.props;
         const { editorState } = this.state;
 
         if(onSubmit){
             return onSubmit({
-                events : 'submit',
+                events : flag,
                 payload : {
                     text : draftToHtml(convertToRaw(editorState.getCurrentContent()))
                 }
@@ -93,12 +95,29 @@ class CommonEditor extends React.Component {
         }
     }
 
+    onCancel(){
+        const { onSubmit } = this.props;
+        const { initialValue } = this.state;
+
+        this.onEditorStateChange(initialValue);
+
+        if(onSubmit){
+            return onSubmit({
+                events : 'cancel',
+            });
+        }
+    }
+
     onClickButton(id){
         switch (id) {
             case FormButton.SAVE:
-                return this.onSubmit();
+                return this.onSubmit('submit');
             case FormButton.CONFIRM:
                 return this.onMove();
+            case FormButton.CANCEL :
+                return this.onCancel();
+            case FormButton.UPDATE :
+                return this.onSubmit('update');
             default:
                 break;
         }

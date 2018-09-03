@@ -39,11 +39,13 @@ export const api = {
         url : `/api/story/reply`,
         params : {...params}
     }),
+    deleteComment : (replyNo) => `/api/story/reply/${replyNo}`,
     getComments : (storyNo, page = 1, size = 10) => `/api/story/${storyNo}/reply/page/${page}/size/${size}`,
     postReport : (params = null) => ({
         url : `/api/story/illegal`,
         params : {...params}
     }),
+
 
     // rank
     getRank : (type = 'donate', term = 'all') => `/api/${type}/ranking/summary?rank_term=${term}`,
