@@ -76,6 +76,17 @@ class Comment extends React.Component {
         }
     }
 
+    componentWillReceiveProps(nextProps) {
+        const { item } = this.props;
+
+        if(JSON.parse(JSON.stringify(item)) !== JSON.parse(JSON.stringify(nextProps.item))){
+            const isLike = service.getValue(nextProps, 'item.isLike', false);
+            this.setState({
+                isLike
+            });
+        }
+    }
+
     onClickLike(e){
         e && e.preventDefault();
         const { item, match, onEvents } = this.props;
