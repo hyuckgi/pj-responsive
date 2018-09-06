@@ -11,11 +11,9 @@ import { Info, Contents } from './';
 
 const mapStateToProps = ({ fetch }) => {
     const item = service.getValue(fetch, 'item.data', {});
-    const comments = service.getValue(fetch, 'multipleList.comments', false);
 
     return{
         item,
-        comments
     }
 }
 
@@ -28,35 +26,10 @@ class Detail extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            page : 1,
-            size : 10,
-        }
+            status : false,
+        };
 
         this.onEvents = this.onEvents.bind(this);
-    }
-
-    componentDidMount() {
-        const storyNo = service.getValue(this.props, 'item.storyNo', false);
-
-        if(storyNo){
-            return this.getComments(storyNo)
-        }
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-        const prevStoryNo = service.getValue(prevProps, 'item.storyNo', false);
-        const currentStoryNo = service.getValue(this.props, 'item.storyNo', false);
-
-        if(currentStoryNo && prevStoryNo !== currentStoryNo){
-            return this.getComments(currentStoryNo);
-        }
-    }
-
-    getComments(storyNo){
-        const { page, size } = this.state;
-        const url = api.getComments(storyNo, page, size);
-
-        return this.props.multipleList([{id : 'comments', url : url, params : {}}]);
     }
 
     onEvents(params){
@@ -65,24 +38,30 @@ class Detail extends React.Component {
 
         switch (events) {
             case 'update':
-                return this.getComments(storyNo)
-                    // .then(() => {
-                    //     return window.location.reload();
-                    // });
+                this.setState({
+                    status : true,
+                });
+                break;
+            case 'complete' :
+                this.setState({
+                    status : false,
+                });
+                break;
             default:
                 break;
         }
     }
 
     render() {
-        const { item, comments } = this.props;
+        const { item } = this.props;
+        const { status } = this.state;
 
         return (
             <div className="detail-wrppper">
                 <Contents item={item}/>
                 <Info item={item}/>
                 <Comment item={item} onEvents={this.onEvents} mode={FormMode.WRITE}/>
-                <CommentList comments={comments} onEvents={this.onEvents} />
+                <CommentList item={item} onEvents={this.onEvents} status={status}/>
             </div>
         );
     }

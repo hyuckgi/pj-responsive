@@ -18,11 +18,17 @@
 }
 
 .comments-wrapper{
-    padding:20px 30px;
+    padding:20px 10px;
+    border-top:1px solid #ddd;
 
     .comment-list{
+        margin-bottom:30px;
+        padding-bottom:30px;
+        border-bottom:1px solid #ddd;
+
         .comment{
-            margin:20px 0;
+            padding: 20px 0 20px;
+            border-bottom: 1px dashed #ddd;
 
             .util-area{
                 max-width:154px;
@@ -52,6 +58,16 @@
 
             }
         }
+
+        & .comment-wrapper:last-child{
+            .comment{
+                border-bottom:none;
+            }
+        }
+    }
+
+    .btn-wrapper{
+        text-align:center;
     }
 }
 
