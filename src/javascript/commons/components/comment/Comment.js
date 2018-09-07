@@ -14,7 +14,7 @@ import { service, api, values, path } from '../../../commons/configs';
 import { FormButton, FormMode } from '../../../commons/types';
 import { CustomIcon, CommonEditor } from '../../../commons/components';
 
-import { Report } from './';
+import { Report } from '../';
 
 
 const mapStateToProps = ({ fetch, security }) => {
@@ -59,6 +59,7 @@ class Comment extends React.Component {
         this.onModify = this.onModify.bind(this);
         this.offModify = this.offModify.bind(this);
 
+        this.onModalEvent = this.onModalEvent.bind(this);
         this.onOpenModal = this.onOpenModal.bind(this);
         this.onCloseModal = this.onCloseModal.bind(this);
 
@@ -98,9 +99,9 @@ class Comment extends React.Component {
 
     onClickLike(e){
         e && e.preventDefault();
-        const { item, match, onEvents } = this.props;
+        const { item, match, onEvents, userInfo } = this.props;
         const { isLike } = this.state;
-        const token = service.getValue(this.props, 'userInfo.token', false);
+        const token = service.getValue(userInfo, 'token', false);
         const storyNo = service.getValue(match, 'params.id', false);
         const replyNo = service.getValue(item, 'replyNo', false);
 
@@ -193,6 +194,17 @@ class Comment extends React.Component {
             visible : true,
             modal : {...params}
         })
+    }
+
+    onModalEvent(params){
+        const { events } = params;
+
+        switch (events) {
+            case 'close':
+                return this.onClickReport();
+            default:
+                break;
+        }
     }
 
     onPress(){
@@ -382,6 +394,7 @@ class Comment extends React.Component {
     }
 
     render() {
+        const { item } = this.props;
         const { visible, reportVisible, modal } = this.state;
 
         return(
@@ -399,7 +412,7 @@ class Comment extends React.Component {
                 >
                     {modal.content}
                 </Modal>
-                {reportVisible ? (<Report />) : null}
+                {reportVisible ? (<Report item={item} onEvents={this.onModalEvent}/>) : null}
             </div>
         )
 

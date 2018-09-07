@@ -61,6 +61,7 @@ class Story extends React.Component {
     }
 
     onEvent(obj){
+        console.log("obj", obj);
         const { events, payload } = obj;
         const type = service.getValue(payload, 'type', false);
         if(type === 'update'){

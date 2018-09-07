@@ -12,6 +12,7 @@ import { CommentList, Comment } from './comment';
 import BlankImage from './BlankImage';
 import { CommonSlider } from './slider';
 import { ItemList } from './item';
+import { Report } from './report';
 
 
 export{
@@ -32,5 +33,6 @@ export{
     CommentList,
     Comment,
     BlankImage,
-    ItemList
+    ItemList,
+    Report
 }
