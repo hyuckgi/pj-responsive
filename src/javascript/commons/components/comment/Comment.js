@@ -79,11 +79,9 @@ class Comment extends React.Component {
             return this.onOpenModal({type : 'token', title : '로그인이 필요한 기능입니다.', content : '로그인 하시겠습니까?'});
         }
 
-        if(!reportVisible){
-            this.setState({
-                reportVisible : !reportVisible
-            })
-        }
+        return this.setState({
+            reportVisible : !reportVisible
+        });
     }
 
     componentWillReceiveProps(nextProps) {
