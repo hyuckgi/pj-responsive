@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { push } from 'react-router-redux';
-import { LocalNavigationBar } from '../../../layout/web';
 
 import { service, values } from '../../../commons/configs';
 

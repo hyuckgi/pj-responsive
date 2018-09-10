@@ -9,14 +9,40 @@ const format = {
 };
 
 const spoons = {
-    serviceName : '',
-    // serviceName : '9spoons',
+    serviceName : '9spoons',
 }
 
 const platform = {
     MOBILE : 'mobile',
     PC : 'desktop',
 }
+
+const role = [
+    {
+        key : 1,
+        name : 'LEVEL1',
+        type : 'administrator',
+        label : '어드민'
+    },
+    {
+        key : 2,
+        name : 'LEVEL2',
+        type : 'local_administrator',
+        label : '지역어드민'
+    },
+    {
+        key : 3,
+        name : 'LEVEL3',
+        type : 'sponsor',
+        label : '스폰서'
+    },
+    {
+        key : 9,
+        name : 'USER',
+        type : 'user',
+        label : '사용자'
+    }
+]
 
 const sns = {
     facebook : {
@@ -107,20 +133,7 @@ const requestType = {
     },
 };
 
-const countries = [
-    {
-        label : '대한민국',
-        value : 'EN'
-    },
-    {
-        label : '미국',
-        value : 'EN'
-    },
-    {
-        label : '일본',
-        value : 'EN'
-    },
-];
+
 const propose = {
     steps : [
         {
@@ -180,9 +193,9 @@ const report = {
 export {
     format,
     mock,
+    role,
     platform,
     requestType,
-    countries,
     propose,
     story,
     sns,

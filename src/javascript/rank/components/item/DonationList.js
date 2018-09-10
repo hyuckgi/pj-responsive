@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
 import { fetch } from '../../../redux/actions';
-import { api, service, columns, path, values } from '../../../commons/configs';
+import { api, service, columns, values } from '../../../commons/configs';
 
 import { List } from '../common';
 import { Avatar } from 'antd';

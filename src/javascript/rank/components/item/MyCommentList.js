@@ -1,12 +1,11 @@
 import React from 'react';
-import moment from 'moment';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
 import { CommentList } from '../../../commons/components';
 
 import { fetch } from '../../../redux/actions';
-import { api, service, columns, path, values } from '../../../commons/configs';
+import { api, service } from '../../../commons/configs';
 
 const mapStateToProps = ({fetch}) => {
     const myComments = service.getValue(fetch, 'multipleList.myComments', false);

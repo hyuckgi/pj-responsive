@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { fetch } from '../../../redux/actions';
-import { service, api } from '../../../commons/configs';
+import { service } from '../../../commons/configs';
 
 import { CommentList, Comment } from '../../../commons/components';
 import { FormMode } from '../../../commons/types';
@@ -34,7 +34,6 @@ class Detail extends React.Component {
 
     onEvents(params){
         const { events } = params;
-        const storyNo = service.getValue(this.props, 'item.storyNo', false);
 
         switch (events) {
             case 'update':

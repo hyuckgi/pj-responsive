@@ -1,27 +1,26 @@
 import {layout as creator} from "../creators";
+import { values, service } from '../../commons/configs';
 
-export const masterLevel1 = () => {
-    return (dispatch) => {
-        return new Promise(resolve => {
-            dispatch(creator.masterLevel1());
-            resolve();
-        });
-    };
-};
+const permission = service.getValue(values, 'role', []);
 
-export const masterLevel2 = () => {
+export const layout = (role) => {
     return (dispatch) => {
+        const obj = permission.filter((item) => item.key === role).find(item => item);
         return new Promise(resolve => {
-            dispatch(creator.masterLevel2());
-            resolve();
-        });
-    };
-};
-
-export const masterLevel3 = () => {
-    return (dispatch) => {
-        return new Promise(resolve => {
-            dispatch(creator.masterLevel3());
+            switch (obj.name) {
+                case 'LEVEL1':
+                    dispatch(creator.masterLevel1());
+                    break;
+                case 'LEVEL2':
+                    dispatch(creator.masterLevel2());
+                    break;
+                case 'LEVEL3':
+                    dispatch(creator.masterLevel3());
+                    break;
+                default:
+                    dispatch(creator.userDefault());
+                    break;
+            }
             resolve();
         });
     };

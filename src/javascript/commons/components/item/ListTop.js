@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import queryString from 'query-string';
 
-import { DesktopLayout, MobileLayout } from '../response';
+import { DesktopLayout } from '../response';
 
 import { Row, Col, Button, Cascader } from 'antd';
 import { WhiteSpace } from 'antd-mobile';

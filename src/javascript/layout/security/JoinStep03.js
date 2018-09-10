@@ -5,9 +5,7 @@ import { service, values } from '../../commons/configs';
 import { FormButton } from '../../commons/types';
 
 import { ButtonWrapper, SelectCountry } from '../../commons/components';
-import { List, InputItem, WhiteSpace, Toast, WingBlank, Checkbox, Button, Flex } from 'antd-mobile';
-
-const CheckboxItem = Checkbox.CheckboxItem;
+import { List, InputItem, WhiteSpace, Toast, WingBlank, Button, Flex } from 'antd-mobile';
 
 class JoinStep03 extends React.Component {
 

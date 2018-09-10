@@ -22,15 +22,15 @@ const config = {
 
 const errorModal = (err) => {
     const data = service.getValue(err, 'response.data', false);
-    // if(data){
-    //     let returnPath = path.serverError;
-    //     if(data.result_code === 404){
-    //         returnPath = path.notFound;
-    //     }
-    //
-    //     window.alert(data.result_msg)
-    //     return window.location.href = returnPath;
-    // }
+    if(data){
+        let returnPath = path.serverError;
+        if(data.result_code === 404){
+            returnPath = path.notFound;
+        }
+
+        window.alert(data.result_msg)
+        return window.location.href = returnPath;
+    }
 }
 
 const getAPIHost = () => {

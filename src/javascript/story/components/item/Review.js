@@ -3,7 +3,9 @@ import { connect } from 'react-redux';
 
 import { service } from '../../../commons/configs';
 
-import { Info, Comment, Contents } from './';
+// import { Info, Comment, Contents } from './';
+
+import { Contents } from './';
 
 const mapStateToProps = ({ fetch }) => {
     const item = service.getValue(fetch, 'item.data', {});

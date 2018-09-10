@@ -5,7 +5,7 @@ import { push } from 'react-router-redux';
 
 import { Flex } from 'antd-mobile';
 
-import { service, path, values } from '../../../commons/configs';
+import { service, values } from '../../../commons/configs';
 
 import { BlankImage } from '../../../commons/components';
 

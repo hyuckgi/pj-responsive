@@ -5,7 +5,7 @@ import { withRouter } from 'react-router';
 import { fetch } from '../../../redux/actions';
 import { service, api } from '../../../commons/configs';
 
-import { ListView , Icon, Accordion, List } from 'antd-mobile';
+import { ListView , Icon, Accordion } from 'antd-mobile';
 
 const dataSource = new ListView.DataSource({
     rowHasChanged: (row1, row2) => row1 !== row2,

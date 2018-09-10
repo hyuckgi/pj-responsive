@@ -17,7 +17,6 @@ class SessionService {
     };
 
     static login(params) {
-        console.log("params", params);
         this.__userInfo = {...params};
         sessionStorage.setItem(StorageKey, JSON.stringify(this.__userInfo));
     };

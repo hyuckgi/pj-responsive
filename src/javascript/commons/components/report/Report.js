@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import { APICaller } from '../../../commons/api';
 
-import { Modal, List, InputItem, Radio, Flex, TextareaItem, Toast } from 'antd-mobile';
+import { Modal, List, Radio, Flex, TextareaItem, Toast } from 'antd-mobile';
 
 import { service, values, api } from '../../configs';
 
@@ -106,7 +106,7 @@ class Report extends React.Component {
     render() {
         const { visible, reason } = this.state;
         const { form } = this.props;
-        const { getFieldProps, getFieldError } = form;
+        const { getFieldProps } = form;
 
         return (
             <Modal

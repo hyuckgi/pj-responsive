@@ -12,7 +12,7 @@ import { service, api, path} from '../../configs';
 import { CustomIcon } from '../';
 
 import { Share, Sponsors } from './';
-import { Report } from '../';
+import { Report, ADList } from '../';
 import { Flex, Button, Modal, Badge } from 'antd-mobile';
 
 const parser = new UAParser();
@@ -60,6 +60,7 @@ class FooterUtil extends React.Component {
         this.onPress = this.onPress.bind(this);
         this.onMove = this.onMove.bind(this);
         this.onModalEvent = this.onModalEvent.bind(this);
+        this.onSupport = this.onSupport.bind(this);
     }
 
     onMove(path){
@@ -129,7 +130,7 @@ class FooterUtil extends React.Component {
         return this.onOpenModal({
             type : null,
             title : '스폰서 목록',
-            contents : (<Sponsors />)
+            contents : (<ADList />)
         })
     }
 
@@ -196,13 +197,23 @@ class FooterUtil extends React.Component {
         return[]
     }
 
+    onSupport(e){
+        e && e.preventDefault();
+        return this.onOpenModal({
+            type : null,
+            title : '광고 연동',
+            contents : (<Sponsors />)
+        })
+    }
+
     render() {
-        const { item } = this.props;
+        const { item, userInfo } = this.props;
         const { visible, isLike, modalContent, reportVisible} = this.state;
         const isMobile = parser.getDevice().type;
         const likeCount = service.getValue(item, 'likeCount', 0);
         const modalType = service.getValue(modalContent, 'type', false)
         const color = isLike ? 'red' : '#fff';
+        const role = service.getValue(userInfo, 'role', 9);
         // // TODO:  color 변화
 
         return (
@@ -228,12 +239,23 @@ class FooterUtil extends React.Component {
                             onClick={this.onClickDonate}
                         >기부하기</Button>
                     </Flex.Item>
-                    <Flex.Item>
+                    <Flex.Item className="report">
                         <Button
                             icon={(<CustomIcon type="FaThumbsDown" roots="FontAwesome" />)}
                             onClick={this.onClickReport}
                         >신고하기</Button>
                     </Flex.Item>
+                    {role === 3
+                        ? (
+                            <Flex.Item>
+                                <Button
+                                    icon={(<CustomIcon type="FaChain" roots="FontAwesome" />)}
+                                    onClick={this.onSupport}
+                                >광고연동</Button>
+                            </Flex.Item>
+                        )
+                        : null
+                    }
                 </Flex>
 
                 <Modal

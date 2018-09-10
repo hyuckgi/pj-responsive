@@ -18,3 +18,9 @@ export const masterLevel3 = () => {
         payload: {}
     }
 };
+export const userDefault = () => {
+    return {
+        type: type.USER,
+        payload: {}
+    }
+};

@@ -3,7 +3,7 @@ import { withRouter } from 'react-router';
 import { CustomIcon } from '../';
 import copy from 'copy-to-clipboard';
 
-import { Button, Toast } from 'antd-mobile';
+import { Toast } from 'antd-mobile';
 import { KaKaoStoryButton, TwitterButton, FacebookButton } from "react-social-kr";
 import { values, service } from '../../configs';
 

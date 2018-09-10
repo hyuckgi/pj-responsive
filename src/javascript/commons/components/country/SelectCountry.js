@@ -7,7 +7,7 @@ import { api, service } from '../../configs';
 
 import { DesktopLayout, MobileLayout } from '../response';
 
-import { Select, Radio } from 'antd';
+import { Select } from 'antd';
 
 import { Toast, Picker, List } from 'antd-mobile';
 

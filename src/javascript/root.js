@@ -3,7 +3,7 @@ import '../stylesheet/root.less';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { Route, Switch } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { ConnectedRouter as Router, routerReducer, routerMiddleware } from 'react-router-redux';

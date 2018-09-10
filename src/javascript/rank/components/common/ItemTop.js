@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { service, values } from '../../../commons/configs';
+import { service } from '../../../commons/configs';
 
 import { Flex } from 'antd-mobile';
 import { Avatar } from 'antd';
@@ -17,7 +17,7 @@ class ItemTop extends React.Component {
                 <Flex className="rank-top-list" justify="center">
                     <Flex.Item>
                         {thumnail
-                            ?                            
+                            ?
                             <div className="thumnail" >
                                 <img src={thumnail} alt={item.username} />
                             </div>

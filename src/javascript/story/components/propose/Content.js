@@ -88,7 +88,6 @@ class Content extends React.Component {
     }
 
     onClickButton(id){
-        const { inx } = this.props;
         switch (id) {
             case FormButton.CREATE:
                 return this.props.onCreate();
@@ -102,7 +101,7 @@ class Content extends React.Component {
     render() {
         const { form, inx } = this.props;
         const { getFieldDecorator } = form;
-        const { file, images, videos } = this.state;
+        const { images, videos } = this.state;
 
         return (
             <div className="content-item">

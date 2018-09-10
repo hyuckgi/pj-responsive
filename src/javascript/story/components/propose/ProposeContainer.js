@@ -13,8 +13,6 @@ import { Steps, Modal, Tabs } from 'antd-mobile';
 import { Step01, Step02, Step03 } from './'
 
 const Step = Steps.Step;
-const { TabPane } = Tabs;
-const alert = Modal.alert;
 
 const mapStateToProps = ({fetch, security}) => {
     const token = service.getValue(security, 'token', false);

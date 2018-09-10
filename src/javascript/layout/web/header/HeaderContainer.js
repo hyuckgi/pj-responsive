@@ -2,7 +2,7 @@ import React from 'react';
 import { Sticky } from 'react-sticky';
 
 import { GlobalNavigation, UtilNavigation } from '../index';
-import { Row, Col, Dropdown, Layout, Button, Menu, Icon } from 'antd';
+import { Row, Col, Layout } from 'antd';
 
 import imgLogo from '../../../../resource/commons/logo2.png'
 
