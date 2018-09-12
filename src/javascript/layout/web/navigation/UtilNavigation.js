@@ -64,7 +64,7 @@ class UtilNavigation extends React.Component {
     }
 
     renderItem(menu){
-        if(menu.id === '403000000'){
+        if(menu.link === path.logout){
             return (
                 <Menu.Item
                     key={menu.id}
@@ -79,7 +79,7 @@ class UtilNavigation extends React.Component {
             <Menu.Item
                 key={menu.id}
             >
-                <NavLink to={menu.link}>{menu.name}</NavLink>
+                <NavLink to={menu.defaultLink}>{menu.name}</NavLink>
             </Menu.Item>
         )
     }

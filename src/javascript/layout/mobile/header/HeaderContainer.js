@@ -19,39 +19,34 @@ class HeaderContainer extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            menu : false,
-            mypage : false,
-        };
-
-        this.onOpenChange = this.onOpenChange.bind(this);
-        this.getLeftContent = this.getLeftContent.bind(this);
+        this.onOpenClick = this.onOpenClick.bind(this);
         this.getRightContent = this.getRightContent.bind(this);
         this.onClick = this.onClick.bind(this);
     }
 
-    getLeftContent(){
-        return [
-            <CustomIcon type="MdDehaze" key="0" sizes="lg" className="am-icon-left" />
-        ];
-    }
-
     getRightContent(){
         return [
-            <CustomIcon type="FaUser" roots="FontAwesome" sizes="lg" key="0" className="am-icon-right"  onClick={this.onOpenChange.bind(this, 'mypage')}/>
+            <CustomIcon type="MdDehaze" sizes="lg" key="0" className="am-icon-right"  onClick={this.onOpenClick.bind(this, 'mypage')}/>
         ]
     }
 
     onClick(e){
-        e.preventDefault();
+        e && e.preventDefault();
         return this.props.move(path.main);
     }
 
 
-    onOpenChange(target = null){
-        const state = `${target}`;
+    onOpenClick(target = null){
+        const { onEvents } = this.props;
 
-        this.props.onOpenChange(state);
+        if(onEvents){
+            onEvents({
+                events : 'open',
+                payload : {
+                    name : 'drawer'
+                }
+            })
+        }
     }
 
     render() {
@@ -61,12 +56,9 @@ class HeaderContainer extends React.Component {
                 <NavBar
                     mode="light"
                     className="header-wrap"
-                    onLeftClick={this.onOpenChange.bind(this, 'menu')}
-                    leftContent={this.getLeftContent()}
+                    leftContent={(<a onClick={this.onClick}><img src={imgLogo} alt="logo" />9Spoons</a>)}
                     rightContent={this.getRightContent()}
-                >
-                    <a onClick={this.onClick}><img src={imgLogo} alt="logo" />9Spoons</a>
-                </NavBar>
+                />
             </div>
         );
     }

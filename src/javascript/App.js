@@ -12,21 +12,10 @@ import { service } from './commons/configs';
 
 const mapStateToProps = ({ fetch, code, router, layout, security }) => {
     const spinning = fetch.isFetching || fetch.isPosting || !code.isInitialized;
-
-    const allMenu = Object.keys(layout).reduce((result, item) => {
-        result = result.concat(layout[item]);
-        return result;
-    }, []);
-    const globalMenu = service.getValue(layout, 'list', []).filter(item => item.level === 0);
-    const currentPath = service.getValue(router, 'location.pathname', "/main");
-    const currentMenu = allMenu.filter(item => item.link === currentPath).find(item => item);
     const userInfo = security || {};
 
     return{
         spinning,
-        globalMenu,
-        currentMenu,
-        allMenu,
         userInfo
     }
 };

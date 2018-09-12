@@ -93,6 +93,7 @@ class ServiceTop extends React.Component {
                     onTabClick={this.onTabClick}
                     prerenderingSiblingsNumber={0}
                     destroyInactiveTab={true}
+                    tabBarBackgroundColor={'#FF6E59'}
                     tabBarUnderlineStyle={{display:'none'}}
                 >
                     {this.renderContent}

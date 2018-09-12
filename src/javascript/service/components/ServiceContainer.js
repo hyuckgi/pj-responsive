@@ -1,32 +1,16 @@
 import React from 'react';
 
-
-import { RuleContainer, CsContainer } from './';
 import { service } from '../../commons/configs';
+import { ServiceTop } from './';
 
 class ServiceContainer extends React.Component {
 
-    renderContainer(){
+    render() {
         const type = service.getValue(this.props, 'match.params.type', false);
 
-        if(!type){
-            return;
-        }
-
-        switch (type) {
-            case 'cs':
-                return (<CsContainer type={type}/>);
-            case 'rules':
-                return (<RuleContainer type={type}/>);
-            default:
-                break;
-        }
-    }
-
-    render() {
         return (
             <div className="servie-container">
-                {this.renderContainer()}
+                <ServiceTop type={type} />
             </div>
         );
     }

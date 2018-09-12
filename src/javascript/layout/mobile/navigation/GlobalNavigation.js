@@ -158,7 +158,6 @@ class GlobalNavigation extends React.Component {
 
         return(
             <div className="sub-navigations" >
-                <WhiteSpace size="xs" className="white-space" style={{backgroundColor:'#f5f5f5'}}/>
                 <Tabs
                     tabs={subMenu}
                     page={subIndex}
@@ -167,6 +166,8 @@ class GlobalNavigation extends React.Component {
                     renderTabBar={this.renderSubTabBar}
                     prerenderingSiblingsNumber={0}
                     destroyInactiveTab={true}
+                    tabBarTextStyle={{fontSize:'12px'}}
+                    tabBarBackgroundColor="#f7f8f9"
                 />
             </div>
         );
@@ -200,12 +201,13 @@ class GlobalNavigation extends React.Component {
         return (
             <Tabs
                 tabs={globalMenu}
-                page={isGlobalMenu ? currentMenu.idx : null}
+                page={isGlobalMenu ? currentMenu.idx - 1 : null}
                 onChange={this.onChange}
                 renderTabBar={this.renderTabBar}
                 swipeable={false}
                 prerenderingSiblingsNumber={0}
                 destroyInactiveTab={true}
+                tabBarUnderlineStyle={{display : 'none'}}
             >
                 {children}
             </Tabs>

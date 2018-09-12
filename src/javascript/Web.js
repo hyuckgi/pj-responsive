@@ -13,8 +13,21 @@ notification.config({placement: 'topRight'});
 
 const { Content } = Layout;
 
-const mapStateToProps = ({ fetch }) => {
-    return{}
+const mapStateToProps = ({ fetch, layout, router }) => {
+
+    const allMenu = Object.keys(layout).reduce((result, item) => {
+        result = result.concat(layout[item]);
+        return result;
+    }, []);
+    const globalMenu = service.getValue(layout, 'list', []).filter(item => item.level === 0);
+    const currentPath = service.getValue(router, 'location.pathname', "/main");
+    const currentMenu = allMenu.filter(item => item.link === currentPath).find(item => item);
+
+    return{
+        globalMenu,
+        currentMenu,
+        allMenu,
+    }
 }
 
 const mapDispatchProps = dispatch => {
@@ -59,7 +72,7 @@ class Web extends React.Component {
         const { spinning } = this.props;
 
         return (
-            <Spinner spinning={spinning} tip={'Loading...'} >
+            <Spinner spinning={false} tip={'Loading...'} >
                 <StickyContainer>
                     <Layout className="web-container">
                         <HeaderContainer {...this.props}/>

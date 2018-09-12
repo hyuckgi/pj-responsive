@@ -33,19 +33,11 @@ export const path = {
 
     // service
     service : '/service',
-    cs : '/service/cs',
-    rules : '/service/rules',
 
-    // user
-    mypage : '/mypages',
-    myHistory : '/mypages/history',
-    myStory : '/mypages/story',
-    myComment : '/mypages/comment',
-
-    settings : '/settings',
-    profile : '/settings/profile',
-    account : '/settings/account',
-
+    // mypage
+    mypage : '/mypage',
+    mypageList :  '/mypage/list',
+    setting : '/mypage/setting',
 
     // utils
     login : '/login',
@@ -53,6 +45,8 @@ export const path = {
     search : '/search',
     notFound : '/notFound',
     serverError : '/serverError',
+    logout : '/logout',
+    withdrawal : '/withdrawal',
 
 };
 

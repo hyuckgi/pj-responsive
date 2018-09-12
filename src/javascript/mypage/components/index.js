@@ -1,6 +1,10 @@
-import { HistoryList } from './history';
+import { ListContainer } from './list';
+import { SettingContainer } from './setting';
+import { MypageTop } from './common';
 
 
 export {
-    HistoryList
+    SettingContainer,
+    ListContainer,
+    MypageTop
 }

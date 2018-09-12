@@ -81,6 +81,9 @@ export const api = {
     // more
     getCslist : ({page = 1, size = 10}) => `/api/help/page/${page}/size/${size}`,
 
+    //profile
+    getProfile : () => `/api/profile`,
+
 };
 
 
