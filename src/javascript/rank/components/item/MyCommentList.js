@@ -37,8 +37,10 @@ class MyCommentList extends React.Component {
     }
 
     getList(){
+        const obj = api.getMyComments({...this.state});
+
         return this.props.multipleList([
-            {id : 'myComments', url : api.getMyComments({...this.state}), params : {}}
+            {id : 'myComments', url : obj.url, params : obj.params}
         ]);
     }
 

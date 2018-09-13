@@ -3,6 +3,7 @@ import { service } from './service';
 import * as values from './values';
 import { path } from './path';
 import * as columns from './columns';
+import mock from './mock';
 
 
 export {
@@ -10,5 +11,6 @@ export {
     service,
     values,
     path,
-    columns
+    columns,
+    mock
 };

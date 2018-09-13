@@ -13,7 +13,7 @@ import { Avatar } from 'antd';
 
 const mapStateToProps = ({fetch}) => {
     const userInfo = service.getValue(fetch, 'item.data', {})
-    const list = service.getValue(fetch, 'multipleList.rankList.list', []);
+    const list = service.getValue(fetch, 'multipleList.myStories.list', []);
     const dataSource = list.map((item, inx) => {
         item = {
             ...item,
@@ -68,15 +68,12 @@ class SupportList extends React.Component {
 
         const userNo = service.getValue(this.props, 'userInfo.userNo', false);
 
-        console.log("userNo");
-
         if(!userNo){
             return;
         }
         const params = {...this.state, userNo :userNo };
         const obj = api.getMyStory({...searchParams, params});
 
-        console.log("obj", obj);
         return this.props.multipleList([
             {id : 'myStories', url : obj.url, params : obj.params},
         ])
@@ -84,7 +81,6 @@ class SupportList extends React.Component {
 
     componentDidUpdate(prevProps, prevState) {
         if(Object.keys(this.props.userInfo).length > 0 && service.getValue(prevProps, 'userInfo.userNo', 0) !== service.getValue(this.props, 'userInfo.userNo', 0)){
-            console.log("aaa");
             this.getData(this.getParamsFormLocation())
         }
     }

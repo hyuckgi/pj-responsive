@@ -15,7 +15,7 @@ class TableList extends React.Component {
 
     onChange(pagination) {
         // TODO 서버의 리스트 스키마가 변경되면 리스트 갯수맞추기 다시 해야됨
-        console.log("pagination", pagination);
+        // console.log("pagination", pagination);
         const { onEvent } = this.props;
         const size = pagination.pageSize;
         const params = {size, page: pagination.current};
@@ -32,7 +32,7 @@ class TableList extends React.Component {
         const { data, columns, size, className } = this.props;
         const { list, pagination } = data;
 
-        console.log("this.props", this.props);
+        // console.log("this.props", this.props);
 
         return (
             <div className={className}>

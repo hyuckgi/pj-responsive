@@ -75,8 +75,10 @@ export const api = {
         }
         return `/api/stroy/history/page/${page}/size/${size}`;
     },
-    getMyComments : ({page = 1, size = 10}) => `/api/comment/page/${page}/size/${size}`,
-
+    getMyComments : ({page = 1, size = 10, params = null}) => ({
+        url : `/api/member/comment/page/${page}/size/${size}`,
+        params : {...params}
+    }),
 
     // event & notice
     getEventList : ({status = 'going', page = 1, size = 10}) => `/api/event/status/${status}/page/${page}/size/${size}`,

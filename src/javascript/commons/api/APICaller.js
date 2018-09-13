@@ -1,7 +1,8 @@
 import axios from 'axios';
 import Async from './Async';
-import { path, service } from '../configs';
+import { path, service, mock } from '../configs';
 import SessionService from '../configs/security/SessionService';
+import queryString from 'query-string';
 
 const userData = SessionService.userInfo;
 const token = service.getValue(userData, 'token', '');
@@ -19,9 +20,34 @@ const config = {
 	healthCheckTime : 10000,
 	hostName: null,
 }
+const makeMock = (docs, url, params) => {
+	const result_code = service.getValue(docs, 'data.result_code', 200);
+	const resultCode = service.getValue(docs, 'data.resultCode', result_code);
 
-const errorModal = (err) => {
+	if(resultCode !== 200){
+		const query = queryString.parseUrl(url);
+		const sizeArr = query.url.split('/');
+		const sizeIdx = sizeArr.findIndex(item => item === 'size');
+		const count = query.url.indexOf("size") !== -1 ? parseInt(sizeArr[sizeIdx + 1]) : 10;
+		const newUrl = query.url.indexOf("size") !== -1 ? sizeArr.slice(0, -1).join("/") : query.url;
+		const newData = mock[newUrl] && mock[newUrl](count);
+
+		docs.data = newData ? newData : docs.data;
+	}
+
+	return docs;
+}
+
+const errorModal = (err, url, params) => {
+	// console.log("obj", url);
+	// console.log("params", params);
+	// console.log("err", err.response);
     const data = service.getValue(err, 'response.data', false);
+	const status = service.getValue(err, 'response.status', false);
+
+	if(status){
+		return makeMock(err.response, url, params)
+	}
     // if(data){
     //     let returnPath = path.serverError;
     //     if(data.result_code === 404){
@@ -203,13 +229,13 @@ class APICaller {
 		const fullUrl = getMakeURL(url);
 		const instance = isPlainAxios ? simpleAxios : axios;
 
-        return instance.post(fullUrl, notToConvert ? params : paramsToUnderscore(params), options).then(docsToCamelCase).catch((err) => errorModal(err));
+        return instance.post(fullUrl, notToConvert ? params : paramsToUnderscore(params), options).then(docsToCamelCase).catch((err) => errorModal(err, url, params));
 	}
 	static put(url, params = {}, options = {}, isPlainAxios = false, notToConvert = false) {
 		const fullUrl = getMakeURL(url);
 		const instance = isPlainAxios ? simpleAxios : axios;
 
-        return instance.put(fullUrl, notToConvert ? params : paramsToUnderscore(params), options).then(docsToCamelCase).catch((err) => errorModal(err));
+        return instance.put(fullUrl, notToConvert ? params : paramsToUnderscore(params), options).then(docsToCamelCase).catch((err) => errorModal(err, url, params));
 	}
 	static get(url, params = null,  isPlainAxios = false) {
 		const fullUrl = getMakeURL(url);
@@ -220,7 +246,8 @@ class APICaller {
 				return response;
 			})
 			.then(docs => docsToCamelCase(docs, params))
-            .catch((err) => errorModal(err));
+			.then(docs => makeMock(docs, url, params))
+            .catch((err) => errorModal(err, url, params));
 	}
     static delete(url, params = null,  isPlainAxios = false) {
 		const fullUrl = getMakeURL(url);
@@ -231,7 +258,7 @@ class APICaller {
 				return response;
 			})
 			.then(docs => docsToCamelCase(docs, params))
-            .catch((err) => errorModal(err));
+            .catch((err) => errorModal(err, url, params));
 	}
 	static getCache(url) {
 		return Async(function* (url) {
@@ -255,8 +282,7 @@ class APICaller {
 		return axios.all(list)
             .then(axios.spread(function(...response) {
 			    return {...response};
-		    }))
-            .catch((err) => errorModal(err));
+		    }));
 	}
 	static defaults = {
 		set debug(value) { config.debug = value; },
