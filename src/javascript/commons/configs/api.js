@@ -57,12 +57,17 @@ export const api = {
         params : {USER_NO : userNo}
     }),
 
-    getUserHistory : ({userNo, page = 1, size = 30, year = null}) => {
+    getUserHistory : ({page = 1, size = 30, year = null}) => {
         if(year){
-            return `/api/donate/activity/${userNo}/year/${year}/page/${page}/size/${size}`;
+            return `/api/donate/activity/year/${year}/page/${page}/size/${size}`;
         }
-        return `/api/donate/activity/${userNo}/page/${page}/size/${size}`;
+        return `/api/donate/activity/page/${page}/size/${size}`;
     },
+
+    getMyStory :  ({page = 1, size = 10, params = null}) => ({
+        url : `/api/member/story/page/${page}/size/${size}`,
+        params : {...params}
+    }),
 
     getProposeList : ({page = 1, size = 30, year = null}) => {
         if(year){

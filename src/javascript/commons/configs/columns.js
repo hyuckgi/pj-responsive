@@ -14,6 +14,7 @@ const sponsorRankList = [
 ];
 
 const donationList = [
+    {title: 'thumbnail', dataIndex: 'thumbnailUrl', key: 'thumbnailUrl', width: 150},
     {title: '참여일자', dataIndex: 'donateDate', key: 'donateDate', width: 150},
     {title: '참여스토리', dataIndex: 'storyTitle', key: 'storyTitle'},
     {title: '참여횟수', dataIndex: 'donateCount', key: 'donateCount', width: 100},
@@ -27,6 +28,7 @@ const proposeList = [
     {title: '목표금액', dataIndex: 'goalDonation', key: 'goalDonation', width: 200},
     {title: '달성율', dataIndex: 'totalDonation', key: 'totalDonation', width: 150},
 ];
+
 
 export {
     userRankList,

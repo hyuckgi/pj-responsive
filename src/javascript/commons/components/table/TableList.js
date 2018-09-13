@@ -1,25 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 
 import { service } from '../../configs';
 import { DesktopLayout, MobileLayout } from '../';
 
-import { Table, Select } from 'antd';
-import { Flex } from 'antd-mobile';
-
-
-const Option = Select.Option;
+import { Table } from 'antd';
 
 class TableList extends React.Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            selectValue : '전체'
-        };
-
-        this.onSelect = this.onSelect.bind(this);
-    }
 
     getRowKey(record){
         return record.key;
@@ -40,72 +28,17 @@ class TableList extends React.Component {
         }
     }
 
-    UNSAFE_componentWillReceiveProps(nextProps) {
-        if(nextProps.location.pathname !== this.props.location.pathname){
-            this.setState({
-                selectValue : '전체'
-            })
-        }
-    }
-
-    onSelect(value){
-        const { onEvent } = this.props;
-        const year = value === 'all' ? null : value;
-
-        this.setState({
-            selectValue : value
-        })
-
-        if(onEvent){
-            onEvent({
-                events : 'year',
-                payload : {year : year}
-            });
-        }
-    }
-
-    renderSelect(){
-        const { selectOptions } = this.props;
-        const { selectValue } = this.state;
-        const options = selectOptions || service.makeYearOption();
-
-        return (
-            <Select
-                ref='select'
-                value={selectValue}
-                onSelect={this.onSelect}
-                style={{ minWidth: 150 }}
-            >
-                {options.map((item, inx) => {
-                    return (
-                        <Option
-                            key={item.value}
-                            title={item.label}
-                            value={item.value}
-                        >{item.label}</Option>
-                    )
-                })}
-            </Select>
-        )
-    }
-
     render() {
-        const { data, columns, title, size } = this.props;
+        const { data, columns, size, className } = this.props;
         const { list, pagination } = data;
 
+        console.log("this.props", this.props);
+
         return (
-            <div className="rank-list">
-                <Flex justify="between" className="rank-list-top">
-                    <Flex.Item >
-                        <h3>{title} {data.total > 0 && `(${data.total} 건)`}</h3>
-                    </Flex.Item>
-                    <Flex.Item style={{textAlign : 'right'}}>
-                        {this.renderSelect()}
-                    </Flex.Item>
-                </Flex>
+            <div className={className}>
                 <DesktopLayout>
                     <Table
-                        size={size || 'middle'}
+                        size={size}
                         columns={columns}
                         dataSource={list}
                         pagination={pagination}
@@ -121,5 +54,16 @@ class TableList extends React.Component {
     }
 
 }
+
+TableList.propTypes = {
+    size : PropTypes.string,
+    className : PropTypes.string,
+};
+
+TableList.defaultProps = {
+    size : 'middle',
+    className : 'table-list',
+};
+
 
 export default withRouter(TableList);
