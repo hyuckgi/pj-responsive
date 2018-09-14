@@ -111,7 +111,7 @@ class Mobile extends React.Component {
                         <Spinner
                             toast={true}
                             tip="Loading..."
-                            spinning={false}
+                            spinning={spinning}
                         />
                     </DrawerContainer>
                 </div>

@@ -80,7 +80,7 @@ class Story extends React.Component {
             return;
         }
         return (
-            <Sticky >
+            <Sticky topOffset={0}>
                 {({ style }) => {
                     const newStyle = {
                         ...style,
@@ -88,7 +88,7 @@ class Story extends React.Component {
                         bottom : 0,
                     }
                     return(
-                        <div style={{ ...newStyle, zIndex: 998 }}>
+                        <div style={{ ...newStyle, zIndex: 100 }}>
                             <FooterUtil item={item} onEvent={this.onEvent}/>
                         </div>
                     )
@@ -111,7 +111,7 @@ class Story extends React.Component {
                         boxShadow : '1px 1px 1px rgba(0,0,0,0.2)'
                     }
                     return(
-                        <div style={{ ...newStyle, zIndex: 998 }}>
+                        <div style={{ ...newStyle, zIndex: 100 }}>
                             <Tabs.DefaultTabBar
                                 {...props}
                             />

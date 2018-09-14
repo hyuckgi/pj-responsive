@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-const defaultPagination = {size: 'small', showSizeChanger:false, showQuickJumper: false, pageSizeOptions: ['10', '50', '100', '400']};
+const defaultPagination = {size: '', showSizeChanger:false, showQuickJumper: false, pageSizeOptions: ['10', '50', '100', '400']};
 
 
 export const service = {
@@ -29,7 +29,7 @@ export const service = {
             return '';
         }
         return '?' + Object.keys(params)
-            .filter(key => key === 'offset' || (params[key] && params[key] !== ''))
+            .filter(key => key === 'page' || (params[key] && params[key] !== ''))
             .map(key => {
                 return encodeURIComponent(key) + '=' + encodeURIComponent(params[key]);
             })
@@ -44,6 +44,7 @@ export const service = {
         }
 
         pagination.total = item.count;
+        pagination.pageSize = item.pageSize;
         return { pagination,  total: item.count, list: item.results};
     },
 
@@ -109,7 +110,7 @@ export const service = {
 
     toSearchParams: (search) => {
         const searchParams = new URLSearchParams(search);
-        const params = {size:10, page:1};
+        const params = { size:10, page:1 }
 
         for (let key of searchParams.keys()) {
             const value = searchParams.get(key);
@@ -119,6 +120,19 @@ export const service = {
         }
         return params;
     },
+
+    // getCurrentPagination(location){
+    //     const searchParams = new URLSearchParams(location.search);
+    //     const size = searchParams.get('size');
+    //     const page = searchParams.get('page');
+    //     let current = 1;
+    //
+    //     if(size && page >= 0){
+    //         current = page / size + 1;
+    //     }
+    //     console.log("size");
+    //     return { current, pageSize : Number(size)}
+    // },
 
     getIosUrl : (url) => {
         if(url.endsWith('.webm')){

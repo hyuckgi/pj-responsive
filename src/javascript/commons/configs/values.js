@@ -87,22 +87,30 @@ const mock = {
 }
 
 const story = {
-    status : [
+    options : [
         {
             path : 'all',
-            status : 0
+            status : 0,
+            value : 0,
+            label : '전체',
         },
         {
             path : 'ready',
-            status : 1
+            status : 1,
+            value : 1,
+            label : '등록대기'
         },
         {
             path : 'progress',
-            status : 2
+            status : 2,
+            value : 2,
+            label : '모금중'
         },
         {
             path : 'complete',
-            status : 3
+            status : 3,
+            value : 3,
+            label : '모금완료'
         }
     ],
     order : [

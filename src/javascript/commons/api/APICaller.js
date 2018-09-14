@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Async from './Async';
-import { path, service, mock } from '../configs';
+import {  service, mock } from '../configs';
 import SessionService from '../configs/security/SessionService';
 import queryString from 'query-string';
 
@@ -42,7 +42,7 @@ const errorModal = (err, url, params) => {
 	// console.log("obj", url);
 	// console.log("params", params);
 	// console.log("err", err.response);
-    const data = service.getValue(err, 'response.data', false);
+    // const data = service.getValue(err, 'response.data', false);
 	const status = service.getValue(err, 'response.status', false);
 
 	if(status){

@@ -148,6 +148,16 @@ class FooterUtil extends React.Component {
         });
     }
 
+    UNSAFE_componentWillReceiveProps(nextProps) {
+        const { item } = this.props;
+        const isLike = service.getValue(nextProps, 'item.isLike', false);
+        if( item && service.getValue(item, 'isLike', false) !== isLike){
+            this.setState({
+                isLike
+            });
+        }
+    }
+
     onClickLike(e){
         const { userInfo } = this.props;
         const token = service.getValue(userInfo, 'token', false);
@@ -167,16 +177,13 @@ class FooterUtil extends React.Component {
             return;
         }
 
-        const obj = api.postLike({storyNo : itemNo, status : isLike ? 1 : 0});
+        const obj = api.postLike({storyNo : itemNo, status : !isLike ? 1 : 0});
 
         return APICaller.post(obj.url, obj.params)
             .then(({data}) => {
                 const result = service.getValue(data, 'resultCode', false);
                 if(result === 200){
                     const { onEvent } = this.props;
-                    this.setState({
-                        isLike : false,
-                    });
                     if(onEvent){
                         onEvent({events: 'success', payload : {type : 'update'}});
                     }
@@ -211,8 +218,8 @@ class FooterUtil extends React.Component {
         const { visible, isLike, modalContent, reportVisible} = this.state;
         const isMobile = parser.getDevice().type;
         const likeCount = service.getValue(item, 'likeCount', 0);
-        const modalType = service.getValue(modalContent, 'type', false)
-        const color = isLike ? 'red' : '#fff';
+        const modalType = service.getValue(modalContent, 'type', false);
+        const color = isLike ? '#2cb9cf' : '#fff';
         const role = service.getValue(userInfo, 'role', 9);
         // // TODO:  color 변화
 
@@ -221,10 +228,10 @@ class FooterUtil extends React.Component {
                 <Flex className="footer-utils" justify="around">
                     <Flex.Item>
                         <Button
-                            icon={(<CustomIcon type="FaThumbsUp" roots="FontAwesome" style={{color : color}}/>)}
+                            icon={(<CustomIcon type={isLike ? 'FaHeart' : 'FaHeartO'} roots="FontAwesome" style={{color : color}}/>)}
                             onClick={this.onClickLike}
                         >
-                            <Badge text={likeCount} style={{ marginLeft: 18}} overflowCount={99}>좋아요</Badge>
+                            <Badge text={likeCount} style={{ marginLeft: 18, backgroundColor: color}} overflowCount={99}><span style={{color:color}}>좋아요</span></Badge>
                         </Button>
                     </Flex.Item>
                     <Flex.Item>

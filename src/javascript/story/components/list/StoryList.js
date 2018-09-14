@@ -74,7 +74,7 @@ class StoryList extends React.Component {
         const query = queryString.parse(location.search);
         const categoryNo = service.getValue(query, 'category', 0);
         const type = service.getValue(match, 'params.type', 'all');
-        const current = service.getValue(values,  'story.status')
+        const current = service.getValue(values,  'story.options')
             .filter(item => item.path === type)
             .find(item => item);
 

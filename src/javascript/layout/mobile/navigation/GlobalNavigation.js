@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
-import { Tabs, WhiteSpace } from 'antd-mobile';
+import { Tabs } from 'antd-mobile';
 import { Sticky } from 'react-sticky';
 
 import { service } from '../../../commons/configs';

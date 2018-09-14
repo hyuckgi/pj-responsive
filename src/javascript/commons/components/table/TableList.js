@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 
-import { service } from '../../configs';
 import { DesktopLayout, MobileLayout } from '../';
 
 import { Table } from 'antd';
@@ -14,14 +13,12 @@ class TableList extends React.Component {
     }
 
     onChange(pagination) {
-        // TODO 서버의 리스트 스키마가 변경되면 리스트 갯수맞추기 다시 해야됨
-        // console.log("pagination", pagination);
-        const { onEvent } = this.props;
+        const { onEvents } = this.props;
         const size = pagination.pageSize;
         const params = {size, page: pagination.current};
 
-        if(onEvent){
-            onEvent({
+        if(onEvents){
+            onEvents({
                 events : 'change',
                 payload : params
             })
@@ -29,16 +26,13 @@ class TableList extends React.Component {
     }
 
     render() {
-        const { data, columns, size, className } = this.props;
+        const { data, columns, size } = this.props;
         const { list, pagination } = data;
 
-        // console.log("this.props", this.props);
-
         return (
-            <div className={className}>
+            <div>
                 <DesktopLayout>
                     <Table
-                        size={size}
                         columns={columns}
                         dataSource={list}
                         pagination={pagination}
@@ -57,12 +51,10 @@ class TableList extends React.Component {
 
 TableList.propTypes = {
     size : PropTypes.string,
-    className : PropTypes.string,
 };
 
 TableList.defaultProps = {
     size : 'middle',
-    className : 'table-list',
 };
 
 

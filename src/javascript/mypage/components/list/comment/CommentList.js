@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import { withRouter } from 'react-router';
 
 import { connect } from 'react-redux';
@@ -6,14 +7,17 @@ import { push } from 'react-router-redux';
 
 import { fetch } from '../../../../redux/actions';
 
-import { api, service, columns, path } from '../../../../commons/configs';
-import { TableList } from '../../../../commons/components';
+import { api, service, columns, path, values } from '../../../../commons/configs';
+import { TableList, Comment, CommonEditor } from '../../../../commons/components';
+import { FormMode } from '../../../../commons/types';
 
-import { Avatar } from 'antd';
+import { Avatar, Pagination } from 'antd';
+import { Flex, Badge } from 'antd-mobile';
 
 const mapStateToProps = ({fetch}) => {
-    const userInfo = service.getValue(fetch, 'item.data', {})
-    const list = service.getValue(fetch, 'multipleList.myComments.list', []);
+    const userInfo = service.getValue(fetch, 'item.data', {});
+    const resultObj = service.getValue(fetch, 'multipleList.myCommentList', {});
+    const list = service.getValue(resultObj, 'list', []);
     const dataSource = list.map((item, inx) => {
         item = {
             ...item,
@@ -22,11 +26,12 @@ const mapStateToProps = ({fetch}) => {
         }
         return item;
     });
-    const makeSource = {count : list.length, results : dataSource };
+    const makeSource = {count : service.getValue(resultObj, 'totalSize', list.length), results : dataSource, pageSize : service.getValue(resultObj, 'size', 10)};
     const data = service.makeList(makeSource);
 
     return {
         data,
+        resultObj,
         userInfo
     }
 };
@@ -42,27 +47,50 @@ class CommnetList extends React.Component {
     constructor(props) {
         super(props);
 
-        this.getData = this.getData.bind(this);
+        this.state = {
+            size : 10,
+            page : 1,
+        }
+
+        this.getList = this.getList.bind(this);
         this.getColumns = this.getColumns.bind(this);
-        this.onEvent = this.onEvent.bind(this);
+        this.onEvents = this.onEvents.bind(this);
+        this.onChange = this.onChange.bind(this)
+        this.onDelete = this.onDelete.bind(this)
+
     }
 
     search(params) {
-        this.props.move(path.list(path.rankList, {...this.getParamsFormLocation(), ...params}));
+        const type = service.getValue(this.props, 'match.params.type', false);
+
+        if(type){
+            this.props.move(path.fullList(`${path.mypageList}/${type}`, {...params}));
+        }
     }
 
     componentDidMount() {
-        this.getData(this.getParamsFormLocation());
+        const { location } = this.props;
+        const { page, size } = this.state;
+
+        if(location.search){
+            return this.search(this.getParamsFormLocation())
+        }
+        return this.search({size, page});
     }
 
-    // componentDidUpdate(prevProps, prevState) {
-    //     if(prevProps.match.params.type !== this.props.match.params.type){
-    //         this.getData(this.getParamsFormLocation());
-    //     }
-    // }
+    componentDidUpdate(prevProps, prevState) {
+        const { location } = this.props;
 
-    getData(searchParams){
+        if(prevProps.location.search !== location.search){
+            this.getList(this.getParamsFormLocation());
+        }
 
+        if(Object.keys(this.props.userInfo).length > 0 && service.getValue(prevProps, 'userInfo.userNo', 0) !== service.getValue(this.props, 'userInfo.userNo', 0)){
+            this.getList(this.getParamsFormLocation())
+        }
+    }
+
+    getList(searchParams){
         const userNo = service.getValue(this.props, 'userInfo.userNo', false);
         if(!userNo){
             return;
@@ -71,23 +99,9 @@ class CommnetList extends React.Component {
         const obj = api.getMyComments({...searchParams, params});
 
         return this.props.multipleList([
-            {id : 'myComments', url : obj.url, params : obj.params},
+            {id : 'myCommentList', url : obj.url, params : obj.params},
         ])
     }
-
-    componentDidUpdate(prevProps, prevState) {
-        if(Object.keys(this.props.userInfo).length > 0 && service.getValue(prevProps, 'userInfo.userNo', 0) !== service.getValue(this.props, 'userInfo.userNo', 0)){
-            this.getData(this.getParamsFormLocation())
-        }
-    }
-
-    // UNSAFE_componentWillReceiveProps(nextProps) {
-    //     if(nextProps.location.pathname !== this.props.location.pathname){
-    //         this.setState({
-    //             year : null
-    //         })
-    //     }
-    // }
 
     getParamsFormLocation(){
         const { location } = this.props;
@@ -107,32 +121,70 @@ class CommnetList extends React.Component {
         });
     }
 
-    onEvent(params){
+    onEvents(params){
         const { events, payload } = params;
 
         switch (events) {
-            case 'year':
-                return this.setState({
-                    year : payload.year
-                }, () => {
-                    return this.getData(this.getParamsFormLocation());
-                })
+            case 'change':
+                return this.search(payload)
             default:
                 break;
         }
     }
 
+    onChange(page, pageSize){
+        return this.search({size : pageSize, page : page})
+    }
+
+    onDelete(){
+        return window.alert("댓글 삭제 명세 ?")
+    }
+
     render() {
-        const { data } = this.props;
-        // const options = service.makeYearOption();
+        const { data, resultObj } = this.props;
+        const current = service.getValue(resultObj, 'page', 1);
 
         return (
-            <div className="mystory-list">
-                <TableList
-                    data={data}
-                    columns={this.getColumns(columns.proposeList)}
-                    onEvent={this.onEvent}
-                />
+            <div className="list-wrap comment-wrap">
+                <Flex justify="between" className="comment-list-top ">
+                    <Flex.Item >
+                        <h3>댓글 {`${data.total && data.total} 개`}</h3>
+                    </Flex.Item>
+                </Flex>
+
+                <div className="comment-list">
+                    {data.list.map((item, idx) => {
+                        const profile = service.getValue(item, 'profileUrl', false);
+                        const updateDate = service.getValue(item, 'updateDate', false);
+
+                        return (
+                            <Flex className="comment" key={idx}>
+                                <Flex.Item style={{maxWidth : 60, textAlign : 'center'}}>
+                                    {profile ? (<Avatar src={profile} />) : (<Avatar icon="user" />) }
+                                </Flex.Item>
+                                <Flex.Item>
+                                    <p className="title">{item.storyTitle}</p>
+                                    <div>
+                                        <CommonEditor value={item.contents} readOnly={true} />
+                                    </div>
+                                    <Flex justify="between">
+                                        <Flex.Item>
+                                            {updateDate ? moment(updateDate).format(values.format.LOCALE_KOR) : null}
+                                        </Flex.Item>
+
+                                        <Flex.Item className="util-area">
+                                            <Flex justify="end">
+                                                <Flex.Item className="count">좋아요<Badge text={10} overflowCount={99} style={{marginLeft: 4, top: -2}}/></Flex.Item>
+                                                <Flex.Item onClick={this.onDelete} className="delete">삭제하기</Flex.Item>
+                                            </Flex>
+                                        </Flex.Item>
+                                    </Flex>
+                                </Flex.Item>
+                            </Flex>
+                        )
+                    })}
+                </div>
+                {data ? <Pagination current={current} onChange={this.onChange} {...data.pagination} /> : null}
             </div>
         );
     }

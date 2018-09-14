@@ -15,6 +15,9 @@ export const path = {
         return `${prefix}/:type/${service.toQuery(params)}`;
     },
     item : (prefix) => (`${prefix}/:id/:mode`),
+    fullList : (prefix, params = null) => {
+        return `${prefix}${service.toQuery(params)}`;
+    },
 
     // move
     moveCate : (prefix, type, categoryNo = 0) => (`${prefix}/${type}?category=${categoryNo}`),

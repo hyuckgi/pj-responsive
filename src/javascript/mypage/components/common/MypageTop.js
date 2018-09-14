@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { push } from 'react-router-redux';
 
-import { service, values, api, path } from '../../../commons/configs';
+import { service, api, path } from '../../../commons/configs';
 import { fetch } from '../../../redux/actions';
 
 import { Avatar } from 'antd';
@@ -16,7 +16,6 @@ const mapStateToProps = ({ fetch,  router, layout, security }) => {
 
     const currentPath = service.getValue(router, 'location.pathname', "/mypage/list/support");
     const currentMenu = mypageMenus.filter(item => item.link === currentPath).find(item => item);
-    const parentMenu = mypageMenus.filter(item => item.id === currentMenu.parent).find(item => item);
     const subMenu = mypageMenus.filter(item => item.parent ===  currentMenu.parent)
         .map((item, inx) => {
             item['title'] = item.name;
@@ -28,7 +27,6 @@ const mapStateToProps = ({ fetch,  router, layout, security }) => {
 
     return{
         currentMenu,
-        parentMenu,
         subMenu,
         userInfo,
         profile
@@ -120,12 +118,12 @@ class MypageTop extends React.Component {
     }
 
     render() {
-        const { parentMenu, subMenu, currentMenu, profile } = this.props;
+        const { subMenu, currentMenu, profile } = this.props;
         const image = service.getValue(profile, 'profileUrl', false);
 
         return (
-            <div className="mypage-container-top">
-                <Flex className="top-wrap">
+            <div className="mypage-wrap">
+                <Flex className="mypage-wrap-top">
                     <Flex.Item className="profile-url" style={{textAlign : 'center'}}>
                         {image ? (<Avatar src={image} />) : <Avatar icon="user" size={120} />}
                     </Flex.Item>

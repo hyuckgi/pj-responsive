@@ -1,8 +1,9 @@
 .web-container{
     .mypage-container{
 
-        &-top{
-            .top-wrap{
+        .mypage-wrap{
+
+            &-top{
                 max-width: 980px;
                 margin: 0 auto;
                 height:240px;
@@ -56,44 +57,91 @@
 
                 }
                 .am-tabs-content-wrap{
+                    padding:50px 0;
                     max-width: 1040px;
                     margin: 0 auto;
-                }
-            }
-        }
-    }
-}
 
-.service-wrapper-top{
-    .am-tabs{
-        .am-tabs-content-wrap{
-            padding:20px 0;
-        }
-    }
-}
+                    .list-wrap{
+                        &-top{
+                            margin-bottom:20px;
+                        }
 
+                        &.comment-wrap{
+                            max-width: 720px;
+                            margin:0 auto;
 
+                            .comment-list-top{
+                                margin-bottom:20px;
+                            }
 
-.cs-list-wrapper{
+                            .comment-list{
+                                border-top: 1px solid #ddd;
+                                border-bottom: 1px solid #ddd;
 
-    .am-list-header{
-        margin-bottom: 20px;
-        span{
-            font-size:1.2em;
-        }
-    }
+                                .comment{
+                                    padding: 10px 0;
+                                    border-bottom: 1px solid #ddd;
 
-    .am-list-body{
-        border:none;
+                                    &:last-child{
+                                        border-bottom:none;
+                                    }
 
-        .list-view-section-body{
-            border-top:1PX solid #ddd;
+                                    .common-editor{
+                                        .spoons-editor-wrapper{
+                                            border: 1px solid #e0e0e0;
+                                            padding:10px;
+                                            border-radius:5px;
+                                            background-color:#fafafa;
+                                        }
 
-            .am-accordion{
-                border-top:none;
+                                        &-read{
+                                            .spoons-editor-wrapper{
+                                                margin:0.5em 0;
+                                                background-color:#fafafa;
+                                                border:none;
+                                            }
+                                        }
+                                    }
 
-                .am-accordion-content-box{
-                    padding:20px;
+                                    .util-area{
+                                        max-width:154px;
+
+                                        .am-flexbox-item{
+
+                                            &.count{
+                                                text-align:center;
+                                            }
+
+                                            &.delete{
+                                                cursor:pointer;
+                                                position:relative;
+                                                text-align:center;
+
+                                                &::before{
+                                                    position:absolute;
+                                                    left:0;
+                                                    top:0;
+                                                    height:20px;
+                                                    content:"";
+                                                    width:1px;
+                                                    border-left:1px solid #ddd;
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    .title{
+                                        margin-bottom:0.5em;
+                                    }
+                                }
+                            }
+
+                            .ant-pagination{
+                                margin:16px 0;
+                                float:right;
+                            }
+                        }
+                    }
                 }
             }
         }

@@ -72,7 +72,7 @@ class Web extends React.Component {
         const { spinning } = this.props;
 
         return (
-            <Spinner spinning={false} tip={'Loading...'} >
+            <Spinner spinning={spinning} tip={'Loading...'} >
                 <StickyContainer>
                     <Layout className="web-container">
                         <HeaderContainer {...this.props}/>

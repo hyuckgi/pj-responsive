@@ -13,7 +13,7 @@ class SubNavigation extends React.Component {
             <Sticky topOffset={70}>
                 {({style}) => {
                     return(
-                        <div style={{...style, zIndex: 998}}>
+                        <div style={{...style, zIndex: 100}}>
                             <SubHeader
                                 title={service.getValue(currentMenu, 'name')}
                             />
