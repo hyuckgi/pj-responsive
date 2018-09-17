@@ -44,19 +44,37 @@ class ADItem extends React.Component {
         this.onModify = this.onModify.bind(this);
         this.onDelete = this.onDelete.bind(this);
         this.onPress = this.onPress.bind(this);
+
+        this.onSubmitDelete = this.onSubmitDelete.bind(this);
     }
 
     onPress(){
         const type = service.getValue(this.state, 'modalContent.type', false);
+        console.log("type", type);
 
+        this.onCloseModal();
         switch (type) {
             case 'delete':
-
-                break;
+                return this.onSubmitDelete();
             default:
-
+                break;
         }
-        console.log("type", type);
+    }
+
+    onSubmitDelete(){
+        const { onEvents, item } = this.props;
+        const adNo =  service.getValue(item, 'adNo', false);
+
+        return APICaller.delete(api.deleteAD(adNo), {})
+        .then(({data}) => {
+            const resultCode = service.getValue(data, 'resultCode', false);
+            if(resultCode === 200){
+                onEvents({
+                    events : 'update',
+                });
+            };
+            return;
+        });
     }
 
     getFooter(){
@@ -97,7 +115,7 @@ class ADItem extends React.Component {
         return modalContent.title;
     }
 
-    onModify(item){
+    onModify(){
         return this.onOpenModal({
             type: 'modify',
             title : '광고 수정',
@@ -105,7 +123,7 @@ class ADItem extends React.Component {
         });
     }
 
-    onDelete(item){
+    onDelete(){
         return this.onOpenModal({
             type: 'delete',
             title : '광고 삭제',
@@ -113,7 +131,8 @@ class ADItem extends React.Component {
         });
     }
 
-    onPreview(item){
+    onPreview(){
+        const { item } = this.props;
         const title = service.getValue(item, 'title', '');
         const src = 'https://media.w3.org/2010/05/sintel/trailer_hd.mp4';
 
@@ -133,7 +152,7 @@ class ADItem extends React.Component {
         });
     }
 
-    renderExtra(item){
+    renderExtra(){
         return(
             <div>
                 <Button
@@ -141,7 +160,7 @@ class ADItem extends React.Component {
                     type="ghost"
                     size="small"
                     inline
-                    onClick={() => this.onModify(item)}
+                    onClick={this.onModify}
                 >수정</Button>
                 <Button
                     style={{marginLeft : 5}}
@@ -149,7 +168,7 @@ class ADItem extends React.Component {
                     type="warning"
                     size="small"
                     inline
-                    onClick={() => this.onDelete(item)}
+                    onClick={this.onDelete}
                 >삭제</Button>
             </div>
         )
@@ -191,7 +210,7 @@ class ADItem extends React.Component {
             return(
                 <List.Item
                     thumb={NoImg}
-                    extra={this.renderExtra(item)}
+                    extra={this.renderExtra()}
                 >
                     <Flex direction="column" align="start" className="ad-item">
                         <Flex.Item>
@@ -202,7 +221,7 @@ class ADItem extends React.Component {
                                 type="ghost"
                                 size="small"
                                 inline
-                               onClick={() => this.onPreview(item)}
+                               onClick={this.onPreview}
                            >play</Button>
                         </Flex.Item>
                         <Flex.Item>

@@ -89,6 +89,7 @@ export const api = {
     },
 
     getADList :  ({page = 1, size = 10}) => `/api/sponsor/ad/page/${page}/size/${size}`,
+    deleteAD : (adNo) => `/api/sponsor/ad/${adNo}`,
 
     // event & notice
     getEventList : ({status = 'going', page = 1, size = 10}) => `/api/event/status/${status}/page/${page}/size/${size}`,

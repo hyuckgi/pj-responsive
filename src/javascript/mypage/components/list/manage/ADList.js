@@ -51,8 +51,15 @@ class ADList extends React.Component {
         return this.props.multipleList([{id : 'ADList', url : api.getADList({page, size}), params : {}}])
     }
 
-    onEvents(...args){
-        console.log("args", args);
+    onEvents(params){
+        const { events, payload } = params;
+
+        switch (events) {
+            case 'update':
+                return this.getList();
+            default:
+                break;
+        }
     }
 
     renderList(){
