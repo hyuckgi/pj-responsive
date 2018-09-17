@@ -207,7 +207,7 @@ export const mock = {
         }
     },
 
-    '/api/sponsor/donate/year/all/page/1/size' : (count) => {
+    '/api/sponsor/donate/page/1/size' : (count) => {
         return {
             "resultCode" : 200,
             "resultMsg" : "SUCCESS",
@@ -220,7 +220,7 @@ export const mock = {
                 "storyTitle": "스토리 제목",
                 "adNo": 11,
                 "adTitle": "광고 제목",
-                "donationPerTime": 500,
+                "donationPerTime": 1500,
                 "donateCount": 10,
                 "totalDonation": 199999,
                 "createDate": "2018년 4월 27일 10시 10분"

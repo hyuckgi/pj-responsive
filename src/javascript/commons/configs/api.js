@@ -80,6 +80,16 @@ export const api = {
         params : {...params}
     }),
 
+    // sponsor
+    getSponList : ({page = 1, size = 30, year = null}) => {
+        if(year){
+            return `/api/sponsor/donate/year/${year}/page/${page}/size/${size}`;
+        }
+        return `/api/sponsor/donate/page/${page}/size/${size}`;
+    },
+
+    getADList :  ({page = 1, size = 10}) => `/api/sponsor/ad/page/${page}/size/${size}`,
+
     // event & notice
     getEventList : ({status = 'going', page = 1, size = 10}) => `/api/event/status/${status}/page/${page}/size/${size}`,
     getNoticeList : ({page = 1, size = 10}) => `/api/notice/page/${page}/size/${size}`,

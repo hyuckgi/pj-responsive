@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {security as type} from '../types';
 import { SessionService } from '../../commons/configs/security';
-import { service } from '../../commons/configs';
+import { service, path } from '../../commons/configs';
 
 const initialState = SessionService.userInfo || {};
 

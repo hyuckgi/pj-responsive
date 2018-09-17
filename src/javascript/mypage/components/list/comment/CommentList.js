@@ -140,6 +140,47 @@ class CommnetList extends React.Component {
         return window.alert("댓글 삭제 명세 ?")
     }
 
+    renderList(){
+        const list = service.getValue(this.props, 'data.list', []);
+
+        if(!list.length){
+            return(
+                <div className="list-none">댓글이 없습니다.</div>
+            )
+        }
+
+        return list.map((item, idx) => {
+            const profile = service.getValue(item, 'profileUrl', false);
+            const updateDate = service.getValue(item, 'updateDate', false);
+
+            return (
+                <Flex className="comment" key={idx}>
+                    <Flex.Item style={{maxWidth : 60, textAlign : 'center'}}>
+                        {profile ? (<Avatar src={profile} />) : (<Avatar icon="user" />) }
+                    </Flex.Item>
+                    <Flex.Item>
+                        <p className="title">{item.storyTitle}</p>
+                        <div>
+                            <CommonEditor value={item.contents} readOnly={true} />
+                        </div>
+                        <Flex justify="between">
+                            <Flex.Item>
+                                {updateDate ? moment(updateDate).format(values.format.LOCALE_KOR) : null}
+                            </Flex.Item>
+
+                            <Flex.Item className="util-area">
+                                <Flex justify="end">
+                                    <Flex.Item className="count">좋아요<Badge text={10} overflowCount={99} style={{marginLeft: 4, top: -2}}/></Flex.Item>
+                                    <Flex.Item onClick={this.onDelete} className="delete">삭제하기</Flex.Item>
+                                </Flex>
+                            </Flex.Item>
+                        </Flex>
+                    </Flex.Item>
+                </Flex>
+            )
+        })
+    }
+
     render() {
         const { data, resultObj } = this.props;
         const current = service.getValue(resultObj, 'page', 1);
@@ -153,38 +194,9 @@ class CommnetList extends React.Component {
                 </Flex>
 
                 <div className="comment-list">
-                    {data.list.map((item, idx) => {
-                        const profile = service.getValue(item, 'profileUrl', false);
-                        const updateDate = service.getValue(item, 'updateDate', false);
-
-                        return (
-                            <Flex className="comment" key={idx}>
-                                <Flex.Item style={{maxWidth : 60, textAlign : 'center'}}>
-                                    {profile ? (<Avatar src={profile} />) : (<Avatar icon="user" />) }
-                                </Flex.Item>
-                                <Flex.Item>
-                                    <p className="title">{item.storyTitle}</p>
-                                    <div>
-                                        <CommonEditor value={item.contents} readOnly={true} />
-                                    </div>
-                                    <Flex justify="between">
-                                        <Flex.Item>
-                                            {updateDate ? moment(updateDate).format(values.format.LOCALE_KOR) : null}
-                                        </Flex.Item>
-
-                                        <Flex.Item className="util-area">
-                                            <Flex justify="end">
-                                                <Flex.Item className="count">좋아요<Badge text={10} overflowCount={99} style={{marginLeft: 4, top: -2}}/></Flex.Item>
-                                                <Flex.Item onClick={this.onDelete} className="delete">삭제하기</Flex.Item>
-                                            </Flex>
-                                        </Flex.Item>
-                                    </Flex>
-                                </Flex.Item>
-                            </Flex>
-                        )
-                    })}
+                    {this.renderList()}
                 </div>
-                {data ? <Pagination current={current} onChange={this.onChange} {...data.pagination} /> : null}
+                {service.getValue(data, 'list.length', false) ? <Pagination current={current} onChange={this.onChange} {...data.pagination} /> : null}
             </div>
         );
     }

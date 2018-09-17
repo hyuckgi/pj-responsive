@@ -15,7 +15,7 @@ import { Flex } from 'antd-mobile';
 const Option = Select.Option;
 
 const mapStateToProps = ({fetch}) => {
-    const resultObj = service.getValue(fetch, 'multipleList.supportList', {});
+    const resultObj = service.getValue(fetch, 'multipleList.sponList', {});
     const list = service.getValue(resultObj, 'list', []);
     const dataSource = list.map((item, inx) => {
         item = {
@@ -39,7 +39,7 @@ const mapDispatchProps = dispatch => ({
 });
 
 
-class SupportList extends React.Component {
+class SponList extends React.Component {
 
     constructor(props) {
         super(props);
@@ -87,9 +87,11 @@ class SupportList extends React.Component {
 
     getList(searchParams){
         const { year } = this.state;
-        const newParam = year ? {...searchParams, year} : searchParams
+        const newParam = year ? {...searchParams, year} : searchParams;
+
+        console.log("newParam", newParam);
         return this.props.multipleList([
-            {id : 'supportList', url : api.getUserHistory({...newParam}), params : {}},
+            {id : 'sponList', url : api.getSponList({...newParam}), params : {}},
         ])
     }
 
@@ -100,11 +102,15 @@ class SupportList extends React.Component {
 
     getColumns(columns){
         return columns.map(column => {
-            if(column.dataIndex === 'thumbnailUrl'){
+            if(column.dataIndex === 'donationPerTime'){
                 column.render = (text, item) => {
-                    const src = service.getValue(item, 'thumbnailUrl', false);
-
-                    return (<span>{src ? (<Avatar src={src} style={{marginRight: 15}}/>) : null}</span>)
+                    return text ? service.amount(text) : 0;
+                }
+            }
+            if(column.dataIndex === 'total'){
+                column.render = (text, item) => {
+                    const total = service.getValue(item, 'donateCount', 0) * service.getValue(item, 'donationPerTime', 0);
+                    return total ? service.amount(total) : 0;
                 }
             }
             return column;
@@ -162,7 +168,7 @@ class SupportList extends React.Component {
             <div className="list-wrap">
                 <Flex justify="between" className="list-wrap-top">
                     <Flex.Item >
-                        <h3>기부내역 {`${data.total && data.total} 건`}</h3>
+                        <h3>총 스폰서 기부금액 {`합계 금액? 원`}</h3>
                     </Flex.Item>
                     <Flex.Item style={{textAlign : 'right'}}>
                         {this.renderSelect()}
@@ -170,7 +176,7 @@ class SupportList extends React.Component {
                 </Flex>
                 <TableList
                     data={data}
-                    columns={this.getColumns(columns.donationList)}
+                    columns={this.getColumns(columns.sponList)}
                     onEvents={this.onEvents}
                 />
             </div>
@@ -178,4 +184,4 @@ class SupportList extends React.Component {
     }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchProps)(SupportList));
+export default withRouter(connect(mapStateToProps, mapDispatchProps)(SponList));

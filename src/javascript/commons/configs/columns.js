@@ -38,11 +38,21 @@ const myProposeList = [
     {title: '달성율', dataIndex: 'totalDonation', key: 'totalDonation', width: 150, className : 'center'},
 ];
 
+const sponList = [
+    {title: '기부일자', dataIndex: 'createDate', key: 'createDate', width: 250, className: 'center'},
+    {title: '스토리 제목', dataIndex: 'storyTitle', key: 'storyTitle'},
+    {title: '광고 제목', dataIndex: 'adTitle', key: 'adTitle'},
+    {title: '단가', dataIndex: 'donationPerTime', key: 'donationPerTime', width: 150, className : 'center'},
+    {title: '횟수', dataIndex: 'donateCount', key: 'donateCount', width: 150, className : 'center'},
+    {title: '소계', dataIndex: 'total', key: 'total', width: 150, className : 'center'},
+];
+
 
 export {
     userRankList,
     sponsorRankList,
     donationList,
     proposeList,
-    myProposeList
+    myProposeList,
+    sponList
 }

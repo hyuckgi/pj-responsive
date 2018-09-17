@@ -62,6 +62,7 @@
                     margin: 0 auto;
 
                     .list-wrap{
+
                         &-top{
                             margin-bottom:20px;
                         }
@@ -75,15 +76,13 @@
                             }
 
                             .comment-list{
-                                border-top: 1px solid #ddd;
-                                border-bottom: 1px solid #ddd;
 
                                 .comment{
                                     padding: 10px 0;
                                     border-bottom: 1px solid #ddd;
 
-                                    &:last-child{
-                                        border-bottom:none;
+                                    &:first-child{
+                                        border-top: 1px solid #ddd;
                                     }
 
                                     .common-editor{
@@ -141,9 +140,60 @@
                                 float:right;
                             }
                         }
+
+                        &.ad-wrap{
+                            max-width: 720px;
+                            margin:0 auto;
+
+                            .ad-list{
+                                .am-list-header{
+                                    padding:0;
+
+                                    .am-list-content{
+                                        font-size:1.1em;
+                                    }
+                                }
+
+                                .am-list-body{
+                                    .am-list-item{
+                                        padding:10px 15px;
+
+                                        &.list-none{
+                                            .am-list-content{
+                                                font-size:1.1em;
+                                                padding:1.5em 0;
+                                                text-align:center;
+                                                p{
+                                                    margin-bottom:0;
+                                                }
+                                            }
+                                        }
+
+                                        .am-list-thumb{
+                                            img{
+                                                width:80px;
+                                                height: 80px;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
+        }
+    }
+}
+
+.am-modal-wrap{
+    &.ad-modal{
+        &.ad-modal-preview{
+
+            .am-modal-transparent{
+                width:50%;
+            }
+
         }
     }
 }

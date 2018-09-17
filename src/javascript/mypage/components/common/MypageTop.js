@@ -9,7 +9,7 @@ import { fetch } from '../../../redux/actions';
 import { Avatar } from 'antd';
 import { Tabs, Flex, Button } from 'antd-mobile';
 
-import { StoryList, CommentList, SupportList } from '../list';
+import { StoryList, CommentList, SupportList, SponList, ADList } from '../list';
 
 const mapStateToProps = ({ fetch,  router, layout, security }) => {
     const mypageMenus = service.getValue(layout, 'mypageMenus', []);
@@ -79,17 +79,21 @@ class MypageTop extends React.Component {
 
     renderContent(item){
         const { type } = this.props;
-        const selected = service.getValue(item, 'id', '401000000');
+        const selected = service.getValue(item, 'id', '403000000');
 
         if(!type || !selected){
             return;
         }
 
         switch (selected) {
+            case '401000000':
+                return (<SponList />)
             case '402000000':
-                return (<StoryList />)
-            case '403000000':
-                return (<CommentList />)
+                return (<ADList />);
+            case '404000000':
+                return (<StoryList />);
+            case '405000000':
+                return (<CommentList />);
             default:
                 return (<SupportList />);
         }

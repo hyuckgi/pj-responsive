@@ -37,15 +37,18 @@ const masterList = [
 
 const mypageMenus = [
     {id: '400000000', name: '마이페이지', link : '/mypage/list', defaultLink : '/mypage/list/support', level: 1, hasChild : true },
-    {id: '401000000', name: '기부내역', link : '/mypage/list/support', level: 2, parent : '400000000'},
-    {id: '402000000', name: '마이스토리', link : '/mypage/list/story', level: 2, parent : '400000000'},
-    {id: '403000000', name: '댓글', link : '/mypage/list/comment', level: 2, parent : '400000000'},
+    {id: '401000000', name: '스폰서 통계', link : '/mypage/list/sponsor', level: 2, parent : '400000000', masterLevel : 3},
+    {id: '402000000', name: '광고관리', link : '/mypage/list/manage', level: 2, parent : '400000000', masterLevel : 3},
+    {id: '403000000', name: '기부내역', link : '/mypage/list/support', level: 2, parent : '400000000'},
+    {id: '404000000', name: '마이스토리', link : '/mypage/list/story', level: 2, parent : '400000000'},
+    {id: '405000000', name: '댓글', link : '/mypage/list/comment', level: 2, parent : '400000000'},
 
     {id: '500000000', name: '사용자 설정', link : '/mypage/setting', level: 1, defaultLink : '/mypage/setting/profile', hasChild : true},
     {id: '501000000', name: '프로필 설정', link : '/mypage/setting/profile', level: 2, parent : '500000000'},
     {id: '502000000', name: '계좌 설정', link : '/mypage/setting/account', level: 2, parent : '500000000'},
     {id: '600000000', name: '로그아웃', link : '/logout', level: 1, },
 ];
+
 
 export const layout = (state = {list, mypageMenus}, action) => {
     switch(action.type) {
@@ -54,12 +57,19 @@ export const layout = (state = {list, mypageMenus}, action) => {
         case type.MASTER_LEVEL_3:
             return {
                 ...state,
-                list: [...list]
+                list: [...list],
+
             };
+        case type.USER:
+            return {
+                ...state,
+                mypageMenus : mypageMenus.filter(item => item.masterLevel !== 3),
+            }
         case securityType.LOGOUT:
             return {
                 ...state,
-                list: [...list]
+                list: [...list],
+                mypageMenus : [...mypageMenus]
             };
         default:
             return state;

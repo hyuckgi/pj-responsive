@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink  } from 'react-router-dom';
 import {connect} from 'react-redux';
+import { push } from 'react-router-redux';
 
 import { Menu } from 'antd';
 import { Modal } from 'antd-mobile';
@@ -23,6 +24,7 @@ const mapStateToProps = ({layout, security}) => {
 
 const mapDispatchProps = dispatch => ({
     logout : () => dispatch(action.logout()),
+    move: (location) => dispatch(push(location)),
 });
 
 class UtilNavigation extends React.Component {
@@ -32,12 +34,18 @@ class UtilNavigation extends React.Component {
 
         this.renderUser = this.renderUser.bind(this);
         this.onClick = this.onClick.bind(this);
+        this.onLogout = this.onLogout.bind(this);
+    }
+
+    onLogout(){
+        this.props.move(path.main);
+        this.props.logout();
     }
 
     onClick(){
         return Modal.alert('로그아웃', '로그아웃 하시겠습니까?', [
             { text : 'Cancel', onPress : () => console.log("cancel")},
-            { text : 'OK', onPress : () => {this.props.logout()} }
+            { text : 'OK', onPress : () => this.onLogout() }
         ]);
     }
 
