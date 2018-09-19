@@ -1,4 +1,5 @@
 import moment from 'moment';
+import queryString from 'query-string';
 
 const defaultPagination = {size: '', showSizeChanger:false, showQuickJumper: false, pageSizeOptions: ['10', '50', '100', '400']};
 
@@ -109,16 +110,10 @@ export const service = {
     },
 
     toSearchParams: (search) => {
-        const searchParams = new URLSearchParams(search);
+        const searchParams = queryString.parse(search);
         const params = { size:10, page:1 }
 
-        for (let key of searchParams.keys()) {
-            const value = searchParams.get(key);
-            if(value) {
-                params[key] = value;
-            }
-        }
-        return params;
+        return {...params, ...searchParams};
     },
 
     // getCurrentPagination(location){
