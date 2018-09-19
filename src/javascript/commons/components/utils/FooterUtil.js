@@ -221,7 +221,6 @@ class FooterUtil extends React.Component {
         const modalType = service.getValue(modalContent, 'type', false);
         const color = isLike ? '#2cb9cf' : '#fff';
         const role = service.getValue(userInfo, 'role', 9);
-        // // TODO:  color 변화
 
         return (
             <div className="footer-utils-wapper">
@@ -231,7 +230,7 @@ class FooterUtil extends React.Component {
                             icon={(<CustomIcon type={isLike ? 'FaHeart' : 'FaHeartO'} roots="FontAwesome" style={{color : color}}/>)}
                             onClick={this.onClickLike}
                         >
-                            <Badge text={likeCount} style={{ marginLeft: 18, backgroundColor: color}} overflowCount={99}><span style={{color:color}}>좋아요</span></Badge>
+                            <Badge text={likeCount} style={{ marginLeft: 18, backgroundColor: color, color : '#ff5b05'}} overflowCount={99}><span style={{color:color}}>좋아요</span></Badge>
                         </Button>
                     </Flex.Item>
                     <Flex.Item>

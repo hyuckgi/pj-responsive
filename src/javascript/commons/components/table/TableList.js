@@ -26,7 +26,7 @@ class TableList extends React.Component {
     }
 
     render() {
-        const { data, columns, size } = this.props;
+        const { data, columns } = this.props;
         const { list, pagination } = data;
 
         return (

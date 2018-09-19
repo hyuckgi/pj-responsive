@@ -1,4 +1,5 @@
 import React from 'react';
+import { createForm } from 'rc-form';
 import moment from 'moment';
 
 import { Player, BigPlayButton } from 'video-react';
@@ -7,11 +8,11 @@ import UAParser from 'ua-parser-js';
 import { APICaller } from '../../../../commons/api';
 import { api, service, columns, path, values } from '../../../../commons/configs';
 import { CustomIcon } from '../../../../commons/components';
-import { FormMode } from '../../../../commons/types';
 
 import { Flex, Button, List, Modal } from 'antd-mobile';
 
 import NoImg from '../../../../../resource/commons/no_image_available.png';
+import { Item } from './';
 
 const parser = new UAParser();
 
@@ -27,7 +28,7 @@ class ADItem extends React.Component {
                 contents : '',
             },
         }
-        this.renderItem = this.renderItem.bind(this);
+
         this.renderExtra = this.renderExtra.bind(this);
 
         // modal
@@ -116,10 +117,11 @@ class ADItem extends React.Component {
     }
 
     onModify(){
+        const { form, item } = this.props;
         return this.onOpenModal({
             type: 'modify',
             title : '광고 수정',
-            contents : '선텍한 광고를 수정하시겠습니까?'
+            contents : (<Item form={form} item={item}/>)
         });
     }
 
@@ -161,7 +163,7 @@ class ADItem extends React.Component {
                     size="small"
                     inline
                     onClick={this.onModify}
-                >수정</Button>
+                />
                 <Button
                     style={{marginLeft : 5}}
                     icon={(<CustomIcon type="FaTrashO" roots="FontAwesome" />)}
@@ -169,7 +171,7 @@ class ADItem extends React.Component {
                     size="small"
                     inline
                     onClick={this.onDelete}
-                >삭제</Button>
+                />
             </div>
         )
     }
@@ -198,66 +200,59 @@ class ADItem extends React.Component {
         return `${cln} ${cln}-${madalType}`;
     }
 
-    renderItem(){
+    render() {
         const { mode, item } = this.props;
         const { visible, modalContent } = this.state;
         const isMobile = parser.getDevice().type;
-        const thumbnailUrl = service.getValue(item, 'thumbnailUrl', false);
+        const thumbnailUrl = service.getValue(item, 'thumbnailUrl', NoImg);
         const playTime = service.getValue(item, 'playTime', 0);
         const duration = moment.duration(playTime, 's');
 
-        if(mode === FormMode.READ){
-            return(
-                <List.Item
-                    thumb={NoImg}
-                    extra={this.renderExtra()}
+        return (
+            <List.Item
+                thumb={thumbnailUrl}
+                extra={this.renderExtra()}
+            >
+                <Flex direction="column" align="start" className="ad-item">
+                    <Flex.Item className="title-area">
+                        {service.getValue(item, 'title', '')}
+                        <Button
+                            icon={(<CustomIcon type="MdPlayCircleOutline" />)}
+                            type="ghost"
+                            size="small"
+                            inline
+                           onClick={this.onPreview}
+                       >play</Button>
+                    </Flex.Item>
+                    <Flex.Item>
+                        재생시간 : {`${moment(duration.hours(), 'HH').format('HH')}:${moment(duration.minutes(), 'mm').format('mm')}:${moment(duration.seconds(), 'ss').format('ss')} 초`}
+                    </Flex.Item>
+                    <Flex.Item>
+                        등록일시 : {`${moment(item.createDate, values.format.FULL_DATETIME_FORMAT).format(values.format.FULL_DATETIME_FORMAT)}`}
+                    </Flex.Item>
+                    <Flex.Item>
+                        수정일시 : {`${moment(item.updateDate, values.format.FULL_DATETIME_FORMAT).format(values.format.FULL_DATETIME_FORMAT)}`}
+                    </Flex.Item>
+                </Flex>
+
+                <Modal
+                    visible={visible}
+                    transparent={isMobile ? false : true}
+                    popup={isMobile ? true : false}
+                    animationType={isMobile ? 'slide-up' : 'fade'}
+                    maskClosable={false}
+                    closable={this.getClosable()}
+                    wrapClassName={this.getClassName()}
+                    title={this.getModalTitle()}
+                    onClose={this.onCloseModal}
+                    footer={this.getFooter()}
                 >
-                    <Flex direction="column" align="start" className="ad-item">
-                        <Flex.Item>
-                            {service.getValue(item, 'title', '')}
-                            <Button
-                                style={{marginLeft : 5, verticalAlign : 'middle'}}
-                                icon={(<CustomIcon type="MdPlayCircleOutline" />)}
-                                type="ghost"
-                                size="small"
-                                inline
-                               onClick={this.onPreview}
-                           >play</Button>
-                        </Flex.Item>
-                        <Flex.Item>
-                            재생시간 : {`${moment(duration.hours(), 'HH').format('HH')}:${moment(duration.minutes(), 'mm').format('mm')}:${moment(duration.seconds(), 'ss').format('ss')} 초`}
-                        </Flex.Item>
-                        <Flex.Item>
-                            등록일시 : {`${moment(item.createDate, values.format.FULL_DATETIME_FORMAT).format(values.format.FULL_DATETIME_FORMAT)}`}
-                        </Flex.Item>
-                        <Flex.Item>
-                            수정일시 : {`${moment(item.updateDate, values.format.FULL_DATETIME_FORMAT).format(values.format.FULL_DATETIME_FORMAT)}`}
-                        </Flex.Item>
-                    </Flex>
-
-                    <Modal
-                        visible={visible}
-                        transparent={isMobile ? false : true}
-                        popup={isMobile ? true : false}
-                        animationType={isMobile ? 'slide-up' : 'fade'}
-                        maskClosable={false}
-                        closable={this.getClosable()}
-                        wrapClassName={this.getClassName()}
-                        title={this.getModalTitle()}
-                        onClose={this.onCloseModal}
-                        footer={this.getFooter()}
-                    >
-                        {this.getModalContents()}
-                    </Modal>
-                </List.Item>
-            )
-        }
-    }
-
-    render() {
-        return this.renderItem();
+                    {this.getModalContents()}
+                </Modal>
+            </List.Item>
+        )
     }
 
 }
 
-export default ADItem;
+export default createForm()(ADItem);

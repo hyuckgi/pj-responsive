@@ -9,7 +9,7 @@ import { fetch } from '../../../../redux/actions';
 import { api, service, columns, path } from '../../../../commons/configs';
 import { TableList } from '../../../../commons/components';
 
-import { Avatar, Select } from 'antd';
+import { Select } from 'antd';
 import { Flex } from 'antd-mobile';
 
 const Option = Select.Option;
