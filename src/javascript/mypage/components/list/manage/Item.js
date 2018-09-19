@@ -45,7 +45,7 @@ class Item extends React.Component {
     }
 
     render() {
-        const { form } = this.props;
+        const { form, status } = this.props;
         const { getFieldDecorator } = form;
         const { videos } = this.state;
         const item = service.getValue(this.props, 'item', false);

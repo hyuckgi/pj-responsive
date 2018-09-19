@@ -43,6 +43,7 @@ class ADList extends React.Component {
                 title : '',
                 contents : '',
             },
+            status : '',
         }
 
         this.getList = this.getList.bind(this);
@@ -90,6 +91,7 @@ class ADList extends React.Component {
     onCreate(e){
         e && e.preventDefault();
         const { form } = this.props;
+        const { status } = this.state;
 
         return this.onOpenModal({
             type: 'create',
@@ -143,7 +145,6 @@ class ADList extends React.Component {
                     return (<p key={idx}>{message}</p>)
                 })}
             </div>),
-			onOk : this.onCloseModal,
 		});
     }
 
@@ -185,9 +186,7 @@ class ADList extends React.Component {
                     })
                     .catch((err) => {
                         return this.errorToast(err)
-                    })
-
-
+                    });
             }
 
             return this.errorToast(errors);
@@ -212,9 +211,17 @@ class ADList extends React.Component {
         });
     }
 
+    resetFields(){
+        const { form } = this.props;
+
+        form.resetFields();
+    }
+
     onCloseModal(){
         this.setState({
             visible : false,
+        }, () => {
+            this.resetFields();
         });
     }
 
