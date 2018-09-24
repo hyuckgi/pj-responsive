@@ -35,23 +35,27 @@ class ListTop extends React.Component {
         const count = type === 'user' ? 'donateCount' : 'sponsorCount';
 
         return list.map((item, inx) => {
-            const typeObj = values.rank[type].types.filter(type => type.type === item.type).find(item => item);
+            const typeObj = values.rank[type].types.filter(type => type.type === item.rankTerm).find(item => item);
             const thumnail = service.getValue(item, 'profileUrl', false);
 
             return (
                 <Flex.Item key={inx}>
                     <p className="title">{service.getValue(typeObj, 'title', '')}</p>
-                    {thumnail
-                        ?
-                        <div className="thumnail" onClick={this.onClick.bind(this, item)}>
-                            <img src={thumnail} alt={item.userId} />
-                        </div>
-                        :
-                        <Avatar icon="user" size="large" onClick={this.onClick.bind(this, item)}/>
-                    }
-                    <p className="user-id" onClick={this.onClick.bind(this, item)}>{service.getMasking(service.getValue(item, 'userId', ''), 3)}</p>
-                    <p className="count">{countTitle} {service.getValue(item, `${count}`, 0)}회</p>
-                    <p className="price">기부 {service.amount(service.getValue(item, 'totalDonation', 0))}원</p>
+                    <div className="img-area">
+                        {thumnail
+                            ?
+                            <div className="thumnail" onClick={this.onClick.bind(this, item)}>
+                                <img src={thumnail} alt={item.userId} />
+                            </div>
+                            :
+                            <Avatar icon="user" size="large" onClick={this.onClick.bind(this, item)}/>
+                        }
+                    </div>
+                    <div className="text-area">
+                        <p className="user-id" onClick={this.onClick.bind(this, item)}>{service.getMasking(service.getValue(item, 'userId', ''), 3)}</p>
+                        <p className="count">{countTitle} {service.getValue(item, `${count}`, 0)}회</p>
+                        <p className="price">기부 {service.amount(service.getValue(item, 'totalDonation', 0))}원</p>
+                    </div>
                 </Flex.Item>
             )
         })

@@ -1,0 +1,102 @@
+.web-container {
+    .main-container{
+
+        .main-title{
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #333;
+
+            span{
+                display:inline-block;
+                margin-left:6px;
+                font-weight:normal;
+                font-size:0.8em;
+                color:#555;
+            }
+        }
+
+        .main-link{
+            color: #333;
+        }
+
+        .common-slider{
+            margin-bottom:50px;
+        }
+
+        .rank-wrapper{
+            width: 1280px;
+            max-width:1280px;
+            padding:0;
+            margin: 0 auto 50px;
+            text-align:center;
+
+            .rank-top{
+                margin: 30px auto;
+
+                &-total{
+                    display:none;
+                }
+
+                &-list{
+                    .am-flexbox-item{
+                        display: flex;
+                        flex-flow: row nowrap;
+                        margin:0 2%;
+
+                        .title{
+                            display:none;
+                        }
+
+                        .img-area,
+                        .text-area{
+                            flex: 1 1 50%;
+                            align-self:center;
+                        }
+
+                        .text-area{
+                            text-align:left;
+                            margin-left:7%;
+                        }
+                    }
+                }
+            }
+
+            .main-link{
+                font-size:1.2em;
+                display:inline-block;
+                padding: 0 5px;
+                border-bottom:1px solid #333;
+            }
+
+            .rank-total{
+                font-size:1.4em;
+                margin-top: 50px;
+
+                .price{
+                    font-size:1.1em;
+                    color:#FF6E59;
+                }
+            }
+        }
+
+        .event-wrapper{
+            margin-bottom:50px;
+        }
+
+        .list-wrapper{
+            margin-bottom:50px;
+
+            & > .am-flexbox{
+
+                .main-link{
+                    text-align:right;
+
+                    a{
+                        font-size:1.1em;
+                        color:#333;
+                    }
+                }
+            }
+        }
+    }
+}

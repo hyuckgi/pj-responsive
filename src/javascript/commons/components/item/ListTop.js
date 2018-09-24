@@ -52,6 +52,12 @@ class ListTop extends React.Component {
         }
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        if(prevProps.match.params.type !== this.props.match.params.type){
+            this.renderWebCategory();
+        }
+    }
+
     renderWebCategory(){
         const { categories, location } = this.props;
         const query = queryString.parse(location.search);
@@ -61,7 +67,7 @@ class ListTop extends React.Component {
         return(
             <Col span={6}>
                 <Cascader
-                    defaultValue={defaultValue}
+                    value={defaultValue}
                     options={categories}
                     onChange={this.onChange}
                     placeholder="카테고리를 선택하세요"
