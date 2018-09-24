@@ -8,11 +8,8 @@ import { service, api, path } from '../commons/configs';
 
 import { Flex } from 'antd-mobile';
 
-import { CommonSlider } from '../commons/components';
+import { CommonSlider, StoryList } from '../commons/components';
 import { ListTop } from '../rank/components/common';
-import { ItemList } from '../commons/components/item';
-
-
 
 const mapStateToProps = ({fetch}) => {
     // TODO: 메인 슬라이드 필터 추가
@@ -61,7 +58,7 @@ class MainContainer extends React.Component {
 
                     <ListTop item={mainRank} type={'user'} />
 
-                    <Link to='/rank/list/user' className="main-link">랭킹 전체 보기 > </Link>
+                    <Link to='/rank/list/user' className="main-link">More</Link>
 
                     <Flex direction="column" className="rank-total">
                         <Flex.Item>우리가 함꼐 모은 기부금</Flex.Item>
@@ -76,10 +73,10 @@ class MainContainer extends React.Component {
                 <div className="list-wrapper">
                     <Flex justify="between">
                         <Flex.Item className="main-title">프로젝트 모금함</Flex.Item>
-                        <Flex.Item className="main-link"><Link to='/story/list/progress'>더보기 ></Link></Flex.Item>
                     </Flex>
 
-                    <ItemList count={4} data={mainStory} prefixUrl={path.storyItem} prefix="story"/>
+                    <StoryList count={4} data={mainStory} prefixUrl={path.storyItem} prefix="story"/>
+                    <Link to='/story/list/progress' className="main-link">More</Link>
                 </div>
 
 

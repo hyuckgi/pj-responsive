@@ -11,7 +11,7 @@ import { FooterUtil } from './utils';
 import { CommentList, Comment } from './comment';
 import BlankImage from './BlankImage';
 import { CommonSlider } from './slider';
-import { ItemList } from './item';
+import { ListTop, List as StoryList } from './list';
 import { Report } from './report';
 import { List as ADList } from './sponsor';
 import { TableList } from './table';
@@ -35,8 +35,9 @@ export{
     CommentList,
     Comment,
     BlankImage,
-    ItemList,
+    ListTop,
     Report,
     ADList,
-    TableList
+    TableList,
+    StoryList,
 }

@@ -1,22 +1,58 @@
+.main-container{
+
+    .main-title{
+        font-weight:bold;
+        color: #333;
+
+        span{
+            display:inline-block;
+            margin-left:6px;
+            font-weight:normal;
+            color:#555;
+        }
+    }
+
+    .main-link{
+        display:inline-block;
+        padding: 0 5px;
+        border-bottom:1px solid #333;
+        color: #333;
+    }
+
+    .rank-wrapper{
+        text-align:center;
+
+        .rank-top{
+            &-total{
+                display:none;
+            }
+            &-list{
+                .am-flexbox-item{
+                    .title{
+                        display:none;
+                    }
+                }
+            }
+        }
+    }
+    .list-wrapper{
+        text-align:center;
+    }
+}
+
 .web-container {
     .main-container{
 
         .main-title{
             font-size: 1.4em;
-            font-weight: bold;
-            color: #333;
 
             span{
-                display:inline-block;
-                margin-left:6px;
-                font-weight:normal;
                 font-size:0.8em;
-                color:#555;
             }
         }
 
         .main-link{
-            color: #333;
+            font-size:1.2em;
         }
 
         .common-slider{
@@ -28,24 +64,15 @@
             max-width:1280px;
             padding:0;
             margin: 0 auto 50px;
-            text-align:center;
 
             .rank-top{
                 margin: 30px auto;
-
-                &-total{
-                    display:none;
-                }
 
                 &-list{
                     .am-flexbox-item{
                         display: flex;
                         flex-flow: row nowrap;
                         margin:0 2%;
-
-                        .title{
-                            display:none;
-                        }
 
                         .img-area,
                         .text-area{
@@ -59,13 +86,6 @@
                         }
                     }
                 }
-            }
-
-            .main-link{
-                font-size:1.2em;
-                display:inline-block;
-                padding: 0 5px;
-                border-bottom:1px solid #333;
             }
 
             .rank-total{
@@ -85,18 +105,38 @@
 
         .list-wrapper{
             margin-bottom:50px;
+        }
+    }
+}
 
-            & > .am-flexbox{
+.mobile-container{
+    .main-container{
+        .common-slider{
+            margin-bottom:20px;
 
-                .main-link{
-                    text-align:right;
-
-                    a{
-                        font-size:1.1em;
-                        color:#333;
-                    }
+            .am-carousel{
+                .slider-frame{
+                    height:250px;
                 }
             }
+        }
+
+        .main-link{
+            font-size:0.9em;
+        }
+
+        .rank-wrapper{
+            .main-title{
+                margin-bottom:10px;
+            }
+
+            .rank-total{
+                margin:30px 0;
+            }
+        }
+
+        .list-wrapper{
+            padding:0 10px;
         }
     }
 }

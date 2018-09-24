@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import queryString from 'query-string';
 
-import { ItemList, ListTop } from '../../../commons/components/item';
+import { ListTop, StoryList as List } from '../../../commons/components';
 
 import { fetch } from '../../../redux/actions';
 import { service, values, api, path } from '../../../commons/configs';
@@ -55,7 +55,7 @@ class StoryList extends React.Component {
         const categoryNo = service.getValue(query, 'category', false);
 
         if(!categoryNo){
-            return (<WhiteSpace size="md" />);
+            return null;
         }
 
         return(<Category category={categoryNo.split('/').slice(-1).find(item => item)} />)
@@ -96,10 +96,9 @@ class StoryList extends React.Component {
 
         return (
             <div className='story-list-wrapper'>
-                <WhiteSpace size="md" />
                 {this.renderCategory()}
                 <ListTop order={order} onChange={this.onChangeParams} prefixUrl={path.storyList}/>
-                <ItemList count={4} data={stories} prefixUrl={path.storyItem} prefix="story"/>
+                <List count={4} data={stories} prefixUrl={path.storyItem} prefix="story"/>
             </div>
 
         );

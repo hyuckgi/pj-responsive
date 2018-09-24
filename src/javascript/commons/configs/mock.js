@@ -21,14 +21,32 @@ export const mock = {
             "resultMsg" : "SUCCESS",
             "data" : {
                 "totalDonation": 30000000,
-                "rankerList" : makeList({
-                    "rankTerm": "all",
-                    "userNo": 10000001,
-                    "userId": "스폰서 랭커",
-                    "profileUrl": "https://picsum.photos/480/320?random",
-                    "sponsorCount": 10000,
-                    "totalDonation": 1000000
-                }, count)
+                "rankerList" : [
+                    {
+                        "rankTerm": "month",
+                        "userNo": 10000001,
+                        "userId": "스폰서 랭커_1",
+                        "profileUrl": "https://picsum.photos/480/320?random",
+                        "sponsorCount": 10000,
+                        "totalDonation": 1000000
+                    },
+                    {
+                        "rankTerm": "year",
+                        "userNo": 10000002,
+                        "userId": "스폰서 랭커_2",
+                        "profileUrl": "https://picsum.photos/480/320?random",
+                        "sponsorCount": 20000,
+                        "totalDonation": 2000000
+                    },
+                    {
+                        "rankTerm": "week",
+                        "userNo": 10000003,
+                        "userId": "스폰서 랭커_3",
+                        "profileUrl": "https://picsum.photos/480/320?random",
+                        "sponsorCount": 5000,
+                        "totalDonation": 50000
+                    }
+                ]
             }
         }
     },

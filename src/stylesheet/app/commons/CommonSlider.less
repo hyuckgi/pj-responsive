@@ -7,4 +7,37 @@
         }
 
     }
+
+    .am-carousel{
+        .slider-list{
+            .text-area{
+                .am-flexbox-item{
+                    padding:10px 3%;
+                    color : #333;
+
+                    &.title{
+                        font-size:1.3em;
+                        word-break: keep-all;
+                    }
+
+                    &.link{
+                        text-align:right;
+                        max-width:100px;
+                        font-size:0.9em;
+
+                        span{
+                            padding:5px 10px;
+                            border:1px solid #ddd;
+                            border-radius:5px;
+                        }
+                    }
+                }
+            }
+        }
+
+        .slider-frame ~ div[class^="slider-decorator"]{
+            bottom:auto !important;
+            top : 190px;
+        }
+    }
 }

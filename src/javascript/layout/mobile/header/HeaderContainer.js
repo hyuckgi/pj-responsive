@@ -22,11 +22,18 @@ class HeaderContainer extends React.Component {
         this.onOpenClick = this.onOpenClick.bind(this);
         this.getRightContent = this.getRightContent.bind(this);
         this.onClick = this.onClick.bind(this);
+        this.onClickSearch = this.onClickSearch.bind(this);
+    }
+
+    onClickSearch(e){
+        e && e.preventDefault();
+        return this.props.move(path.search);
     }
 
     getRightContent(){
         return [
-            <CustomIcon type="MdDehaze" sizes="lg" key="0" className="am-icon-right"  onClick={this.onOpenClick.bind(this, 'mypage')}/>
+            <CustomIcon type="MdSearch" sizes="lg" key="0" className="am-icon-right"  onClick={this.onClickSearch}/>,
+            <CustomIcon type="MdDehaze" sizes="lg" key="1" className="am-icon-right"  onClick={this.onOpenClick.bind(this, 'mypage')}/>
         ]
     }
 

@@ -1,44 +1,24 @@
-.web-container{
-    .rank-wrapper{
-        max-width: 1040px;
-        margin:0 auto;
-    }
-}
-
 .rank-wrapper{
-    padding:4% 2%;
-
     .rank-top{
-        margin-bottom:5%;
+
         &-total{
             text-align:center;
-            margin:0 10% 5%;
 
             .am-flexbox-item{
-                font-size:1.5em;
                 font-weight:bold;
             }
         }
 
         &-list{
             .am-flexbox-item{
-                flex:0 0 25%;
                 text-align:center;
 
                 .title{
-                    font-size:1.3em;
                     color:#2290A2;
                     font-weight:bold;
                 }
                 .thumnail{
-                    margin:0 auto 14px;
-
                     img{
-                        // TODO 임시
-                        height: 154px;
-
-                        max-width:154px;
-                        max-height:154px;
                         border-radius:50%;
                         overflow:hidden;
                         background-color:#fff;
@@ -49,9 +29,6 @@
                 }
                 .ant-avatar{
                     margin:0 auto 14px;
-                    width:154px;
-                    height:154px;
-                    line-height:154px;
                     border-radius:50%;
                     cursor: pointer;
                     border:2px solid #ffffff;
@@ -85,6 +62,108 @@
 
                 .am-tabs-default-bar-tab{
                     cursor:pointer;
+                }
+            }
+        }
+    }
+}
+
+.web-container{
+    .rank-wrapper{
+        max-width: 1040px;
+        margin:0 auto;
+        padding:4% 2%;
+
+        .rank-top{
+            margin-bottom:5%;
+
+            &-total{
+                margin: 0 auto 5%;
+
+                .am-flexbox-item{
+                    font-size:1.5em;
+                }
+            }
+
+            &-list{
+                flex:0 0 25%;
+
+                .am-flexbox-item{
+                    .title{
+                        font-size:1.3em;
+                    }
+
+                    .img-area{
+                        .thumnail{
+                            margin:0 auto 14px;
+
+                            img{
+                                height: 154px;
+                                width:154px;
+                            }
+                        }
+
+                        .ant-avatar{
+                            width:154px;
+                            height:154px;
+                            line-height:154px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .rank-list{
+
+    }
+}
+
+.mobile-container{
+    .rank-wrapper{
+        padding:0 10px;
+
+        .rank-top{
+            margin-bottom:30px;
+
+            &-total{
+                padding:5% 0;
+                .am-flexbox-item{
+
+                }
+            }
+
+            &-list{
+                flex:0 0 33.3333%;
+
+                .am-flexbox-item{
+
+                    .img-area{
+
+                        margin-bottom:1em;
+
+                        .thumnail{
+                            img{
+                                height: 100px;
+                                width:100px;
+                            }
+                        }
+
+                        .ant-avatar{
+                            width:100px;
+                            height:100px;
+                            line-height:100px;
+                        }
+                    }
+
+                    .text-area{
+                        p{
+                            margin-bottom:0;
+                            white-space: nowrap;
+                            overflow-x: hidden;
+                            text-overflow: ellipsis;
+                        }
+                    }
                 }
             }
         }

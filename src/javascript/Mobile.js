@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Gesture from 'rc-gesture';
 import { StickyContainer } from 'react-sticky';
 
-import { Spinner, WrapperContainer, MobileWrapper } from './layout';
+import { Spinner, WrapperContainer, MobileWrapper, FooterContainer } from './layout';
 import { HeaderContainer, DrawerContainer } from './layout/mobile';
 import { service } from './commons/configs';
 
@@ -107,6 +107,8 @@ class Mobile extends React.Component {
                                 <WrapperContainer {...this.props}/>
                             </MobileWrapper>
                         </StickyContainer>
+
+                        <FooterContainer />
 
                         <Spinner
                             toast={true}

@@ -5,12 +5,12 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import queryString from 'query-string';
 
-import { DesktopLayout } from '../response';
+import { DesktopLayout, MobileLayout } from '../response';
 
-import { Row, Col, Button, Cascader } from 'antd';
-import { WhiteSpace } from 'antd-mobile';
+import { WhiteSpace, Flex, Button } from 'antd-mobile';
 
 import { values, service, path } from '../../configs';
+import { CustomPicker } from '../';
 
 const mapStateToProps = ({code, fetch}) => {
     const categories = service.getValue(code, 'categories', []);
@@ -28,7 +28,7 @@ class ListTop extends React.Component {
     constructor(props) {
         super(props);
 
-        this.renderWebOrder = this.renderWebOrder.bind(this);
+        this.renderOrder = this.renderOrder.bind(this);
         this.onClick = this.onClick.bind(this);
         this.onChange = this.onChange.bind(this);
     }
@@ -54,30 +54,29 @@ class ListTop extends React.Component {
 
     componentDidUpdate(prevProps, prevState) {
         if(prevProps.match.params.type !== this.props.match.params.type){
-            this.renderWebCategory();
+            this.renderCategory();
         }
     }
 
-    renderWebCategory(){
+    renderCategory(){
         const { categories, location } = this.props;
         const query = queryString.parse(location.search);
         const categoryNo = service.getValue(query, 'category', false);
         const defaultValue = categoryNo ? [categoryNo.split('/').map(item => Number(item))] : [];
 
         return(
-            <Col span={6}>
-                <Cascader
+            <Flex.Item>
+                <CustomPicker
                     value={defaultValue}
                     options={categories}
                     onChange={this.onChange}
                     placeholder="카테고리를 선택하세요"
-                    style={{width : '100%'}}
                 />
-            </Col>
+            </Flex.Item>
         )
     }
 
-    renderWebOrder(){
+    renderOrder(){
         const { order, match } = this.props;
         const options = service.getValue(values, 'story.order');
         const { type } = match.params;
@@ -87,39 +86,31 @@ class ListTop extends React.Component {
         }
 
         return(
-            <Col span={5}>
-                <Row  type="flex" align="middle" justify="space-between">
-                    {options.map((item, inx) => {
-                        return (
-                            <Col
-                                key={inx}
-                                span={24/options.length}
-                            >
-                                <Button
-                                    onClick={this.onClick.bind(this, item)}
-                                    type={order === item.value ? 'primary' : null}
-                                >
-                                    {item.label}
-                                </Button>
-                            </Col>
-                        );
-                    })}
-                </Row>
-            </Col>
+            <Flex.Item style={{textAlign : 'right'}}>
+                {options.map((item, inx) => {
+                    return (
+                        <Button
+                            key={inx}
+                            inline
+                            size="small"
+                            onClick={this.onClick.bind(this, item)}
+                            type={order === item.value ? 'primary' : 'ghost'}
+                            style={{marginRight : 5, marginLeft: 5}}
+                        >
+                            {item.label}
+                        </Button>
+                    );
+                })}
+            </Flex.Item>
         )
     }
 
     render() {
         return (
-            <div className="list-top-wrapper">
-                <DesktopLayout>
-                    <Row  type="flex" align="middle" justify="space-between">
-                        {this.renderWebCategory()}
-                        {this.renderWebOrder()}
-                    </Row>
-                    <WhiteSpace />
-                </DesktopLayout>
-            </div>
+            <Flex justify="between" className="list-top-wrapper">
+                {this.renderCategory()}
+                {this.renderOrder()}
+            </Flex>
         );
     }
 

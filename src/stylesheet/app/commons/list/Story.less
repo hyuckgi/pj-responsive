@@ -1,0 +1,126 @@
+.list-item{
+    .ant-card{
+
+        &-cover{
+            position:relative;
+            overflow:hidden;
+            border-bottom:1px solid #ddd;
+            background-color:#f0efef;
+
+            img{
+                position:absolute;
+                top:50%;
+                left:50%;
+                transform:translate(-50%, -50%);
+            }
+        }
+
+        &-meta{
+            &-title{
+                overflow:hidden;
+                white-space:normal;
+            }
+
+            &-description{
+                .donations{
+                    display:flex;
+                    flex-flow:column wrap;
+                    justify-content:center;
+
+                    & > div{
+                        flex : 1 1 auto;
+                        align-self:center;
+                        width:100%;
+                    }
+
+                    .donation-price{
+                        .price-wrapper{
+                            display:flex;
+                            flex-flow: row nowrap;
+                            justify-content:space-between;
+
+                            p{
+                                flex:1 1 auto;
+                                flex-basis:50%;
+                                overflow-x:hidden;
+                                margin-bottom:0;
+
+                                &:last-child{
+                                    text-align: right;
+                                }
+                            }
+                        }
+                    }
+
+                    .ant-progress-status-normal{
+                        .ant-progress-bg{
+                            background-color:#8b9a9c;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.web-container{
+    .list-item{
+        .ant-card{
+            &-cover{
+                height:320px;
+            }
+            &-meta{
+                &-title{
+                    height:48px;
+                }
+
+                &-description{
+                    .donations{
+                        min-height:50px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.mobile-container{
+    .list-item{
+        .ant-card{
+            &-cover{
+                height:140px;
+            }
+
+            &-body{
+                padding:5%;
+            }
+
+            &-meta{
+                &-title{
+                    font-size: 1em;
+                    height: 2.6em;
+                    line-height: 1.3em;
+                }
+
+                &-description{
+                    .username{
+                        font-size: 0.8em;
+                        margin-bottom: 0;
+                    }
+
+                    .donations{
+                        .donation-price{
+                            .price-wrapper{
+                                p{
+                                    font-size:0.8em;
+                                    line-height:1.3em;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+}

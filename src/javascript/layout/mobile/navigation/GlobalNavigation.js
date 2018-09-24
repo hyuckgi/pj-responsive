@@ -156,6 +156,10 @@ class GlobalNavigation extends React.Component {
         const { currentPath } = this.props;
         const subIndex = subMenu.findIndex(item => item.link === currentPath);
 
+        if(subIndex < 0){
+            return;
+        }
+
         return(
             <div className="sub-navigations" >
                 <Tabs

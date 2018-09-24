@@ -70,7 +70,7 @@ class ListTop extends React.Component {
                     <Flex.Item>전체 기부금</Flex.Item>
                     <Flex.Item>{service.amount(service.getValue(item, 'totalDonation', 0))}원 기부</Flex.Item>
                 </Flex>
-                <Flex className="rank-top-list" justify="center">
+                <Flex className="rank-top-list" justify="center" align="start">
                     {this.renderItem()}
                 </Flex>
             </div>

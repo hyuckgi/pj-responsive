@@ -1,0 +1,33 @@
+
+.list-container{
+    overflow-x:hidden;
+}
+
+.web-container{
+    .list-container{
+
+        & [class^="ant-row-"]{
+
+            & [class^="ant-col-"]{
+                padding:8px 0;
+            }
+        }
+
+        .list-none{
+            font-size:1.5em;
+        }
+    }
+}
+
+
+.mobile-container{
+    .list-container{
+
+        & [class^="ant-row-"]{
+
+            & [class^="ant-col-"]{
+                padding:5px 0;
+            }
+        }
+    }
+}

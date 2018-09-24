@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Layout, notification } from 'antd';
 import { StickyContainer, Sticky } from 'react-sticky';
 
-import { Spinner, WrapperContainer } from './layout';
+import { Spinner, WrapperContainer, FooterContainer } from './layout';
 import { HeaderContainer, LocalNavigationBar } from './layout/web';
 
 import { service } from './commons/configs';
@@ -80,6 +80,8 @@ class Web extends React.Component {
                         <Content className="section">
                             <WrapperContainer />
                         </Content>
+
+                        <FooterContainer />
                     </Layout>
                 </StickyContainer>
             </Spinner>

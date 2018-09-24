@@ -1,4 +1,8 @@
 .web-container{
+
+    & > .section{
+        min-height:calc(~'100vh' - 301px);
+    }
     .ant-layout{
         background:#fff;
     }
@@ -11,6 +15,7 @@
 }
 
 .mobile-container {
+
     figure{
         margin:0;
     }
@@ -23,9 +28,17 @@
     .am-button{
         border: 1px solid #dadada;
         box-shadow: 1px 1px 2px rgba(0,0,0,0.14);
+        vertical-align:middle;
 
         em{
             font-style:normal;
+        }
+
+        &-small{
+            font-size: 0.8em;
+            height: 24px;
+            line-height: 24px;
+            padding: 0 8px;
         }
     }
 

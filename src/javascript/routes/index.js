@@ -5,6 +5,7 @@ import Board from './Board';
 import Service from './Service';
 import Mypage from './Mypage';
 import Setting from './Setting';
+import Search from './Search';
 
 export {
     Main,
@@ -13,5 +14,6 @@ export {
     Board,
     Service,
     Mypage,
-    Setting
+    Setting,
+    Search
 }

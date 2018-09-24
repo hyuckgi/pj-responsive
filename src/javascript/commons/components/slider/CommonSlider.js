@@ -5,9 +5,9 @@ import { push } from 'react-router-redux';
 import { DesktopLayout, MobileLayout } from '../response';
 
 import { Carousel as WebCarousel } from 'antd';
-import { Carousel as MobileCarousel } from 'antd-mobile';
+import { Carousel as MobileCarousel, Flex, Button } from 'antd-mobile';
 
-import { path } from '../../configs';
+import { path, service } from '../../configs';
 
 const mapStateToProps = ({fetch}) => {
 
@@ -70,15 +70,28 @@ class CommonSlider extends React.Component {
                     >
                         {list.map((item, inx) => {
                             return (
-                                <img
+                                <a
                                     key={inx}
-                                    src={item.imageUrl || item.thumbnailUrl}
-                                    alt={item.title}
                                     onClick={this.onClick.bind(this, item)}
-                                    onLoad={() => {
-                                        window.dispatchEvent(new Event('resize'));
-                                    }}
-                                />
+                                    style={{ display: 'inline-block', width: '100%', height: 'auto'}}
+                                >
+                                    <img
+                                        src={item.imageUrl || item.thumbnailUrl}
+                                        alt={item.title}
+                                        style={{ width: '100%', verticalAlign: 'top', maxHeight: 220}}
+                                        onLoad={() => {
+                                            window.dispatchEvent(new Event('resize'));
+                                        }}
+                                    />
+                                    <Flex className="text-area" justify="between" >
+                                        <Flex.Item className="title">
+                                            {`${service.getValue(item, 'title', '')}`}
+                                        </Flex.Item>
+                                        <Flex.Item className="link">
+                                            <span>참여하기</span>
+                                        </Flex.Item>
+                                    </Flex>
+                                </a>
                             );
                         })}
                     </MobileCarousel>
