@@ -55,7 +55,7 @@ class UtilNavigation extends React.Component {
         if(!Object.keys(userInfo).length){
             return(
                 <Menu.Item>
-                    <NavLink to={path.login}>로그인</NavLink>
+                    <NavLink to={path.login}>Login</NavLink>
                 </Menu.Item>
             )
         }
@@ -100,7 +100,7 @@ class UtilNavigation extends React.Component {
                 className="util-navigation"
             >
                 <Menu.Item>
-                    <NavLink to={path.propose}>스토리 제안</NavLink>
+                    <NavLink to={path.propose}>Proposition</NavLink>
                 </Menu.Item>
                 <Menu.Item className="btn-search">
                     <NavLink to={path.search}>

@@ -7,7 +7,7 @@ import { DesktopLayout, MobileLayout } from '../response';
 import { Carousel as WebCarousel } from 'antd';
 import { Carousel as MobileCarousel } from 'antd-mobile';
 
-import { service, path } from '../../configs';
+import { path } from '../../configs';
 
 const mapStateToProps = ({fetch}) => {
 

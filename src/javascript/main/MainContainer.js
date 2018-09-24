@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { fetch } from '../redux/actions';
-import { values, service, api, path } from '../commons/configs';
+import { service, api, path } from '../commons/configs';
 
 import { Flex } from 'antd-mobile';
 

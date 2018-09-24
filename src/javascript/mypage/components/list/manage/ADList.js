@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 import { APICaller } from '../../../../commons/api';
 import { fetch } from '../../../../redux/actions';
 
-import { api, service, values } from '../../../../commons/configs';
+import { api, service } from '../../../../commons/configs';
 
-import { Button, List, Modal, Toast } from 'antd-mobile';
+import { Button, List, Modal } from 'antd-mobile';
 import { Modal as WebModal } from 'antd';
 
 import UAParser from 'ua-parser-js';
@@ -91,7 +91,6 @@ class ADList extends React.Component {
     onCreate(e){
         e && e.preventDefault();
         const { form } = this.props;
-        const { status } = this.state;
 
         return this.onOpenModal({
             type: 'create',
@@ -257,7 +256,6 @@ class ADList extends React.Component {
     }
 
     render() {
-        const { form } = this.props;
         const { visible } = this.state;
         const isMobile = parser.getDevice().type;
 

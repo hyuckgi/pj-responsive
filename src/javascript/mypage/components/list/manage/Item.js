@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { upload } from '../../../../commons/api';
-import { FormMode } from '../../../../commons/types';
 import { service} from '../../../../commons/configs';
 
 import { Form, Input, Button, Upload, Icon } from 'antd';
@@ -45,7 +44,7 @@ class Item extends React.Component {
     }
 
     render() {
-        const { form, status } = this.props;
+        const { form } = this.props;
         const { getFieldDecorator } = form;
         const { videos } = this.state;
         const item = service.getValue(this.props, 'item', false);

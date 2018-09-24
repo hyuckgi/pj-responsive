@@ -6,7 +6,7 @@ import { Player, BigPlayButton } from 'video-react';
 import UAParser from 'ua-parser-js';
 
 import { APICaller } from '../../../../commons/api';
-import { api, service, columns, path, values } from '../../../../commons/configs';
+import { api, service, values } from '../../../../commons/configs';
 import { CustomIcon } from '../../../../commons/components';
 
 import { Flex, Button, List, Modal } from 'antd-mobile';
@@ -201,8 +201,8 @@ class ADItem extends React.Component {
     }
 
     render() {
-        const { mode, item } = this.props;
-        const { visible, modalContent } = this.state;
+        const { item } = this.props;
+        const { visible } = this.state;
         const isMobile = parser.getDevice().type;
         const thumbnailUrl = service.getValue(item, 'thumbnailUrl', NoImg);
         const playTime = service.getValue(item, 'playTime', 0);
