@@ -9,7 +9,8 @@ import { fetch } from '../../../redux/actions';
 import { Avatar } from 'antd';
 import { Tabs, Flex, Button } from 'antd-mobile';
 
-import { StoryList, CommentList, SupportList, SponList, ADList } from '../list';
+import { StoryList, CommentList, SupportList, SponList } from '../list';
+import { ADListSponsor } from '../../../commons/components';
 
 const mapStateToProps = ({ fetch,  router, layout, security }) => {
     const mypageMenus = service.getValue(layout, 'mypageMenus', []);
@@ -89,7 +90,7 @@ class MypageTop extends React.Component {
             case '401000000':
                 return (<SponList />)
             case '402000000':
-                return (<ADList />);
+                return (<ADListSponsor path='manage'/>);
             case '404000000':
                 return (<StoryList />);
             case '405000000':

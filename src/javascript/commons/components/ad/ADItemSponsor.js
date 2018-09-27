@@ -5,19 +5,19 @@ import moment from 'moment';
 import { Player, BigPlayButton } from 'video-react';
 import UAParser from 'ua-parser-js';
 
-import { APICaller } from '../../../../commons/api';
-import { api, service, values } from '../../../../commons/configs';
-import { CustomIcon } from '../../../../commons/components';
+import { APICaller } from '../../api';
+import { api, service, values } from '../../configs';
+import { CustomIcon } from '../../components';
 
 import { Flex, Button, List, Modal } from 'antd-mobile';
 import { Modal as WebModal } from 'antd';
 
-import NoImg from '../../../../../resource/commons/no_image_available.png';
+import NoImg from '../../../../resource/commons/no_image_available.png';
 import { Item } from './';
 
 const parser = new UAParser();
 
-class ADItem extends React.Component {
+class ADItemSponsor extends React.Component {
 
     constructor(props) {
         super(props);
@@ -139,7 +139,7 @@ class ADItem extends React.Component {
                 }
 
                 const obj = api.postAD(newParams);
-                
+
                 return APICaller.put(obj.url, obj.params)
                     .then((...args) => {
                         console.log("args", args);
@@ -332,4 +332,4 @@ class ADItem extends React.Component {
 
 }
 
-export default createForm()(ADItem);
+export default createForm()(ADItemSponsor);

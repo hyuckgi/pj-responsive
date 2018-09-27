@@ -9,11 +9,10 @@ import { APICaller } from '../../api';
 
 import { service, api, path} from '../../configs';
 
-import { CustomIcon } from '../';
-
-import { Share, ADList as Sponsor } from './';
-import { Report, ADList } from '../';
 import { Flex, Button, Modal, Badge } from 'antd-mobile';
+
+import { CustomIcon, ADListUser, Report, ADListSponsor } from '../';
+import { Share } from './';
 
 const parser = new UAParser();
 
@@ -129,8 +128,8 @@ class FooterUtil extends React.Component {
         e && e.preventDefault();
         return this.onOpenModal({
             type : null,
-            title : '스폰서 목록',
-            contents : (<ADList />)
+            title : '스폰서 광고 목록',
+            contents : (<ADListUser />)
         })
     }
 
@@ -209,7 +208,7 @@ class FooterUtil extends React.Component {
         return this.onOpenModal({
             type : null,
             title : '스폰서 광고 연동',
-            contents : (<Sponsor />)
+            contents : (<ADListSponsor path="story"/>)
         })
     }
 

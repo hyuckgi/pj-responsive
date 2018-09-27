@@ -1,18 +1,19 @@
 import React from 'react';
 import { createForm } from 'rc-form';
 import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 
-import { APICaller } from '../../../../commons/api';
-import { fetch } from '../../../../redux/actions';
+import { APICaller } from '../../api';
+import { fetch } from '../../../redux/actions';
 
-import { api, service } from '../../../../commons/configs';
+import { api, service } from '../../configs';
 
 import { Button, List, Modal } from 'antd-mobile';
 import { Modal as WebModal } from 'antd';
 
 import UAParser from 'ua-parser-js';
 
-import { ADItem, Item } from './';
+import { ADItemSponsor, Item } from './';
 
 const parser = new UAParser();
 
@@ -28,9 +29,10 @@ const mapStateToProps = ({fetch}) => {
 
 const mapDispatchProps = dispatch => ({
     multipleList: (list) => dispatch(fetch.multipleList(list)),
+    move: (location) => dispatch(push(location)),
 });
 
-class ADList extends React.Component {
+class ADListSponsor extends React.Component {
 
     constructor(props) {
         super(props);
@@ -49,10 +51,12 @@ class ADList extends React.Component {
         this.getList = this.getList.bind(this);
         this.renderList = this.renderList.bind(this);
         this.renderHeader = this.renderHeader.bind(this);
+        this.renderButton = this.renderButton.bind(this);
 
         this.onEvents = this.onEvents.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.onCreate = this.onCreate.bind(this);
+        this.onClick = this.onClick.bind(this);
 
         // modal
         this.onOpenModal = this.onOpenModal.bind(this);
@@ -235,8 +239,25 @@ class ADList extends React.Component {
         }
 
         return list.map((item, idx) => {
-            return(<ADItem key={idx} item={item} onEvents={this.onEvents} />)
+            return(<ADItemSponsor key={idx} item={item} onEvents={this.onEvents} />)
         })
+    }
+
+    onClick(e){
+        e && e.preventDefault();
+        this.props.move('/mypage/list/manage');
+    }
+
+    renderButton(){
+        const { path } = this.props;
+
+        console.log("path", path);
+
+        if(path === 'story'){
+            return (<Button inline type="primary" onClick={this.onClick}>새로운 광고 등록</Button>)
+        }
+
+        return (<Button inline type="primary" onClick={this.onCreate}>광고등록</Button>)
     }
 
     renderHeader(){
@@ -244,7 +265,7 @@ class ADList extends React.Component {
 
         return(
             <List.Item
-                extra={(<Button inline type="primary" onClick={this.onCreate}>광고등록</Button>)}
+                extra={this.renderButton()}
                 align="middle"
             >
                 등록된 광고 : {`${service.getValue(list, 'length', 0)} / 10`}
@@ -260,7 +281,7 @@ class ADList extends React.Component {
             <div className="list-wrap ad-wrap">
                 <List
                     className="ad-list"
-                    renderHeader={this.renderHeader}
+                    renderHeader={this.renderHeader()}
                 >
                     {this.renderList()}
                 </List>
@@ -284,4 +305,4 @@ class ADList extends React.Component {
     }
 }
 
-export default createForm()(connect(mapStateToProps, mapDispatchProps)(ADList));
+export default createForm()(connect(mapStateToProps, mapDispatchProps)(ADListSponsor));

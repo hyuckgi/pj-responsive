@@ -13,31 +13,35 @@ import BlankImage from './BlankImage';
 import { CommonSlider } from './slider';
 import { ListTop, List as StoryList } from './list';
 import { Report } from './report';
-import { List as ADList } from './sponsor';
+import { List as ADListUser } from './sponsor';
 import { TableList } from './table';
+import { ADListSponsor } from './ad';
 
 
 export{
     CommonSlider,
     CommonEditor,
-    CertifyPhone,
-    CustomIcon,
-    Buttons,
-    ButtonWrapper,
-    Agreement,
-    CertifyButton,
-    SelectCountry,
-    CustomPicker,
-    AccountContainer,
+    ADListSponsor,
     DesktopLayout,
     MobileLayout,
     FooterUtil,
     CommentList,
     Comment,
     BlankImage,
-    ListTop,
     Report,
-    ADList,
+
+    CertifyPhone,
+    CustomIcon,
+    Buttons,
+    ButtonWrapper,
+    SelectCountry,
+
+    Agreement,
+    CertifyButton,
+    CustomPicker,
+    AccountContainer,
+    ListTop,
+    ADListUser,
     TableList,
     StoryList,
 }
