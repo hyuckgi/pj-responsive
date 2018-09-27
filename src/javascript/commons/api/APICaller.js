@@ -1,5 +1,4 @@
 import axios from 'axios';
-import Async from './Async';
 import {  service, mock } from '../configs';
 import SessionService from '../configs/security/SessionService';
 import queryString from 'query-string';
@@ -172,58 +171,6 @@ const jsonToParams = (obj = {}) => {
     }, '');
 }
 
-class APIMonitor {
-	static initialize() {
-		this._errorTime = null;
-		this._isLive = true;
-
-		this.timerGate();
-	}
-
-	static timerGate() {
-		if (this.instanceTimer) {
-			clearTimeout(this.instanceTimer);
-			this.instanceTimer = undefined;
-		}
-		this.instanceTimer = setTimeout(() => {
-			this.instanceTimer = undefined;
-			APIMonitor.timerHealthCheck();
-		}, config.healthCheckTime);
-	}
-	static timerHealthCheck() {
-		if (config.caching === true) {
-			const fullUrl = getMakeURL('/health.txt');
-			axios.get(fullUrl)
-				.then((response) => {
-					this._isLive = true;
-					return true;
-				})
-				.catch((e) => {
-					if (e.message === 'Network error') {
-						this._isLive = false;
-						this.networkError();
-					}
-					return false;
-				})
-				.then((result) => {
-					this.timerGate();
-				});
-		}
-	}
-	static networkError() {
-		this._errorTime = Date.now();
-		this._isLive = false;
-	}
-
-	static get isLive() {
-		return this._isLive;
-	}
-
-	static defaults = {
-		set healthCheckTime(value) {config.healthCheckTime = value;}
-	}
-}
-
 class APICaller {
 	static post(url, params = {}, options = {}, isPlainAxios = false, notToConvert = false) {
 		const fullUrl = getMakeURL(url);
@@ -260,78 +207,12 @@ class APICaller {
 			.then(docs => docsToCamelCase(docs, params))
             .catch((err) => errorModal(err, url, params));
 	}
-	static getCache(url) {
-		return Async(function* (url) {
-			let result;
-			const cacheData = sessionStorage.getItem(url);
-			if (cacheData) {
-				result = JSON.parse(cacheData);
-				if (Date.now() - result.time > (60 * 60 * 1000) ) {
-					result = undefined;
-				}
-			}
-			if (!result) {
-				result = yield APICaller.get(url);
-				result.time = Date.now();
-				sessionStorage.setItem(url, JSON.stringify(result));
-			}
-			return result;
-		}, url);
-	}
 	static all(list) {
 		return axios.all(list)
             .then(axios.spread(function(...response) {
 			    return {...response};
 		    }));
 	}
-	static defaults = {
-		set debug(value) { config.debug = value; },
-		get debug() { return config.debug },
-
-		set caching(value) {
-			if (config.offlineMode === false) {
-				config.caching = value;
-			} else {
-				config.caching = true;
-			}
-			if (config.caching === true) {
-				APIMonitor.initialize();
-			}
-		},
-		get caching() { return config.caching; },
-
-		set offlineMode(value) {
-			config.offlineMode = value;
-			if (value === true) {
-				this.defaults.caching = true;
-			}
-		},
-		get offlineMode() { return config.offlineMode; },
-
-		set timeout(value) { axios.defaults.timeout = value; },
-		get timeout() { return axios.defaults.timeout; },
-
-		set hostName(value) { config.hostName = value;},
-		get hostName() { return APIHost}
-    };
-    static upload(file, option = {}) {
-        console.log("file", file);
-        const options = {
-            ...option,
-            // headers: {
-    		// 	'X-Auth-Token' : localStorage.getItem('token'),
-            //     'Content-Type' : 'multipart/form-data',
-    		// },
-            // withCredentials: false
-        }
-
-        const formData = new FormData();
-        formData.append('file', file);
-        formData.append('filename', file.name);
-        formData.append('type', 11);
-
-        return APICaller.post('/api/file/upload', formData, options);
-    }
 }
 
 // if (process.env.NODE_ENV !== 'production') {
@@ -377,4 +258,4 @@ const upload = {
 };
 
 export default APICaller
-export {APIMonitor, APICaller, APIHost, axios, upload}
+export {APICaller, axios, upload}

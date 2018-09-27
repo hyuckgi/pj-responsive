@@ -1,9 +1,10 @@
 import ListTop from './ListTop';
-import List from './List';
 import ItemTop from './ItemTop';
+
+import List from './List';
 
 export {
     ListTop,
-    List,
-    ItemTop
+    ItemTop,
+    List
 }

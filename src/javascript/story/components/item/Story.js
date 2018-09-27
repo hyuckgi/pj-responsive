@@ -85,7 +85,7 @@ class Story extends React.Component {
                     const newStyle = {
                         ...style,
                         top: 'auto',
-                        bottom : 0,
+                        bottom : 10,
                     }
                     return(
                         <div style={{ ...newStyle, zIndex: 100 }}>

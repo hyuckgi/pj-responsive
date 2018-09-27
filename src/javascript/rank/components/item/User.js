@@ -26,7 +26,7 @@ const mapStateToProps = ({fetch}) => {
 };
 
 const mapDispatchProps = dispatch => ({
-    getItem :(url) => dispatch(fetch.get(url)),
+    getItem :(url, params) => dispatch(fetch.get(url, params)),
 });
 
 class User extends React.Component {
@@ -49,8 +49,9 @@ class User extends React.Component {
 
     getItem(){
         const { userNo } = this.state;
+        const obj = api.getDonate(userNo);
 
-        return this.props.getItem(...api.getDonate(userNo));
+        return this.props.getItem(obj.url, obj.params);
     }
 
     componentDidUpdate(prevProps, prevState) {

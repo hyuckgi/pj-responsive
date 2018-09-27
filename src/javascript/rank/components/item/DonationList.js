@@ -2,9 +2,10 @@ import React from 'react';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import { push } from 'react-router-redux';
 
 import { fetch } from '../../../redux/actions';
-import { api, service, columns, values } from '../../../commons/configs';
+import { api, service, columns, values, path } from '../../../commons/configs';
 
 import { List } from '../common';
 import { Avatar } from 'antd';
@@ -12,8 +13,8 @@ import { Avatar } from 'antd';
 const donationList = columns.donationList;
 
 const mapStateToProps = ({fetch}) => {
-    const res = service.getValue(fetch, 'multipleList.donationList', {});
-    const list = service.getValue(res, 'list', []);
+    const resultObj = service.getValue(fetch, 'multipleList.donationList', {});
+    const list = service.getValue(resultObj, 'list', []);
     const dataSource = list.length && list.map((item, inx) => {
         item = {
             ...item,
@@ -24,18 +25,22 @@ const mapStateToProps = ({fetch}) => {
         return item;
     });
 
-    const currentPage = service.getValue(fetch, 'multipleList.donationList.page', 1);
-    const makeSource = {count : list.length, results : dataSource };
+    const makeSource = {
+        count : service.getValue(resultObj, 'totalSize', list.length),
+        results : dataSource,
+        pageSize : service.getValue(resultObj, 'size', 10),
+        current : service.getValue(resultObj, 'page', 10)
+    };
     const data = service.makeList(makeSource);
 
     return {
-        data,
-        currentPage
+        data
     }
 };
 
 const mapDispatchProps = dispatch => ({
     multipleList: (list) => dispatch(fetch.multipleList(list)),
+    move: (location) => dispatch(push(location)),
 });
 
 
@@ -50,8 +55,18 @@ class DonationList extends React.Component {
             userNo : service.getValue(this.props, 'match.params.id', false)
         };
 
+        this.search = this.search.bind(this);
+
         this.getList = this.getList.bind(this);
         this.onEvent = this.onEvent.bind(this);
+    }
+
+    search(params) {
+        // const type = service.getValue(this.props, 'match.params.type', false);
+        //
+        // if(type){
+        //     this.props.move(path.fullList(`${path.rankList}/${type}`, {...params}));
+        // }
     }
 
     componentDidMount() {

@@ -79,6 +79,7 @@ export const mock = {
                 "totalDonation": 3000000,
                 "rankerList": [
                     {
+                        "userNo": 100000111,
                         "rankTerm": "month",
                         "userId": "사용자 랭커_1",
                         "profileUrl": "https://picsum.photos/480/320?random",
@@ -86,6 +87,7 @@ export const mock = {
                         "totalDonation": 10000000
                     },
                     {
+                        "userNo": 100000222,
                         "rankTerm": "year",
                         "userId": "사용자 랭커_2",
                         "profileUrl": "https://picsum.photos/480/320?random",
@@ -93,6 +95,7 @@ export const mock = {
                         "totalDonation": 20000000000
                     },
                     {
+                        "userNo": 100000333,
                         "rankTerm": "week",
                         "userId": "사용자 랭커_3",
                         "profileUrl": "https://picsum.photos/480/320?random",

@@ -1,7 +1,6 @@
 import CommonEditor from './CommonEditor';
 import CustomIcon from './CustomIcon';
-import CertifyPhone from './CertifyPhone';
-import { ButtonWrapper, CertifyButton, Buttons } from './buttons';
+import { ButtonWrapper, Buttons } from './buttons';
 import { Agreement } from './agree';
 import { SelectCountry } from './country';
 import { CustomPicker } from './picker';
@@ -30,14 +29,12 @@ export{
     BlankImage,
     Report,
 
-    CertifyPhone,
     CustomIcon,
     Buttons,
     ButtonWrapper,
     SelectCountry,
 
     Agreement,
-    CertifyButton,
     CustomPicker,
     AccountContainer,
     ListTop,

@@ -25,7 +25,7 @@ const mapStateToProps = ({fetch}) => {
         }
         return item;
     });
-    const makeSource = {count : service.getValue(resultObj, 'totalSize', list.length), results : dataSource, pageSize : service.getValue(resultObj, 'size', 10) };
+    const makeSource = {count : service.getValue(resultObj, 'totalSize', list.length), results : dataSource, pageSize : service.getValue(resultObj, 'size', 10), current : service.getValue(resultObj, 'page', 10)};
     const data = service.makeList(makeSource);
 
     return {

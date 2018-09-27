@@ -2,13 +2,14 @@ import React from 'react';
 import { withRouter } from 'react-router';
 
 import { service } from '../../../commons/configs';
-import { DesktopLayout, MobileLayout } from '../../../commons/components';
+import { DesktopLayout, MobileLayout, TableList } from '../../../commons/components';
 
 import { Table, Select } from 'antd';
 import { Flex } from 'antd-mobile';
 
-
 const Option = Select.Option;
+
+
 
 class List extends React.Component {
 
@@ -89,9 +90,14 @@ class List extends React.Component {
         )
     }
 
+    onEvents(params){
+        const { events, payload } = params;
+
+        console.log('params', params);
+    }
+
     render() {
         const { data, columns, title, size } = this.props;
-        const { list, pagination } = data;
 
         return (
             <div className="rank-list">
@@ -103,19 +109,11 @@ class List extends React.Component {
                         {this.renderSelect()}
                     </Flex.Item>
                 </Flex>
-                <DesktopLayout>
-                    <Table
-                        size={size || 'middle'}
-                        columns={columns}
-                        dataSource={list}
-                        pagination={pagination}
-                        rowKey={this.getRowKey}
-                        onChange={this.onChange.bind(this)}
-                    />
-                </DesktopLayout>
-                <MobileLayout>
-                    mobile...wait
-                </MobileLayout>
+                <TableList
+                    data={data}
+                    columns={columns}
+                    onEvents={this.onEvents}
+                />
             </div>
         );
     }
