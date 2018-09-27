@@ -244,7 +244,29 @@ export const mock = {
                 "createDate": "2018년 4월 27일 10시 10분"
             }, count)
         }
+    },
+
+    '/api/sponsors/ad/page/1/size' : (count) => {
+        return {
+            "resultCode" : 200,
+            "resultMsg" : "SUCCESS",
+            "totalPage" : 1,
+            "totalSize" : count * 5,
+            "page" : 1,
+            "size" : count,
+            "list" : makeList({
+                "adNo": 1,
+                "name": "광고",
+                "videoUrl": "http://apidev.9spoons.com/api/file/1000000244/90/e2/b5/cbab3f14-5bba-f24b-fa256a90f64e1c5a",
+                "thumbnailUrl": "http://apidev.9spoons.com/api/file/1000000018/8c/c0/1d/098f6bcd-4621-d373-cade4e832627b4f6",
+                "playTime": 20000,
+                "isAdLink": "false",
+                "updateDate": "2018-06-17 22:48:09",
+                "createDate": "2018-06-17 22:48:09"
+            }, count)
+        }
     }
+
 
 
 }

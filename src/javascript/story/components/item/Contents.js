@@ -80,7 +80,7 @@ class Contents extends React.Component {
         }
         const newImages = images.reduce((result, item) => {
             const newItem = {
-                url : item,
+                imageUrl : item,
                 text : title,
             }
             result.push(newItem);
@@ -89,7 +89,7 @@ class Contents extends React.Component {
 
         return(
             <div className="img-area">
-                <CommonSlider data={newImages} />
+                <CommonSlider list={newImages} autoplay={false}/>
             </div>
         )
     }

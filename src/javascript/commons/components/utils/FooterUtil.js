@@ -11,7 +11,7 @@ import { service, api, path} from '../../configs';
 
 import { CustomIcon } from '../';
 
-import { Share, Sponsors } from './';
+import { Share, ADList as Sponsor } from './';
 import { Report, ADList } from '../';
 import { Flex, Button, Modal, Badge } from 'antd-mobile';
 
@@ -208,8 +208,8 @@ class FooterUtil extends React.Component {
         e && e.preventDefault();
         return this.onOpenModal({
             type : null,
-            title : '광고 연동',
-            contents : (<Sponsors />)
+            title : '스폰서 광고 연동',
+            contents : (<Sponsor />)
         })
     }
 
@@ -219,7 +219,7 @@ class FooterUtil extends React.Component {
         const isMobile = parser.getDevice().type;
         const likeCount = service.getValue(item, 'likeCount', 0);
         const modalType = service.getValue(modalContent, 'type', false);
-        const color = isLike ? '#2cb9cf' : '#fff';
+        const color = isLike ? '#eb1010' : '#ff6d59';
         const role = service.getValue(userInfo, 'role', 9);
 
         return (
@@ -230,26 +230,26 @@ class FooterUtil extends React.Component {
                             icon={(<CustomIcon type={isLike ? 'FaHeart' : 'FaHeartO'} roots="FontAwesome" style={{color : color}}/>)}
                             onClick={this.onClickLike}
                         >
-                            <Badge text={likeCount} style={{ marginLeft: 18, backgroundColor: color, color : '#ff5b05'}} overflowCount={99}><span style={{color:color}}>좋아요</span></Badge>
+                            <Badge text={likeCount} style={{ marginLeft: 18, backgroundColor: color, color : '#fff'}} overflowCount={99}><span style={{color:color}}>Likes</span></Badge>
                         </Button>
                     </Flex.Item>
                     <Flex.Item>
                         <Button
                             icon={(<CustomIcon type="MdShare"/>)}
                             onClick={this.onClickShare}
-                        >공유하기</Button>
+                        >Share</Button>
                     </Flex.Item>
                     <Flex.Item>
                         <Button
-                            icon={(<CustomIcon type="MdFavorite"/>)}
+                            icon={(<CustomIcon type="FaHeartbeat" roots="FontAwesome"/>)}
                             onClick={this.onClickDonate}
-                        >기부하기</Button>
+                        >Donation</Button>
                     </Flex.Item>
                     <Flex.Item className="report">
                         <Button
-                            icon={(<CustomIcon type="FaThumbsDown" roots="FontAwesome" />)}
+                            icon={(<CustomIcon type="FaBullhorn" roots="FontAwesome" />)}
                             onClick={this.onClickReport}
-                        >신고하기</Button>
+                        >Notify</Button>
                     </Flex.Item>
                     {role === 3
                         ? (
@@ -257,7 +257,7 @@ class FooterUtil extends React.Component {
                                 <Button
                                     icon={(<CustomIcon type="FaChain" roots="FontAwesome" />)}
                                     onClick={this.onSupport}
-                                >광고연동</Button>
+                                >Linkage</Button>
                             </Flex.Item>
                         )
                         : null

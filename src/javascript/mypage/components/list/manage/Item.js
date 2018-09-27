@@ -30,11 +30,18 @@ const formItemLayout = {
 class Item extends React.Component {
     constructor(props) {
         super(props);
+
+        const title = service.getValue(this.props, 'item.name', '');
+        const adNo = service.getValue(this.props, 'item.adNo', false);
+        const video = service.getValue(this.props, 'item.videoUrl', false) ? [{uid : adNo, key : adNo, adNo : adNo, name : title}] : [];
+
         this.state = {
-            videos : []
+            videos : video,
+            title : title,
         };
 
         this.onChange = this.onChange.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
 
     onChange(params){
@@ -43,10 +50,16 @@ class Item extends React.Component {
         });
     }
 
+    handleChange(e){
+        this.setState({
+            title : e.target.value
+        })
+    }
+
     render() {
         const { form } = this.props;
         const { getFieldDecorator } = form;
-        const { videos } = this.state;
+        const { videos, title } = this.state;
         const item = service.getValue(this.props, 'item', false);
 
         return (
@@ -58,9 +71,12 @@ class Item extends React.Component {
                     >
                         {getFieldDecorator(`title`, {
                             rules: [{ required: true, message: '제목을 입력하세요' }],
-                            initialValue : service.getValue(item, 'title', null),
+                            initialValue : title
                         })(
-                            <Input placeholder="제목을 입력하세요" />
+                            <Input
+                                onChange={this.handleChange}
+                                placeholder="제목을 입력하세요"
+                            />
                         )}
                     </FormItem>
                     <FormItem
@@ -72,16 +88,15 @@ class Item extends React.Component {
                             rules: [{ required: item ? false : true, message: '광고영상을 등록하세요' }],
                         })(
                             <Upload
-                                {...upload.getProps(videos)}
+                                {...upload}
                                 accept='video/*'
                                 fileList={videos}
                                 listType="text"
                                 onChange={this.onChange}
-                                data={{
-                                    type : 12,
-                                    file : videos[0],
-                                    filename : service.getValue(videos[0], 'name', '')
-                                }}
+                                data={(file) => ({
+                                    type : 22,
+                                    filename : service.getValue(file, 'name', '')
+                                })}
                             >
                                 <Button>
                                     <Icon type="upload" />Upload

@@ -95,10 +95,7 @@ class SupportList extends React.Component {
 
     getParamsFormLocation(){
         const { location } = this.props;
-        const test = service.toSearchParams(location.search);
-        console.log("test", test);
-
-        return test;
+        return service.toSearchParams(location.search);
     }
 
     getColumns(columns){

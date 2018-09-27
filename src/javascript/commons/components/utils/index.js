@@ -1,10 +1,12 @@
 import FooterUtil from './FooterUtil';
 import Share from './Share';
-import Sponsors from './Sponsors';
+import ADList from './ADList';
+import ADItem from './ADItem';
 
 
 export {
     FooterUtil,
     Share,
-    Sponsors,
+    ADList,
+    ADItem
 }

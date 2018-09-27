@@ -164,22 +164,19 @@ class ADList extends React.Component {
         return this.makeModal(messages);
     }
 
-    onSubmit(type = 'create'){
+    onSubmit(){
         const { form } = this.props;
-        const apiType = type === 'create' ? 'post' : 'put';
 
         form.validateFields((errors, value) => {
             console.log("errors", errors);
             console.log("value", value);
 
-
             if(!errors){
                 const adFileNo = service.getFileNo(service.getValue(value, 'adFile.fileList', [])).find(item => item);
-                // // TODO: put일 경우
                 const obj = api.postAD({title : value.title, adFileNo});
                 console.log("obj", obj);
 
-                return APICaller[apiType](obj.url, obj.params)
+                return APICaller.post(obj.url, obj.params)
                     .then((...args) => {
                         console.log("args", args);
                     })
@@ -197,7 +194,7 @@ class ADList extends React.Component {
 
         switch (type) {
             case 'create':
-                return this.onSubmit(type);
+                return this.onSubmit();
             default:
                 break;
         }

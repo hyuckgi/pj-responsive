@@ -10,6 +10,7 @@ import { api, service, values } from '../../../../commons/configs';
 import { CustomIcon } from '../../../../commons/components';
 
 import { Flex, Button, List, Modal } from 'antd-mobile';
+import { Modal as WebModal } from 'antd';
 
 import NoImg from '../../../../../resource/commons/no_image_available.png';
 import { Item } from './';
@@ -47,19 +48,52 @@ class ADItem extends React.Component {
         this.onPress = this.onPress.bind(this);
 
         this.onSubmitDelete = this.onSubmitDelete.bind(this);
+        this.onSubmitModify = this.onSubmitModify.bind(this);
+
+        this.errorToast = this.errorToast.bind(this);
+        this.makeModal = this.makeModal.bind(this);
     }
 
     onPress(){
         const type = service.getValue(this.state, 'modalContent.type', false);
-        console.log("type", type);
 
         this.onCloseModal();
         switch (type) {
             case 'delete':
                 return this.onSubmitDelete();
+            case 'modify':
+                return this.onSubmitModify();
             default:
                 break;
         }
+    }
+
+    makeModal(messages){
+        return WebModal.error({
+            title : '오류가 발생했습니다.',
+            content : (<div>
+                {messages.map((message, idx) => {
+                    return (<p key={idx}>{message}</p>)
+                })}
+            </div>),
+        });
+    }
+
+    errorToast(errors = null){
+        const { getFieldError } = this.props.form;
+        if(!errors){
+            return;
+        }
+
+        const messages = Object.keys(errors)
+            .map(item => {
+                return getFieldError(item);
+            })
+            .reduce((result, item, idx) => {
+                return result.concat(item);
+            }, []);
+
+        return this.makeModal(messages);
     }
 
     onSubmitDelete(){
@@ -76,6 +110,49 @@ class ADItem extends React.Component {
             };
             return;
         });
+    }
+
+    onSubmitModify(){
+        const { form, item } = this.props;
+        const adNo = service.getValue(item, 'adNo', false);
+
+        if(!adNo){
+            return;
+        }
+
+        form.validateFields((errors, value) => {
+            console.log("errors", errors);
+            console.log("value", value);
+
+            if(!errors){
+                const flag = service.getValue(value, 'adFile', false) ? true : false;
+
+                let newParams;
+                if(flag){
+                    newParams = {adFileNo : service.getFileNo(service.getValue(value, 'adFile.fileList', [])).find(item => item)};
+                }
+
+                newParams = {
+                    ...newParams,
+                    title : value.title,
+                    adNo,
+                }
+
+                const obj = api.postAD(newParams);
+                
+                return APICaller.put(obj.url, obj.params)
+                    .then((...args) => {
+                        console.log("args", args);
+                    })
+                    .catch((err) => {
+                        return this.errorToast(err)
+                    });
+
+            }
+
+            return this.errorToast(errors);
+        });
+
     }
 
     getFooter(){
@@ -135,12 +212,12 @@ class ADItem extends React.Component {
 
     onPreview(){
         const { item } = this.props;
-        const title = service.getValue(item, 'title', '');
-        const src = 'https://media.w3.org/2010/05/sintel/trailer_hd.mp4';
+        const name = service.getValue(item, 'name', '');
+        const src = service.getValue(item, 'videoUrl');
 
         return this.onOpenModal({
             type : 'preview',
-            title : `미리보기-${title}`,
+            title : `미리보기-${name}`,
             contents : (
                 <Player
                     preload={'auto'}
@@ -215,7 +292,7 @@ class ADItem extends React.Component {
             >
                 <Flex direction="column" align="start" className="ad-item">
                     <Flex.Item className="title-area">
-                        {service.getValue(item, 'title', '')}
+                        {service.getValue(item, 'name', '')}
                         <Button
                             icon={(<CustomIcon type="MdPlayCircleOutline" />)}
                             type="ghost"

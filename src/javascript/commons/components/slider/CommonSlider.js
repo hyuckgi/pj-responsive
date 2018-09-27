@@ -38,13 +38,13 @@ class CommonSlider extends React.Component {
     }
 
     render() {
-        const { list = [] } = this.props;
+        const { list = [], autoplay = true } = this.props;
 
         return (
             <div className="common-slider">
                 <DesktopLayout>
                     <WebCarousel
-                        autoplay
+                        autoplay={autoplay}
                     >
                         {list.map((item, inx) => {
                             return (
@@ -63,7 +63,7 @@ class CommonSlider extends React.Component {
                 </DesktopLayout>
                 <MobileLayout>
                     <MobileCarousel
-                        autoplay={true}
+                        autoplay={autoplay}
                         infinite
                         // beforeChange={(from, to) => console.log(`slide from ${from} to ${to}`)}
                         // afterChange={index => console.log('slide to', index)}

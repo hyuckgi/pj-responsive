@@ -168,18 +168,17 @@ class Step02 extends React.Component {
                             rules: [{ required: true, message: '대표사진을 첨부하세요' }],
                         })(
 							<Upload
-								{...upload.getProps(image)}
+                                {...upload}
 								accept='image/*'
                                 fileList={image}
 								listType="picture-card"
                                 onChange={(params) => this.onChange('image', params)}
                                 beforeUpload={(params) => this.beforeUpload('image', params)}
 								onRemove={(params) => this.onRemove('image', params)}
-                                data={{
+                                data={(file) => ({
                                     type : 11,
-									file : file['image'],
-									filename : service.getValue(file, 'image.name', '')
-                                }}
+                                    filename : service.getValue(file, 'name', '')
+                                })}
 							>
 								{image.length < 1
 									? (<div>

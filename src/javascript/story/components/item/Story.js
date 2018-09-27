@@ -15,8 +15,8 @@ import Review from './Review';
 const parser = new UAParser();
 
 const tabs = [
-    {title : '상세보기', child : (<Detail />), key : 1,},
-    {title : '후기보기', child : (<Review />), key : 2,},
+    {title : 'Detail', child : (<Detail />), key : 1,},
+    {title : 'Review', child : (<Review />), key : 2,},
 ];
 
 
@@ -80,7 +80,7 @@ class Story extends React.Component {
             return;
         }
         return (
-            <Sticky topOffset={0}>
+            <Sticky>
                 {({ style }) => {
                     const newStyle = {
                         ...style,
@@ -101,7 +101,7 @@ class Story extends React.Component {
         const type = service.getValue(device, 'type', false);
 
         return (
-            <Sticky topOffset={0}>
+            <Sticky>
                 {({ style }) => {
                     const newStyle = {
                         ...style,

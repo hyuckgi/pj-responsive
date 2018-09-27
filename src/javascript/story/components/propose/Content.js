@@ -137,18 +137,19 @@ class Content extends React.Component {
                         {getFieldDecorator(`contentsList.${inx}.images`, {
                         })(
                             <Upload
-                                {...upload.getProps(images)}
+                                {...upload}
                                 accept='image/*'
                                 fileList={images}
                                 listType="picture-card"
                                 onChange={(params) => this.onChange('images', params)}
                                 beforeUpload={(params) => this.beforeUpload('images', params)}
                                 onRemove={(params) => this.onRemove('images', params)}
-                                data={{
-                                    type : 11,
-                                    file : this.state.file['images'],
-                                    filename : service.getValue(this.state, 'file.images.name', '')
-                                }}
+                                data={(file) => (
+                                    {
+                                        type : 11,
+                                        filename : service.getValue(file, 'name', '')
+                                    }
+                                )}
                             >
                                 {images.length < 9
                                     ? (<div>
@@ -167,18 +168,17 @@ class Content extends React.Component {
                         {getFieldDecorator(`contentsList.${inx}.videos`, {
                         })(
                             <Upload
-                                {...upload.getProps(videos)}
+                                {...upload}
                                 accept='video/*'
                                 fileList={videos}
                                 listType="text"
                                 onChange={(params) => this.onChange('videos', params)}
                                 beforeUpload={(params) => this.beforeUpload('videos', params)}
                                 onRemove={(params) => this.onRemove('videos', params)}
-                                data={{
+                                data={(file) => ({
                                     type : 12,
-                                    file : this.state.file['videos'],
-                                    filename : service.getValue(this.state, 'file.videos.name', '')
-                                }}
+                                    filename : service.getValue(file, 'name', '')
+                                })}
                             >
                                 {videos.length < 4
                                     ? (<Button>

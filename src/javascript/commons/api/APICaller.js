@@ -315,6 +315,7 @@ class APICaller {
 		get hostName() { return APIHost}
     };
     static upload(file, option = {}) {
+        console.log("file", file);
         const options = {
             ...option,
             // headers: {
@@ -366,14 +367,12 @@ if (true) {
 }
 
 const upload = {
-    getProps : (fileList) => ({
-        action: `${APIHost}/api/file/upload`,
-        headers: {
-			'X-Auth-Token' : token,
-		},
-		showUploadList : {showPreviewIcon : false},
-        withCredentials: false
-    }),
+    action: `${APIHost}/api/file/upload`,
+    headers: {
+        'X-Auth-Token' : token,
+    },
+    showUploadList : {showPreviewIcon : false},
+    withCredentials: false,
     convertObject
 };
 
