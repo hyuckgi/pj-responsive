@@ -144,7 +144,7 @@ class Step02 extends React.Component {
 
     render() {
         const { form } = this.props;
-		const { file, image } = this.state;
+		const { image } = this.state;
         const { getFieldDecorator } = form;
 
         return (

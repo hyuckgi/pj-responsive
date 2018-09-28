@@ -27,7 +27,7 @@ const makeMock = (docs, url, params) => {
 		const query = queryString.parseUrl(url);
 		const sizeArr = query.url.split('/');
 		const sizeIdx = sizeArr.findIndex(item => item === 'size');
-		const count = query.url.indexOf("size") !== -1 ? parseInt(sizeArr[sizeIdx + 1]) : 10;
+		const count = query.url.indexOf("size") !== -1 ? parseInt(sizeArr[sizeIdx + 1], 10) : 10;
 		const newUrl = query.url.indexOf("size") !== -1 ? sizeArr.slice(0, -1).join("/") : query.url;
 		const newData = mock[newUrl] && mock[newUrl](count);
 

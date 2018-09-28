@@ -1,4 +1,6 @@
 .common-slider{
+    position:relative;
+
     .ant-carousel{
         .slick-list{
             .slick-slide{
@@ -38,6 +40,48 @@
         .slider-frame ~ div[class^="slider-decorator"]{
             bottom:auto !important;
             top : 190px;
+        }
+    }
+
+    .button-wrapper{
+        position:absolute;
+        top:-21px;
+        left:-70px;
+        right:-70px;
+        bottom:0px;
+        height:100%;
+        width:calc(100% + 140px);
+
+
+        & > .am-flexbox-item{
+            align-self:stretch;
+
+            .am-button{
+                z-index:5;
+                display:inline-block;
+                height:100%;
+                border:none;
+                padding:0;
+                display: flex;
+                flex-flow: row nowrap;
+                align-items: stretch;
+
+                &.btn-prev{
+                    float: left;
+                }
+
+                &.btn-next{
+                    float:right;
+                }
+
+                .am-icon{
+                    flex: 1 1 100%;
+                    align-self: center;
+                    width:70px;
+                    height:70px;
+                    margin-right:0;
+                }
+            }
         }
     }
 }

@@ -2,12 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
-import { DesktopLayout, MobileLayout } from '../response';
+import { DesktopLayout, MobileLayout, ButtonWrapper, CustomIcon } from '../';
 
 import { Carousel as WebCarousel } from 'antd';
 import { Carousel as MobileCarousel, Flex, Button } from 'antd-mobile';
 
 import { path, service } from '../../configs';
+import { FormButton } from '../../types';
 
 const mapStateToProps = ({fetch}) => {
 
@@ -25,6 +26,7 @@ class CommonSlider extends React.Component {
         super(props);
 
         this.onClick = this.onClick.bind(this);
+        this.getButtons = this.getButtons.bind(this);
     }
 
     onClick(item){
@@ -37,6 +39,24 @@ class CommonSlider extends React.Component {
         return this.props.move(path.moveItem(prefixUrl, item[`${prefix}No`] ));
     }
 
+    onClickButton(id){
+        switch (id) {
+            case FormButton.PREV:
+                return this.refs.webCarousel.prev();
+            case FormButton.NEXT:
+                return this.refs.webCarousel.next();
+            default:
+                break;
+        }
+    }
+
+    getButtons(){
+        return [
+            { id : FormButton.PREV, label : null, className : 'btn-prev', icon : (<CustomIcon type="MdChevronLeft" />), type : 'ghost' },
+            { id : FormButton.NEXT, label : null, className : 'btn-next', icon : (<CustomIcon type="MdChevronRight" />), type : 'ghost'}
+        ];
+    }
+
     render() {
         const { list = [], autoplay = true } = this.props;
 
@@ -44,7 +64,9 @@ class CommonSlider extends React.Component {
             <div className="common-slider">
                 <DesktopLayout>
                     <WebCarousel
+                        ref="webCarousel"
                         autoplay={autoplay}
+                        dots={false}
                     >
                         {list.map((item, inx) => {
                             return (
@@ -60,6 +82,7 @@ class CommonSlider extends React.Component {
                             )
                         })}
                     </WebCarousel>
+                    {list.length > 1 ? (<ButtonWrapper buttons={this.getButtons()} onClickButton={this.onClickButton.bind(this)}/>) : null }
                 </DesktopLayout>
                 <MobileLayout>
                     <MobileCarousel

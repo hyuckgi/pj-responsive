@@ -5,9 +5,7 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import queryString from 'query-string';
 
-import { DesktopLayout, MobileLayout } from '../../response';
-
-import { WhiteSpace, Flex, Button } from 'antd-mobile';
+import { Flex, Button } from 'antd-mobile';
 
 import { values, service, path } from '../../../configs';
 import { CustomPicker } from '../../';

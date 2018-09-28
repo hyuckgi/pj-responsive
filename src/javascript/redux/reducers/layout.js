@@ -25,15 +25,15 @@ const list = [
     {id: '4020200', name: 'Policy', level: 2, link : '/service/rules/policy', parent: '4020000'},
 ];
 
-const masterList = [
-    {id: '8000000', name: '시스템 관리', link: '/systems', level: 0, defaultLink: '/systems/version'},
-    {id: '8010000', name: '버전 관리', link: '/systems/version', level: 1, parent: '8000000'},
-    {id: '8020000', name: '화상수업 관리', link: '/systems/web-lesson', level: 1, parent: '8000000'},
-    {id: '8030000', name: 'CDN 퍼지', link: '/systems/purge', level: 1, parent: '8000000'},
-    {id: '8040000', name: '관리자 비밀번호', link: '/systems/password', level: 1, parent: '8000000'},
-
-    {id: '-1000000', name: '마이페이지', link: '/home/profile', level: 1},
-];
+// const masterList = [
+//     {id: '8000000', name: '시스템 관리', link: '/systems', level: 0, defaultLink: '/systems/version'},
+//     {id: '8010000', name: '버전 관리', link: '/systems/version', level: 1, parent: '8000000'},
+//     {id: '8020000', name: '화상수업 관리', link: '/systems/web-lesson', level: 1, parent: '8000000'},
+//     {id: '8030000', name: 'CDN 퍼지', link: '/systems/purge', level: 1, parent: '8000000'},
+//     {id: '8040000', name: '관리자 비밀번호', link: '/systems/password', level: 1, parent: '8000000'},
+//
+//     {id: '-1000000', name: '마이페이지', link: '/home/profile', level: 1},
+// ];
 
 const mypageMenus = [
     {id: '400000000', name: 'Mypage', link : '/mypage/list', defaultLink : '/mypage/list/support', level: 1, hasChild : true },

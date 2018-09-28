@@ -4,7 +4,7 @@ import { push } from 'react-router-redux';
 
 import { Card, Progress } from 'antd';
 
-import { values, service, path } from '../../../configs';
+import { service, path } from '../../../configs';
 
 import { BlankImage } from '../../';
 
@@ -42,7 +42,6 @@ class Story extends React.Component {
     }
 
     renderProgressBar(status){
-        const { platform } = this.props;
         if(!status || status === 1){
             return (<div></div>);
         }

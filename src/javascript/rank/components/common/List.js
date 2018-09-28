@@ -89,7 +89,7 @@ class List extends React.Component {
     }
 
     render() {
-        const { data, columns, title, size } = this.props;
+        const { data, columns, title } = this.props;
 
         return (
             <div className="rank-list">

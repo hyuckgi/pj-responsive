@@ -5,7 +5,7 @@ import { DesktopLayout, MobileLayout } from '../../response';
 
 import { Row, Col } from 'antd';
 
-import { values, service } from '../../../configs';
+import { service } from '../../../configs';
 import Story from './Story';
 
 class List extends React.Component {
