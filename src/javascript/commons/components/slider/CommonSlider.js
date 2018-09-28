@@ -5,7 +5,7 @@ import { push } from 'react-router-redux';
 import { DesktopLayout, MobileLayout, ButtonWrapper, CustomIcon } from '../';
 
 import { Carousel as WebCarousel } from 'antd';
-import { Carousel as MobileCarousel, Flex, Button } from 'antd-mobile';
+import { Carousel as MobileCarousel, Flex } from 'antd-mobile';
 
 import { path, service } from '../../configs';
 import { FormButton } from '../../types';
