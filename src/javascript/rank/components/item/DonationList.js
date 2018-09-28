@@ -58,7 +58,7 @@ class DonationList extends React.Component {
         this.search = this.search.bind(this);
 
         this.getList = this.getList.bind(this);
-        this.onEvent = this.onEvent.bind(this);
+        this.onEvents = this.onEvents.bind(this);
     }
 
     search(params) {
@@ -87,7 +87,7 @@ class DonationList extends React.Component {
         }
     }
 
-    onEvent(params){
+    onEvents(params){
 
         console.log("params", params);
         // TODO 리스트 pagination
@@ -114,10 +114,12 @@ class DonationList extends React.Component {
 
     getColumns(columns){
         return columns.map(column => {
-            if(column.dataIndex === 'storyTitle'){
+            if(column.dataIndex === 'thumbnailUrl'){
                 column.render = (text, item) => {
-                    const src = service.getValue(item, 'thumbnailUrl', false);
-                    return (<span>{src ? <Avatar src={src} style={{marginRight : 15}}/> : null }{text}</span>)
+                    if(text){
+                        return (<Avatar src={text} style={{marginRight : 15}}/>)
+                    }
+                    return null;
                 }
             }
             return column;
@@ -139,7 +141,7 @@ class DonationList extends React.Component {
                 data={data}
                 title='기부내역'
                 columns={this.getColumns(donationList)}
-                onEvent={this.onEvent}
+                onEvents={this.onEvents}
             />
         );
     }

@@ -51,7 +51,7 @@ class ProposeList extends React.Component {
         };
 
         this.getList = this.getList.bind(this);
-        this.onEvent = this.onEvent.bind(this);
+        this.onEvents = this.onEvents.bind(this);
     }
 
     componentDidMount() {
@@ -72,7 +72,7 @@ class ProposeList extends React.Component {
         }
     }
 
-    onEvent(params){
+    onEvents(params){
 
         console.log("params", params);
         // TODO 리스트 pagination
@@ -124,7 +124,7 @@ class ProposeList extends React.Component {
                 data={data}
                 title='스토리 제안 내역'
                 columns={this.getColumns(proposeList)}
-                onEvent={this.onEvent}
+                onEvents={this.onEvents}
             />
         );
     }

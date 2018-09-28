@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 
-import { DesktopLayout, MobileLayout } from '../';
+import { DesktopLayout, MobileLayout } from '../../';
 
 import { Table } from 'antd';
 
@@ -26,13 +26,14 @@ class TableList extends React.Component {
     }
 
     render() {
-        const { data, columns } = this.props;
+        const { data, columns, size = 'middle'} = this.props;
         const { list, pagination } = data;
 
         return (
-            <div>
+            <div className="table-list">
                 <DesktopLayout>
                     <Table
+                        size={size}
                         columns={columns}
                         dataSource={list}
                         pagination={pagination}

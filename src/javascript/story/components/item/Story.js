@@ -37,7 +37,6 @@ class Story extends React.Component {
     constructor(props) {
         super(props);
 
-
         this.getItem = this.getItem.bind(this);
         this.renderContent = this.renderContent.bind(this);
         this.renderUtils = this.renderUtils.bind(this);

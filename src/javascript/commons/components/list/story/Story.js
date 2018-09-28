@@ -2,13 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
-import { Card as WebCard, Progress as WebProgress } from 'antd';
-import { Card as MobileCard, WhiteSpace } from 'antd-mobile';
+import { Card, Progress } from 'antd';
 
+import { values, service, path } from '../../../configs';
 
-import { values, service, path } from '../../configs';
-
-import { BlankImage } from '../';
+import { BlankImage } from '../../';
 
 const mapStateToProps = ({layout, router}) => {
     const pathname = service.getValue(router, 'location.pathname', false);
@@ -22,7 +20,7 @@ const mapDispatchProps = dispatch => ({
     move: (location) => dispatch(push(location)),
 });
 
-class Item extends React.Component {
+class Story extends React.Component {
 
     constructor(props) {
         super(props);
@@ -30,7 +28,6 @@ class Item extends React.Component {
         this.renderDescription = this.renderDescription.bind(this);
         this.renderDonation = this.renderDonation.bind(this);
         this.renderProgressBar = this.renderProgressBar.bind(this);
-
     }
 
     onClick(item, e){
@@ -50,11 +47,9 @@ class Item extends React.Component {
             return (<div></div>);
         }
 
-        if(platform === values.platform.PC){
-            return(
-                <WebProgress percent={50} showInfo={false} status={status === 2 ? 'active' : 'normal'} size='small'/>
-            )
-        }
+        return(
+            <Progress percent={50} showInfo={false} status={status === 2 ? 'active' : 'normal'} size='small'/>
+        )
     }
 
     renderText(status, item){
@@ -96,45 +91,24 @@ class Item extends React.Component {
     }
 
     render() {
-        const { item, platform } = this.props;
+        const { item } = this.props;
         const imgSrc = service.getValue(item, 'thumbnailUrl', false);
 
-        if(platform === values.platform.PC){
-            return(
-                <div className="item" onClick={this.onClick.bind(this, item)}>
-                     <WebCard
-                        hoverable
-                        cover={imgSrc ? <img alt={item.title} src={imgSrc} /> : <BlankImage />}
-                    >
-                        <WebCard.Meta
-                            title={item.title}
-                            description={this.renderDescription(item)}
-                        />
-                    </WebCard>
-                </div>
-            )
-        }
         return(
-            <div className="item">
-                <MobileCard
-                    full
-                    onClick={this.onClick.bind(this, item)}
+            <div className="list-item" onClick={this.onClick.bind(this, item)}>
+                 <Card
+                    hoverable
+                    cover={imgSrc ? <img alt={item.title} src={imgSrc} /> : <BlankImage />}
                 >
-                    <MobileCard.Header
+                    <Card.Meta
                         title={item.title}
-                        thumb={<span className="img-area"><img src={imgSrc} alt={item.title} /></span>}
-                        extra={<span>extra</span>}
+                        description={this.renderDescription(item)}
                     />
-                    <MobileCard.Body>
-                        <div>{item.descript}</div>
-                    </MobileCard.Body>
-                    <MobileCard.Footer content="footer" extra={<span>footer ds</span>}/>
-                </MobileCard>
-                <WhiteSpace size="lg" />
+                </Card>
             </div>
         )
     }
 
 }
 
-export default connect(mapStateToProps, mapDispatchProps)(Item);
+export default connect(mapStateToProps, mapDispatchProps)(Story);

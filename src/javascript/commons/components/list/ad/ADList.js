@@ -3,27 +3,25 @@ import { createForm } from 'rc-form';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
-import { APICaller } from '../../api';
-import { fetch } from '../../../redux/actions';
+import { APICaller } from '../../../api';
+import { fetch } from '../../../../redux/actions';
 
-import { api, service } from '../../configs';
+import { api, service } from '../../../configs';
 
 import { Button, List, Modal } from 'antd-mobile';
 import { Modal as WebModal } from 'antd';
 
 import UAParser from 'ua-parser-js';
 
-import { ADItemSponsor, Item } from './';
+import { ListItem, Item } from './';
 
 const parser = new UAParser();
 
 const mapStateToProps = ({fetch}) => {
-    const resultObj = service.getValue(fetch, 'multipleList.ADList', {});
-    const list = service.getValue(resultObj, 'list', []);
+    const list = service.getValue(fetch, 'multipleList.ADList.list', []);
 
     return {
-        resultObj,
-        list
+        list,
     }
 };
 
@@ -32,7 +30,7 @@ const mapDispatchProps = dispatch => ({
     move: (location) => dispatch(push(location)),
 });
 
-class ADListSponsor extends React.Component {
+class ADList extends React.Component {
 
     constructor(props) {
         super(props);
@@ -239,7 +237,7 @@ class ADListSponsor extends React.Component {
         }
 
         return list.map((item, idx) => {
-            return(<ADItemSponsor key={idx} item={item} onEvents={this.onEvents} />)
+            return(<ListItem key={idx} item={item} onEvents={this.onEvents} />)
         })
     }
 
@@ -250,9 +248,7 @@ class ADListSponsor extends React.Component {
 
     renderButton(){
         const { path } = this.props;
-
-        console.log("path", path);
-
+        
         if(path === 'story'){
             return (<Button inline type="primary" onClick={this.onClick}>새로운 광고 등록</Button>)
         }
@@ -305,4 +301,4 @@ class ADListSponsor extends React.Component {
     }
 }
 
-export default createForm()(connect(mapStateToProps, mapDispatchProps)(ADListSponsor));
+export default createForm()(connect(mapStateToProps, mapDispatchProps)(ADList));

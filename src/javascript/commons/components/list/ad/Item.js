@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { upload } from '../../api';
-import { service} from '../../configs';
+import { upload } from '../../../api';
+import { service} from '../../../configs';
 
 import { Form, Input, Button, Upload, Icon } from 'antd';
 

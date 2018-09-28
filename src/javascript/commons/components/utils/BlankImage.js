@@ -1,6 +1,6 @@
 import React from 'react';
 
-import NoImg from '../../../resource/commons/no_image_available.png';
+import NoImg from '../../../../resource/commons/no_image_available.png';
 
 class BlankImage extends React.Component {
 

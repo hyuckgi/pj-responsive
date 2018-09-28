@@ -11,7 +11,7 @@ import { service, api, path} from '../../configs';
 
 import { Flex, Button, Modal, Badge } from 'antd-mobile';
 
-import { CustomIcon, ADListUser, Report, ADListSponsor } from '../';
+import { CustomIcon, ADListUser, Report, ADList } from '../';
 import { Share } from './';
 
 const parser = new UAParser();
@@ -208,7 +208,7 @@ class FooterUtil extends React.Component {
         return this.onOpenModal({
             type : null,
             title : '스폰서 광고 연동',
-            contents : (<ADListSponsor path="story"/>)
+            contents : (<ADList path="story"/>)
         })
     }
 

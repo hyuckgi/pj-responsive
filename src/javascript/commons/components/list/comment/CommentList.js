@@ -1,12 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { FormMode } from '../../../commons/types';
+import { FormMode } from '../../../../commons/types';
 
-import { fetch } from '../../../redux/actions';
-import { service, api } from '../../../commons/configs';
+import { fetch } from '../../../../redux/actions';
+import { service, api } from '../../../../commons/configs';
+
+import { Button } from 'antd';
 
 import { Comment } from './';
-import { Button } from 'antd';
 
 const mapStateToProps = ({ fetch }) => {
     const isFetching = fetch.isFetching || false;

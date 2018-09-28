@@ -5,19 +5,19 @@ import moment from 'moment';
 import { Player, BigPlayButton } from 'video-react';
 import UAParser from 'ua-parser-js';
 
-import { APICaller } from '../../api';
-import { api, service, values } from '../../configs';
-import { CustomIcon } from '../../components';
+import { APICaller } from '../../../api';
+import { api, service, values } from '../../../configs';
+import { CustomIcon } from '../../../components';
 
 import { Flex, Button, List, Modal } from 'antd-mobile';
 import { Modal as WebModal } from 'antd';
 
-import NoImg from '../../../../resource/commons/no_image_available.png';
+import NoImg from '../../../../../resource/commons/no_image_available.png';
 import { Item } from './';
 
 const parser = new UAParser();
 
-class ADItemSponsor extends React.Component {
+class ListItem extends React.Component {
 
     constructor(props) {
         super(props);
@@ -332,4 +332,4 @@ class ADItemSponsor extends React.Component {
 
 }
 
-export default createForm()(ADItemSponsor);
+export default createForm()(ListItem);

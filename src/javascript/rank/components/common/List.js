@@ -2,14 +2,12 @@ import React from 'react';
 import { withRouter } from 'react-router';
 
 import { service } from '../../../commons/configs';
-import { DesktopLayout, MobileLayout, TableList } from '../../../commons/components';
+import { TableList } from '../../../commons/components';
 
-import { Table, Select } from 'antd';
+import { Select } from 'antd';
 import { Flex } from 'antd-mobile';
 
 const Option = Select.Option;
-
-
 
 class List extends React.Component {
 
@@ -90,12 +88,6 @@ class List extends React.Component {
         )
     }
 
-    onEvents(params){
-        const { events, payload } = params;
-
-        console.log('params', params);
-    }
-
     render() {
         const { data, columns, title, size } = this.props;
 
@@ -112,7 +104,7 @@ class List extends React.Component {
                 <TableList
                     data={data}
                     columns={columns}
-                    onEvents={this.onEvents}
+                    onEvents={this.props.onEvents}
                 />
             </div>
         );

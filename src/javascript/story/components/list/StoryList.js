@@ -2,13 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import queryString from 'query-string';
 
-import { ListTop, StoryList as List } from '../../../commons/components';
+import { StoryList as List, StoryListTop } from '../../../commons/components';
 
 import { fetch } from '../../../redux/actions';
 import { service, values, api, path } from '../../../commons/configs';
 
-
-import { WhiteSpace } from 'antd-mobile';
 import { Category } from './';
 
 const mapStateToProps = ({fetch}) => {
@@ -97,7 +95,7 @@ class StoryList extends React.Component {
         return (
             <div className='story-list-wrapper'>
                 {this.renderCategory()}
-                <ListTop order={order} onChange={this.onChangeParams} prefixUrl={path.storyList}/>
+                <StoryListTop order={order} onChange={this.onChangeParams} prefixUrl={path.storyList}/>
                 <List count={4} data={stories} prefixUrl={path.storyItem} prefix="story"/>
             </div>
 

@@ -5,16 +5,16 @@ import moment from 'moment';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
-import { APICaller } from '../../../commons/api';
+import { APICaller } from '../../../../commons/api';
 
 import { Avatar } from 'antd';
 import { Flex, Modal, Badge } from 'antd-mobile';
 
-import { service, api, values, path } from '../../../commons/configs';
-import { FormButton, FormMode } from '../../../commons/types';
-import { CustomIcon, CommonEditor } from '../../../commons/components';
+import { service, api, values, path } from '../../../../commons/configs';
+import { FormButton, FormMode } from '../../../../commons/types';
+import { CustomIcon, CommonEditor } from '../../../../commons/components';
 
-import { Report } from '../';
+import { Report } from '../../';
 
 
 const mapStateToProps = ({ fetch, security }) => {

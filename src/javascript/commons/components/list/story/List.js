@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { DesktopLayout, MobileLayout } from '../response';
+import { DesktopLayout, MobileLayout } from '../../response';
 
 import { Row, Col } from 'antd';
 
-import { values, service } from '../../configs';
+import { values, service } from '../../../configs';
 import Story from './Story';
 
 class List extends React.Component {

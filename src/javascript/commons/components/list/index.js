@@ -1,14 +1,13 @@
-import Item from './Item';
-import ItemList from './ItemList';
-import ListTop from './ListTop';
-
-import Story from './Story';
-import List from './List';
+import { List as StoryList, ListTop as StoryListTop } from './story';
+import { TableList } from './table';
+import { ADList } from './ad';
+import { CommentList, Comment } from './comment';
 
 export {
-    Item,
-    Story,
-    List,
-    ItemList,
-    ListTop
+    StoryList,
+    StoryListTop,
+    TableList,
+    ADList,
+    CommentList,
+    Comment
 }

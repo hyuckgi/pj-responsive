@@ -5,12 +5,12 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import queryString from 'query-string';
 
-import { DesktopLayout, MobileLayout } from '../response';
+import { DesktopLayout, MobileLayout } from '../../response';
 
 import { WhiteSpace, Flex, Button } from 'antd-mobile';
 
-import { values, service, path } from '../../configs';
-import { CustomPicker } from '../';
+import { values, service, path } from '../../../configs';
+import { CustomPicker } from '../../';
 
 const mapStateToProps = ({code, fetch}) => {
     const categories = service.getValue(code, 'categories', []);
