@@ -168,7 +168,7 @@ class Step02 extends React.Component {
                             rules: [{ required: true, message: '대표사진을 첨부하세요' }],
                         })(
 							<Upload
-                                {...upload}
+                                {...upload.getProps()}
 								accept='image/*'
                                 fileList={image}
 								listType="picture-card"

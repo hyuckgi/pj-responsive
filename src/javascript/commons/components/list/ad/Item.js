@@ -3,7 +3,7 @@ import React from 'react';
 import { upload } from '../../../api';
 import { service} from '../../../configs';
 
-import { Form, Input, Button, Upload, Icon } from 'antd';
+import { Form, Input, Button, Upload, Icon, Modal } from 'antd';
 
 const FormItem = Form.Item;
 
@@ -42,6 +42,8 @@ class Item extends React.Component {
 
         this.onChange = this.onChange.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.onError = this.onError.bind(this);
+        this.onClose = this.onClose.bind(this);
     }
 
     onChange(params){
@@ -54,6 +56,25 @@ class Item extends React.Component {
         this.setState({
             title : e.target.value
         })
+    }
+
+    onClose(){
+        const { onEvents } = this.props;
+        if(onEvents){
+            onEvents({
+                events : 'close',
+            });
+        }
+    }
+
+    onError(error, res, file){
+        const resMsg = service.getValue(res, 'result_msg', 'errors');
+
+        return Modal.warning({
+            title: '파일업로드 중 에러가 발생했습니다.',
+            content: resMsg,
+            onOk : this.onClose
+        });
     }
 
     render() {
@@ -88,7 +109,7 @@ class Item extends React.Component {
                             rules: [{ required: item ? false : true, message: '광고영상을 등록하세요' }],
                         })(
                             <Upload
-                                {...upload}
+                                {...upload.getProps()}
                                 accept='video/*'
                                 fileList={videos}
                                 listType="text"
@@ -97,6 +118,7 @@ class Item extends React.Component {
                                     type : 22,
                                     filename : service.getValue(file, 'name', '')
                                 })}
+                                onError={this.onError}
                             >
                                 <Button>
                                     <Icon type="upload" />Upload

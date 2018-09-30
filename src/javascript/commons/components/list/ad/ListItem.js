@@ -65,6 +65,8 @@ class ListItem extends React.Component {
         this.makeModal = this.makeModal.bind(this);
 
         this.onLink = this.onLink.bind(this);
+
+        this.onEvents = this.onEvents.bind(this);
     }
 
     onPress(){
@@ -232,6 +234,17 @@ class ListItem extends React.Component {
         });
     }
 
+    onEvents(params){
+        const { events } = params;
+
+        switch (events) {
+            case 'close' :
+                this.onCloseModal();
+            default:
+                break;
+        }
+    }
+
     getModalContents(){
         const { modalContent } = this.state;
         return modalContent.contents;
@@ -247,7 +260,7 @@ class ListItem extends React.Component {
         return this.onOpenModal({
             type: 'modify',
             title : '광고 수정',
-            contents : (<Item form={form} item={item}/>)
+            contents : (<Item form={form} item={item} onEvents={this.onEvents}/>)
         });
     }
 

@@ -85,6 +85,8 @@ class ADList extends React.Component {
         switch (events) {
             case 'update':
                 return this.getList();
+            case 'close' :
+                return this.onCloseModal();
             default:
                 break;
         }
@@ -97,7 +99,7 @@ class ADList extends React.Component {
         return this.onOpenModal({
             type: 'create',
             title : '광고 등록',
-            contents : (<Item form={form} />)
+            contents : (<Item form={form} onEvents={this.onEvents} />)
         });
     }
 

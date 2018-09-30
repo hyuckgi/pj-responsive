@@ -137,7 +137,7 @@ class Content extends React.Component {
                         {getFieldDecorator(`contentsList.${inx}.images`, {
                         })(
                             <Upload
-                                {...upload}
+                                {...upload.getProps()}
                                 accept='image/*'
                                 fileList={images}
                                 listType="picture-card"
@@ -168,7 +168,7 @@ class Content extends React.Component {
                         {getFieldDecorator(`contentsList.${inx}.videos`, {
                         })(
                             <Upload
-                                {...upload}
+                                {...upload.getProps()}
                                 accept='video/*'
                                 fileList={videos}
                                 listType="text"

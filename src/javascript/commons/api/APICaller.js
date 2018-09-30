@@ -3,14 +3,20 @@ import {  service, mock } from '../configs';
 import SessionService from '../configs/security/SessionService';
 import queryString from 'query-string';
 
-const userData = SessionService.userInfo;
-const token = service.getValue(userData, 'token', '');
+
+const getToken = () => {
+    const userData = SessionService.userInfo;
+    const token = service.getValue(userData, 'token', '');
+
+    return token;
+}
 
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 axios.defaults.withCredentials = false;
-axios.defaults.headers.common['X-Auth-Token'] = token;
+axios.defaults.headers.common['X-Auth-Token'] = getToken();
 axios.defaults.headers.common['Accept-Language'] = window.navigator.language || 'en-US';
 axios.defaults.headers.common['Content-Type'] = 'application/json';
+
 
 const config = {
 	debug : false,
@@ -35,6 +41,15 @@ const makeMock = (docs, url, params) => {
 	}
 
 	return docs;
+}
+
+const onError = (error, res, file) => {
+    const errorCode = service.getValue(res, 'result_code', '');
+    const errorMsg = service.getValue(res, 'result_msg', false);
+    if(errorMsg){
+        window.alert(errorMsg);
+        return window.location.reload();
+    }
 }
 
 const errorModal = (err, url, params) => {
@@ -248,12 +263,16 @@ if (true) {
 }
 
 const upload = {
-    action: `${APIHost}/api/file/upload`,
-    headers: {
-        'X-Auth-Token' : token,
-    },
-    showUploadList : {showPreviewIcon : false},
-    withCredentials: false,
+    getProps : () => ({
+        action: `${APIHost}/api/file/upload`,
+        headers: {
+            'X-Auth-Token' : getToken(),
+            'Accept-Language' : window.navigator.language || 'en-US',
+        },
+        showUploadList : {showPreviewIcon : false},
+        withCredentials: false,
+        onError : onError,
+    }),
     convertObject
 };
 

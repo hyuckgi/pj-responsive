@@ -8,13 +8,12 @@ export const tag = (cookies) => {
         ];
         return APICaller.all(list.map(item => APICaller.get(item.url, item.params)))
             .then(docs => {
-                if(docs.status === 200){
-                    const data = Object.keys(docs).reduce((result, key) => {
-                        result[list[key].id] = docs[key].data;
-                        return result;
-                    }, {});
-                    dispatch(creator.code(data));
-                }
+                const result = docs || {};
+                const data = Object.keys(result).reduce((result, key) => {
+                    result[list[key].id] = docs[key].data;
+                    return result;
+                }, {});
+                dispatch(creator.code(data));
             })
             .then(docs => dispatch(creator.codeEnd()));
     };
