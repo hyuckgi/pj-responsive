@@ -36,7 +36,7 @@ class MainContainer extends React.Component {
     }
 
     getData(){
-        const story = api.getList({page : 1, size : 10, status: 2, order : 0});
+        const story = api.getList({page : 1, size : 10, status: 1, order : 0});
 
         return this.props.multipleList([
             {id : 'mainStory', url : story.url, params : story.params },
@@ -49,7 +49,7 @@ class MainContainer extends React.Component {
 
         return (
             <div className="main-container">
-                <CommonSlider list={storyList} prefixUrl={path.storyItem} prefix="story"/>
+                <CommonSlider list={storyList} prefixUrl={path.storyItem} prefix="story" path="main"/>
 
                 <div className="rank-wrapper" >
                     <Flex  align="start" >

@@ -87,14 +87,16 @@ export const api = {
         }
         return `/api/sponsor/donate/page/${page}/size/${size}`;
     },
-    // TODO: 임시 sponsor
-    // getADList :  ({page = 1, size = 10}) => `/api/sponsor/ad/page/${page}/size/${size}`,
     getADList :  ({page = 1, size = 10}) => `/api/sponsor/ad/page/${page}/size/${size}`,
     postAD : (params = null) => ({
         url : `/api/sponsor/ad`,
         params : {...params}
     }),
     deleteAD : (adNo) => `/api/sponsor/ad/${adNo}`,
+    linkAD : (params = null) => ({
+        url : '/api/sponsor/story/contract',
+        params : {...params}
+    }),
 
     // event & notice
     getEventList : ({status = 'going', page = 1, size = 10}) => `/api/event/status/${status}/page/${page}/size/${size}`,

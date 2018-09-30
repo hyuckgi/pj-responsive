@@ -58,7 +58,8 @@ class CommonSlider extends React.Component {
     }
 
     render() {
-        const { list = [], autoplay = true } = this.props;
+        const { list = [], autoplay = true, path = false} = this.props;
+        const isMain = path === 'main' ? true : false;
 
         return (
             <div className="common-slider">
@@ -66,7 +67,7 @@ class CommonSlider extends React.Component {
                     <WebCarousel
                         ref="webCarousel"
                         autoplay={autoplay}
-                        dots={false}
+                        dots={isMain}
                     >
                         {list.map((item, inx) => {
                             return (
@@ -82,7 +83,7 @@ class CommonSlider extends React.Component {
                             )
                         })}
                     </WebCarousel>
-                    {list.length > 1 ? (<ButtonWrapper buttons={this.getButtons()} onClickButton={this.onClickButton.bind(this)}/>) : null }
+                    {!isMain && list.length > 1 ? (<ButtonWrapper buttons={this.getButtons()} onClickButton={this.onClickButton.bind(this)}/>) : null }
                 </DesktopLayout>
                 <MobileLayout>
                     <MobileCarousel

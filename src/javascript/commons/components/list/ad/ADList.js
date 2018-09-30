@@ -119,13 +119,13 @@ class ADList extends React.Component {
     getClassName(){
         const isMobile = parser.getDevice().type;
         const madalType = service.getValue(this.state, 'modalContent.type', false);
-        const cln = 'ad-modal';
+        const classname = 'ad-modal';
 
         if(isMobile){
-            return `${cln} ${cln}-${madalType} ${cln}-mobile`;
+            return `${classname} ${classname}-${madalType} ${classname}-mobile`;
         }
 
-        return `${cln} ${cln}-${madalType}`;
+        return `${classname} ${classname}-${madalType}`;
     }
 
     getModalContents(){
@@ -224,7 +224,7 @@ class ADList extends React.Component {
     }
 
     renderList(){
-        const { list } = this.props;
+        const { list, path } = this.props;
 
         if(!list.length){
             return(
@@ -237,7 +237,7 @@ class ADList extends React.Component {
         }
 
         return list.map((item, idx) => {
-            return(<ListItem key={idx} item={item} onEvents={this.onEvents} />)
+            return(<ListItem key={idx} item={item} onEvents={this.onEvents} path={path}/>)
         })
     }
 
@@ -248,7 +248,7 @@ class ADList extends React.Component {
 
     renderButton(){
         const { path } = this.props;
-        
+
         if(path === 'story'){
             return (<Button inline type="primary" onClick={this.onClick}>새로운 광고 등록</Button>)
         }
