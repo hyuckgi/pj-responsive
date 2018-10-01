@@ -249,7 +249,7 @@ class ListItem extends React.Component {
 
         switch (events) {
             case 'close' :
-                this.onCloseModal();
+                return this.onCloseModal();
             default:
                 break;
         }

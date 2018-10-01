@@ -8,9 +8,8 @@ import { DesktopLayout, MobileLayout } from './response';
 import { FooterUtil, BlankImage, CustomIcon } from './utils';
 
 import { CommonSlider } from './slider';
-import { StoryListTop, StoryList, TableList, ADList,  CommentList, Comment } from './list';
+import { StoryListTop, StoryList, TableList, ADList,  CommentList, Comment, DonationList } from './list';
 import { Report } from './report';
-import { List as ADListUser } from './sponsor';
 
 
 export{
@@ -30,7 +29,9 @@ export{
     StoryList,
     StoryListTop,
     TableList,
+
     ADList,
+    DonationList,
 
     Buttons,
     ButtonWrapper,
@@ -38,5 +39,4 @@ export{
 
     Agreement,
     AccountContainer,
-    ADListUser,
 }

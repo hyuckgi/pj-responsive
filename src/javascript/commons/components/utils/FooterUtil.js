@@ -11,7 +11,7 @@ import { service, api, path} from '../../configs';
 
 import { Flex, Button, Modal, Badge } from 'antd-mobile';
 
-import { CustomIcon, ADListUser, Report, ADList } from '../';
+import { CustomIcon, DonationList, Report, ADList } from '../';
 import { Share } from './';
 
 const parser = new UAParser();
@@ -20,7 +20,7 @@ const mapStateToProps = ({ fetch, security }) => {
     const userInfo = security || {};
 
     return{
-        userInfo
+        userInfo,
     }
 }
 
@@ -129,7 +129,7 @@ class FooterUtil extends React.Component {
         return this.onOpenModal({
             type : null,
             title : '스폰서 광고 목록',
-            contents : (<ADListUser />)
+            contents : (<DonationList />)
         })
     }
 

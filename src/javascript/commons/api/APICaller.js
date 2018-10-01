@@ -44,7 +44,6 @@ const makeMock = (docs, url, params) => {
 }
 
 const onError = (error, res, file) => {
-    const errorCode = service.getValue(res, 'result_code', '');
     const errorMsg = service.getValue(res, 'result_msg', false);
     if(errorMsg){
         window.alert(errorMsg);

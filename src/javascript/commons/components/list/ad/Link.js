@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { List, InputItem, Flex } from 'antd-mobile';
+import { Flex } from 'antd-mobile';
 import { Form, InputNumber, Checkbox } from 'antd';
 
 import { service } from '../../../configs';
