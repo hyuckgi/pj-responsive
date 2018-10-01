@@ -64,7 +64,7 @@ class Video extends React.Component {
                 playsInline={true}
                 autoPlay={true}
             >
-                <source src={'http://apidev.9spoons.com/api/file/1000000298/7a/e6/23/cbab3f14-5bba-f24b-fa256a90f64e1c5a'} />
+                <source src={src} />
                 <BigPlayButton position="center" />
             </Player>
         );
