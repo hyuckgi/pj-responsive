@@ -4,6 +4,7 @@ import * as values from './values';
 import { path } from './path';
 import * as columns from './columns';
 import mock from './mock';
+import * as constants from './constants';
 
 
 export {
@@ -12,5 +13,6 @@ export {
     values,
     path,
     columns,
-    mock
+    mock,
+    constants
 };

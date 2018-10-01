@@ -194,8 +194,18 @@ class ListItem extends React.Component {
                 const obj = api.linkAD(newParams);
 
                 return APICaller.post(obj.url, obj.params)
-                    .then((...args) => {
-                        console.log("args", args);
+                    .then(({data}) => {
+                        const resultCode = service.getValue(data, 'resultCode', false);
+                        const resultMsg = service.getValue(data, 'resultMsg', '');
+
+                        if(resultCode === 200){
+                            return WebModal.success({
+                                title : '광고연동 요청성공',
+                                content : '계약서?',
+                                onOk : this.onLink,
+                            });
+                        }
+                        return this.makeModal([resultMsg]);
                     })
                     .catch((err) => {
                         return this.errorToast(err)
@@ -301,7 +311,6 @@ class ListItem extends React.Component {
     }
 
     onClickButton(id){
-        console.log("id", id);
         switch (id) {
             case FormButton.UPDATE:
                 return this.onModify();

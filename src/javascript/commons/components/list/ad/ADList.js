@@ -6,7 +6,7 @@ import { push } from 'react-router-redux';
 import { APICaller } from '../../../api';
 import { fetch } from '../../../../redux/actions';
 
-import { api, service } from '../../../configs';
+import { api, service, constants } from '../../../configs';
 
 import { Button, List, Modal } from 'antd-mobile';
 import { Modal as WebModal } from 'antd';
@@ -55,6 +55,7 @@ class ADList extends React.Component {
         this.onSubmit = this.onSubmit.bind(this);
         this.onCreate = this.onCreate.bind(this);
         this.onClick = this.onClick.bind(this);
+        this.onOk = this.onOk.bind(this);
 
         // modal
         this.onOpenModal = this.onOpenModal.bind(this);
@@ -168,21 +169,32 @@ class ADList extends React.Component {
         return this.makeModal(messages);
     }
 
+    onOk(){
+        this.onCloseModal();
+        this.onEvents({events : 'update'});
+    }
+
     onSubmit(){
         const { form } = this.props;
 
         form.validateFields((errors, value) => {
-            console.log("errors", errors);
-            console.log("value", value);
 
             if(!errors){
                 const adFileNo = service.getFileNo(service.getValue(value, 'adFile.fileList', [])).find(item => item);
                 const obj = api.postAD({title : value.title, adFileNo});
-                console.log("obj", obj);
 
                 return APICaller.post(obj.url, obj.params)
-                    .then((...args) => {
-                        console.log("args", args);
+                    .then(({data}) => {
+                        const resultCode = service.getValue(data, 'resultCode', false);
+                        const resultMsg = service.getValue(data, 'resultMsg', '')
+                        if(resultCode === 200){
+                            return WebModal.success({
+                                title : '광고 등록 성공',
+                                content : '광고가 등록되었습니다.',
+                                onOk : this.onOk,
+                            });
+                        }
+                        return this.makeModal([resultMsg]);
                     })
                     .catch((err) => {
                         return this.errorToast(err)
@@ -249,7 +261,11 @@ class ADList extends React.Component {
     }
 
     renderButton(){
-        const { path } = this.props;
+        const { path, list } = this.props;
+
+        if(list.length >= constants.AD_MAX_SIZE){
+            return;
+        }
 
         if(path === 'story'){
             return (<Button inline type="primary" onClick={this.onClick}>새로운 광고 등록</Button>)

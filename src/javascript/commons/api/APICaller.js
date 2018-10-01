@@ -78,11 +78,11 @@ const getAPIHost = () => {
 		if (config.hostName) {
 			return config.hostName;
 		}
-		return 'http://apidev.9spoons.com';
+		return 'https://apidev.9spoons.com';
 	} else if (process.env.NODE_ENV === 'test') {
 		return '';
 	} else {
-		return 'http://apidev.9spoons.com';
+		return 'https://apidev.9spoons.com';
 	}
 };
 
