@@ -55,6 +55,7 @@ class VideoPlayer extends React.Component {
             aspectRatio : "16:9",
             youtube : {
                 ytControls : 0,
+                origin : `https://${window.location.hostname}`
             },
             sources,
         }
