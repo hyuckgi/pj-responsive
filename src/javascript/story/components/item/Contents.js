@@ -1,13 +1,7 @@
 import React from 'react';
-import { Player, BigPlayButton } from 'video-react';
 
 import { service } from '../../../commons/configs';
-import { CommonEditor, CommonSlider } from '../../../commons/components';
-
-import UAParser from 'ua-parser-js';
-
-const parser = new UAParser();
-
+import { CommonEditor, CommonSlider, VideoPlayer } from '../../../commons/components';
 
 class Contents extends React.Component {
 
@@ -48,25 +42,11 @@ class Contents extends React.Component {
             <div className="video-area">
                 {
                     videos.map((item, idx) => {
-                        const os = parser.getOS();
-                        const src = os.name === 'iOS' ? service.getIosUrl(item) : item;
-                        const poster = os.name === 'iOS' ? service.getIosPoster(item) : '';
-                        const isVideo =  (/\.(mp4|avi|mpg|mpeg|mpe|wmv|asf|asx|flv|rm|mov|dat|webm|m3u8)$/i).test(src);
-
-                        if(!isVideo){
+                        if(!item){
                             return null;
                         }
-
                         return(
-                            <Player
-                                key={idx}
-                                preload={'auto'}
-                                poster={poster}
-                                playsInline={true}
-                            >
-                                <source src={src} />
-                                <BigPlayButton position="center" />
-                            </Player>
+                            <VideoPlayer url={item} key={idx} autoplay={false} />
                         )
                     })
                 }

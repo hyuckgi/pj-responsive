@@ -229,9 +229,7 @@ class DonationList extends React.Component {
     }
 
     renderList(){
-        const { list, path } = this.props;
-
-        console.log("list", list);
+        const { list } = this.props;
 
         if(!list.length){
             return(

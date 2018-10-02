@@ -515,6 +515,26 @@ html:not([data-scale]) .wink-mobile-wrap .am-button{
     }
 }
 
+.am-button{
+    cursor:pointer;
+}
+
+
+.video-wrapper{
+    .video-js{
+        .vjs-control{
+            &.vjs-button{
+                & > .vjs-icon-placeholder:before{
+                    line-height:2.2em;
+                }
+            }
+        }
+
+        .vjs-current-time{
+            display:block;
+        }
+    }
+}
 
 html:not([data-scale]) .app-container .am-list-body div:not(:last-child) .am-list-line::after,
 html:not([data-scale]) .app-container .am-accordion::before,

@@ -2,14 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { createForm } from 'rc-form';
 import moment from 'moment';
-
-import { Player, BigPlayButton } from 'video-react';
 import UAParser from 'ua-parser-js';
 
 import { APICaller } from '../../../api';
 import { api, service, values } from '../../../configs';
 import { FormButton } from '../../../types';
-import { CustomIcon, ButtonWrapper } from '../../../components';
+import { CustomIcon, ButtonWrapper, VideoPlayer } from '../../../components';
 
 import { Flex, Button, List, Modal } from 'antd-mobile';
 import { Modal as WebModal } from 'antd';
@@ -285,21 +283,12 @@ class ListItem extends React.Component {
     onPreview(){
         const { item } = this.props;
         const name = service.getValue(item, 'name', '');
-        const src = service.getValue(item, 'videoUrl');
+        const url = service.getValue(item, 'videoUrl');
 
         return this.onOpenModal({
             type : 'preview',
             title : `미리보기-${name}`,
-            contents : (
-                <Player
-                    preload={'auto'}
-                    playsInline={true}
-                    autoPlay={true}
-                >
-                    <source src={src} />
-                    <BigPlayButton position="center" />
-                </Player>
-            )
+            contents : (<VideoPlayer url={url} />),
         });
     }
 
