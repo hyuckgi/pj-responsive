@@ -82,8 +82,17 @@ class Item extends React.Component {
     }
 
     onEnded(){
-        const { story } = this.props;
+        const { story, item } = this.props;
+        const { visible } = this.state;
         const storyNo = service.getValue(story, 'storyNo', false);
+
+        if(visible){
+            WebModal.success({
+                title : '기부 성공',
+                content : `${service.getValue(item, 'donationPerTime', 0)}원을 기부했습니다.`,
+                onOk : this.onCloseModal
+            });
+        }
 
         console.log("onEnded");
         console.log("storyNo", storyNo);

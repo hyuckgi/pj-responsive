@@ -1,11 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
-
+import queryString from 'query-string';
 import { Tabs } from 'antd-mobile';
 import { Sticky } from 'react-sticky';
 
-import { service } from '../../../commons/configs';
+import { service, path } from '../../../commons/configs';
+
+const mobileLayout = [
+    {id: '1080000', name: 'Detail', link: '/story/item/detail', level: 1, },
+    {id: '1090000', name: 'Review', link: '/story/item/review', level: 1, },
+];
 
 const mapStateToProps = ({fetch}) => {
     return {
@@ -22,17 +27,35 @@ class GlobalNavigation extends React.Component {
     constructor(props) {
         super(props);
 
+        this.state = {
+            subMenu : [],
+        }
+
         this.renderTabBar = this.renderTabBar.bind(this);
         this.onChange = this.onChange.bind(this);
         this.renderSubTabBar = this.renderSubTabBar.bind(this);
         this.moveTab = this.moveTab.bind(this);
         this.onSwipe = this.onSwipe.bind(this);
         this.onChildChange = this.onChildChange.bind(this);
+
+        this.getSubMenu = this.getSubMenu.bind(this);
     }
 
     componentDidUpdate(prevProps, prevState) {
         if(prevProps.swipeObj !== this.props.swipeObj){
             return this.onSwipe(this.props.swipeObj);
+        }
+    }
+
+    componentDidMount() {
+        const { subMenu, currentPath } = this.props;
+        this.getSubMenu(subMenu, currentPath)
+    }
+
+    componentWillReceiveProps(nextProps) {
+        const { location } = this.props;
+        if(JSON.parse(JSON.stringify(location)) !== JSON.parse(JSON.stringify(nextProps.location))){
+            this.getSubMenu(nextProps.subMenu, nextProps.currentPath)
         }
     }
 
@@ -139,7 +162,14 @@ class GlobalNavigation extends React.Component {
     }
 
     moveTab(layout){
+        const { location } = this.props;
         const link = service.getValue(layout, 'defaultLink', false) || service.getValue(layout, 'link', '/');
+
+        if(link.indexOf(path.storyItem) === 0){
+            const pathName = service.getValue(location, 'pathname', '').split('/');
+            return this.props.move(path.moveItemStory(layout.name.toLowerCase(), pathName[pathName.length - 2]))
+        }
+
         return this.props.move(link);
     }
 
@@ -152,13 +182,16 @@ class GlobalNavigation extends React.Component {
         );
     }
 
-    renderSubTab(subMenu){
+    renderSubTab(){
+        const { subMenu, subIndex } = this.state;
         const { currentPath } = this.props;
-        const subIndex = subMenu.findIndex(item => item.link === currentPath);
-
-        if(subIndex < 0){
+        if(!subMenu.length){
             return;
         }
+
+        // if(subIndex < 0){
+        //     return;
+        // }
 
         return(
             <div className="sub-navigations" >
@@ -168,8 +201,6 @@ class GlobalNavigation extends React.Component {
                     swipeable={false}
                     onChange={this.onChildChange}
                     renderTabBar={this.renderSubTabBar}
-                    prerenderingSiblingsNumber={0}
-                    destroyInactiveTab={true}
                     tabBarTextStyle={{fontSize:'12px'}}
                     tabBarBackgroundColor="#f7f8f9"
                 />
@@ -177,9 +208,25 @@ class GlobalNavigation extends React.Component {
         );
     }
 
-    renderTabBar(props) {
-        const { subMenu } = this.props;
+    getSubMenu(subMenu, currentPath){
+        let newSubMenu;
+        const flag = currentPath.indexOf(path.storyItem) === 0;
+        const pathName = currentPath.split('/');
 
+        if(flag){
+            newSubMenu = mobileLayout;
+
+        }else{
+            newSubMenu = subMenu;
+        }
+
+        this.setState({
+            subMenu : newSubMenu,
+            subIndex : flag ? (pathName[pathName.length - 3] === 'detail' ? 0 : 1) : newSubMenu.findIndex(item => item.link === currentPath)
+        })
+    }
+
+    renderTabBar(props) {
         return (
             <Sticky topOffset={70}>
                 {({style}) => {
@@ -191,7 +238,7 @@ class GlobalNavigation extends React.Component {
                                     renderTab={tab => this.renderTab(tab)}
                                 />
                             </div>
-                            {subMenu ? this.renderSubTab(subMenu) : null}
+                            {this.renderSubTab()}
                         </div>
                     );
                 }}

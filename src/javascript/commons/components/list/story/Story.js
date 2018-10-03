@@ -32,13 +32,9 @@ class Story extends React.Component {
 
     onClick(item, e){
         e.preventDefault();
-        const { prefixUrl, prefix } = this.props;
+        const { prefix } = this.props;
 
-        if(!prefixUrl){
-            return;
-        }
-
-        return this.props.move(path.moveItem(prefixUrl, item[`${prefix}No`] ));
+        return this.props.move(path.moveItemStory('detail', item[`${prefix}No`]));
     }
 
     renderProgressBar(status){

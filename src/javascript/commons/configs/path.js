@@ -14,14 +14,16 @@ export const path = {
     list: (prefix, params = null) => {
         return `${prefix}/:type/${service.toQuery(params)}`;
     },
-    item : (prefix) => (`${prefix}/:id/:mode`),
+    itemStory : `/story/item/:page/:id/:mode`,
+    item : (prefix) => (`${prefix}/:id`),
     fullList : (prefix, params = null) => {
         return `${prefix}${service.toQuery(params)}`;
     },
 
     // move
     moveCate : (prefix, type, categoryNo = 0) => (`${prefix}/${type}?category=${categoryNo}`),
-    moveItem : (prefix, id, mode = 'read') => (`${prefix}/${id}/${mode}`),
+    moveItem : (prefix, id, params) => (`${prefix}/${id}/${service.toQuery(params)}`),
+    moveItemStory : (page = 'detail', id, mode = 'read') => (`/story/item/${page}/${id}/${mode}`),
 
     // rank
     rank : '/rank',

@@ -1,10 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Switch, Route } from 'react-router-dom';
 import { StickyContainer, Sticky } from 'react-sticky';
-import UAParser from 'ua-parser-js';
+import { push } from 'react-router-redux';
 
-import { FooterUtil } from '../../../commons/components';
-import { service, api } from '../../../commons/configs';
+import { FooterUtil, DesktopLayout, MobileLayout } from '../../../commons/components';
+import { service, api, path } from '../../../commons/configs';
 import { fetch } from '../../../redux/actions';
 import { Tabs, WhiteSpace } from 'antd-mobile';
 
@@ -12,11 +13,10 @@ import { StoryTop } from './';
 import Detail from './Detail';
 import Review from './Review';
 
-const parser = new UAParser();
 
 const tabs = [
-    {title : 'Detail', child : (<Detail />), key : 1,},
-    {title : 'Review', child : (<Review />), key : 2,},
+    {title : 'Detail', key : 1,},
+    {title : 'Review', key : 2,},
 ];
 
 
@@ -30,9 +30,10 @@ const mapStateToProps = ({ fetch }) => {
 
 const mapDispatchProps = dispatch => ({
     getItem :(url) => dispatch(fetch.get(url)),
+    move: (location) => dispatch(push(location)),
 });
 
-class Story extends React.Component {
+class StoryContainer extends React.Component {
 
     constructor(props) {
         super(props);
@@ -41,6 +42,9 @@ class Story extends React.Component {
         this.renderContent = this.renderContent.bind(this);
         this.renderUtils = this.renderUtils.bind(this);
         this.onEvent = this.onEvent.bind(this);
+        this.renderTab = this.renderTab.bind(this);
+
+        this.onTabClick = this.onTabClick.bind(this);
     }
 
     componentDidMount() {
@@ -92,25 +96,28 @@ class Story extends React.Component {
                         </div>
                     )
                 }}
-            </Sticky>);
+            </Sticky>
+        );
     }
 
     renderTabBar(props){
-        const device = parser.getDevice();
-        const type = service.getValue(device, 'type', false);
-
         return (
             <Sticky>
                 {({ style }) => {
+                    // console.log("Sticky", arguments, style);
                     const newStyle = {
                         ...style,
-                        top: type === 'mobile' ? 45 : 80,
-                        left:0,
-                        width: '100%',
-                        boxShadow : '1px 1px 1px rgba(0,0,0,0.2)'
-                    }
+                        top: 80,
+                        left : 0,
+                        boxShadow: '1px 1px 1px rgba(0,0,0,0.2)',
+                        width : '100%'
+                    };
+
                     return(
-                        <div style={{ ...newStyle, zIndex: 100 }}>
+                        <div
+                            style={{...newStyle, zIndex: 100}}
+                            className={`story-tab-bar`}
+                        >
                             <Tabs.DefaultTabBar
                                 {...props}
                             />
@@ -121,11 +128,43 @@ class Story extends React.Component {
     }
 
     onTabClick(tab){
-        window.scrollTo(0, 0);
+        const id = service.getValue(this.props, 'match.params.id', false);
+
+        if(!id){
+            return
+        }
+
+        return this.props.move(path.moveItemStory(tab.title.toLowerCase(), id));
+
     }
 
     renderContent(tab){
-        return React.createElement('div', {}, tab.child);
+        const { match } = this.props;
+        const page = service.getValue(match, 'params.page', 'detail');
+
+        switch (page) {
+            case 'detail':
+                return (<Detail />);
+            case 'review':
+                return (<Review />);
+            default:
+                break;
+        }
+    }
+
+    renderTab(reviewData){
+        return (
+            <Tabs
+                tabs={Object.keys(reviewData).length ? tabs : tabs.slice(0, 1)}
+                initalPage={0}
+                destroyInactiveTab={true}
+                prerenderingSiblingsNumber={0}
+                onTabClick={this.onTabClick}
+                renderTabBar={this.renderTabBar}
+            >
+                {this.renderContent}
+            </Tabs>
+        )
     }
 
     render() {
@@ -134,24 +173,21 @@ class Story extends React.Component {
 
         return (
             <div className="story-detail">
-                <WhiteSpace size="xs"/>
-                <StoryTop item={item}/>
-                <StickyContainer>
-                    <Tabs
-                        tabs={Object.keys(reviewData).length ? tabs : tabs.slice(0, 1)}
-                        initalPage={0}
-                        destroyInactiveTab={true}
-                        prerenderingSiblingsNumber={0}
-                        onTabClick={this.onTabClick}
-                        renderTabBar={this.renderTabBar}
-                    >
-                        {this.renderContent}
-                    </Tabs>
-                    {this.renderUtils(item)}
-                </StickyContainer>
+                <DesktopLayout>
+                    <WhiteSpace size="xs"/>
+                    <StoryTop item={item}/>
+
+                    <StickyContainer>
+                        {this.renderTab(reviewData)}
+                        {this.renderUtils(item)}
+                    </StickyContainer>
+                </DesktopLayout>
+                <MobileLayout>
+                    {this.renderContent()}
+                </MobileLayout>
             </div>
         );
     }
 }
 
-export default connect(mapStateToProps, mapDispatchProps)(Story);
+export default connect(mapStateToProps, mapDispatchProps)(StoryContainer);

@@ -1,10 +1,10 @@
-import Story from './Story';
+import StoryContainer from './StoryContainer';
 import StoryTop from './StoryTop';
 import Info from './Info';
 import Contents from './Contents';
 
 export {
-    Story,
+    StoryContainer,
     StoryTop,
     Info,
     Contents,
