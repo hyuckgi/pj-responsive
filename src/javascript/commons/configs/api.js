@@ -97,6 +97,10 @@ export const api = {
         url : '/api/sponsor/story/contract',
         params : {...params}
     }),
+    donateAD : (params = null) => ({
+        url : `/api/donate/`,
+        params : {...params}
+    }),
 
     // event & notice
     getEventList : ({status = 'going', page = 1, size = 10}) => `/api/event/status/${status}/page/${page}/size/${size}`,

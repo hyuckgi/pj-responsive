@@ -76,9 +76,12 @@ class Item extends React.Component {
         const adNo = service.getValue(item, 'adNo', false);
         const storyNo = service.getValue(story, 'storyNo', false);
 
-        console.log("onStart");
-        console.log("adNo", adNo);
-        console.log("storyNo", storyNo);
+        const obj = api.donateAD({adNo, storyNo});
+
+        return APICaller.post(obj.url, obj.params)
+            .then((...args) => {
+                console.log("res", args);
+            });
     }
 
     onEnded(){
@@ -86,16 +89,21 @@ class Item extends React.Component {
         const { visible } = this.state;
         const storyNo = service.getValue(story, 'storyNo', false);
 
-        if(visible){
-            WebModal.success({
-                title : '기부 성공',
-                content : `${service.getValue(item, 'donationPerTime', 0)}원을 기부했습니다.`,
-                onOk : this.onCloseModal
-            });
-        }
+        const obj = api.donateAD({donateNo : storyNo});
 
-        console.log("onEnded");
-        console.log("storyNo", storyNo);
+        return APICaller.post(obj.url, obj.params)
+            .then(({data}) => {
+                console.log("res", data);
+
+                if(data && visible){
+                    WebModal.success({
+                        title : '기부 성공',
+                        content : `${service.getValue(item, 'donationPerTime', 0)}원을 기부했습니다.`,
+                        onOk : this.onCloseModal
+                    });
+                }
+
+            });
     }
 
     onClickButton(id){

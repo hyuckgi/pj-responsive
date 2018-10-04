@@ -112,6 +112,22 @@
         .am-tabs{
             .story-tab-bar{
                 width:100%;
+
+                &-sticky{
+                    .am-tabs-default-bar{
+                        transition:all 0.2s;
+                        
+                        .am-tabs-default-bar-tab{
+                            transition:all 0.2s;
+                            color:#fff;
+                            background-color:#FF6E59;
+
+                            &.am-tabs-default-bar-tab-active{
+                                background-color:#EC3F2E;
+                            }
+                        }
+                    }
+                }
             }
         }
     }

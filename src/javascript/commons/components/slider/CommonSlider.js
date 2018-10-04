@@ -27,6 +27,7 @@ class CommonSlider extends React.Component {
 
         this.onClick = this.onClick.bind(this);
         this.getButtons = this.getButtons.bind(this);
+        this.renderImage = this.renderImage.bind(this);
     }
 
     onClick(item){
@@ -61,6 +62,53 @@ class CommonSlider extends React.Component {
         ];
     }
 
+    renderImage(list){
+        const { path = false } = this.props;
+
+        if(path === 'main'){
+            return list.map((item, inx) => {
+                console.log("item", item);
+                return (
+                    <a
+                        key={inx}
+                        onClick={this.onClick.bind(this, item)}
+                    >
+                        <div className="main-slider">
+                            <div className="img-area">
+                                <img
+                                    src={item.imageUrl || item.thumbnailUrl}
+                                    alt={item.title}
+                                    onLoad={() => {
+                                        window.dispatchEvent(new Event('resize'));
+                                    }}
+                                />
+                            </div>
+                            <div className="text-area">
+                                <div>
+                                    {`${service.getValue(item, 'title', '')}`}
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                )
+            })
+        }
+
+        return list.map((item, inx) => {
+            return (
+                <div key={inx} onClick={this.onClick.bind(this, item)}>
+                    <img
+                        src={item.imageUrl || item.thumbnailUrl}
+                        alt={item.title}
+                        onLoad={() => {
+                            window.dispatchEvent(new Event('resize'));
+                        }}
+                    />
+                </div>
+                )
+            });
+    }
+
     render() {
         const { list = [], autoplay = true, path = false} = this.props;
         const isMain = path === 'main' ? true : false;
@@ -72,20 +120,9 @@ class CommonSlider extends React.Component {
                         ref="webCarousel"
                         autoplay={autoplay}
                         dots={isMain}
+                        effect={isMain ? 'fade' : 'scrollx'}
                     >
-                        {list.map((item, inx) => {
-                            return (
-                                <div key={inx} onClick={this.onClick.bind(this, item)}>
-                                    <img
-                                        src={item.imageUrl || item.thumbnailUrl}
-                                        alt={item.title}
-                                        onLoad={() => {
-                                            window.dispatchEvent(new Event('resize'));
-                                        }}
-                                    />
-                                </div>
-                            )
-                        })}
+                        {this.renderImage(list)}
                     </WebCarousel>
                     {!isMain && list.length > 1 ? (<ButtonWrapper buttons={this.getButtons()} onClickButton={this.onClickButton.bind(this)}/>) : null }
                 </DesktopLayout>
@@ -101,7 +138,7 @@ class CommonSlider extends React.Component {
                                 <a
                                     key={inx}
                                     onClick={this.onClick.bind(this, item)}
-                                    style={{ display: 'inline-block', width: '100%', height: 'auto'}}
+
                                 >
                                     <img
                                         src={item.imageUrl || item.thumbnailUrl}

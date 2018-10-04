@@ -103,11 +103,10 @@ class StoryContainer extends React.Component {
     renderTabBar(props){
         return (
             <Sticky>
-                {({ style }) => {
-                    // console.log("Sticky", arguments, style);
+                {({ style, isSticky }) => {
                     const newStyle = {
                         ...style,
-                        top: 80,
+                        top: 81,
                         left : 0,
                         boxShadow: '1px 1px 1px rgba(0,0,0,0.2)',
                         width : '100%'
@@ -116,7 +115,7 @@ class StoryContainer extends React.Component {
                     return(
                         <div
                             style={{...newStyle, zIndex: 100}}
-                            className={`story-tab-bar`}
+                            className={`story-tab-bar ${isSticky ? 'story-tab-bar-sticky' : 'story-tab-bar-relative'}`}
                         >
                             <Tabs.DefaultTabBar
                                 {...props}
@@ -174,7 +173,6 @@ class StoryContainer extends React.Component {
         return (
             <div className="story-detail">
                 <DesktopLayout>
-                    <WhiteSpace size="xs"/>
                     <StoryTop item={item}/>
 
                     <StickyContainer>
