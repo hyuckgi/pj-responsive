@@ -10,59 +10,56 @@
             border-bottom: none;
         }
 
-        .ant-menu-item:not(.btn-search){
-            color:#fff;
-            float:none;
-            top:0;
-            margin-top:0;
-            border-bottom:0;
-            font-size:1.2em;
-            flex:1 1 auto;
-            border:1px solid #fff;
-            border-radius:28px;
-            margin:0 5px;
-            text-align:center;
-            padding:0 10px;
+        .ant-menu-item{
+            color:#FF6E59;
+            flex : 1 1 auto;
+            border-radius: 28px;
+            margin: 0 5px;
+            padding: 0 10px;
+            text-align: center;
+            border-bottom:none;
+            top:auto;
 
-            &:hover,
-            &-active,
-            &.on{
-                color:#fff !important;
-                background-color:#EC3F2E;
-                border-color:#fff;
+            &:not(.btn-search){
+                border: 1px solid #FF6E59;
             }
 
-            a{
-                color:inherit;
+
+            & > a{
+                color:#FF6E59;
 
                 &:hover{
-                    color:#fff;
-                }
-
-                &::before{
-                    display:none;
+                    color:#FF6E59;
                 }
             }
-        }
 
-        .ant-menu-item.btn-search{
-            float:none;
-            flex:1 1 54px;
-            font-size:2em;
-            color:#fff;
-            margin:0 5px;
-            text-align:center;
-            max-width:50px;
-            padding:0 10px;
+            &.btn-search{
+                font-size:2em;
+                padding:0;
+                max-width:40px;
 
-            a{
-                display:inline-block;
+                &:hover,
+                &-active,
+                &.on{
+                    border-bottom:none;
+                }
             }
         }
 
         .ant-menu-submenu{
+            position: relative;
+            top:auto;
+            border-bottom: none;
+
             .ant-menu-submenu-title{
                 font-size: 3em;
+                padding:0 10px;
+            }
+
+            &:hover,
+            &-active,
+            &-open{
+                border-bottom:none;
             }
         }
     }

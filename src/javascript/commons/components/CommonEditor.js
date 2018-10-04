@@ -136,6 +136,10 @@ class CommonEditor extends React.Component {
     renderFooter(){
         const buttons = service.getValue(this.props, 'buttons', []);
 
+        if(!buttons.length){
+            return null;
+        }
+
         return (
             <Flex justify="end" className="button-wrapper">
                 <Flex.Item>

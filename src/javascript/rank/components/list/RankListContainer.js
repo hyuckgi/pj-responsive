@@ -9,15 +9,8 @@ import { TableList} from '../../../commons/components';
 
 import { ListTop } from '../common';
 
-import { Avatar, Select } from 'antd';
+import { Avatar } from 'antd';
 import { Flex } from 'antd-mobile';
-
-const Option = Select.Option;
-
-const selectOptions = [
-    { value : 'all', label : '전체'},
-    { value : 'year', label : '연도별'},
-]
 
 const mapStateToProps = ({fetch}) => {
     const ranks = service.getValue(fetch, 'multipleList.rankTop.data', {});
@@ -59,15 +52,11 @@ class RankListContainer extends React.Component {
         this.state = {
             size : 10,
             page : 1,
-            selectValue : 'all',
         };
 
         this.getData = this.getData.bind(this);
         this.getColumns = this.getColumns.bind(this);
         this.onEvents = this.onEvents.bind(this);
-
-        this.onSelect = this.onSelect.bind(this);
-        this.renderSelect = this.renderSelect.bind(this);
 
         this.search = this.search.bind(this);
     }
@@ -98,21 +87,17 @@ class RankListContainer extends React.Component {
     componentDidUpdate(prevProps, prevState) {
         const { location } = this.props;
         if(prevProps.location.search !== location.search){
-            this.setState({
-                selectValue : 'all'
-            })
             this.getData(this.getParamsFormLocation());
         }
     }
 
     getData(searchParams){
-        const { selectValue } = this.state;
         const type = service.getValue(this.props, 'match.params.type', 'user');
         const flag = type === 'user' ? 'donate' : 'sponsor';
 
         return this.props.multipleList([
             {id : 'rankTop', url : api.getRank(flag), params : {}},
-            {id : 'rankList', url : api.getRankList({type : flag, ...searchParams, term : selectValue}), params : {}},
+            {id : 'rankList', url : api.getRankList({type : flag, ...searchParams}), params : {}},
         ])
     }
 
@@ -155,37 +140,6 @@ class RankListContainer extends React.Component {
         }
     }
 
-    onSelect(value){
-        this.setState({
-            selectValue : value
-        }, () => {
-            return this.getData(this.getParamsFormLocation());
-        });
-    }
-
-    renderSelect(){
-        const { selectValue } = this.state;
-
-        return (
-            <Select
-                ref='select'
-                value={selectValue}
-                onSelect={this.onSelect}
-                style={{ minWidth: 150 }}
-            >
-                {selectOptions.map((item, inx) => {
-                    return (
-                        <Option
-                            key={item.value}
-                            title={item.label}
-                            value={item.value}
-                        >{item.label}</Option>
-                    )
-                })}
-            </Select>
-        )
-    }
-
     render() {
         const { ranks, match, data } = this.props;
         const type = service.getValue(match, 'params.type', 'user');
@@ -198,9 +152,6 @@ class RankListContainer extends React.Component {
                     <Flex justify="between" className="rank-list-top">
                         <Flex.Item >
                             <h3>{title} {data.total > 0 && `(${data.total} 건)`}</h3>
-                        </Flex.Item>
-                        <Flex.Item style={{textAlign : 'right'}}>
-                            {this.renderSelect()}
                         </Flex.Item>
                     </Flex>
                     <TableList

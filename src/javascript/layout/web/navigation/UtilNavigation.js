@@ -62,7 +62,7 @@ class UtilNavigation extends React.Component {
 
         return (
             <SubMenu
-                title={<CustomIcon type="MdAccountCircle" style={{color:'#fff'}}/>}
+                title={<CustomIcon type="MdAccountCircle" style={{color:'#FF6E59'}}/>}
             >
                 {mypageMenus.filter((item) => item.level === 1).map((item, idx) => {
                     return this.renderItem(item);
@@ -106,7 +106,7 @@ class UtilNavigation extends React.Component {
                     <NavLink to={path.search}>
                         <CustomIcon
                             type='MdSearch'
-                            style={{color : '#fff'}}
+                            style={{color : '#FF6E59'}}
                         />
                     </NavLink>
                 </Menu.Item>

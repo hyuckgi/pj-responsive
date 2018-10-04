@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
+import UAParser from 'ua-parser-js';
 
 import { APICaller } from '../../../../commons/api';
 
@@ -16,6 +17,7 @@ import { CustomIcon, CommonEditor } from '../../../../commons/components';
 
 import { Report } from '../../';
 
+const parser = new UAParser();
 
 const mapStateToProps = ({ fetch, security }) => {
     const userInfo = security || {};
@@ -269,6 +271,7 @@ class Comment extends React.Component {
     }
 
     renderInnerWrite(){
+        const isMobile = parser.getDevice().type;
         return(
             <Flex.Item className="util-area">
                 <Flex justify="between">
@@ -276,13 +279,13 @@ class Comment extends React.Component {
                         <CustomIcon
                             type="MdDeleteForever"
                             style={{marginRight: 3, color : '#2CB9CF', fontSize : '1.5em'}}
-                        />삭제
+                        />{service.getWebText('삭제', isMobile)}
                     </Flex.Item>
                     <Flex.Item onClick={this.onModify}>
                         <CustomIcon
                             type="MdCreate"
                             style={{marginRight: 3, color : '#2CB9CF', fontSize : '1.5em'}}
-                        />수정
+                        />{service.getWebText('수정', isMobile)}
                     </Flex.Item>
                 </Flex>
             </Flex.Item>
@@ -294,32 +297,30 @@ class Comment extends React.Component {
         const { isLike, innerMode } = this.state;
         const isMine = service.getValue(item, 'isMyReply', false);
         const likeCount = service.getValue(item, 'likeCount', 0);
+        const isMobile = parser.getDevice().type;
 
         if(isMine){
             return  innerMode === FormMode.READ ? this.renderInnerWrite() : null
         }
 
         return(
-            <Flex.Item className="util-area">
-                <Flex justify="between">
-                    <Flex.Item onClick={this.onClickLike} >
+            <div className="util-area">
+                <Flex justify="end" align="top">
+                    <Flex.Item onClick={this.onClickLike}>
                         <CustomIcon
                             type={isLike ? 'FaHeart' : 'FaHeartO'}
                             roots="FontAwesome"
                             style={{marginRight: 3, color : '#2CB9CF'}}
-                        />좋아요
+                        /><Badge text={likeCount} overflowCount={99}>{service.getWebText('좋아요', isMobile)}</Badge>
                     </Flex.Item>
-                    {likeCount > 0 ?
-                        (<Flex.Item className="count">
-                            <Badge text={likeCount} overflowCount={99} />
-                        </Flex.Item>)
-                        : null}
-
                     <Flex.Item onClick={this.onClickReport} className="report">
-                        신고
+                        <CustomIcon
+                            type='MdNotificationsActive'
+                            style={{marginRight: 3, color : '#2CB9CF'}}
+                        />{service.getWebText('신고', isMobile)}
                     </Flex.Item>
                 </Flex>
-            </Flex.Item>
+            </div>
         )
     }
 
@@ -340,7 +341,7 @@ class Comment extends React.Component {
 
         return(
             <Flex className={`comment ${innerMode === FormMode.WRITE ? 'comment-write' : ''}`}>
-                <Flex.Item style={{maxWidth : 60, textAlign : 'center'}}>
+                <Flex.Item className="avatar-area">
                     {profile ? (<Avatar src={profile} />) : (<Avatar icon="user" />) }
                 </Flex.Item>
                 <Flex.Item>
@@ -348,17 +349,18 @@ class Comment extends React.Component {
                     <div>
                         <CommonEditor value={contents} readOnly={flag} buttons={flag ? [] : this.getInnerButtons()} onSubmit={this.onSubmit}/>
                     </div>
-                    <Flex justify="between">
+
+                    <div className="bottom">
                         { innerMode === FormMode.READ
                             ? (
-                                <Flex.Item>
+                                <div className="time-area">
                                     {updateDate ? moment(updateDate).format(values.format.LOCALE_KOR) : null}
-                                </Flex.Item>
+                                </div>
                             )
                             : null
                         }
                         {this.renderUtils()}
-                    </Flex>
+                    </div>
                 </Flex.Item>
             </Flex>
         )
@@ -371,7 +373,7 @@ class Comment extends React.Component {
 
         return(
             <Flex className="comment comment-write" align="start">
-                <Flex.Item style={{maxWidth : 100, textAlign : 'center'}}>
+                <Flex.Item  className="avatar-area">
                     <Avatar icon="user" size="large"/>
                 </Flex.Item>
                 <Flex.Item>

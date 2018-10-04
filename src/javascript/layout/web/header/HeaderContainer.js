@@ -32,25 +32,27 @@ class HeaderContainer extends React.Component {
 
     render() {
         return (
-            <Sticky topOffset={1}>
-                {({style}) => {
-                    return(
-                        <Header id="header" className="header-container" style={{...style, zIndex: 100 }}>
-                            <Row type="flex" justify="space-between" align="middle" className="header-wrap" >
-                                <Col span={4} className="logo" onClick={this.onClick.bind(this)}>
-                                    <img src={imgLogo} alt="logo"/> 9Spoons
-                                </Col>
-                                <Col span={10} offset={1} className="global-navigation-wrap">
-                                    {this.renderTabBar()}
-                                </Col>
-                                <Col className="dropdown" span={8} offset={1}>
-                                    {this.renderUtils()}
-                                </Col>
-                            </Row>
-                        </Header>
-                    );
-                }}
-            </Sticky>
+            <div style={{ zIndex: 100}}>
+                <Sticky topOffset={1}>
+                    {({style}) => {
+                        return(
+                            <Header id="header" className="header-container" style={{...style, zIndex: 100 }}>
+                                <Row type="flex" justify="space-between" align="middle" className="header-wrap" >
+                                    <Col span={4} className="logo" onClick={this.onClick.bind(this)}>
+                                        <img src={imgLogo} alt="logo"/> 9Spoons
+                                    </Col>
+                                    <Col span={10} offset={1} className="global-navigation-wrap">
+                                        {this.renderTabBar()}
+                                    </Col>
+                                    <Col className="dropdown" span={7} offset={2}>
+                                        {this.renderUtils()}
+                                    </Col>
+                                </Row>
+                            </Header>
+                        );
+                    }}
+                </Sticky>
+            </div>
         );
     }
 

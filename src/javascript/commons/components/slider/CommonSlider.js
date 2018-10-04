@@ -36,6 +36,10 @@ class CommonSlider extends React.Component {
             return;
         }
 
+        if(prefix === 'story'){
+            return this.props.move(path.moveItemStory('detail', item[`${prefix}No`]));
+        }
+
         return this.props.move(path.moveItem(prefixUrl, item[`${prefix}No`] ));
     }
 

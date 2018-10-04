@@ -140,7 +140,10 @@ class Item extends React.Component {
                     visible={visible}
                     transparent={false}
                     maskClosable={false}
+                    closable={true}
                     wrapClassName={'fullscreen-modal'}
+                    title={''}
+                    onClose={this.onCloseModal}
                 >
                     <VideoPlayer url={url} onEvents={this.onEvents} controls={false} fullscreen={true} />
                 </Modal>

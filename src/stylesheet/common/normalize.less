@@ -1,3 +1,7 @@
+
+
+@web-font-size-base : 14px;
+
 .web-container{
 
     & > .section{
@@ -15,6 +19,8 @@
 }
 
 .mobile-container {
+
+    font-size:12px;
 
     figure{
         margin:0;
@@ -330,9 +336,19 @@ html:not([data-scale]) .wink-mobile-wrap .am-button{
         }
     }
 
-    .am-button-primary{
-        color:#fff !important;
+    .am-button{
+        font-size:1em;
+        cursor:pointer;
+
+        &.am-button-primary{
+            color:#fff !important;
+        }
     }
+
+    .am-tabs-default-bar-tab{
+        font-size:1em;
+    }
+
 }
 
 .circle-radio{
@@ -514,11 +530,6 @@ html:not([data-scale]) .wink-mobile-wrap .am-button{
         }
     }
 }
-
-.am-button{
-    cursor:pointer;
-}
-
 
 .video-wrapper{
     .video-js{

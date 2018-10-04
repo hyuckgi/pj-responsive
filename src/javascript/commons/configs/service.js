@@ -5,6 +5,12 @@ const defaultPagination = {size: '', showSizeChanger:false, showQuickJumper: fal
 
 
 export const service = {
+    getWebText : (txt, isMobile = false) => {
+        if(!isMobile){
+            return txt;
+        }
+        return ''
+    },
     getValue: (obj, key, defaultValue) => {
         if(!obj) {
             return defaultValue;

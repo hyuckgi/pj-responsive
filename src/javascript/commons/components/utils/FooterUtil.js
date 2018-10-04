@@ -126,6 +126,17 @@ class FooterUtil extends React.Component {
 
     onClickDonate(e){
         e && e.preventDefault();
+        const { userInfo } = this.props;
+        const token = service.getValue(userInfo, 'token', false);
+
+        if(!token){
+            return this.onOpenModal({
+                type : 'token',
+                title : '로그인이 필요한 기능입니다.',
+                contents : '로그인 하시겠습니까?'
+            });
+        }
+
         return this.onOpenModal({
             type : null,
             title : '스폰서 광고 목록',

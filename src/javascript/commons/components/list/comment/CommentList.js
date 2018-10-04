@@ -38,13 +38,15 @@ class CommentList extends React.Component {
         this.onClick = this.onClick.bind(this);
     }
 
-    componentDidMount() {
-        const storyNo = service.getValue(this.props, 'item.storyNo', false);
-
-        if(storyNo){
-            return this.getComments(storyNo)
-        }
-    }
+    // TEMP:
+    // componentDidMount() {
+    //     console.log("componentDidMount");
+    //     const storyNo = service.getValue(this.props, 'item.storyNo', false);
+    //
+    //     if(storyNo){
+    //         return this.getComments(storyNo)
+    //     }
+    // }
 
     componentDidUpdate(prevProps, prevState) {
         const { status, item, onEvents, isFetching } = this.props;
@@ -53,11 +55,13 @@ class CommentList extends React.Component {
         const currentStoryNo = service.getValue(item, 'storyNo', false);
 
         if((currentStoryNo && prevStoryNo !== currentStoryNo)){
+            console.log("aaaaa");
             return this.getComments(currentStoryNo);
         }
 
         if(status && status !== prevProps.status){
             onEvents({events : 'complete'});
+            console.log("bbbbb");
             return this.getComments(currentStoryNo);
         }
 
