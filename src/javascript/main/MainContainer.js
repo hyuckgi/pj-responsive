@@ -15,11 +15,13 @@ const mapStateToProps = ({fetch}) => {
     // TODO: 메인 슬라이드 필터 추가
     const mainStory = service.getValue(fetch, 'multipleList.mainStory', {});
     const mainRank = service.getValue(fetch, 'multipleList.mainRank.data', {});
+    const events = service.getValue(fetch, 'multipleList.event.list', []);
 
     return {
         mainStory,
         storyList : service.getValue(mainStory, 'list', []),
-        mainRank
+        mainRank,
+        events
     }
 };
 
@@ -41,15 +43,19 @@ class MainContainer extends React.Component {
         return this.props.multipleList([
             {id : 'mainStory', url : story.url, params : story.params },
             {id : 'mainRank', url : api.getRank('donate', 'month'), params : {}},
+            {id : `event`, url : api.getEventList({status : 'going', page : 1, size : 5}), params : {} },
         ]);
     }
 
     render() {
-        const { mainStory, storyList, mainRank } = this.props;
+        const { mainStory, storyList, mainRank, events } = this.props;
 
         return (
             <div className="main-container">
-                <CommonSlider list={storyList} prefixUrl={path.storyItem} prefix="story" path="main"/>
+                <div className="main-slider">
+                    <CommonSlider list={storyList} prefixUrl={path.storyItem} prefix="story" path="main"/>
+                </div>
+
 
                 <div className="rank-wrapper" >
                     <Flex  align="start" >
@@ -61,13 +67,14 @@ class MainContainer extends React.Component {
                     <Link to='/rank/list/user' className="main-link">More</Link>
 
                     <Flex direction="column" className="rank-total">
-                        <Flex.Item>우리가 함꼐 모은 기부금</Flex.Item>
+                        <Flex.Item>우리가 함께 모은 기부금</Flex.Item>
                         <Flex.Item className="price">{service.amount(service.getValue(mainRank, 'totalDonation', 0))}원</Flex.Item>
                     </Flex>
                 </div>
 
                 <div className="event-wrapper">
-                    이벤트 게시글이 없습니다.
+                    이벤트 등록시 배너 이미지 추가 등록??
+                    <CommonSlider list={events} prefixUrl={path.boardItem} prefix="event" path="event"/>
                 </div>
 
                 <div className="list-wrapper">

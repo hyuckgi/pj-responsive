@@ -213,7 +213,7 @@ export const mock = {
         }
     },
 
-    '/api/account' : (count) => {
+    '/api/account' : () => {
         return {
             "resultCode" : 200,
             "resultMsg" : "SUCCESS",
@@ -224,7 +224,7 @@ export const mock = {
                 "depositor": "아마존",
                 "updateDate": "2018-06-17 22:48:09",
                 "createDate": "2018-06-17 22:48:09"
-            }, count)
+            }, 5)
         }
     },
 

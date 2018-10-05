@@ -1,15 +1,16 @@
 import React from 'react';
 
 import { upload } from '../../../commons/api';
-import { service } from '../../../commons/configs';
+import { service, values } from '../../../commons/configs';
 import { FormButton } from '../../../commons/types';
 
-import { Form, Input, Button, Upload, Icon } from 'antd';
+import { Form, Input, Button, Upload, Icon, Select } from 'antd';
 
 import { ButtonWrapper, CustomIcon  } from '../../../commons/components';
 
 const FormItem = Form.Item;
 const { TextArea } = Input;
+const Option = Select.Option;
 
 const formItemLayout = {
 	labelCol: {
@@ -102,6 +103,12 @@ class Content extends React.Component {
         const { form, inx } = this.props;
         const { getFieldDecorator } = form;
         const { images, videos } = this.state;
+        const selectBefore = (
+          <Select defaultValue="Http://" style={{ width: 100 }}>
+            <Option value="Http://">Http://</Option>
+            <Option value="Https://">Https://</Option>
+          </Select>
+        );
 
         return (
             <div className="content-item">
@@ -164,6 +171,19 @@ class Content extends React.Component {
                     <FormItem
                         {...formItemLayout}
                         label="동영상"
+                    >
+                        {getFieldDecorator(`contentsList.${inx}.videoUrl`, {
+                            rules : [{pattern : values.validateUrl, message : '올바른 URL형식이 아닙니다.'}]
+                        })(
+                            <Input
+                                addonBefore={selectBefore}
+                                placeholder="mysite.com"
+                            />
+                        )}
+                    </FormItem>
+                    <FormItem
+                        {...formItemLayout}
+                        label=" "
                     >
                         {getFieldDecorator(`contentsList.${inx}.videos`, {
                         })(

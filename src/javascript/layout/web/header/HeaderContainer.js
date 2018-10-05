@@ -34,9 +34,9 @@ class HeaderContainer extends React.Component {
         return (
             <div style={{ zIndex: 100}}>
                 <Sticky topOffset={1}>
-                    {({style}) => {
+                    {({style, isSticky}) => {
                         return(
-                            <Header id="header" className="header-container" style={{...style, zIndex: 100 }}>
+                            <Header id="header" className={`header-container ${isSticky ? 'header-container-sticky' : 'header-container-relative' }`} style={{...style, zIndex: 100 }}>
                                 <Row type="flex" justify="space-between" align="middle" className="header-wrap" >
                                     <Col span={4} className="logo" onClick={this.onClick.bind(this)}>
                                         <img src={imgLogo} alt="logo"/> 9Spoons

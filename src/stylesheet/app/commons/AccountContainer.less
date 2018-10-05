@@ -2,5 +2,28 @@
     & > .ant-radio-group{
         display:block;
         text-align:right;
+        margin-bottom:10px;
+    }
+
+    .make-account-wrapper{
+        .ant-form{
+            &.ant-form-inline{
+
+                .ant-form-item:first-child{
+                    width:150px;
+                }
+                .ant-form-item:last-child{
+                    width:calc(100% - 167px);
+                    margin-top:1px;
+                    margin-right:0;
+                }
+            }
+
+            .ant-form-item{
+                &.bank-number{
+                    margin-bottom:0;
+                }
+            }
+        }
     }
 }

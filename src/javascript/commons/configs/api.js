@@ -113,6 +113,9 @@ export const api = {
     //profile
     getProfile : () => `/api/profile`,
 
+    // account
+    getAccount : () => `/api/account`,
+
 };
 
 

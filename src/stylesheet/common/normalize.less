@@ -349,6 +349,18 @@ html:not([data-scale]) .wink-mobile-wrap .am-button{
         font-size:1em;
     }
 
+    .ant-upload-list-picture-card{
+        .ant-upload-list-item-info{
+            & > span{
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 100%;
+                transform: translate(-50%, -50%);
+            }
+        }
+    }
+
 }
 
 .circle-radio{
@@ -411,9 +423,19 @@ html:not([data-scale]) .wink-mobile-wrap .am-button{
         }
     }
 }
+.am-list-item{
+    &.list-none{
+        text-align:center;
+        .am-list-line-wrap{
+            .am-list-content{
+                text-align:center;
 
-.list-none{
-    text-align:center;
+                p{
+                    margin-bottom:0;
+                }
+            }
+        }
+    }
 }
 
 .last{
@@ -447,10 +469,6 @@ html:not([data-scale]) .wink-mobile-wrap .am-button{
                     .am-list-content{
                         font-size:1.1em;
                         padding:1.5em 0;
-                        text-align:center;
-                        p{
-                            margin-bottom:0;
-                        }
                     }
                 }
 

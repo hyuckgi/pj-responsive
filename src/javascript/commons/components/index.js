@@ -8,7 +8,7 @@ import { DesktopLayout, MobileLayout } from './response';
 import { FooterUtil, BlankImage, CustomIcon } from './utils';
 
 import { CommonSlider } from './slider';
-import { StoryListTop, StoryList, TableList, ADList,  CommentList, Comment, DonationList } from './list';
+import { StoryListTop, StoryList, TableList, ADList,  CommentList, Comment, DonationList, AccountList } from './list';
 import { Report } from './report';
 import { VideoPlayer } from './video';
 
@@ -42,4 +42,5 @@ export{
 
     Agreement,
     AccountContainer,
+    AccountList,
 }

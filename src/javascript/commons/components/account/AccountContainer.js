@@ -2,7 +2,8 @@ import React from 'react';
 
 import {  Radio } from 'antd';
 
-import { MakeAccount, AccountList } from './';
+import { MakeAccount } from './';
+import { AccountList } from '../';
 
 const RadioGroup = Radio.Group;
 

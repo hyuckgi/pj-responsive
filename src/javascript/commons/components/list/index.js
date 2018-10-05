@@ -3,6 +3,7 @@ import { TableList } from './table';
 import { ADList } from './ad';
 import { CommentList, Comment } from './comment';
 import { DonationList } from './donation';
+import { AccountList } from './account';
 
 export {
     StoryList,
@@ -11,5 +12,6 @@ export {
     ADList,
     CommentList,
     Comment,
-    DonationList
+    DonationList,
+    AccountList
 }

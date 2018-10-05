@@ -6,7 +6,7 @@ import { upload } from '../../../commons/api';
 import { service } from '../../../commons/configs';
 import { FormButton } from '../../../commons/types';
 
-import { Form, Input, Upload, Icon } from 'antd';
+import { Form, Input, Upload, Icon, Alert } from 'antd';
 
 import { ContentList } from './';
 
@@ -164,6 +164,7 @@ class Step02 extends React.Component {
                         {...formItemLayout}
                         label="대표사진"
                     >
+                        <Alert message="이미지 사이즈는 640 * 360 입니다." type="info" style={{marginBottom : 10}}/>
                         {getFieldDecorator('image', {
                             rules: [{ required: true, message: '대표사진을 첨부하세요' }],
                         })(

@@ -55,48 +55,49 @@
             font-size:1.2em;
         }
 
-        .common-slider{
-            margin:20px 0 30px;
-            border:1px solid #ddd;
-            height:360px;
-            overflow:hidden;
+        .main-slider{
+            .common-slider{
+                margin:20px 0 30px;
+                border:1px solid #ddd;
+                height:360px;
+                overflow:hidden;
 
-            .main-slider{
+                .main-slider{
 
-                &::after{
-                    content:"";
-                    clear:both;
-                    display:block;
-                }
+                    &::after{
+                        content:"";
+                        clear:both;
+                        display:block;
+                    }
 
-                & > div{
-                    box-sizing:border-box;
-                }
+                    & > div{
+                        box-sizing:border-box;
+                    }
 
-                .img-area{
-                    float:left;
-                    width:64%;
-                    border-right:1px solid #ddd;
-                    height:360px;
-                    overflow:hidden;
-                    position:relative;
+                    .img-area{
+                        float:left;
+                        width:64%;
+                        border-right:1px solid #ddd;
+                        height:360px;
+                        overflow:hidden;
+                        position:relative;
 
-                    img{
-                        width:100%;
-                        position: absolute;
-                        top: 50%;
-                        left: 50%;
-                        transform: translate(-50%, -50%);
+                        img{
+                            width:100%;
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            transform: translate(-50%, -50%);
+                        }
+                    }
+
+                    .text-area{
+                        float:right;
+                        width:26%;
+                        padding:20px;
                     }
                 }
-
-                .text-area{
-                    float:right;
-                    width:26%;
-                    padding:20px;
-                }
             }
-
         }
 
         .rank-wrapper{
@@ -145,6 +146,10 @@
 
         .list-wrapper{
             margin-bottom:50px;
+
+            .list-container{
+                margin-bottom:30px;
+            }
         }
     }
 }

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { ButtonWrapper, AccountContainer } from '../../../commons/components';
 import { FormButton } from '../../../commons/types';
 
-import { Form, Input, Radio, InputNumber } from 'antd';
+import { Form, Input, Radio, InputNumber, Row, Col } from 'antd';
 
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
@@ -125,13 +125,25 @@ class Step03 extends React.Component {
 							/>
                         )}
                     </FormItem>
-                    <FormItem
-                        {...formItemLayout}
-                        label="계좌번호"
+                </Form>
+                <Row
+                    align="middle"
+                >
+                    <Col
+                        xs={{span: 24}}
+                        sm={{span: 6}}
+                        style={{textAlign : 'right', paddingRight: 10}}
                     >
-						<AccountContainer form={form} decorator="accountData" />
-                    </FormItem>
-
+                        계좌번호
+                    </Col>
+                    <Col
+                        xs={{span: 24}}
+                        sm={{span: 18}}
+                    >
+                        <AccountContainer form={form} decorator="accountData" />
+                    </Col>
+                </Row>
+                <Form>
                     <FormItem
                         {...formItemLayout}
                         label="대표 전화번호"
