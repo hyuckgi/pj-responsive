@@ -36,34 +36,36 @@ const list = [
 // ];
 
 const mypageMenus = [
-    {id: '400000000', name: 'Mypage', link : '/mypage/list', defaultLink : '/mypage/list/support', level: 1, hasChild : true },
-    {id: '401000000', name: 'Statistic', link : '/mypage/list/sponsor', level: 2, parent : '400000000', masterLevel : 3},
-    {id: '402000000', name: 'Manage', link : '/mypage/list/manage', level: 2, parent : '400000000', masterLevel : 3},
-    {id: '403000000', name: 'History', link : '/mypage/list/support', level: 2, parent : '400000000'},
-    {id: '404000000', name: 'Story', link : '/mypage/list/story', level: 2, parent : '400000000'},
-    {id: '405000000', name: 'Comment', link : '/mypage/list/comment', level: 2, parent : '400000000'},
+    {id: '500000000', name: 'Mypage', link : '/mypage/list', defaultLink : '/mypage/list/support', level: 1, hasChild : true },
+    {id: '501000000', name: 'Statistic', link : '/mypage/list/sponsor', level: 2, parent : '500000000', masterLevel : 3},
+    {id: '502000000', name: 'Manage', link : '/mypage/list/manage', level: 2, parent : '500000000', masterLevel : 3},
+    {id: '503000000', name: 'History', link : '/mypage/list/support', level: 2, parent : '500000000'},
+    {id: '504000000', name: 'Story', link : '/mypage/list/story', level: 2, parent : '500000000'},
+    {id: '505000000', name: 'Comment', link : '/mypage/list/comment', level: 2, parent : '500000000'},
 
-    {id: '500000000', name: 'Setting', link : '/mypage/setting', level: 1, defaultLink : '/mypage/setting/profile', hasChild : true},
-    {id: '501000000', name: 'Profile', link : '/mypage/setting/profile', level: 2, parent : '500000000'},
-    {id: '502000000', name: 'Account', link : '/mypage/setting/account', level: 2, parent : '500000000'},
-    {id: '600000000', name: 'Logout', link : '/logout', level: 1, },
+    {id: '600000000', name: 'Setting', link : '/mypage/setting', level: 1, defaultLink : '/mypage/setting/profile', hasChild : true},
+    {id: '601000000', name: 'Profile', link : '/mypage/setting/profile', level: 2, parent : '600000000'},
+    {id: '602000000', name: 'Account', link : '/mypage/setting/account', level: 2, parent : '600000000'},
+
+    {id: '700000000', name: 'ServiceManage', link : '/admin', linkTo : 'direct', level: 1, masterLevel : 1, defaultLink : 'http://admindev.9spoons.com/main'},
+
+    {id: '900000000', name: 'Logout', link : '/logout', level: 1, linkTo : 'direct'},
 ];
 
 
+const getMasterMenus = (level) => {
+    return mypageMenus.filter((item) => !item.masterLevel || item.masterLevel >= level);
+}
+
 export const layout = (state = {list, mypageMenus}, action) => {
     switch(action.type) {
-        // case type.MASTER_LEVEL_1:
-        // case type.MASTER_LEVEL_2:
+        case type.MASTER_LEVEL_1:
+        case type.MASTER_LEVEL_2:
         case type.MASTER_LEVEL_3:
-            return {
-                ...state,
-                list: [...list],
-
-            };
         case type.USER:
             return {
                 ...state,
-                mypageMenus : mypageMenus.filter(item => item.masterLevel !== 3),
+                mypageMenus : getMasterMenus(action.payload.key),
             }
         case securityType.LOGOUT:
             return {

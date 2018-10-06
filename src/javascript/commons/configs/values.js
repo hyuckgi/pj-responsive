@@ -8,7 +8,8 @@ const format = {
     LOCALE_KOR : `YYYY년 MM월 DD일`,
 };
 
-const validateUrl = /^(www\.)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/;
+const validateUrl = /^(www.)?[a-z0-9]+([-.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/;
+
 
 const spoons = {
     serviceName : '9spoons',

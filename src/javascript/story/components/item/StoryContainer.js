@@ -1,13 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Switch, Route } from 'react-router-dom';
 import { StickyContainer, Sticky } from 'react-sticky';
 import { push } from 'react-router-redux';
 
 import { FooterUtil, DesktopLayout, MobileLayout } from '../../../commons/components';
 import { service, api, path } from '../../../commons/configs';
 import { fetch } from '../../../redux/actions';
-import { Tabs, WhiteSpace } from 'antd-mobile';
+import { Tabs } from 'antd-mobile';
 
 import { StoryTop } from './';
 import Detail from './Detail';
@@ -18,7 +17,6 @@ const tabs = [
     {title : 'Detail', key : 1,},
     {title : 'Review', key : 2,},
 ];
-
 
 const mapStateToProps = ({ fetch }) => {
     const item = service.getValue(fetch, 'item.data', {});

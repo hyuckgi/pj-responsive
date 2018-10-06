@@ -4,7 +4,7 @@ import { push } from 'react-router-redux';
 
 import { DesktopLayout, MobileLayout, ButtonWrapper, CustomIcon } from '../';
 
-import { Carousel as WebCarousel } from 'antd';
+import { Carousel as WebCarousel, Progress } from 'antd';
 import { Carousel as MobileCarousel, Flex } from 'antd-mobile';
 
 import { path, service } from '../../configs';
@@ -27,7 +27,10 @@ class CommonSlider extends React.Component {
 
         this.onClick = this.onClick.bind(this);
         this.getButtons = this.getButtons.bind(this);
+        this.renderItem = this.renderItem.bind(this);
+        this.renderMainItem = this.renderMainItem.bind(this);
         this.renderImage = this.renderImage.bind(this);
+        this.renderProgressBar = this.renderProgressBar.bind(this);
     }
 
     onClick(item){
@@ -55,6 +58,19 @@ class CommonSlider extends React.Component {
         }
     }
 
+    renderImage(item, style = {}){
+        return (
+            <img
+                src={item.imageUrl || item.thumbnailUrl}
+                alt={item.title}
+                style={style}
+                onLoad={() => {
+                    window.dispatchEvent(new Event('resize'));
+                }}
+            />
+        )
+    }
+
     getButtons(){
         return [
             { id : FormButton.PREV, label : null, className : 'btn-prev', icon : (<CustomIcon type="MdChevronLeft" />), type : 'ghost' },
@@ -62,48 +78,64 @@ class CommonSlider extends React.Component {
         ];
     }
 
-    renderImage(list){
-        const { path = false } = this.props;
+    renderProgressBar(item){
+        const status = service.getValue(item, 'status', false);
+        const percent = service.toPercentage(item.goalDonation / item.totalDonation);
 
-        if(path === 'main'){
-            return list.map((item, inx) => {
-                console.log("item", item);
-                return (
-                    <a
-                        key={inx}
-                        onClick={this.onClick.bind(this, item)}
-                    >
-                        <div className="main-slider">
-                            <div className="img-area">
-                                <img
-                                    src={item.imageUrl || item.thumbnailUrl}
-                                    alt={item.title}
-                                    onLoad={() => {
-                                        window.dispatchEvent(new Event('resize'));
-                                    }}
-                                />
-                            </div>
-                            <div className="text-area">
-                                <div>
-                                    {`${service.getValue(item, 'title', '')}`}
-                                </div>
-                            </div>
+        return(
+            <Flex.Item>
+                <div className="float-wrapper">
+                    <p>목표금액</p>
+                    <p>{service.amount(service.getValue(item, 'goalDonation', 0))} 원</p>
+                </div>
+                {status && status !== 2
+                    ? (
+                        <Progress percent={parseInt(percent, 10)} showInfo={false} status={status === 2 ? 'active' : 'normal'} size='small'/>
+                    ) : null
+                }
+            </Flex.Item>
+        )
+    }
+
+    renderMainItem(list){
+        return list.map((item, inx) => {
+            return (
+                <a
+                    key={inx}
+                    onClick={this.onClick.bind(this, item)}
+                >
+                    <div className="main-slider">
+                        <div className="img-area">
+                            {this.renderImage(item)}
                         </div>
-                    </a>
-                )
-            })
-        }
+                        <div className="text-area">
+                            <Flex direction="column" align="start" >
+                                <Flex.Item className="category">
+                                    {service.getValue(item, 'categoryName', '')}
+                                </Flex.Item>
+                                <Flex.Item className="title">
+                                    {service.getValue(item, 'title', '')}
+                                </Flex.Item>
+                                <Flex.Item className="contents">
+                                    {service.getValue(item, 'contents', '')}
+                                </Flex.Item>
+                                {this.renderProgressBar(item)}
+                                <Flex.Item>
+                                    <span className="link" onClick={this.onClick.bind(this, item)}>참여하기</span>
+                                </Flex.Item>
+                            </Flex>
+                        </div>
+                    </div>
+                </a>
+            )
+        })
+    }
 
+    renderItem(list){
         return list.map((item, inx) => {
             return (
                 <div key={inx} onClick={this.onClick.bind(this, item)}>
-                    <img
-                        src={item.imageUrl || item.thumbnailUrl}
-                        alt={item.title}
-                        onLoad={() => {
-                            window.dispatchEvent(new Event('resize'));
-                        }}
-                    />
+                    {this.renderImage(item)}
                 </div>
                 )
             });
@@ -112,6 +144,8 @@ class CommonSlider extends React.Component {
     render() {
         const { list = [], autoplay = true, path = false} = this.props;
         const isMain = path === 'main' ? true : false;
+        // TEMP:
+        const newList = list.slice(0, 3);
 
         return (
             <div className="common-slider">
@@ -122,9 +156,9 @@ class CommonSlider extends React.Component {
                         dots={isMain}
                         effect={isMain ? 'fade' : 'scrollx'}
                     >
-                        {this.renderImage(list)}
+                        {isMain ? this.renderMainItem(newList) : this.renderItem(newList)}
                     </WebCarousel>
-                    {!isMain && list.length > 1 ? (<ButtonWrapper buttons={this.getButtons()} onClickButton={this.onClickButton.bind(this)}/>) : null }
+                    {list.length > 1 ? (<ButtonWrapper buttons={this.getButtons()} onClickButton={this.onClickButton.bind(this)}/>) : null }
                 </DesktopLayout>
                 <MobileLayout>
                     <MobileCarousel
@@ -138,16 +172,8 @@ class CommonSlider extends React.Component {
                                 <a
                                     key={inx}
                                     onClick={this.onClick.bind(this, item)}
-
                                 >
-                                    <img
-                                        src={item.imageUrl || item.thumbnailUrl}
-                                        alt={item.title}
-                                        style={{ width: '100%', verticalAlign: 'top', maxHeight: 220}}
-                                        onLoad={() => {
-                                            window.dispatchEvent(new Event('resize'));
-                                        }}
-                                    />
+                                    {this.renderImage(item, { width: '100%', verticalAlign: 'top', maxHeight: 220})}
                                     <Flex className="text-area" justify="between" >
                                         <Flex.Item className="title">
                                             {`${service.getValue(item, 'title', '')}`}

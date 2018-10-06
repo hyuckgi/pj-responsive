@@ -100,8 +100,6 @@
 }
 
 .am-list{
-
-
     .picker-wrapper{
         .am-list-item{
             .am-list-line{
@@ -288,16 +286,6 @@ body, *{
   padding:0;
 }
 
-html:not([data-scale]) .wink-mobile-wrap .am-button::before{
-    display:none;
-}
-
-html:not([data-scale]) .wink-mobile-wrap .am-button{
-    border:1px solid #dadada;
-}
-
-
-
 #root{
     .ant-layout{
         background:#fff;
@@ -342,6 +330,12 @@ html:not([data-scale]) .wink-mobile-wrap .am-button{
 
         &.am-button-primary{
             color:#fff !important;
+
+            &.am-button-active{
+                color: #fff;
+                background-color: #d95041;
+                border-color: #d95041;
+            }
         }
     }
 
@@ -440,129 +434,6 @@ html:not([data-scale]) .wink-mobile-wrap .am-button{
 
 .last{
     margin-top: 1em;
-}
-
-.ad-wrap{
-    max-width: 720px;
-    margin:0 auto;
-
-    .ad-list{
-        .am-list-header{
-            padding:0;
-
-            .am-list-content{
-                font-size:1.1em;
-            }
-        }
-
-        .am-list-body{
-
-            .am-list-item{
-                padding:10px 15px;
-                border-bottom:1px solid #ddd;
-
-                &:last-child{
-                    border-bottom:none;
-                }
-
-                &.list-none{
-                    .am-list-content{
-                        font-size:1.1em;
-                        padding:1.5em 0;
-                    }
-                }
-
-                .am-list-thumb{
-                    img{
-                        width:120px;
-                        height: 120px;
-                    }
-                }
-
-                .am-list-line{
-                    padding-right:0;
-
-                    .am-list-content{
-                        padding:0;
-                        font-size:1em;
-
-                        .ad-item{
-                            .am-flexbox-item{
-                                width:100%;
-
-                                &.title-area{
-                                    font-size:1.2em;
-                                    line-height:30px;
-                                    margin-bottom: 15px;
-                                    padding: 0px 0 12px 0;
-                                    border-bottom: 1px solid #ddd;
-
-                                    .am-button{
-                                        float:right;
-                                        vertical-align:middle;
-                                    }
-                                }
-                            }
-                        }
-
-                        .link-item{
-                            padding:10px 10px 0;
-                            margin-top:10px;
-                            border-top:1px solid #ddd;
-
-                            .am-flexbox-item{
-                                width:100%;
-
-                                .ant-form-item{
-                                    margin-bottom:0
-                                }
-
-                                &.total{
-                                    padding:8px 8px 1px;
-                                    text-align:right;
-                                }
-                            }
-                        }
-                    }
-
-                    .am-list-extra{
-                        flex-basis:25%;
-
-                        .button-wrapper {
-                            .am-flexbox-item{
-                                text-align:center;
-
-                                .am-button{
-                                    margin-left:auto;
-                                    margin-right:auto;
-                                    & > .am-button-icon{
-                                        margin-right:0;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-
-            }
-        }
-    }
-}
-
-.video-wrapper{
-    .video-js{
-        .vjs-control{
-            &.vjs-button{
-                & > .vjs-icon-placeholder:before{
-                    line-height:2.2em;
-                }
-            }
-        }
-
-        .vjs-current-time{
-            display:block;
-        }
-    }
 }
 
 html:not([data-scale]) .app-container .am-list-body div:not(:last-child) .am-list-line::after,

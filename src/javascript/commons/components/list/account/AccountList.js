@@ -40,7 +40,13 @@ class AccountList extends React.Component {
     }
 
     onEvents(params){
-        console.log("params", params);
+        const { events } = params;
+        switch (events) {
+            case 'update':
+                return this.getList();
+            default:
+                break;
+        }
     }
 
     renderList(){

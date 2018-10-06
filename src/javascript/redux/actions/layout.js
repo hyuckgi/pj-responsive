@@ -9,16 +9,16 @@ export const layout = (role) => {
         return new Promise(resolve => {
             switch (obj.name) {
                 case 'LEVEL1':
-                    dispatch(creator.masterLevel1());
+                    dispatch(creator.masterLevel1(obj));
                     break;
                 case 'LEVEL2':
-                    dispatch(creator.masterLevel2());
+                    dispatch(creator.masterLevel2(obj));
                     break;
                 case 'LEVEL3':
-                    dispatch(creator.masterLevel3());
+                    dispatch(creator.masterLevel3(obj));
                     break;
                 default:
-                    dispatch(creator.userDefault());
+                    dispatch(creator.userDefault(obj));
                     break;
             }
             resolve();

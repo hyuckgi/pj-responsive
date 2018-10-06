@@ -85,7 +85,7 @@ class Report extends React.Component {
                 APICaller.post(obj.url, obj.params)
                 .then(({data}) => {
                     const resultCode = service.getValue(data, 'resultCode', false);
-                    if(resultCode === 200){
+                    if(resultCode && resultCode === 200){
                         return Toast.success('신고가 정상적으로 접수되었습니다.', 1, this.onClose);
                     }
                 })

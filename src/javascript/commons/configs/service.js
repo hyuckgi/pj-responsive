@@ -58,7 +58,11 @@ export const service = {
     amount : (value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ','),
 
     toPercentage : (value)  => {
-        return isNaN(value) ? '' : value.toFixed(0) + '%';
+        if(!isFinite(value)){
+            return '0';
+        }
+
+        return isNaN(value) ? '0' : value.toFixed(0);
     },
 
     getFileNo : (fileList) => {

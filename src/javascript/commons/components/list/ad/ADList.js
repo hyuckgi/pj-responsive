@@ -187,7 +187,7 @@ class ADList extends React.Component {
                     .then(({data}) => {
                         const resultCode = service.getValue(data, 'resultCode', false);
                         const resultMsg = service.getValue(data, 'resultMsg', '')
-                        if(resultCode === 200){
+                        if(resultCode && resultCode === 200){
                             return WebModal.success({
                                 title : '광고 등록 성공',
                                 content : '광고가 등록되었습니다.',

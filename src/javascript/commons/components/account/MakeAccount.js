@@ -1,36 +1,15 @@
 import React from 'react';
 
-import { Input, Select, Row, Col, Checkbox, Form } from 'antd';
+import { Input, Select, Checkbox, Form } from 'antd';
 
 const Option = Select.Option;
 const FormItem = Form.Item;
-
-const formItemLayout = {
-	labelCol: {
-		xs: {
-			span: 24
-		},
-		sm: {
-			span: 4
-		}
-	},
-	wrapperCol: {
-		xs: {
-			span: 24
-		},
-		sm: {
-			span: 20
-		}
-	},
-	colon : false
-};
-
 
 class MakeAccount extends React.Component {
 
     render() {
         const { form, decorator } = this.props;
-        const { getFieldDecorator, getFieldError } = form;
+        const { getFieldDecorator } = form;
 
         return (
             <div className="make-account-wrapper">

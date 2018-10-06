@@ -14,3 +14,17 @@
 .mobile-container{
 
 }
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx){
+    html:not([data-scale]) .web-container .am-button-ghost::before{
+        display:none;
+    }
+
+    html:not([data-scale]) .web-container .am-button-ghost{
+        border:1px solid #FF6E59;
+
+        &.am-button-active{
+            border:1px solid #FF6E59;
+        }
+    }
+}

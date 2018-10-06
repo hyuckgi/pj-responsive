@@ -63,7 +63,9 @@ class Join extends React.Component {
 
         APICaller.post(obj.url, obj.params)
         .then(({data}) => {
-            if(data.resultCode === 200){
+            const resultCode = service.getValue(data, 'resultCode', false);
+
+            if(resultCode && resultCode === 200){
                 return this.props.login(obj.params)
                     .then(() => {
                         return Toast.success(`회원가입을 축하합니다.`, 2, this.props.moveHome());

@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
-import queryString from 'query-string';
 import { Tabs } from 'antd-mobile';
 import { Sticky } from 'react-sticky';
 
@@ -184,7 +183,6 @@ class GlobalNavigation extends React.Component {
 
     renderSubTab(){
         const { subMenu, subIndex } = this.state;
-        const { currentPath } = this.props;
         if(!subMenu.length){
             return;
         }

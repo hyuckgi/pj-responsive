@@ -122,7 +122,7 @@ class Comment extends React.Component {
         return APICaller.post(obj.url, obj.params)
             .then(({data}) => {
                 const resultCode = service.getValue(data, 'resultCode', false);
-                if(resultCode === 200){
+                if(resultCode && resultCode === 200){
                     if(onEvents){
                         onEvents({events : 'update', payload : data})
                     }
@@ -167,7 +167,7 @@ class Comment extends React.Component {
         return APICaller[events === "submit" ? "post" : "put"](obj.url, obj.params)
             .then(({data}) => {
                 const resultCode = service.getValue(data, 'resultCode', false);
-                if(resultCode === 200){
+                if(resultCode && resultCode === 200){
                     this.setState({
                         defaultValue : '',
                         innerMode : FormMode.READ,
@@ -230,7 +230,7 @@ class Comment extends React.Component {
         return APICaller.delete(url, {})
             .then(({data}) => {
                 const resultCode = service.getValue(data, 'resultCode', false);
-                if(resultCode === 200){
+                if(resultCode && resultCode === 200){
                     this.onCloseModal();
 
                     if(onEvents){

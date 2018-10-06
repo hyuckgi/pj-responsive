@@ -48,15 +48,10 @@ class Story extends React.Component {
     }
 
     renderText(status, item){
-
-        const percent = item.totalDonation !== 0
-            ? service.toPercentage(item.goalDonation / item.totalDonation)
-            : '0%'
-
         return(
             <div className="donation-price">
                 <div className="price-wrapper">
-                    <p>{status === 1 ? '목표금액' : percent}</p>
+                    <p>{status === 1 ? '목표금액' : `${service.toPercentage(item.goalDonation / item.totalDonation)}%`}</p>
                     <p>{status === 1
                         ? service.amount(service.getValue(item, 'goalDonation', 0))
                         : service.amount(service.getValue(item, 'totalDonation', 0))} 원</p>

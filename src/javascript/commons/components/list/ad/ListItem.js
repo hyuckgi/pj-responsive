@@ -196,7 +196,7 @@ class ListItem extends React.Component {
                         const resultCode = service.getValue(data, 'resultCode', false);
                         const resultMsg = service.getValue(data, 'resultMsg', '');
 
-                        if(resultCode === 200){
+                        if(resultCode && resultCode === 200){
                             return WebModal.success({
                                 title : '광고연동 요청성공',
                                 content : '계약서?',

@@ -52,7 +52,7 @@ class MainContainer extends React.Component {
 
         return (
             <div className="main-container">
-                <div className="main-slider">
+                <div className="main-slider-area">
                     <CommonSlider list={storyList} prefixUrl={path.storyItem} prefix="story" path="main"/>
                 </div>
 

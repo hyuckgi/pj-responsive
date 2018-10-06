@@ -1,26 +1,26 @@
 import {layout as type} from "../types";
 
-export const masterLevel1 = () => {
+export const masterLevel1 = (permission) => {
     return {
         type: type.MASTER_LEVEL_1,
-        payload: {}
+        payload: {...permission}
     }
 };
-export const masterLevel2 = () => {
+export const masterLevel2 = (permission) => {
     return {
         type: type.MASTER_LEVEL_2,
-        payload: {}
+        payload: {...permission}
     }
 };
-export const masterLevel3 = () => {
+export const masterLevel3 = (permission) => {
     return {
         type: type.MASTER_LEVEL_3,
-        payload: {}
+        payload: {...permission}
     }
 };
-export const userDefault = () => {
+export const userDefault = (permission) => {
     return {
         type: type.USER,
-        payload: {}
+        payload: {...permission}
     }
 };

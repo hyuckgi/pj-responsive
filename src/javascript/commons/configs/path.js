@@ -45,6 +45,7 @@ export const path = {
     setting : '/mypage/setting',
 
     // utils
+    admin : '/admin',
     login : '/login',
     join : '/join',
     search : '/search',

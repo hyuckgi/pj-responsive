@@ -86,3 +86,17 @@
 }
 
 html:not([data-scale]) .common-slider .am-button-ghost::before{display:none;}
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx){
+    html:not([data-scale]) .web-container .common-slider .am-button-ghost::before{
+        display:none;
+    }
+
+    html:not([data-scale]) .web-container .common-slider .am-button-ghost{
+        border:none;
+
+        &.am-button-active{
+            border:none;
+        }
+    }
+}

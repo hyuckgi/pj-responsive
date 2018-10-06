@@ -210,7 +210,7 @@ class APICaller {
 			.then(docs => makeMock(docs, url, params))
             .catch((err) => errorModal(err, url, params));
 	}
-    static delete(url, params = null,  isPlainAxios = false) {
+    static delete(url, params = {},  isPlainAxios = false) {
 		const fullUrl = getMakeURL(url);
 		const str = jsonToParams(paramsToUnderscore(params));
 		const instance = isPlainAxios ? simpleAxios : axios;

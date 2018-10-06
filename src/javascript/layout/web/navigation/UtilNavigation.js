@@ -33,7 +33,6 @@ class UtilNavigation extends React.Component {
         super(props);
 
         this.renderUser = this.renderUser.bind(this);
-        this.onClick = this.onClick.bind(this);
         this.onLogout = this.onLogout.bind(this);
     }
 
@@ -42,7 +41,11 @@ class UtilNavigation extends React.Component {
         this.props.logout();
     }
 
-    onClick(){
+    onClick(menu){
+        if(menu.link === path.admin){
+            return window.open(menu.defaultLink);
+        }
+
         return Modal.alert('로그아웃', '로그아웃 하시겠습니까?', [
             { text : 'Cancel', onPress : () => console.log("cancel")},
             { text : 'OK', onPress : () => this.onLogout() }
@@ -72,11 +75,12 @@ class UtilNavigation extends React.Component {
     }
 
     renderItem(menu){
-        if(menu.link === path.logout){
+        const linkTo = service.getValue(menu, 'linkTo', false);
+        if(linkTo === 'direct'){
             return (
                 <Menu.Item
                     key={menu.id}
-                    onClick={this.onClick}
+                    onClick={this.onClick.bind(this, menu)}
                 >
                     {menu.name}
                 </Menu.Item>
