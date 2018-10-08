@@ -70,18 +70,17 @@ class JoinStep03 extends React.Component {
         const { stepProps, form } = this.props;
 
         form.validateFields((errors, value) => {
-
             const { userType } = this.state;
-            const { nickname, email, cellphone, countryCode, username, businessNumber } = value;
+            const { nickname, email, cellphone, countryCode, username, businessNumber, countryMobileCode } = value;
 
-            if(!countryCode){
+            if(!countryCode || !countryMobileCode){
                 return;
             }
 
             if(!errors){
                 return stepProps.onSubmit({
                     cellphone : cellphone.replace(/ /gi, ""),
-                    countryCode : countryCode,
+                    countryCode : countryCode || countryMobileCode[1],
                     email : email,
                     nickname : nickname,
                     username : username,
@@ -109,9 +108,7 @@ class JoinStep03 extends React.Component {
             return;
         }
 
-        const regex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-
-        if(regex.test(value)){
+        if(values.validateEmail.test(value)){
             Toast.success(`사용가능한 이메일입니다.`, 1);
             return this.setState({
                 disabled: false,

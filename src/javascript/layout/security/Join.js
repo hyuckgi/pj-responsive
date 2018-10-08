@@ -24,7 +24,7 @@ class Join extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            current : 0,
+            current : 2,
         };
 
         this.onClickNext = this.onClickNext.bind(this);
@@ -129,7 +129,7 @@ class Join extends React.Component {
             <div className="join-container">
                 <Flex justify="start" direction="column" wrap="nowrap" className="join-wrapper" align="center" >
                     <Flex justify="center" direction="row" wrap="wrap">
-                        <Flex.Item>
+                        <Flex.Item className="only-web">
                             <WhiteSpace size="xl" />
                             <h2 className="title">회원가입</h2>
                         </Flex.Item>

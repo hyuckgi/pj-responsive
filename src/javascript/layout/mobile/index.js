@@ -1,10 +1,10 @@
 import { HeaderContainer } from './header';
 import { DrawerContainer } from './drawer';
-import { GlobalNavigation, SubNavigation } from './navigation';
+import { GlobalNavigation, SubHeaderContainer } from './navigation';
 
 export{
     HeaderContainer,
     GlobalNavigation,
-    SubNavigation,
+    SubHeaderContainer,
     DrawerContainer,
 };

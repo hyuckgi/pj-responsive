@@ -7,7 +7,6 @@ class Wrapper extends React.Component {
             <div className="drawer-wrapper">Wrapper</div>
         );
     }
-
 }
 
 export default Wrapper;

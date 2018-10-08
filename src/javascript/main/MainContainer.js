@@ -47,12 +47,18 @@ class MainContainer extends React.Component {
         ]);
     }
 
+    onChange(e){
+        console.log("obj", e);
+        e && e.preventDefault();
+        e && e.stopPropagation();
+    }
+
     render() {
         const { mainStory, storyList, mainRank, events } = this.props;
 
         return (
             <div className="main-container">
-                <div className="main-slider-area">
+                <div className="main-slider-area" onTouchStart={this.onChange.bind(this)}>
                     <CommonSlider list={storyList} prefixUrl={path.storyItem} prefix="story" path="main"/>
                 </div>
 
@@ -72,7 +78,7 @@ class MainContainer extends React.Component {
                     </Flex>
                 </div>
 
-                <div className="event-wrapper">
+                <div className="event-wrapper" onTouchStart={this.onChange.bind(this)}>
                     이벤트 등록시 배너 이미지 추가 등록??
                     <CommonSlider list={events} prefixUrl={path.boardItem} prefix="event" path="event"/>
                 </div>

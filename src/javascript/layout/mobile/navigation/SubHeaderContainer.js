@@ -11,9 +11,9 @@ class SubNavigation extends React.Component {
 
         return(
             <Sticky topOffset={70}>
-                {({style}) => {
+                {({style, isSticky}) => {
                     return(
-                        <div style={{...style, zIndex: 100}}>
+                        <div style={{...style, zIndex: 100}} className={`sub-header-container ${isSticky ? 'navigations-sticky' : 'navigations-relative'}`}>
                             <SubHeader
                                 title={service.getValue(currentMenu, 'name')}
                             />

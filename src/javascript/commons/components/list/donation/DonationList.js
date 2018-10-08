@@ -19,10 +19,10 @@ const parser = new UAParser();
 
 const mapStateToProps = ({fetch}) => {
     const item = service.getValue(fetch, 'item', {});
-    const donationList = service.getValue(item, 'data.adData', {});
+    const donationList = service.getValue(item, 'data.adList', []);
 
     return {
-        list : [donationList]
+        list : donationList,
     }
 };
 

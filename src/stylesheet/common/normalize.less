@@ -5,17 +5,12 @@
 .web-container{
 
     & > .section{
-        min-height:calc(~'100vh' - 301px);
+        min-height:calc(~'100vh' - 81px);
     }
     .ant-layout{
         background:#fff;
     }
 
-    .ant-layout-content{
-        // width:1280px;
-        // margin:0 auto;
-        // min-height:3000px;
-    }
 }
 
 .mobile-container {
@@ -61,6 +56,10 @@
     .button-wrapper{
         margin: 20px auto 11px;
         text-align:center;
+    }
+
+    .only-web{
+        display:none;
     }
 }
 
@@ -269,6 +268,27 @@
     }
     .am-modal-close{
         cursor:pointer;
+    }
+
+    &.am-modal-wrap-popup{
+        .am-modal-popup{
+            top:0;
+            .am-modal-content{
+                .am-modal-header{
+                    border-bottom:1px solid #ddd;
+                    .am-modal-title{
+                        line-height:45px;
+                    }
+                }
+                .am-modal-close{
+                    top:15px;
+                }
+
+                .am-modal-body{
+                    padding:9px 15px;
+                }
+            }
+        }
     }
 }
 

@@ -1,16 +1,16 @@
 import {layout as type, security as securityType} from '../types';
 
 const list = [
-    {id: '1000000', name: 'Story',  level: 0,  link:'/story', defaultLink: '/story/list/progress', idx : 2},
+    {id: '1000000', name: 'Story',  level: 0,  link:'/story', defaultLink: '/story/list/progress', idx : 1, mobile : true},
     {id: '1010000', name: 'Prepare', link: '/story/list/ready', level: 1, parent: '1000000'},
     {id: '1020000', name: 'Fund-raising', link: '/story/list/progress', level: 1, parent: '1000000'},
     {id: '1030000', name: 'Completion', link: '/story/list/complete', level: 1, parent: '1000000'},
 
-    {id: '2000000', name: 'History',  level: 0, link:'/rank', idx : 3, defaultLink : '/rank/list/user'},
+    {id: '2000000', name: 'History',  level: 0, link:'/rank', idx : 2, defaultLink : '/rank/list/user', mobile : true},
     {id: '2010000', name: 'Rank',  level: 1, link:'/rank/list/user', parent: '2000000'},
     {id: '2020000', name: 'Sponsor Rank',  level: 1, link:'/rank/list/sponsor', parent: '2000000'},
 
-    {id: '3000000', name: 'Event / Notice',  level: 0, link:'/board/list', defaultLink: '/board/list/event',  idx : 4},
+    {id: '3000000', name: 'Event / Notice',  level: 0, link:'/board/list', defaultLink: '/board/list/event',  idx : 3, mobile : true},
     {id: '3010000', name: 'Event', level: 1, link : '/board/list/event', parent: '3000000'},
     {id: '3020000', name: 'Notice', level: 1, link : '/board/list/notice', parent: '3000000'},
 
@@ -24,16 +24,6 @@ const list = [
     {id: '4020100', name: 'Terms', level: 2, link : '/service/rules/terms', parent: '4020000'},
     {id: '4020200', name: 'Policy', level: 2, link : '/service/rules/policy', parent: '4020000'},
 ];
-
-// const masterList = [
-//     {id: '8000000', name: '시스템 관리', link: '/systems', level: 0, defaultLink: '/systems/version'},
-//     {id: '8010000', name: '버전 관리', link: '/systems/version', level: 1, parent: '8000000'},
-//     {id: '8020000', name: '화상수업 관리', link: '/systems/web-lesson', level: 1, parent: '8000000'},
-//     {id: '8030000', name: 'CDN 퍼지', link: '/systems/purge', level: 1, parent: '8000000'},
-//     {id: '8040000', name: '관리자 비밀번호', link: '/systems/password', level: 1, parent: '8000000'},
-//
-//     {id: '-1000000', name: '마이페이지', link: '/home/profile', level: 1},
-// ];
 
 const mypageMenus = [
     {id: '500000000', name: 'Mypage', link : '/mypage/list', defaultLink : '/mypage/list/support', level: 1, hasChild : true },
@@ -52,12 +42,19 @@ const mypageMenus = [
     {id: '900000000', name: 'Logout', link : '/logout', level: 1, linkTo : 'direct'},
 ];
 
+const serviceMenu = [
+    {id : '1000', name : 'Join', link : '/join', level: 1},
+    {id : '2000', name : 'Login', link : '/login', level: 1},
+    {id : '3000', name : 'Search', link : '/search', level: 1},
+    {id : '4000', name : 'Withdrawal', link : '/withdrawal', level: 1},
+]
+
 
 const getMasterMenus = (level) => {
     return mypageMenus.filter((item) => !item.masterLevel || item.masterLevel >= level);
 }
 
-export const layout = (state = {list, mypageMenus}, action) => {
+export const layout = (state = {list, mypageMenus, serviceMenu}, action) => {
     switch(action.type) {
         case type.MASTER_LEVEL_1:
         case type.MASTER_LEVEL_2:

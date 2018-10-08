@@ -32,8 +32,8 @@ class HeaderContainer extends React.Component {
 
     getRightContent(){
         return [
-            <CustomIcon type="MdSearch" sizes="lg" key="0" className="am-icon-right"  onClick={this.onClickSearch}/>,
-            <CustomIcon type="MdDehaze" sizes="lg" key="1" className="am-icon-right"  onClick={this.onOpenClick.bind(this, 'mypage')}/>
+            <CustomIcon type="MdSearch" sizes="lg" key="0" className="am-icon-right"  onClick={this.onClickSearch} style={{fontSize : '1.5em', marginTop: 5}}/>,
+            <CustomIcon type="MdDehaze" sizes="lg" key="1" className="am-icon-right"  onClick={this.onOpenClick.bind(this, 'mypage')} style={{fontSize : '1.5em', marginTop: 5}}/>
         ]
     }
 
@@ -57,6 +57,11 @@ class HeaderContainer extends React.Component {
     }
 
     render() {
+        const { isGlobalMenu } = this.props;
+
+        if(!isGlobalMenu){
+            return null;
+        }
 
         return (
             <div className="header-container">

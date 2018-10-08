@@ -1,23 +1,17 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { createForm } from 'rc-form';
 
 import { APICaller } from '../../api';
 import { api, service } from '../../configs';
+import { CommonEditor } from '../../components';
 
-import { Accordion, List, Checkbox, Button, Badge, Toast } from 'antd-mobile';
+import { List, Checkbox, Badge, Toast , Modal} from 'antd-mobile';
+import UAParser from 'ua-parser-js';
 
+
+const parser = new UAParser();
 const CheckboxItem = Checkbox.CheckboxItem;
 
-const mapStateToProps = ({fetch}) => {
-    return {
-
-    }
-};
-
-const mapDispatchToProps = (dispatch) => ({
-
-});
 
 class Agreement extends React.Component {
 
@@ -27,12 +21,18 @@ class Agreement extends React.Component {
         this.state = {
             list : [],
             terms : {},
+            visible : false,
+            wrap : {
+                title : '',
+                terms : '',
+            }
         }
 
-        this.onChange = this.onChange.bind(this);
-        this.renderExtra = this.renderExtra.bind(this);
         this.onChangeAllTerms = this.onChangeAllTerms.bind(this);
         this.getTerms = this.getTerms.bind(this);
+        this.onChange = this.onChange.bind(this);
+
+        this.onCloseModal = this.onCloseModal.bind(this);
     }
 
     componentDidMount() {
@@ -63,8 +63,6 @@ class Agreement extends React.Component {
     }
 
     onChange(e, item){
-        e.preventDefault();
-        e.stopPropagation();
         const key = `terms_${item.code}`;
         return this.setState({
             terms : {
@@ -72,6 +70,21 @@ class Agreement extends React.Component {
                 [key] : e.target.checked
             }
         });
+    }
+
+    onOpenModal(e, item){
+        e && e.preventDefault();
+        e && e.stopPropagation();
+        this.setState({
+            visible : true,
+            wrap : item
+        });
+    }
+
+    onCloseModal(){
+        this.setState({
+            visible : false,
+        })
     }
 
     getAllTerms(value){
@@ -91,20 +104,14 @@ class Agreement extends React.Component {
             form.setFieldsValue(checked);
             return this.setState({
                 terms : checked
-            })
+            });
         }else{
             const unChecked = this.getAllTerms(false);
             form.setFieldsValue(unChecked);
             return this.setState({
                 terms : unChecked
-            })
+            });
         }
-    }
-
-    renderExtra(item){
-        return(
-            <Button href={item.url} target="_new" size="small" className="custom-btn">보기</Button>
-        )
     }
 
     renderHeader(){
@@ -125,37 +132,61 @@ class Agreement extends React.Component {
             return (
                 <List.Item
                     key={idx}
+                    arrow="horizontal"
+                    extra={(<span onClick={(e) => this.onOpenModal(e, item)}>보기</span>)}
+                    onClick={(e) => this.onChange(e, item)}
                 >
-                    <Accordion>
-                        <Accordion.Panel header={
-                            form.getFieldDecorator(`terms_${item.code}`, {
-                                initialValue : true,
-                            })(<CheckboxItem checked={terms[`terms_${item.code}`]} key={`terms_${item.code}`} onChange={(e) => this.onChange(e, item)}>{item.title}</CheckboxItem>)
-                        }>
-                            <div>{item.terms}</div>
-                        </Accordion.Panel>
-                    </Accordion>
+                    {
+                        form.getFieldDecorator(`terms_${item.code}`, {
+                            initialValue : true,
+                        })(
+                            <CheckboxItem
+                                checked={terms[`terms_${item.code}`]}
+                                key={`terms_${item.code}`}
+                            >
+                                {item.title}
+                            </CheckboxItem>)
+                    }
                 </List.Item>
             )
         });
     }
 
     render() {
-        const { terms } = this.state;
+        const { terms, visible, wrap } = this.state;
+        const isMobile = parser.getDevice().type;
         const allTerms = Object.keys(terms).length > 0 && Object.keys(terms).some(item => !terms[item]);
 
         return (
-            <List className="agreement-wrapper" renderHeader={this.renderHeader}>
-                <CheckboxItem
-                    checked={!allTerms}
-                    key={'allTerms'}
-                    onChange={this.onChangeAllTerms}
-                >전체 동의합니다.</CheckboxItem>
-                {this.renderTerms()}
-            </List>
+            <div>
+                <List className="agreement-wrapper" renderHeader={this.renderHeader}>
+                    <CheckboxItem
+                        checked={!allTerms}
+                        key={'allTerms'}
+                        onChange={this.onChangeAllTerms}
+                    >전체 동의합니다.</CheckboxItem>
+                    {this.renderTerms()}
+                </List>
+
+                <Modal
+                    wrapClassName={`modal-agreement ${isMobile ? 'modal-agreement-mobile' : 'modal-agreement-web'}`}
+                    visible={visible}
+                    transparent={isMobile ? false : true}
+                    popup={isMobile ? true : false}
+                    animationType={isMobile ? 'slide-up' : 'fade'}
+                    maskClosable={true}
+                    closable={true}
+                    title={wrap.title}
+                    onClose={this.onCloseModal}
+                    footer={[{text : '확인', onPress : this.onCloseModal}]}
+                >
+                    <CommonEditor value={wrap.terms} readOnly={true}/>
+                </Modal>
+            </div>
+
         );
     }
 
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(createForm()(Agreement));
+export default createForm()(Agreement);

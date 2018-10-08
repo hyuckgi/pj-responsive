@@ -39,12 +39,11 @@ class SubHeader extends React.Component {
 
         return (
             <NavBar
-             className="sub-navigations"
              mode="light"
-             icon={<CustomIcon type="FaAngleLeft" roots="FontAwesome" />}
+             icon={<CustomIcon type="FaAngleLeft" roots="FontAwesome" style={{fontSize : '1.5em', verticalAlign : 'top' }}/>}
              onLeftClick={this.onLeftClick.bind(this)}
              rightContent={[
-               <CustomIcon key="1" type="FaHome" roots="FontAwesome" onClick={this.onRightClick.bind(this)}/>
+               <CustomIcon key="1" type="FaHome" roots="FontAwesome" onClick={this.onRightClick.bind(this)} style={{fontSize : '1.4em', verticalAlign : 'top' }}/>
              ]}
            >
             <span>{title}</span>

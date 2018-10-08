@@ -28,9 +28,7 @@ class SelectCountry extends React.Component {
         };
 
         this.getCountry = this.getCountry.bind(this);
-        // this.onChange = this.onChange.bind(this);
         this.getFilter = this.getFilter.bind(this);
-        // this.onSelect = this.onSelect.bind(this);
         this.onOK = this.onOK.bind(this);
     }
 
@@ -73,13 +71,6 @@ class SelectCountry extends React.Component {
             return result;
         }, {});
     }
-    // onSelect(value){
-    //     console.log("value", value);
-    // }
-    //
-    // onChange(value){
-    //     console.log("val");
-    // }
 
     getMList(list){
         return list.map(item => item.name.slice(0, 1))
@@ -101,18 +92,16 @@ class SelectCountry extends React.Component {
     }
 
     onOK(values){
-        const { form } = this.props;
         const item = this.getFilter(values[1]);
-        this.setState({
+        return this.setState({
             selected : item,
-        })
-        form.setFieldsValue({countryCode : item.value});
+        });
     }
 
     render() {
         const { form } = this.props;
         const { getFieldDecorator, getFieldProps } = form;
-        const { countries, onSearch, newList, selected } = this.state;
+        const { countries, onSearch, newList } = this.state;
 
         const initial = countries.length && this.getFilter(initialValue);
 
@@ -139,15 +128,16 @@ class SelectCountry extends React.Component {
                 <MobileLayout>
                     <List>
                         <Picker
-                            {...getFieldProps('countryCode', {
+                            {...getFieldProps('countryMobileCode', {
                             })}
                             data={mList}
                             cols={2}
                             title="국가선택"
                             okText="완료"
                             dismissText="취소"
-                            onOk={this.onOK}
-                            extra={service.getValue(selected, 'code', false) ? (`${service.getValue(selected, 'name')} / ${service.getValue(selected, 'code')}`) : '선택'}
+                            onOk={(v) => this.onOK(v)}
+                            extra={'선택'}
+                            format={(labels) => {return labels[1]}}
                         >
                             <List.Item arrow="horizontal">Select Your Country</List.Item>
                         </Picker>

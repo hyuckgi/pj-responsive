@@ -1,8 +1,8 @@
 import GlobalNavigation from './GlobalNavigation';
-import SubNavigation from './SubNavigation';
+import SubHeaderContainer from './SubHeaderContainer';
 
 
 export{
     GlobalNavigation,
-    SubNavigation
+    SubHeaderContainer
 }

@@ -9,7 +9,7 @@ import { HeaderContainer, DrawerContainer } from './layout/mobile';
 import { service } from './commons/configs';
 
 const mobileLayout = [
-    {id: '100', name: 'Home',  level: 0,  link:'/main', defaultLink: '/main', idx : 1},
+    {id: '100', name: 'Home',  level: 0,  link:'/main', defaultLink: '/main', idx : 0, mobile : true},
 ];
 
 const mapStateToProps = ({ fetch, layout, router }) => {
@@ -18,10 +18,11 @@ const mapStateToProps = ({ fetch, layout, router }) => {
         return result;
     }, []).concat(mobileLayout);
 
-    const globalMenu = service.getValue(layout, 'list', []).filter(item => item.level === 0).concat(mobileLayout).filter(item => item.idx).sort((a, b) => a.id - b.id);
+    const globalMenu = service.getValue(layout, 'list', []).filter(item => item.level === 0).concat(mobileLayout).filter(item => item.mobile).sort((a, b) => a.id - b.id);
     const currentPath = service.getValue(router, 'location.pathname', "/main");
-    const currentMenu = globalMenu.filter(item => item.link.indexOf(currentPath.split("/")[1]) === 1).find(item => item);
+    const currentMenu = allMenu.filter(item => item.link.indexOf(currentPath.split("/")[1]) === 1).find(item => item);
     const isGlobalMenu = globalMenu.some(item => item.id === service.getValue(currentMenu, 'id', 0));
+
     const subMenu = isGlobalMenu && service.getValue(currentMenu, 'defaultLink', false)
         ? allMenu.filter(item => item.parent ===  currentMenu.id)
         : false;
@@ -58,18 +59,25 @@ class Mobile extends React.Component {
     }
 
     onSwipe(swipeObj){
-        this.setState({
+        const { onOpen } = this.state;
+        if(onOpen){
+            if(swipeObj.direction === 4){
+                return this.onCloseChange();
+            }
+            return;
+        }
+        return this.setState({
             swipeObj
         });
     }
 
-    onOpenChange(params){
+    onOpenChange(params = null){
         return this.setState({
             onOpen : true,
         })
     }
 
-    onCloseChange(params){
+    onCloseChange(params = null){
         return this.setState({
             onOpen : false,
         })
@@ -89,17 +97,17 @@ class Mobile extends React.Component {
     }
 
     render() {
-        const { spinning } = this.props;
+        const { spinning, isGlobalMenu } = this.props;
         const { onOpen, swipeObj } = this.state;
 
         return (
             <Gesture
                 direction='all'
-                onSwipe = {this.onSwipe.bind(this)}
+                onSwipe = {this.onSwipe}
                 >
                 <div className="mobile-container">
-                    <DrawerContainer status={onOpen} onEvents={this.onEvents}>
-                        <HeaderContainer onEvents={this.onEvents}/>
+                    <DrawerContainer status={onOpen} onEvents={this.onEvents} >
+                        <HeaderContainer onEvents={this.onEvents} isGlobalMenu={isGlobalMenu}/>
 
                         <StickyContainer className="section">
                             <MobileWrapper {...this.props} swipeObj={swipeObj}>

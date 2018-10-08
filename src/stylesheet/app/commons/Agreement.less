@@ -9,14 +9,23 @@
 
         & > .am-list-item{
             border-bottom:1px solid #ddd;
+            cursor:pointer;
 
             .am-list-line{
-                padding-right:0;
-
                 .am-list-content{
                     padding:0;
                     font-size:1em;
                 }
+
+                .am-list-extra{
+                    font-size:1em;
+                    flex-basis:auto;
+                    z-index:1;
+                }
+            }
+
+            &-active{
+                background:#fff;
             }
         }
 
@@ -40,9 +49,14 @@
                     border: 1px solid #ddd;
 
                     .am-accordion-content-box{
-                        padding:8px 10px;
+                        padding:8px 10px 8px 15px;
                         border-bottom:none;
                         font-size:0.8em;
+                        word-break:keep-all;
+
+                        .common-editor{
+                            overflow:visible;
+                        }
                     }
                 }
             }
@@ -50,53 +64,27 @@
     }
 }
 
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx){
+    html:not([data-scale]) .agreement-wrapper .am-accordion .am-accordion-item .am-accordion-content .am-accordion-content-box::after{
+        display:none;
+    }
+}
 
-// .agreement-accordion{
-//     &.am-accordion{
-//         border-top:none;
-//         .am-accordion-item{
-//             .am-accordion-header{
-//                 font-size:1.2em;
-//
-//                 .title{
-//                     text-align: left;
-//                 }
-//             }
-//
-//             .am-accordion-content{
-//                 .am-list{
-//                     .am-list-body{
-//                         border-bottom:none;
-//
-//                         & > .am-checkbox-item{
-//                             border-bottom:1px solid #ddd;
-//                         }
-//
-//                         & > .am-list-item:not(.am-checkbox-item){
-//                             & > .am-list-line{
-//                                 & > .am-list-content{
-//                                     padding:0;
-//                                 }
-//                             }
-//
-//                             &:not(:last-child){
-//                                 & > .am-list-line{
-//                                     border-bottom:1px solid #ddd;
-//                                 }
-//                             }
-//                         }
-//                     }
-//                 }
-//             }
-//         }
-//         .am-list-item{
-//             .am-list-line{
-//                 .am-list-extra{
-//                     max-width:85px;
-//                 }
-//             }
-//         }
-//
-//
-//     }
-// }
+.modal-agreement{
+    &-web{
+        .am-modal{
+            width:720px;
+            margin:0 auto;
+
+            .am-modal-header{
+                border-bottom:1px solid #ddd;
+            }
+
+            .am-modal-body{
+                max-height:calc(~'60vh');
+                overflow-y: scroll;
+            }
+        }
+    }
+
+}

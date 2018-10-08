@@ -41,7 +41,7 @@ class GlobalNavigation extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if(prevProps.swipeObj !== this.props.swipeObj){
+        if(service.getValue(prevProps, 'swipeObj.startTime', '') !== service.getValue(this.props, 'swipeObj.startTime', '')){
             return this.onSwipe(this.props.swipeObj);
         }
     }
@@ -132,12 +132,12 @@ class GlobalNavigation extends React.Component {
         }
 
         if(swipeObj.direction === 2){
-            if(subMenu){
+            if(subMenu.length){
                 return this.localSwipe('next');
             }
             return this.globalSwipe('next');
         }else if(swipeObj.direction === 4){
-            if(subMenu){
+            if(subMenu.length){
                 return this.localSwipe('prev');
             }
             return this.globalSwipe('prev');
@@ -207,7 +207,7 @@ class GlobalNavigation extends React.Component {
     }
 
     getSubMenu(subMenu, currentPath){
-        let newSubMenu;
+        let newSubMenu = [];
         const flag = currentPath.indexOf(path.storyItem) === 0;
         const pathName = currentPath.split('/');
 
@@ -227,10 +227,10 @@ class GlobalNavigation extends React.Component {
     renderTabBar(props) {
         return (
             <Sticky topOffset={70}>
-                {({style}) => {
+                {({style, isSticky}) => {
                     return(
-                        <div style={{...style, zIndex: 1 }} >
-                            <div className="global-navigations">
+                        <div style={{...style, zIndex: 1 }} className={`${isSticky ? 'navigations-sticky' : 'navigations-relative'}`} >
+                            <div className={`global-navigations`}>
                                 <Tabs.DefaultTabBar
                                     {...props}
                                     renderTab={tab => this.renderTab(tab)}
@@ -250,7 +250,7 @@ class GlobalNavigation extends React.Component {
         return (
             <Tabs
                 tabs={globalMenu}
-                page={isGlobalMenu ? currentMenu.idx - 1 : null}
+                page={isGlobalMenu ? currentMenu.idx : null}
                 onChange={this.onChange}
                 renderTabBar={this.renderTabBar}
                 swipeable={false}
