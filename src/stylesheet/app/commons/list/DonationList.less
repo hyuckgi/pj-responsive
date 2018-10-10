@@ -77,3 +77,9 @@
 .mobile-donation-wrap{
 
 }
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx){
+    html:not([data-scale]) .web-donation-wrap .am-list-body div:not(:last-child) .am-list-line::after{
+        display:none;
+    }
+}

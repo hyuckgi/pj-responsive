@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import moment from 'moment';
 
 import { APICaller } from '../../../api';
@@ -12,13 +11,6 @@ import { Modal as WebModal } from 'antd';
 
 import NoImg from '../../../../../resource/commons/no_image_available.png';
 
-const mapStateToProps = ({fetch}) => {
-    const story = service.getValue(fetch, 'item.data', {});
-
-    return {
-        story,
-    }
-};
 
 class Item extends React.Component {
 
@@ -72,37 +64,45 @@ class Item extends React.Component {
     }
 
     onStart(){
-        const { item, story } = this.props;
-        const adNo = service.getValue(item, 'adNo', false);
-        const storyNo = service.getValue(story, 'storyNo', false);
+        const { item } = this.props;
+        const contractNo = service.getValue(item, 'contractNo', false);
 
-        const obj = api.donateAD({adNo, storyNo});
+        const obj = api.donateAD({contractNo});
+
+        console.log("obj", obj);
 
         return APICaller.post(obj.url, obj.params)
-            .then((...args) => {
-                console.log("res", args);
+            .then(({data}) => {
+                const resultCode = service.getValue(data, 'resultCode', 0);
+                if(resultCode === 200){
+                    this.setState({
+                        donateNo : data.donateNo || null,
+                    });
+                }
             });
     }
 
     onEnded(){
-        const { story, item } = this.props;
-        const { visible } = this.state;
-        const storyNo = service.getValue(story, 'storyNo', false);
+        const { item } = this.props;
+        const { donateNo } = this.state;
 
-        const obj = api.donateAD({donateNo : storyNo});
+        const obj = api.donateAD({donateNo});
 
-        return APICaller.post(obj.url, obj.params)
+        return APICaller.put(obj.url, obj.params)
             .then(({data}) => {
-                console.log("res", data);
-
-                if(data && visible){
-                    WebModal.success({
+                const resultCode = service.getValue(data, 'resultCode', 0);
+                if(resultCode === 200){
+                    return WebModal.success({
                         title : '기부 성공',
                         content : `${service.getValue(item, 'donationPerTime', 0)}원을 기부했습니다.`,
                         onOk : this.onCloseModal
                     });
                 }
-
+                return WebModal.error({
+                    title : '기부 실패',
+                    content : `${service.getValue(data, 'resultMsg', '')}`,
+                    onOk : this.onCloseModal
+                });
             });
     }
 
@@ -161,4 +161,4 @@ class Item extends React.Component {
 
 }
 
-export default connect(mapStateToProps)(Item);
+export default Item;

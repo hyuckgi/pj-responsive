@@ -24,7 +24,7 @@ class Join extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            current : 2,
+            current : 0,
         };
 
         this.onClickNext = this.onClickNext.bind(this);
