@@ -1,7 +1,7 @@
-import CsList from './CsList';
-import MakeCs from './MakeCs';
+import Faq from './Faq';
+import Qna from './Qna';
 
 export {
-    MakeCs,
-    CsList
+    Qna,
+    Faq
 }

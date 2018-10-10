@@ -1,7 +1,5 @@
-import Agreement from './Agreement';
-import Policy from './Policy';
+import RuleContainer from './RuleContainer';
 
 export {
-    Agreement,
-    Policy,
+    RuleContainer
 }

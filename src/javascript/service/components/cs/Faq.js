@@ -10,7 +10,7 @@ import { Menu, Table } from 'antd';
 
 
 const columns = [
-    { title: 'helpNo', dataIndex: 'helpNo', key: 'helpNo', className: 'center', width: 100},
+    { title: 'helpNo', dataIndex: 'helpNo', key: 'helpNo', className: 'center'},
     { title: 'title', dataIndex: 'title', key: 'title' },
 ];
 
@@ -38,7 +38,7 @@ const mapDispatchProps = dispatch => ({
     multipleList: (list) => dispatch(fetch.multipleList(list)),
 });
 
-class CsList extends React.Component {
+class Faq extends React.Component {
 
     constructor(props) {
         super(props);
@@ -80,17 +80,13 @@ class CsList extends React.Component {
         });
     }
 
-    rowKey(...args){
-        console.log("args", args);
-    }
-
     render() {
         const { list } = this.props;
         const { seletedKey, dataSource } = this.state;
 
         return (
-            <Flex className="cs-list-wrapper" align="stretch" alignContent="start">
-                <Flex.Item className="cs-list-navigation">
+            <Flex className="faq-wrapper" align="stretch" alignContent="start">
+                <Flex.Item className="faq-navigation">
                     <Menu
                         onSelect={this.onSelect}
                         defaultSelectedKeys={[seletedKey]}
@@ -106,9 +102,8 @@ class CsList extends React.Component {
                         })}
                     </Menu>
                 </Flex.Item>
-                <Flex.Item className="cs-list">
+                <Flex.Item className="faq">
                     <Table
-                        rowKey={this.rowKey}
                         defaultExpandedRowKeys={[0]}
                         title={() => service.getValue(list[seletedKey], `itemName`, '')}
                         columns={columns}
@@ -125,4 +120,4 @@ class CsList extends React.Component {
 
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchProps)(CsList));
+export default withRouter(connect(mapStateToProps, mapDispatchProps)(Faq));

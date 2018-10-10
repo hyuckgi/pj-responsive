@@ -1,8 +1,38 @@
+.qna-wrapper{
+    .am-list{
+        .am-list-body{
+            .am-list-item{
+
+                &.am-textarea-item{
+                    .am-textarea-label{
+                        text-align:center;
+                        font-size:1em;
+                    }
+                    .am-textarea-control{
+                        textarea{
+                            border:1px solid #dadada;
+                            padding:7px 10px;
+                            border-radius:4px;
+                            font-size:0.9em;
+                        }
+                    }
+                }
+
+                &.am-input-item{
+                    .am-input-label{
+                        font-size:1em;
+                    }
+                }
+            }
+        }
+    }
+}
+
 .web-container{
     .service-wrapper{
 
         &-top{
-            .title{
+            & > .title{
                 max-width: 1040px;
                 margin: 0 auto;
                 height:180px;
@@ -37,16 +67,17 @@
                 .am-tabs-content-wrap{
                     max-width: 1040px;
                     margin: 0 auto;
+                    padding:20px 0;
 
-                    .cs-list-wrapper{
-                        .cs-list-navigation{
+                    .faq-wrapper{
+                        .faq-navigation{
                             flex-basis:25%;
 
                             .ant-menu-vertical{
                                 border-right:none;
                             }
                         }
-                        .cs-list{
+                        .faq{
                             flex-basis:75%;
                             margin-left:20px;
 
@@ -59,44 +90,84 @@
                             }
                         }
                     }
+
+                    .title,
+                    .ant-table-title{
+                        padding: 16px 0;
+                        position: relative;
+                        border-radius: 0;
+                        font-size:1.2em;
+                        font-weight:bold;
+                        margin:0;
+                    }
+
+                    .qna-wrapper{
+                        max-width:540px;
+                        margin:0 auto;
+                    }
                 }
             }
         }
     }
 }
 
-.service-wrapper-top{
-    .am-tabs{
-        .am-tabs-content-wrap{
-            padding:20px 0;
+.mobile-container{
+    .service-wrapper{
+        &-top{
+            & > .title{
+                display:none;
+            }
+
+            .am-tabs{
+                .am-tabs-tab-bar-wrap{
+                    display:none;
+                }
+
+                .am-tabs-content-wrap{
+                    .am-flexbox{
+                        &.faq-wrapper{
+                            flex-flow:row wrap;
+
+                            .am-flexbox-item{
+                                flex: 0 0 100%;
+                                margin:0;
+                            }
+
+                            .faq-navigation{
+                                border-bottom:1px solid #ddd;
+
+                                .ant-menu{
+                                    .ant-menu-item{
+                                        margin:0;
+                                    }
+                                }
+                            }
+
+                            .faq{
+                                padding:10px;
+                                .title,
+                                .ant-table-title{
+                                    text-align:center;
+                                    font-size:1em;
+                                    font-weight:bold;
+                                }
+                                .ant-table-body{
+                                    table{
+                                        border-top:1px solid #e8e8e8;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }
 
-
-
-.cs-list-wrapper{
-
-    .am-list-header{
-        margin-bottom: 20px;
-        span{
-            font-size:1.2em;
-        }
-    }
-
-    .am-list-body{
-        border:none;
-
-        .list-view-section-body{
-            border-top:1PX solid #ddd;
-
-            .am-accordion{
-                border-top:none;
-
-                .am-accordion-content-box{
-                    padding:20px;
-                }
-            }
-        }
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx){
+    html:not([data-scale]) .qna-wrapper .am-list-body::before,
+    html:not([data-scale]) .qna-wrapper .am-list-body::after{
+        display:none;
     }
 }

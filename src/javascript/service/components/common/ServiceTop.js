@@ -7,7 +7,7 @@ import { service, values } from '../../../commons/configs';
 
 import { Tabs } from 'antd-mobile';
 
-import { Policy, Agreement, CsList, MakeCs } from '../';
+import { Faq, Qna, RuleContainer } from '../';
 
 const mapStateToProps = ({ fetch, code, router, layout }) => {
     const allMenu = Object.keys(layout).reduce((result, item) => {
@@ -66,13 +66,12 @@ class ServiceTop extends React.Component {
 
         switch (selected) {
             case '4010100':
-                return (<CsList />)
+                return (<Faq />)
             case '4010200':
-                return (<MakeCs />)
+                return (<Qna />)
             case '4020100':
-                return (<Agreement />)
             case '4020200':
-                return (<Policy />)
+                return (<RuleContainer id={selected}/>)
             default:
                 break;
         }

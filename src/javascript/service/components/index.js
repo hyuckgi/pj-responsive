@@ -1,13 +1,12 @@
 import ServiceContainer from './ServiceContainer';
-import { CsList, MakeCs } from './cs';
-import { Policy, Agreement } from './rules';
+import { Faq, Qna } from './cs';
+import { RuleContainer } from './rules';
 import { ServiceTop } from './common';
 
 export {
     ServiceContainer,
     ServiceTop,
-    CsList,
-    MakeCs,
-    Policy,
-    Agreement,
+    Faq,
+    Qna,
+    RuleContainer
 }
