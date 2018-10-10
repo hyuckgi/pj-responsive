@@ -37,6 +37,28 @@
                 .am-tabs-content-wrap{
                     max-width: 1040px;
                     margin: 0 auto;
+
+                    .cs-list-wrapper{
+                        .cs-list-navigation{
+                            flex-basis:25%;
+
+                            .ant-menu-vertical{
+                                border-right:none;
+                            }
+                        }
+                        .cs-list{
+                            flex-basis:75%;
+                            margin-left:20px;
+
+                            .ant-table{
+                                .ant-table-body{
+                                    .ant-table-row{
+                                        cursor:pointer;
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }

@@ -88,13 +88,13 @@ class MypageTop extends React.Component {
         }
 
         switch (selected) {
-            case '401000000':
+            case '501000000':
                 return (<SponList />)
-            case '402000000':
+            case '502000000':
                 return (<ADList path='manage'/>);
-            case '404000000':
+            case '504000000':
                 return (<StoryList />);
-            case '405000000':
+            case '505000000':
                 return (<CommentList />);
             default:
                 return (<SupportList />);

@@ -38,6 +38,9 @@ export const path = {
 
     // service
     service : '/service',
+    serviceList : (prefix, params = null) => {
+        return `${prefix}/:type/:page/:id/${service.toQuery(params)}`;
+    },
 
     // mypage
     mypage : '/mypage',
