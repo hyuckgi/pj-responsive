@@ -107,21 +107,32 @@
                         }
 
                         .title{
+                            display:-webkit-box;
+                            -webkit-line-clamp:2;
                             font-size:2.2em;
-                            line-height:40px;
-                            max-height:80px;
                             overflow:hidden;
+                            text-overflow:ellipsis;
                             word-break:keep-all;
+                            word-wrap: break-word;
                             margin-bottom:10px;
+                            line-height: 1.3em;
+                            /* autoprefixer: off */
+                            -webkit-box-orient:vertical;
+                            /* autoprefixer: on */
                         }
 
                         .contents{
                             color:#555;
-                            line-height:26px;
-                            max-height:78px;
+                            display:-webkit-box;
+                            -webkit-line-clamp:4;
                             overflow:hidden;
-                            word-break: keep-all;
+                            text-overflow:ellipsis;
+                            word-break:keep-all;
+                            word-wrap: break-word;
                             margin-bottom:18px;
+                            /* autoprefixer: off */
+                            -webkit-box-orient:vertical;
+                            /* autoprefixer: on */
                         }
 
                         .link{
