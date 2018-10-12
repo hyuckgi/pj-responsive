@@ -38,17 +38,27 @@ class Item extends React.Component {
         this.state = {
             videos : video,
             title : title,
+            images : []
         };
 
-        this.onChange = this.onChange.bind(this);
+        this.onChangeVideo = this.onChangeVideo.bind(this);
+        this.onChangeImage = this.onChangeImage.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.onError = this.onError.bind(this);
         this.onClose = this.onClose.bind(this);
     }
 
-    onChange(params){
+    onChangeVideo(params){
+        console.log("params", params);
         return this.setState({
             videos : params.fileList.slice(-1),
+        });
+    }
+
+    onChangeImage(params){
+        console.log("params", params);
+        return this.setState({
+            images : params.fileList.slice(-1),
         });
     }
 
@@ -80,7 +90,7 @@ class Item extends React.Component {
     render() {
         const { form } = this.props;
         const { getFieldDecorator } = form;
-        const { videos, title } = this.state;
+        const { videos, title, images } = this.state;
         const item = service.getValue(this.props, 'item', false);
 
         return (
@@ -102,6 +112,35 @@ class Item extends React.Component {
                     </FormItem>
                     <FormItem
                         {...formItemLayout}
+                        label="대표사진"
+                    >
+                        {getFieldDecorator(`adImageFile`, {
+                        })(
+                            <Upload
+                                {...upload.getProps()}
+                                accept='image/*'
+                                fileList={images}
+                                listType="picture-card"
+                                onChange={this.onChangeImage}
+                                data={(file) => (
+                                    {
+                                        type : 11,
+                                        filename : service.getValue(file, 'name', '')
+                                    }
+                                )}
+                            >
+                                {images.length < 1
+                                    ? (<div>
+                                        <Icon type="plus" />
+                                        <div className="ant-upload-text">Upload</div>
+                                     </div>)
+                                    : null
+                                }
+                            </Upload>
+                        )}
+                    </FormItem>
+                    <FormItem
+                        {...formItemLayout}
                         label="광고영상"
                         className="video"
                     >
@@ -113,7 +152,7 @@ class Item extends React.Component {
                                 accept='video/*'
                                 fileList={videos}
                                 listType="text"
-                                onChange={this.onChange}
+                                onChange={this.onChangeVideo}
                                 data={(file) => ({
                                     type : 22,
                                     filename : service.getValue(file, 'name', '')

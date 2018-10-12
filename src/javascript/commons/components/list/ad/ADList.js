@@ -180,8 +180,9 @@ class ADList extends React.Component {
         form.validateFields((errors, value) => {
 
             if(!errors){
+                const adImageFileNo = service.getFileNo(service.getValue(value, 'adImageFile.fileList', [])).find(item => item);
                 const adFileNo = service.getFileNo(service.getValue(value, 'adFile.fileList', [])).find(item => item);
-                const obj = api.postAD({title : value.title, adFileNo});
+                const obj = api.postAD({title : value.title, adFileNo, adImageFileNo});
 
                 return APICaller.post(obj.url, obj.params)
                     .then(({data}) => {
