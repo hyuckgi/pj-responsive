@@ -72,7 +72,18 @@
             }
             &-meta{
                 &-title{
-                    height:48px;
+                    display:-webkit-box;
+                    -webkit-line-clamp:2;
+                    font-size:1.2em;
+                    overflow:hidden;
+                    text-overflow:ellipsis;
+                    word-break:keep-all;
+                    word-wrap: break-word;
+                    line-height: 1.3em;
+                    /* autoprefixer: off */
+                    -webkit-box-orient:vertical;
+                    /* autoprefixer: on */
+                    min-height:42px;
                 }
 
                 &-description{

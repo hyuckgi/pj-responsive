@@ -53,10 +53,10 @@ class ListItem extends React.Component {
         return (
             <Flex className={`board-list-item ${type}-item`}>
                 <Flex.Item>
-                    renderNotice
+                    {service.getValue(item, 'title', '')}
                 </Flex.Item>
                 <Flex.Item>
-                    renderNotice2222
+                    {service.getValue(item, 'contents', '')}
                 </Flex.Item>
             </Flex>
         )

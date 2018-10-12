@@ -10,7 +10,6 @@ import { Menu, Table } from 'antd';
 
 
 const columns = [
-    { title: 'helpNo', dataIndex: 'helpNo', key: 'helpNo', className: 'center'},
     { title: 'title', dataIndex: 'title', key: 'title' },
 ];
 

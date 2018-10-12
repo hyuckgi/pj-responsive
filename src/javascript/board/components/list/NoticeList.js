@@ -23,6 +23,8 @@ const mapStateToProps = ({fetch}) => {
     }
 };
 
+const defaultQuery = { page : 1, size : 5};
+
 const mapDispatchProps = dispatch => ({
     multipleList: (list) => dispatch(fetch.multipleList(list)),
 });
@@ -33,10 +35,10 @@ class NoticeList extends React.Component {
     constructor(props) {
         super(props);
 
+        this.query = JSON.parse(JSON.stringify(defaultQuery));
+
         this.state = {
             dataSource : dataSource,
-            size : 10,
-            page : 1,
         };
 
         this.renderRow = this.renderRow.bind(this);
@@ -59,13 +61,12 @@ class NoticeList extends React.Component {
     }
 
     getList(){
-        const { page, size } = this.state;
 
-        return this.props.multipleList([{id : `notice`, url : api.getNoticeList({page, size}), params : {} }])
+        return this.props.multipleList([{id : `notice`, url : api.getNoticeList({...this.query}), params : {} }])
             .then(() => {
-                const total = service.getValue(this.props, `notice.totalSize`, 1);
-                const current = service.getValue(this.props, `notice.list`, []);
-                const hasMore = total > current.length ? true : false;
+                const total = service.getValue(this.props, `notice.totalPage`, 1);
+                const current = service.getValue(this.props, `notice.page`, 1);
+                const hasMore = total > current ? true : false;
 
                 return this.setState({
                     hasMore
@@ -82,7 +83,6 @@ class NoticeList extends React.Component {
     }
 
     onEndReached(e){
-        console.log("onEndReached");
         const { hasMore } = this.state;
         const { isFetching } = this.props;
 
@@ -90,13 +90,12 @@ class NoticeList extends React.Component {
             return;
         }
 
-        return this.setState(prevState => {
-            return {
-                page : prevState.page =+ 1,
-            }
-        }, () => {
+        if (isFetching || !hasMore) {
+            return;
+        }else{
+            this.query.size = service.getValue(this.query, 'size', defaultQuery.size) + defaultQuery.size;
             return this.getList();
-        });
+        }
     }
 
     renderHeader(){

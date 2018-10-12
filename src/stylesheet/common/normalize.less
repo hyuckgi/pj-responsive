@@ -457,6 +457,12 @@ body, *{
     margin-top: 1em;
 }
 
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx){
+    html:not([data-scale]) .app-container .am-list-body::before,
+    html:not([data-scale]) .app-container .am-list-body::after{
+        display:none;
+    }
+}
 
 html:not([data-scale]) .app-container .am-list-body div:not(:last-child) .am-list-line::after,
 html:not([data-scale]) .app-container .am-accordion::before,

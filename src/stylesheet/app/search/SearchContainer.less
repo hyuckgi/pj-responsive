@@ -1,0 +1,95 @@
+.web-container{
+    .search-container{
+        max-width:1000px;
+        margin:0 auto;
+        padding:3%;
+
+        .search-box-area{
+            margin-bottom:30px;
+        }
+
+        .search-wrap{
+            .title{
+                padding:10px;
+                font-weight:bold;
+                margin-bottom:8px;
+            }
+
+            &.category-wrap{
+                .list{
+                    .am-flexbox{
+                        .am-flexbox-item{
+                            flex: 0 0 10.5%;
+                            margin: 0 1% 20px;
+
+                            p{
+                                text-align:center;
+                                margin-bottom:0;
+                                margin-top:5px;
+                            }
+                        }
+                    }
+                }
+            }
+
+            &.tag-wrap{
+                .list{
+                    .am-flexbox{
+                        .am-flexbox-item{
+                            flex : 0 0 auto;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.mobile-container{
+    .search-container{
+
+        .search-box-area{
+            margin-bottom:10px;
+        }
+
+        .search-wrap{
+            padding:15px 15px 0;
+
+            .title{
+                font-weight:bold;
+                margin-bottom:10px;
+                text-align:center;
+            }
+
+            &.category-wrap{
+                .list{
+                    .am-flexbox{
+                        .am-flexbox-item{
+                            flex: 0 0 23%;
+                            margin: 0 1% 10px;
+                            text-align:center;
+
+                            p{
+                                text-align:center;
+                                margin-bottom:0;
+                                margin-top:5px;
+                            }
+                        }
+                    }
+                }
+            }
+
+            &.tag-wrap{
+                .list{
+                    .am-flexbox{
+                        flex-wrap: wrap;
+                        .am-flexbox-item{
+                            flex : 0 0 auto;
+                            margin:5px 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

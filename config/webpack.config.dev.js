@@ -285,14 +285,6 @@ module.exports = {
     // The public URL is available as %PUBLIC_URL% in index.html, e.g.:
     // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
     // In development, this will be an empty string.
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      filename: 'vendor.[chunkhash].js',
-      minChunks (module) {
-        return module.context &&
-               module.context.indexOf('node_modules') >= 0;
-      }
-    }),
     new ExtractTextPlugin("[name].css"),
     new InterpolateHtmlPlugin(env.raw),
     // Generates an `index.html` file with the <script> injected.
