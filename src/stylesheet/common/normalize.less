@@ -197,14 +197,6 @@
                 .am-input-label{
                     color:#000;
                 }
-                input{
-                    -webkit-opacity:1 !important;
-                    -webkit-text-fill-color: #FF6E59;
-
-                    color: #FF6E59;
-                    background-color:#eafbfd;
-                    border:1px solid #FF6E59;
-                }
             }
         }
     }
@@ -294,8 +286,10 @@
 
 body{
     min-width:320px;
+    // ios scrolling
+    overflow:auto;
+    -webkit-overflow-scrolling:touch;
 }
-
 
 li, ol{
     list-style:none;

@@ -8,7 +8,7 @@ import { FormButton } from '../../../commons/types';
 
 import { Form, Input, Upload, Icon, Alert } from 'antd';
 
-import { ContentList } from './';
+import { ContentList } from '../';
 
 const FormItem = Form.Item;
 

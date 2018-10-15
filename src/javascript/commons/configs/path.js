@@ -9,6 +9,7 @@ export const path = {
     storyItem : '/story/item',
     storyList : '/story/list',
     propose : '/story/propose',
+    review : '/story/review',
 
     // recieve
     list: (prefix, params = null) => {
@@ -45,7 +46,10 @@ export const path = {
     // mypage
     mypage : '/mypage',
     mypageList :  '/mypage/list',
-    setting : '/mypage/setting',
+
+    // setting
+    setting : '/setting',
+
 
     // utils
     admin : '/admin',

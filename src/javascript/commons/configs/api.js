@@ -111,10 +111,19 @@ export const api = {
     getCslist : ({page = 1, size = 10}) => `/api/help/page/${page}/size/${size}`,
 
     //profile
-    getProfile : () => `/api/profile`,
+    getProfile : (params = null) => ({
+        url : `/api/profile`,
+        params : {...params}
+    }),
 
     // account
     getAccount : () => `/api/account`,
+
+    // review
+    postReview : (params = null) => ({
+        url : `/api/story/review`,
+        params : {...params}
+    }),
 
 };
 

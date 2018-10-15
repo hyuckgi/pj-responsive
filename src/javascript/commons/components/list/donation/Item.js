@@ -7,10 +7,10 @@ import { FormButton } from '../../../types';
 import { CustomIcon, ButtonWrapper, VideoPlayer } from '../../../components';
 
 import { Flex, List, Modal } from 'antd-mobile';
-import { Modal as WebModal } from 'antd';
 
 import NoImg from '../../../../../resource/commons/no_image_available.png';
 
+const alert = Modal.alert;
 
 class Item extends React.Component {
 
@@ -92,17 +92,13 @@ class Item extends React.Component {
             .then(({data}) => {
                 const resultCode = service.getValue(data, 'resultCode', 0);
                 if(resultCode === 200){
-                    return WebModal.success({
-                        title : '기부 성공',
-                        content : `${service.getValue(item, 'donationPerTime', 0)}원을 기부했습니다.`,
-                        onOk : this.onCloseModal
-                    });
+                    return alert('기부 성공', `${service.getValue(item, 'donationPerTime', 0)}원을 기부했습니다.`, [
+                        { text: 'Ok', onPress: () => this.onCloseModal() },
+                    ]);
                 }
-                return WebModal.error({
-                    title : '기부 실패',
-                    content : `${service.getValue(data, 'resultMsg', '')}`,
-                    onOk : this.onCloseModal
-                });
+                return alert('기부 실패', `${service.getValue(data, 'resultMsg', '')}`, [
+                    { text: 'Ok', onPress: () => this.onCloseModal() },
+                ]);
             });
     }
 

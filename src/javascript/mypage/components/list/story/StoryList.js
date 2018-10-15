@@ -10,7 +10,7 @@ import { api, service, columns, path, values } from '../../../../commons/configs
 import { TableList } from '../../../../commons/components';
 
 import { Avatar, Select } from 'antd';
-import { Flex } from 'antd-mobile';
+import { Flex, Button } from 'antd-mobile';
 
 const Option = Select.Option;
 const statusOptions = service.getValue(values, 'story.options', []);
@@ -57,6 +57,8 @@ class SupportList extends React.Component {
         this.onEvents = this.onEvents.bind(this);
         this.renderSelect = this.renderSelect.bind(this);
         this.onSelect = this.onSelect.bind(this);
+
+        this.onClick = this.onClick.bind(this);
     }
 
     search(params) {
@@ -108,6 +110,15 @@ class SupportList extends React.Component {
         return service.toSearchParams(location.search);
     }
 
+    onClick(item, e){
+        e && e.preventDefault();
+        const storyNo = service.getValue(item, 'storyNo', false);
+
+        if(storyNo){
+            return this.props.move(path.moveItem(path.review, storyNo, 'write'));
+        }
+    }
+
     getColumns(columns){
         return columns.map(column => {
             if(column.dataIndex === 'imageUrl'){
@@ -122,6 +133,16 @@ class SupportList extends React.Component {
                 column.render = (text, item) => {
                     const current = statusOptions.filter(item => item.value === Number(text)).find(item => item);
                     return service.getValue(current, 'label', text);
+                }
+            }
+
+            if(column.dataIndex === 'etc'){
+                column.render = (text, item) => {
+                    const status = service.getValue(item, 'status', 1);
+                    if(status === 3){
+                        return (<Button type="ghost" size="small" inline onClick={this.onClick.bind(this, item)}>후기작성</Button>)
+                    }
+                    return null
                 }
             }
             return column;

@@ -4,8 +4,8 @@ import Rank from './Rank';
 import Board from './Board';
 import Service from './Service';
 import Mypage from './Mypage';
-import Setting from './Setting';
 import Search from './Search';
+import Setting from './Setting';
 
 export {
     Main,
@@ -14,6 +14,6 @@ export {
     Board,
     Service,
     Mypage,
-    Setting,
-    Search
+    Search,
+    Setting
 }

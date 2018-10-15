@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { path } from '../../commons/configs';
-import { Main, Story, Rank, Board, Service, Mypage, Setting, Search  } from '../../routes';
+import { Main, Story, Rank, Board, Service, Mypage, Search, Setting } from '../../routes';
 import { Join, Login, Page404, Page500 } from '../';
 
 class WrapperContainer extends React.Component {
@@ -31,7 +31,7 @@ class WrapperContainer extends React.Component {
                 <Route path={path.board} component={Board} />
                 <Route path={path.service} component={Service} />
                 <Route path={path.mypage} component={Mypage} />
-                <Route path={path.settings} component={Setting} />
+                <Route path={path.setting} component={Setting} />
             </Switch>
         );
     }

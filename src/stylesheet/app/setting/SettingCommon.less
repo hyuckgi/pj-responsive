@@ -1,0 +1,140 @@
+.web-container{
+    .setting-container{
+
+        .setting-wrap{
+
+            &-top{
+                max-width: 980px;
+                margin: 0 auto;
+                height:240px;
+
+                .title{
+                    max-width:120px;
+                    font-size:2em;
+                    font-weight:bold;
+                }
+
+                .text-area{
+                    div{
+                        padding:0 30px;
+
+                        p{
+                            font-size:1.3em;
+
+                            &:last-child{
+                                margin-bottom:0;
+                            }
+                        }
+
+                    }
+                }
+            }
+
+            .am-tabs{
+
+                .am-tabs-tab-bar-wrap{
+                    background-color:#FF6E59;
+
+                    .am-tabs-default-bar{
+                        width:1040px;
+                        margin:0 auto;
+
+                        .am-tabs-default-bar-tab{
+                            font-size:1.2em;
+                            cursor:pointer;
+                            color:#fff;
+                            background-color:#FF6E59;
+                            border-bottom:none;
+
+                            &-active{
+                                color:#fff;
+                                background-color: #EC3F2E;
+                            }
+                        }
+                    }
+
+                }
+                .am-tabs-content-wrap{
+                    padding:50px 0;
+                    max-width: 480px;
+                    margin: 0 auto;
+
+                    .list-wrap{
+
+                        &.account-wrap{
+
+                        }
+                    }
+
+                    .profile-wrapper{
+                        text-align:center;
+
+                        .am-list{
+                            text-align:left;
+                            .am-list-item {
+                                .am-input-label {
+                                    text-align:left;
+                                }
+                            }
+                        }
+
+                        .profile-image{
+                            position: relative;
+                            display:inline-block;
+                            margin:0 auto 30px;
+
+                            .ant-avatar{
+                                border:2px solid #fff;
+                                box-shadow:0px 4px 8px rgba(0, 0, 0, 0.4);
+                            }
+
+                            .ant-form{
+                                position:absolute;
+                                bottom:-4px;
+                                right:-4px;
+
+                                .ant-form-item{
+                                    margin-bottom:0;
+
+                                    .ant-btn{
+                                        padding:5px 10px;
+                                        border:1px solid #fff;
+                                        box-shadow:0px 0px 14px rgba(0, 0, 0, 0.4);
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.am-modal-wrap{
+    &.ad-modal{
+
+        &.ad-modal-preview,
+        &.ad-modal-modify,
+        &.ad-modal-create{
+            .am-modal-transparent{
+                width:50%;
+                max-width:720px;
+
+                .am-modal-content{
+                    .ad-inner-item{
+                        .ant-form-item{
+
+                            &.video{
+                                .ant-form-item-control{
+                                    text-align:left;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

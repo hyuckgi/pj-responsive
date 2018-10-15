@@ -33,9 +33,9 @@ const mypageMenus = [
     {id: '504000000', name: 'Story', link : '/mypage/list/story', level: 2, parent : '500000000'},
     {id: '505000000', name: 'Comment', link : '/mypage/list/comment', level: 2, parent : '500000000'},
 
-    {id: '600000000', name: 'Setting', link : '/mypage/setting', level: 1, defaultLink : '/mypage/setting/profile', hasChild : true},
-    {id: '601000000', name: 'Profile', link : '/mypage/setting/profile', level: 2, parent : '600000000'},
-    {id: '602000000', name: 'Account', link : '/mypage/setting/account', level: 2, parent : '600000000'},
+    {id: '600000000', name: 'Setting', link : '/setting', level: 1, defaultLink : '/setting/profile', hasChild : true},
+    {id: '601000000', name: 'Profile', link : '/setting/profile', level: 2, parent : '600000000', descript : '수정하려는 항목의 열쇠를 누른 후 수정하세요.'},
+    {id: '602000000', name: 'Account', link : '/setting/account', level: 2, parent : '600000000', descript : '자주 쓰는 계좌는 최대 5개까지만 등록됩니다.'},
 
     {id: '700000000', name: 'ServiceManage', link : '/admin', linkTo : 'direct', level: 1, masterLevel : 1, defaultLink : 'http://admindev.9spoons.com/main'},
 

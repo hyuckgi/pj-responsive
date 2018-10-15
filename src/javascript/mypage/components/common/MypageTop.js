@@ -16,8 +16,12 @@ import { ADList } from '../../../commons/components';
 const mapStateToProps = ({ fetch,  router, layout, security }) => {
     const mypageMenus = service.getValue(layout, 'mypageMenus', []);
 
-    const currentPath = service.getValue(router, 'location.pathname', "/mypage/list/support");
-    const currentMenu = mypageMenus.filter(item => item.link === currentPath).find(item => item);
+    const currentPath = service.getValue(router, 'location.pathname', false);
+    console.log('currentPath', currentPath);
+
+    const currentMenu = currentPath && mypageMenus.filter(item => item.link === currentPath).find(item => item);
+
+    console.log('currentMenu', currentMenu);
     const subMenu = mypageMenus.filter(item => item.parent ===  currentMenu.parent)
         .map((item, inx) => {
             item['title'] = item.name;
@@ -64,6 +68,7 @@ class MypageTop extends React.Component {
     }
 
     onMove(path){
+        console.log("onMove");
         return this.props.move(path);
     }
 
@@ -72,10 +77,12 @@ class MypageTop extends React.Component {
     }
 
     onChange(item, inx){
+        console.log("onChange");
         return this.onMove(item.link);
     }
 
     onTabClick(item, inx){
+        console.log("onTabClick");
         return this.onMove(item.link);
     }
 

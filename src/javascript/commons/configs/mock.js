@@ -185,7 +185,7 @@ export const mock = {
                 "fundraisingPeriod": 7,
                 "likeCount": 0,
                 "replyCount": 0,
-                "status": 1,
+                "status": 3,
                 "isUpdate": false,
                 "isDelete": false,
                 "updateDate": "2018-06-19 12:01:42",

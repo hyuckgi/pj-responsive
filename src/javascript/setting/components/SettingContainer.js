@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { service } from '../../../commons/configs';
-import { MypageTop } from '../';
+import { service } from '../../commons/configs';
+import { SettingTop } from './';
 
-class ListContainer extends React.Component {
+class SettingContainer extends React.Component {
 
     render() {
         const type = service.getValue(this.props, 'match.params.type', false);
@@ -11,14 +11,13 @@ class ListContainer extends React.Component {
         if(!type){
             return;
         }
-        
+
         return (
             <div className="list-wrapper">
-                <MypageTop type={type}/>
+                <SettingTop type={type}/>
             </div>
         );
     }
-
 }
 
-export default ListContainer;
+export default SettingContainer;

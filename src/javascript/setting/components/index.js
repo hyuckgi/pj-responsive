@@ -1,6 +1,9 @@
-import { ProfileContainer } from './profile';
+import SettingContainer from './SettingContainer';
+import { SettingTop } from './common';
+import { Profile } from './profile';
 
-
-export {
-    ProfileContainer
+export{
+    SettingContainer,
+    SettingTop,
+    Profile
 }

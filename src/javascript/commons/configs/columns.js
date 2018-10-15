@@ -36,6 +36,7 @@ const myProposeList = [
     {title: '상태', dataIndex: 'status', key: 'status', width: 100, className : 'center'},
     {title: '목표금액', dataIndex: 'goalDonation', key: 'goalDonation', width: 150, className : 'center'},
     {title: '달성율', dataIndex: 'totalDonation', key: 'totalDonation', width: 150, className : 'center'},
+    {title: '비고', dataIndex: 'etc', key: 'etc', width: 100, className : 'center'},
 ];
 
 const sponList = [

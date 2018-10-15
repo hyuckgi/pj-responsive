@@ -6,7 +6,9 @@ import { api, service, values } from '../../../configs';
 
 import { CustomIcon, ButtonWrapper } from '../../../components';
 import { FormButton } from '../../../types';
-import { Flex, List } from 'antd-mobile';
+import { Flex, List, Modal } from 'antd-mobile';
+
+const alert = Modal.alert;
 
 class ListItem extends React.Component {
 
@@ -39,7 +41,10 @@ class ListItem extends React.Component {
     onClickButton(id){
         switch (id) {
             case FormButton.DELETE:
-                return this.onDelete();
+                return alert('계좌 삭제', '정말로 계좌를 삭제하시겠습니까?', [
+                    { text: 'Cancel', onPress: () => console.log('cancel') },
+                    { text: 'Ok', onPress: () => this.onDelete() },
+                ]);
             default:
                 break;
         }
