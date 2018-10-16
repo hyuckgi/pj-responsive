@@ -46,6 +46,7 @@ export const path = {
     // mypage
     mypage : '/mypage',
     mypageList :  '/mypage/list',
+    withdrawal : '/mypage/withdrawal',
 
     // setting
     setting : '/setting',
@@ -59,7 +60,7 @@ export const path = {
     notFound : '/notFound',
     serverError : '/serverError',
     logout : '/logout',
-    withdrawal : '/withdrawal',
+
 
 };
 

@@ -9,7 +9,7 @@ class ServiceContainer extends React.Component {
         const type = service.getValue(this.props, 'match.params.type', false);
 
         return (
-            <div className="servie-container">
+            <div className="service-container">
                 <ServiceTop type={type} />
             </div>
         );

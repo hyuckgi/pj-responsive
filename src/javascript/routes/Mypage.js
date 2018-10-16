@@ -2,7 +2,7 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import { path } from '../commons/configs';
-import { ListContainer } from '../mypage/components';
+import { ListContainer, WithDrawal } from '../mypage/components';
 
 class Mypage extends React.Component {
 
@@ -11,6 +11,7 @@ class Mypage extends React.Component {
             <div className="mypage-container">
                 <Switch>
                     <Route path={path.list(path.mypageList)} component={ListContainer} />
+                    <Route path={path.withdrawal} component={WithDrawal} />
                 </Switch>
             </div>
 
