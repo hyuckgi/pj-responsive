@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import queryString from 'query-string';
+import { Link } from 'react-router-dom';
 
 import { StoryList as List, StoryListTop } from '../../../commons/components';
 
@@ -29,12 +30,14 @@ class StoryList extends React.Component {
         this.state = {
             order : 0,
             page : 1,
-            size : 10,
+            size : 20,
         }
 
         this.getList = this.getList.bind(this);
         this.onChangeParams = this.onChangeParams.bind(this);
         this.renderCategory = this.renderCategory.bind(this);
+
+        this.onClick = this.onClick.bind(this);
     }
 
     componentDidMount() {
@@ -42,8 +45,16 @@ class StoryList extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if(prevProps.match.params.type !== this.props.match.params.type || prevProps.location.search !== this.props.location.search || prevState !== this.state){
-            this.getList();
+        if(prevProps.match.params.type !== this.props.match.params.type){
+            return this.setState({
+                page : 1,
+                size : 20,
+            }, () => {
+                this.getList();
+            });
+        }
+        if(prevProps.location.search !== this.props.location.search || prevState !== this.state){
+            return this.getList();
         }
     }
 
@@ -64,6 +75,14 @@ class StoryList extends React.Component {
             ...this.state,
             ...params,
         });
+    }
+
+    onClick(){
+        this.setState(prevState => ({
+            ...prevState,
+            page : 1,
+            size : prevState.size += 20,
+        }));
     }
 
     getList(){
@@ -90,13 +109,17 @@ class StoryList extends React.Component {
 
     render() {
         const { stories } = this.props;
-        const { order } = this.state;
+        const { size, order } = this.state;
+        const isEnded = service.getValue(stories, 'size', 20) >= service.getValue(stories, 'totalSize', 20);
 
         return (
             <div className='story-list-wrapper'>
                 {this.renderCategory()}
                 <StoryListTop order={order} onChange={this.onChangeParams} prefixUrl={path.storyList}/>
                 <List count={4} data={stories} prefixUrl={path.storyItem} prefix="story"/>
+                <div className="story-list-bottom">
+                    {isEnded ? (<p>마지막 리스트입니다.</p>) : (<p onClick={this.onClick}>More</p>)}
+                </div>
             </div>
 
         );
