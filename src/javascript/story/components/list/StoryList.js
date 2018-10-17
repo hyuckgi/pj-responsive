@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import queryString from 'query-string';
-import { Link } from 'react-router-dom';
 
 import { StoryList as List, StoryListTop } from '../../../commons/components';
 
@@ -109,7 +108,7 @@ class StoryList extends React.Component {
 
     render() {
         const { stories } = this.props;
-        const { size, order } = this.state;
+        const { order } = this.state;
         const isEnded = service.getValue(stories, 'size', 20) >= service.getValue(stories, 'totalSize', 20);
 
         return (

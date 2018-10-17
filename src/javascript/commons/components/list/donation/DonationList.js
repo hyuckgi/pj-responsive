@@ -5,17 +5,12 @@ import { push } from 'react-router-redux';
 
 import { APICaller } from '../../../api';
 import { fetch } from '../../../../redux/actions';
-
 import { api, service, constants } from '../../../configs';
 
 import { Button, List, Modal } from 'antd-mobile';
 import { Modal as WebModal } from 'antd';
 
-import UAParser from 'ua-parser-js';
-
 import { Item } from './';
-
-const parser = new UAParser();
 
 const mapStateToProps = ({fetch}) => {
     const item = service.getValue(fetch, 'item', {});

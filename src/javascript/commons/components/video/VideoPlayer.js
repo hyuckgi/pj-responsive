@@ -73,11 +73,8 @@ class VideoPlayer extends React.Component {
     }
 
     makeInstance(){
-        const { fullscreen } = this.props;
-
         this.player = videojs(this.refs.player, this.getOptions(), () => {
             eventList.forEach(ev => this.player.on(ev, this.onEvents));
-
         });
     }
 

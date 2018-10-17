@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Avatar } from 'antd';
 
 import { APICaller, upload } from '../../../commons/api';
-import { service, api, path, values } from '../../../commons/configs';
+import { service, api, values } from '../../../commons/configs';
 import { fetch } from '../../../redux/actions';
 
 import { FormButton } from '../../../commons/types';
@@ -292,9 +292,9 @@ class Profile extends React.Component {
     }
 
     renderProfileImage(){
-        const { profile, form } = this.props;
+        const { form } = this.props;
         const { getFieldDecorator } = form;
-        const { imageUrl, loading, disabled } = this.state;
+        const { imageUrl, disabled } = this.state;
 
         return(
             <div className="profile-image">
