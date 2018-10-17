@@ -123,34 +123,36 @@ class Login extends React.Component {
         const { getFieldProps } = form;
 
         return (
-            <WingBlank className="login-container">
-                <Flex justify="start" direction="column" wrap="nowrap" className="login-wrapper" align="center">
-                    <Flex justify="center" direction="row" wrap="wrap">
-                        <Flex.Item className="logo">
-                            <img src={logo} alt="logo" /> 9Spoons
-                        </Flex.Item>
-                        <Flex.Item>
-                            <WhiteSpace size="lg"/>
-                            <List>
-                                <InputItem
-                                    {...getFieldProps('userid', {
-                                        rules: [{ required: true, message: '아이디를 입력하세요!'}]
-                                    })}
-                                    placeholder="UserID"
-                                />
-                                <InputItem
-                                    {...getFieldProps('passwd', {
-                                        rules: [{ required: true, message: '비밀번호를 입력하세요!'}]
-                                    })}
-                                    type="password"
-                                    placeholder="Password"
-                                />
-                            </List>
-                            <WhiteSpace size="lg"/>
-                            <Button type="primary" onClick={this.onSubmit}  >로그인</Button>
-                            <Button onClick={this.onClick} className="btn-join" >회원가입</Button>
-                        </Flex.Item>
-                    </Flex>
+            <WingBlank>
+                <Flex className="login-container" align="center" justify="center">
+                    <Flex.Item>
+                        <div className="login-area">
+                            <p className="logo">
+                                <img src={logo} alt="logo" /> 9Spoons
+                            </p>
+                            <div>
+                                <WhiteSpace size="lg"/>
+                                <List>
+                                    <InputItem
+                                        {...getFieldProps('userid', {
+                                            rules: [{ required: true, message: '아이디를 입력하세요!'}]
+                                        })}
+                                        placeholder="UserID"
+                                    />
+                                    <InputItem
+                                        {...getFieldProps('passwd', {
+                                            rules: [{ required: true, message: '비밀번호를 입력하세요!'}]
+                                        })}
+                                        type="password"
+                                        placeholder="Password"
+                                    />
+                                </List>
+                                <WhiteSpace size="lg"/>
+                                <Button type="primary" onClick={this.onSubmit}>로그인</Button>
+                                <Button onClick={this.onClick} >회원가입</Button>
+                            </div>
+                        </div>
+                    </Flex.Item>
                 </Flex>
             </WingBlank>
         );

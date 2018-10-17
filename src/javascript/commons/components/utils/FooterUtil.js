@@ -226,6 +226,7 @@ class FooterUtil extends React.Component {
         const modalType = service.getValue(modalContent, 'type', false);
         const color = isMobile ? '#fff' : (isLike ? '#eb1010' : '#ff6d59');
         const role = service.getValue(userInfo, 'role', 9);
+        const mobilePopup = modalType === 'token' ? false : (isMobile ? true : false);
 
         return (
             <div className="footer-utils-wapper">
@@ -271,9 +272,9 @@ class FooterUtil extends React.Component {
 
                 <Modal
                     visible={visible}
-                    transparent={isMobile ? false : true}
-                    popup={isMobile ? true : false}
-                    animationType={isMobile ? 'slide-up' : 'fade'}
+                    transparent={!mobilePopup}
+                    popup={mobilePopup}
+                    animationType={mobilePopup ? 'slide-up' : 'fade'}
                     maskClosable={false}
                     closable={modalType === 'token' ? false : true}
                     wrapClassName={service.getMobileClassName('footer-util-modal')}
