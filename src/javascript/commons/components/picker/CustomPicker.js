@@ -5,6 +5,7 @@ import { DesktopLayout, MobileLayout } from '../response';
 import { service } from '../../configs';
 
 import { Cascader } from 'antd';
+import { Picker, List } from 'antd-mobile';
 
 class CustomPicker extends React.Component {
 
@@ -22,7 +23,7 @@ class CustomPicker extends React.Component {
 
 
     render() {
-        const { options } = this.props;
+        const { options, value, type, label = null } = this.props;
 
         return (
             <div className="custom-picker">
@@ -34,7 +35,22 @@ class CustomPicker extends React.Component {
                     />
                 </DesktopLayout>
                 <MobileLayout>
-                    MobileLayout
+                    <List className="picker-list-container">
+                        <Picker
+                            value={value[0]}
+                            data={options}
+                            title={type}
+                            okText="완료"
+                            dismissText="취소"
+                            onOk={this.onChange.bind(this)}
+                            extra={`${type} 선택`}
+                            format={(labels) => {
+                                return labels[labels.length - 1];
+                            }}
+                        >
+                            <List.Item>{label}</List.Item>
+                        </Picker>
+                    </List>
                 </MobileLayout>
             </div>
         );

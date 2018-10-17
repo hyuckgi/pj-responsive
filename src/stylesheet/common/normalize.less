@@ -13,7 +13,8 @@
 
 }
 
-.mobile-container {
+.mobile-container,
+div[id^="am-modal-container"]{
 
     font-size:12px;
 
@@ -60,6 +61,33 @@
 
     .only-web{
         display:none;
+    }
+
+    .picker-list-container{
+        margin-bottom:5px;
+
+        .am-list-body{
+            .am-list-item{
+                padding-left:0;
+                min-height:auto;
+
+                .am-list-line{
+                    padding-right:0;
+
+                    .am-list-extra{
+                        flex:0 0 auto;
+                        font-size:1em;
+                        padding:7px 10px;
+                        text-align:center;
+                        border:1px solid #ddd;
+                        border-radius:5px;
+                    }
+                }
+            }
+        }
+    }
+    .am-modal-title{
+        font-size:1.4em;
     }
 }
 
@@ -300,7 +328,8 @@ body, *{
   padding:0;
 }
 
-#root{
+#root,
+div[id^="am-modal-container"]{
     .ant-layout{
         background:#fff;
     }
@@ -326,15 +355,6 @@ body, *{
                     text-align:left;
                 }
             }
-        }
-    }
-
-    .full-layout {
-        min-height:calc(~'100vh' - 135px);
-        align-items:stretch;
-
-        .full-layout-wrapper{
-            align-self:center;
         }
     }
 
@@ -451,17 +471,10 @@ body, *{
     margin-top: 1em;
 }
 
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx){
-    html:not([data-scale]) .app-container .am-list-body::before,
-    html:not([data-scale]) .app-container .am-list-body::after{
-        display:none;
-    }
-}
-
-html:not([data-scale]) .app-container .am-list-body div:not(:last-child) .am-list-line::after,
-html:not([data-scale]) .app-container .am-accordion::before,
-html:not([data-scale]) .app-container .am-accordion .am-accordion-item .am-accordion-header::after,
-html:not([data-scale]) .app-container .am-picker-col-indicator::before,
-html:not([data-scale]) .app-container .am-picker-col-indicator::after{
-    display:none;
+html:not([data-scale]) .am-list-body div:not(:last-child) .am-list-line::after,
+html:not([data-scale]) .am-accordion::before,
+html:not([data-scale]) .am-accordion .am-accordion-item .am-accordion-header::after,
+html:not([data-scale]) .am-picker-col-indicator::before,
+html:not([data-scale]) .am-picker-col-indicator::after{
+    display:none !important;
 }

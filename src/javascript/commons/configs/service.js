@@ -1,12 +1,22 @@
 import moment from 'moment';
 import queryString from 'query-string';
+import UAParser from 'ua-parser-js';
 
 const defaultPagination = {size: '', showSizeChanger:false, showQuickJumper: false, pageSizeOptions: ['10', '50', '100', '400']};
-
+const parser = new UAParser();
 
 export const service = {
-    getWebText : (txt, isMobile = false) => {
-        if(!isMobile){
+    isMobile : () => {
+        return parser.getDevice().type;
+    },
+    getMobileClassName : (className) => {
+        if(service.isMobile()){
+            return `${className} ${className}-mobile`
+        }
+        return `${className}`
+    },
+    getWebText : (txt) => {
+        if(!service.isMobile()){
             return txt;
         }
         return ''

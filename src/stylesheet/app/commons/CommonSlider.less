@@ -13,13 +13,26 @@
     .am-carousel{
         .slider-list{
             .text-area{
+                border-bottom : 1px solid #ddd;
                 .am-flexbox-item{
                     padding:10px 3%;
                     color : #333;
 
                     &.title{
-                        font-size:1.3em;
-                        word-break: keep-all;
+                        p{
+                            margin-bottom:0;
+                            display:-webkit-box;
+                            -webkit-line-clamp:2;
+                            overflow:hidden;
+                            text-overflow:ellipsis;
+                            word-break:keep-all;
+                            word-wrap: break-word;
+                            font-size:1.3em;
+                            min-height: 43px;
+                            /* autoprefixer: off */
+                            -webkit-box-orient:vertical;
+                            /* autoprefixer: on */
+                        }
                     }
 
                     &.link{
@@ -37,9 +50,12 @@
             }
         }
 
-        .slider-frame ~ div[class^="slider-decorator"]{
-            bottom:auto !important;
-            top : 190px;
+        &.main{
+
+            div[class^="slider-decorator"]{
+                bottom:auto !important;
+                top : 10px;
+            }
         }
     }
 

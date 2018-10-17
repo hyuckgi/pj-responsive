@@ -28,6 +28,7 @@ const mapStateToProps = ({ fetch }) => {
 
 const mapDispatchProps = dispatch => ({
     getItem :(url) => dispatch(fetch.get(url)),
+    reset : () => dispatch(fetch.reset()),
     move: (location) => dispatch(push(location)),
 });
 
@@ -48,8 +49,13 @@ class StoryContainer extends React.Component {
     componentDidMount() {
         const itemId = service.getValue(this.props, 'match.params.id', false);
         if(itemId){
+            window.scroll(0, 0);
             this.getItem(itemId);
         }
+    }
+
+    componentWillUnmount() {
+        this.props.reset();
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -169,7 +175,7 @@ class StoryContainer extends React.Component {
         const reviewData = service.getValue(item, 'reviewData', {});
 
         return (
-            <div className="story-detail">
+            <div className="story-detail" ref="detail">
                 <DesktopLayout>
                     <StoryTop item={item}/>
 

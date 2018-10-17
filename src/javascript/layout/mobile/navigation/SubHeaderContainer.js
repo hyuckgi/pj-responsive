@@ -4,7 +4,7 @@ import { Sticky } from 'react-sticky';
 import { service } from '../../../commons/configs';
 import { SubHeader } from '../header';
 
-class SubNavigation extends React.Component {
+class SubHeaderContainer extends React.Component {
 
     renderNavBar(){
         const { currentMenu } = this.props;
@@ -37,4 +37,4 @@ class SubNavigation extends React.Component {
 
 }
 
-export default SubNavigation;
+export default SubHeaderContainer;

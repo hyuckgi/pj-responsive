@@ -141,6 +141,12 @@ class CommonSlider extends React.Component {
             });
     }
 
+    onTouchStart(e){
+        console.log("e", e);
+        e && e.stopPropagation();
+
+    }
+
     render() {
         const { list = [], autoplay = true, path = false} = this.props;
         const isMain = path === 'main' ? true : false;
@@ -148,7 +154,7 @@ class CommonSlider extends React.Component {
         const newList = list.slice(0, 3);
 
         return (
-            <div className="common-slider">
+            <div className="common-slider" onTouchMove={this.onTouchStart.bind(this)}>
                 <DesktopLayout>
                     <WebCarousel
                         ref="webCarousel"
@@ -162,27 +168,33 @@ class CommonSlider extends React.Component {
                 </DesktopLayout>
                 <MobileLayout>
                     <MobileCarousel
-                        autoplay={autoplay}
+                        className={`${path === 'main' ? 'main' : '' }`}
+                        autoplay={false}
                         infinite
-                        // beforeChange={(from, to) => console.log(`slide from ${from} to ${to}`)}
-                        // afterChange={index => console.log('slide to', index)}
+                        dots={list.length > 1 ? true : false}
                     >
                         {list.map((item, inx) => {
                             return (
-                                <a
+                                <div
+                                    style={{cursor:'pointer'}}
                                     key={inx}
                                     onClick={this.onClick.bind(this, item)}
                                 >
-                                    {this.renderImage(item, { width: '100%', verticalAlign: 'top', maxHeight: 220})}
-                                    <Flex className="text-area" justify="between" >
-                                        <Flex.Item className="title">
-                                            {`${service.getValue(item, 'title', '')}`}
-                                        </Flex.Item>
-                                        <Flex.Item className="link">
-                                            <span>참여하기</span>
-                                        </Flex.Item>
-                                    </Flex>
-                                </a>
+                                    {this.renderImage(item, { width: '100%', verticalAlign: 'top', minHeight : 220})}
+                                    {isMain
+                                        ? (
+                                            <Flex className="text-area" justify="between" >
+                                                <Flex.Item className="title">
+                                                    <p>{`${service.getValue(item, 'title', '')}`}</p>
+                                                </Flex.Item>
+                                                <Flex.Item className="link">
+                                                    <span>참여하기</span>
+                                                </Flex.Item>
+                                            </Flex>
+                                        )
+                                        : null
+                                    }
+                                </div>
                             );
                         })}
                     </MobileCarousel>

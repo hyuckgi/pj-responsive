@@ -2,27 +2,24 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { service } from '../../../commons/configs';
-
-// import { Info, Comment, Contents } from './';
-
 import { Contents } from './';
 
 const mapStateToProps = ({ fetch }) => {
-    const item = service.getValue(fetch, 'item.data', {});
+    const reviewData = service.getValue(fetch, 'item.data.reviewData', {});
 
     return{
-        item
+        reviewData
     }
 }
 
 class Review extends React.Component {
 
     render() {
-        const { item } = this.props;
+        const { reviewData } = this.props;
 
         return (
             <div className="review-wrppper">
-                <Contents item={item}/>
+                <Contents item={reviewData}/>
             </div>
         );
     }

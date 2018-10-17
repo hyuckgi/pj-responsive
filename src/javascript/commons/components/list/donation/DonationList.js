@@ -111,15 +111,9 @@ class DonationList extends React.Component {
     }
 
     getClassName(){
-        const isMobile = parser.getDevice().type;
         const madalType = service.getValue(this.state, 'modalContent.type', false);
         const classname = 'ad-modal';
-
-        if(isMobile){
-            return `${classname} ${classname}-${madalType} ${classname}-mobile`;
-        }
-
-        return `${classname} ${classname}-${madalType}`;
+        return service.getMobileClassName(`${classname} ${classname}-${madalType}`);
     }
 
     getModalContents(){
@@ -278,7 +272,7 @@ class DonationList extends React.Component {
 
     render() {
         const { visible } = this.state;
-        const isMobile = parser.getDevice().type;
+        const isMobile = service.isMobile();
 
         return (
             <div className={`list-wrap ${isMobile ? 'mobile-donation-wrap' : 'web-donation-wrap'}`}>

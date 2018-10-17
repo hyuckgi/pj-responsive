@@ -20,6 +20,9 @@ const eventList = [
     'error',
     'playing',
     'firstplay',
+    'click',
+    'tap',
+    'touchstart'
 ];
 
 class VideoPlayer extends React.Component {
@@ -34,6 +37,7 @@ class VideoPlayer extends React.Component {
         this.onStart = this.onStart.bind(this);
 
         this.onEvents = this.onEvents.bind(this);
+        this.changeFullscreen = this.changeFullscreen.bind(this);
     }
 
     componentDidMount() {
@@ -41,7 +45,7 @@ class VideoPlayer extends React.Component {
     }
 
     getOptions(){
-        const { url, controls = true } = this.props;
+        const { url, controls = true, autoplay = false } = this.props;
 
         const sources = [{
             src : `https://www.youtube.com/watch?v=${url}`,
@@ -50,7 +54,7 @@ class VideoPlayer extends React.Component {
 
         return {
             ...defaultProps,
-            autoplay : !controls,
+            autoplay : autoplay,
             controls : controls,
             aspectRatio : "16:9",
             youtube : {
@@ -61,14 +65,19 @@ class VideoPlayer extends React.Component {
         }
     }
 
+    changeFullscreen(){
+        const { fullscreen } = this.props;
+        if(fullscreen){
+            this.player.requestFullscreen();
+        }
+    }
+
     makeInstance(){
         const { fullscreen } = this.props;
 
         this.player = videojs(this.refs.player, this.getOptions(), () => {
             eventList.forEach(ev => this.player.on(ev, this.onEvents));
-            if(fullscreen){
-                this.player.requestFullscreen();
-            }
+
         });
     }
 
@@ -79,7 +88,12 @@ class VideoPlayer extends React.Component {
             case 'firstplay':
                 return this.onStart();
             case 'ended' :
+                this.player.exitFullscreen();
                 return this.onEnded();
+            case 'click':
+            case 'tap':
+            case 'touchstart':
+                return this.changeFullscreen();
             default:
                 break;
         }

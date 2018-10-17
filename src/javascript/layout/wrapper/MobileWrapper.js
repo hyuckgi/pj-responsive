@@ -5,7 +5,7 @@ import { GlobalNavigation, SubHeaderContainer } from '../mobile';
 class MobileWrapper extends React.Component {
 
     render() {
-        const { isGlobalMenu = false } = this.props;
+        const { isGlobalMenu = false, currentPath } = this.props;
 
         return (
             <div className="wrapper-container">

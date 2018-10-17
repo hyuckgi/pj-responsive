@@ -6,12 +6,8 @@ import { api, service } from '../../configs';
 import { CommonEditor } from '../../components';
 
 import { List, Checkbox, Badge, Toast , Modal} from 'antd-mobile';
-import UAParser from 'ua-parser-js';
 
-
-const parser = new UAParser();
 const CheckboxItem = Checkbox.CheckboxItem;
-
 
 class Agreement extends React.Component {
 
@@ -154,7 +150,7 @@ class Agreement extends React.Component {
 
     render() {
         const { terms, visible, wrap } = this.state;
-        const isMobile = parser.getDevice().type;
+        const isMobile = service.isMobile();
         const allTerms = Object.keys(terms).length > 0 && Object.keys(terms).some(item => !terms[item]);
 
         return (

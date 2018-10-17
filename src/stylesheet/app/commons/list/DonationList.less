@@ -1,3 +1,60 @@
+.donation-list{
+    .am-list-body{
+        .am-list-item{
+            border-bottom:1px solid #ddd;
+
+            &:last-child{
+                border-bottom:none;
+            }
+
+            &.list-none{
+                .am-list-content{
+                    font-size:1.1em;
+                    padding:1.5em 0;
+                }
+            }
+
+            .am-list-line{
+                padding-right:0;
+
+                .am-list-content{
+                    padding:0;
+
+                    .donation-item{
+                        .am-flexbox-item{
+                            width:100%;
+                        }
+                    }
+                }
+
+                .am-list-extra{
+                    flex-basis:25%;
+
+                    .button-wrapper {
+                        margin: 0 auto;
+                        .am-flexbox-item{
+                            text-align:center;
+
+                            .am-whitespace{
+                                display:none;
+                            }
+
+                            .am-button{
+                                margin-left:auto;
+                                margin-right:auto;
+                                & > .am-button-icon{
+                                    margin-right:0;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+}
+
 .web-donation-wrap{
     width:680px;
 
@@ -9,18 +66,6 @@
         .am-list-body{
             .am-list-item{
                 padding:10px 15px;
-                border-bottom:1px solid #ddd;
-
-                &:last-child{
-                    border-bottom:none;
-                }
-
-                &.list-none{
-                    .am-list-content{
-                        font-size:1.1em;
-                        padding:1.5em 0;
-                    }
-                }
 
                 .am-list-thumb{
                     img{
@@ -30,38 +75,10 @@
                 }
 
                 .am-list-line{
-                    padding-right:0;
-
                     .am-list-content{
-                        padding:0;
-
                         .donation-item{
-
                             .am-flexbox-item{
-                                width:100%;
                                 font-size:1.2em;
-                            }
-                        }
-                    }
-
-                    .am-list-extra{
-                        flex-basis:25%;
-
-                        .button-wrapper {
-                            .am-flexbox-item{
-                                text-align:center;
-
-                                .am-whitespace{
-                                    display:none;
-                                }
-
-                                .am-button{
-                                    margin-left:auto;
-                                    margin-right:auto;
-                                    & > .am-button-icon{
-                                        margin-right:0;
-                                    }
-                                }
                             }
                         }
                     }
@@ -75,7 +92,25 @@
 
 
 .mobile-donation-wrap{
+    .donation-list{
+        max-height:calc(~'100vh' - 64px);
+        overflow-y: scroll;
+        padding-right:10px;
+        -webkit-overflow-scrolling:touch;
 
+        .am-list-body{
+            .am-list-item{
+                padding:5px 0;
+
+                .am-list-thumb{
+                    img{
+                        width:40px;
+                        height: 40px;
+                    }
+                }
+            }
+        }
+    }
 }
 
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx){

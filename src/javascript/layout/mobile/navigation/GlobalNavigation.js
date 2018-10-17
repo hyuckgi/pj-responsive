@@ -12,7 +12,10 @@ const mobileLayout = [
 ];
 
 const mapStateToProps = ({fetch}) => {
+    const story = service.getValue(fetch, 'item.data', {});
+
     return {
+        story
     }
 };
 
@@ -208,11 +211,12 @@ class GlobalNavigation extends React.Component {
 
     getSubMenu(subMenu, currentPath){
         let newSubMenu = [];
+        const { story } = this.props;
         const flag = currentPath.indexOf(path.storyItem) === 0;
         const pathName = currentPath.split('/');
 
         if(flag){
-            newSubMenu = mobileLayout;
+            newSubMenu = service.getValue(story, 'reviewData', false) ? mobileLayout : [mobileLayout[0]];
 
         }else{
             newSubMenu = subMenu;

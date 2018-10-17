@@ -46,7 +46,7 @@ class Contents extends React.Component {
                             return null;
                         }
                         return(
-                            <VideoPlayer url={item} key={idx} autoplay={false} />
+                            <VideoPlayer url={item} key={idx} />
                         )
                     })
                 }

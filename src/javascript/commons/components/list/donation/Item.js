@@ -112,7 +112,7 @@ class Item extends React.Component {
     }
 
     getButtons(){
-        return [{ id : FormButton.CONFIRM, label : '기부하기', icon : (<CustomIcon type="FaHeartbeat" roots="FontAwesome"/>), size : 'small', inline : true}];
+        return [{ id : FormButton.CONFIRM, label : service.getWebText('기부하기'), icon : (<CustomIcon type="FaHeartbeat" roots="FontAwesome"/>), size : 'small', inline : true}];
     }
 
     render() {
@@ -145,11 +145,11 @@ class Item extends React.Component {
                     transparent={false}
                     maskClosable={false}
                     closable={true}
-                    wrapClassName={'fullscreen-modal'}
+                    wrapClassName={service.getMobileClassName('fullscreen-modal')}
                     title={''}
                     onClose={this.onCloseModal}
                 >
-                    <VideoPlayer url={url} onEvents={this.onEvents} controls={false} fullscreen={true} />
+                    <VideoPlayer url={url} onEvents={this.onEvents} fullscreen={true} />
                 </Modal>
             </List.Item>
         )

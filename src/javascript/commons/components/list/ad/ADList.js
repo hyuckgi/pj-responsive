@@ -5,17 +5,12 @@ import { push } from 'react-router-redux';
 
 import { APICaller } from '../../../api';
 import { fetch } from '../../../../redux/actions';
-
 import { api, service, constants } from '../../../configs';
 
 import { Button, List, Modal } from 'antd-mobile';
 import { Modal as WebModal } from 'antd';
 
-import UAParser from 'ua-parser-js';
-
 import { ListItem, Item } from './';
-
-const parser = new UAParser();
 
 const mapStateToProps = ({fetch}) => {
     const list = service.getValue(fetch, 'multipleList.ADList.list', []);
@@ -120,7 +115,7 @@ class ADList extends React.Component {
     }
 
     getClassName(){
-        const isMobile = parser.getDevice().type;
+        const isMobile = service.isMobile();
         const madalType = service.getValue(this.state, 'modalContent.type', false);
         const classname = 'ad-modal';
 
@@ -290,7 +285,7 @@ class ADList extends React.Component {
 
     render() {
         const { visible } = this.state;
-        const isMobile = parser.getDevice().type;
+        const isMobile = service.isMobile();
 
         return (
             <div className="list-wrap ad-wrap">

@@ -6,11 +6,8 @@ import { service } from '../../commons/configs';
 
 import { Flex } from 'antd-mobile';
 import { Avatar, Tag } from 'antd';
-
 import { SearchBox } from './';
-import UAParser from 'ua-parser-js';
 
-const parser = new UAParser();
 const colorList = [
     'magenta',
     'red',
@@ -24,7 +21,6 @@ const colorList = [
     'geekblue',
     'purple',
 ];
-
 
 const getFlat = (list) => {
     if(!Array.isArray(list)){
@@ -96,8 +92,7 @@ class SearchContainer extends React.Component {
 
     renderCategory(){
         const { categoryList } = this.props;
-        const isMobile = parser.getDevice().type;
-        const size = isMobile ? 40 : 98;
+        const size = service.isMobile() ? 40 : 98;
 
         return (
             <Flex wrap="wrap">

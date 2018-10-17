@@ -3,11 +3,8 @@ import { createForm } from 'rc-form';
 import PropTypes from 'prop-types';
 
 import { APICaller } from '../../../commons/api';
-
 import { Modal, List, Radio, Flex, TextareaItem, Toast } from 'antd-mobile';
-
 import { service, values, api } from '../../configs';
-
 
 class Report extends React.Component {
 
@@ -107,13 +104,16 @@ class Report extends React.Component {
         const { visible, reason } = this.state;
         const { form } = this.props;
         const { getFieldProps } = form;
+        const isMobile = service.isMobile();
 
         return (
             <Modal
                 visible={visible}
                 closable={true}
-                className="report-wrapper"
-                transparent
+                className={service.getMobileClassName("report-wrapper")}
+                transparent={isMobile ? false : true}
+                popup={isMobile ? true : false}
+                animationType={isMobile ? 'slide-up' : 'fade'}
                 maskClosable={false}
                 onClose={this.onClose}
                 title="신고사유"

@@ -1,21 +1,15 @@
 import React  from 'react';
 import { createForm } from 'rc-form';
-import UAParser from 'ua-parser-js';
 
 import { APICaller } from '../../api';
 import { api, service } from '../../configs';
 
 import { DesktopLayout, MobileLayout } from '../response';
-
 import { Select } from 'antd';
-
 import { Toast, Picker, List } from 'antd-mobile';
-
 
 const Option = Select.Option;
 const initialValue = window.navigator.language.split("-")[1];
-
-const parser = new UAParser();
 
 class SelectCountry extends React.Component {
 
@@ -104,10 +98,8 @@ class SelectCountry extends React.Component {
         const { countries, onSearch, newList } = this.state;
 
         const initial = countries.length && this.getFilter(initialValue);
-
-        const isMobile = parser.getDevice().type;
         const list = onSearch ? newList : countries;
-        const mList = isMobile ? this.getMList(countries) : [];
+        const mList = service.isMobile() ? this.getMList(countries) : [];
 
         return (
             <div className="select-country">

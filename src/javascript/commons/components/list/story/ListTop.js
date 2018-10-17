@@ -5,10 +5,10 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import queryString from 'query-string';
 
-import { Flex, Button } from 'antd-mobile';
+import { Flex, Button, List, Picker } from 'antd-mobile';
 
 import { values, service, path } from '../../../configs';
-import { CustomPicker } from '../../';
+import { CustomPicker, DesktopLayout, MobileLayout } from '../../';
 
 const mapStateToProps = ({code, fetch}) => {
     const categories = service.getValue(code, 'categories', []);
@@ -29,12 +29,17 @@ class ListTop extends React.Component {
         this.renderOrder = this.renderOrder.bind(this);
         this.onClick = this.onClick.bind(this);
         this.onChange = this.onChange.bind(this);
+        this.onOk = this.onOk.bind(this);
     }
 
     onClick(item, e){
         e.preventDefault();
         const order = service.getValue(item, 'value', 0);
         this.props.onChange({order : order});
+    }
+
+    onOk(values){
+        this.props.onChange({order : values[0]});
     }
 
     onChange(value){
@@ -69,6 +74,7 @@ class ListTop extends React.Component {
                     options={categories}
                     onChange={this.onChange}
                     placeholder="카테고리를 선택하세요"
+                    type="카테고리"
                 />
             </Flex.Item>
         )
@@ -77,6 +83,8 @@ class ListTop extends React.Component {
     renderOrder(){
         const { order, match } = this.props;
         const options = service.getValue(values, 'story.order');
+        const current = options.filter(item => item.value === order).find(item => item);
+        
         const { type } = match.params;
 
         if(type !== 'progress'){
@@ -85,20 +93,41 @@ class ListTop extends React.Component {
 
         return(
             <Flex.Item style={{textAlign : 'right'}}>
-                {options.map((item, inx) => {
-                    return (
-                        <Button
-                            key={inx}
-                            inline
-                            size="small"
-                            onClick={this.onClick.bind(this, item)}
-                            type={order === item.value ? 'primary' : 'ghost'}
-                            style={{marginRight : 5, marginLeft: 5}}
+                <DesktopLayout>
+                    {options.map((item, inx) => {
+                        return (
+                            <Button
+                                key={inx}
+                                inline
+                                size="small"
+                                onClick={this.onClick.bind(this, item)}
+                                type={order === item.value ? 'primary' : 'ghost'}
+                                style={{marginRight : 5, marginLeft: 5}}
+                            >
+                                {item.label}
+                            </Button>
+                        );
+                    })}
+                </DesktopLayout>
+                <MobileLayout>
+                    <List className="picker-list-container">
+                        <Picker
+                            value={[current.value]}
+                            data={options}
+                            title="정렬"
+                            cols={1}
+                            okText="완료"
+                            dismissText="취소"
+                            onOk={this.onOk}
+                            extra={`${current.label}`}
+                            format={(labels) => {
+                                return labels;
+                            }}
                         >
-                            {item.label}
-                        </Button>
-                    );
-                })}
+                            <List.Item></List.Item>
+                        </Picker>
+                    </List>
+                </MobileLayout>
             </Flex.Item>
         )
     }

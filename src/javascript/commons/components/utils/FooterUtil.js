@@ -2,19 +2,14 @@ import React from 'react';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import UAParser from 'ua-parser-js';
 import { push } from 'react-router-redux';
 
 import { APICaller } from '../../api';
-
 import { service, api, path} from '../../configs';
 
 import { Flex, Button, Modal, Badge } from 'antd-mobile';
-
 import { CustomIcon, DonationList, Report, ADList } from '../';
 import { Share } from './';
-
-const parser = new UAParser();
 
 const mapStateToProps = ({ fetch, security }) => {
     const userInfo = security || {};
@@ -226,10 +221,10 @@ class FooterUtil extends React.Component {
     render() {
         const { item, userInfo } = this.props;
         const { visible, isLike, modalContent, reportVisible} = this.state;
-        const isMobile = parser.getDevice().type;
+        const isMobile = service.isMobile();
         const likeCount = service.getValue(item, 'likeCount', 0);
         const modalType = service.getValue(modalContent, 'type', false);
-        const color = isLike ? '#eb1010' : '#ff6d59';
+        const color = isMobile ? '#fff' : (isLike ? '#eb1010' : '#ff6d59');
         const role = service.getValue(userInfo, 'role', 9);
 
         return (
@@ -240,7 +235,7 @@ class FooterUtil extends React.Component {
                             icon={(<CustomIcon type={isLike ? 'FaHeart' : 'FaHeartO'} roots="FontAwesome" style={{color : color}}/>)}
                             onClick={this.onClickLike}
                         >
-                            <Badge text={likeCount} style={{ marginLeft: 18, backgroundColor: color, color : '#fff'}} overflowCount={99}><span style={{color:color}}>Likes</span></Badge>
+                            <Badge text={likeCount} style={{ marginLeft: isMobile ? -3 : 18, backgroundColor: color, color : isMobile ? '#333' : '#fff'}} overflowCount={99}><span style={{color:color}}>Likes</span></Badge>
                         </Button>
                     </Flex.Item>
                     <Flex.Item>
@@ -281,7 +276,7 @@ class FooterUtil extends React.Component {
                     animationType={isMobile ? 'slide-up' : 'fade'}
                     maskClosable={false}
                     closable={modalType === 'token' ? false : true}
-                    wrapClassName={isMobile ? `footer-util-modal footer-util-modal-mobile` : `footer-util-modal`}
+                    wrapClassName={service.getMobileClassName('footer-util-modal')}
                     title={this.getModalTitle()}
                     onClose={this.onCloseModal}
                     footer={this.getFooter()}

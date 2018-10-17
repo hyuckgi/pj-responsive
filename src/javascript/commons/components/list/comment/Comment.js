@@ -4,10 +4,8 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
-import UAParser from 'ua-parser-js';
 
 import { APICaller } from '../../../../commons/api';
-
 import { Avatar } from 'antd';
 import { Flex, Modal, Badge } from 'antd-mobile';
 
@@ -16,8 +14,6 @@ import { FormButton, FormMode } from '../../../../commons/types';
 import { CustomIcon, CommonEditor } from '../../../../commons/components';
 
 import { Report } from '../../';
-
-const parser = new UAParser();
 
 const mapStateToProps = ({ fetch, security }) => {
     const userInfo = security || {};
@@ -271,7 +267,6 @@ class Comment extends React.Component {
     }
 
     renderInnerWrite(){
-        const isMobile = parser.getDevice().type;
         return(
             <Flex.Item className="util-area">
                 <Flex justify="between">
@@ -279,13 +274,13 @@ class Comment extends React.Component {
                         <CustomIcon
                             type="MdDeleteForever"
                             style={{marginRight: 3, color : '#2CB9CF', fontSize : '1.5em'}}
-                        />{service.getWebText('삭제', isMobile)}
+                        />{service.getWebText('삭제')}
                     </Flex.Item>
                     <Flex.Item onClick={this.onModify}>
                         <CustomIcon
                             type="MdCreate"
                             style={{marginRight: 3, color : '#2CB9CF', fontSize : '1.5em'}}
-                        />{service.getWebText('수정', isMobile)}
+                        />{service.getWebText('수정')}
                     </Flex.Item>
                 </Flex>
             </Flex.Item>
@@ -297,7 +292,6 @@ class Comment extends React.Component {
         const { isLike, innerMode } = this.state;
         const isMine = service.getValue(item, 'isMyReply', false);
         const likeCount = service.getValue(item, 'likeCount', 0);
-        const isMobile = parser.getDevice().type;
 
         if(isMine){
             return  innerMode === FormMode.READ ? this.renderInnerWrite() : null
@@ -311,13 +305,13 @@ class Comment extends React.Component {
                             type={isLike ? 'FaHeart' : 'FaHeartO'}
                             roots="FontAwesome"
                             style={{marginRight: 3, color : '#2CB9CF'}}
-                        /><Badge text={likeCount} overflowCount={99}>{service.getWebText('좋아요', isMobile)}</Badge>
+                        /><Badge text={likeCount} overflowCount={99}>{service.getWebText('좋아요')}</Badge>
                     </Flex.Item>
                     <Flex.Item onClick={this.onClickReport} className="report">
                         <CustomIcon
                             type='MdNotificationsActive'
                             style={{marginRight: 3, color : '#2CB9CF'}}
-                        />{service.getWebText('신고', isMobile)}
+                        />{service.getWebText('신고')}
                     </Flex.Item>
                 </Flex>
             </div>

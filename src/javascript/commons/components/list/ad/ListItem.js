@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { createForm } from 'rc-form';
 import moment from 'moment';
-import UAParser from 'ua-parser-js';
 
 import { APICaller } from '../../../api';
 import { api, service, values } from '../../../configs';
@@ -14,8 +13,6 @@ import { Modal as WebModal } from 'antd';
 
 import NoImg from '../../../../../resource/commons/no_image_available.png';
 import { Item, Link } from './';
-
-const parser = new UAParser();
 
 const mapStateToProps = ({fetch}) => {
     const story = service.getValue(fetch, 'item', {});
@@ -288,7 +285,7 @@ class ListItem extends React.Component {
         return this.onOpenModal({
             type : 'preview',
             title : `미리보기-${name}`,
-            contents : (<VideoPlayer url={url} />),
+            contents : (<VideoPlayer url={url} autoplay={true}/>),
         });
     }
 
@@ -356,7 +353,7 @@ class ListItem extends React.Component {
     }
 
     getClassName(){
-        const isMobile = parser.getDevice().type;
+        const isMobile = service.isMobile();
         const madalType = service.getValue(this.state, 'modalContent.type', false);
         const classname = 'ad-modal';
 
@@ -370,7 +367,7 @@ class ListItem extends React.Component {
     render() {
         const { item, form } = this.props;
         const { visible, accordion } = this.state;
-        const isMobile = parser.getDevice().type;
+        const isMobile = service.isMobile();
         const thumbnailUrl = service.getValue(item, 'thumbnailUrl', NoImg);
         const playTime = service.getValue(item, 'playTime', 0);
         const duration = moment.duration(playTime, 's');

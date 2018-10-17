@@ -5,7 +5,7 @@ import Gesture from 'rc-gesture';
 import { StickyContainer } from 'react-sticky';
 
 import { Spinner, WrapperContainer, MobileWrapper, FooterContainer } from './layout';
-import { HeaderContainer, DrawerContainer } from './layout/mobile';
+import { HeaderContainer, DrawerContainer, FooterNavigation } from './layout/mobile';
 import { service } from './commons/configs';
 
 const mobileLayout = [
@@ -52,12 +52,6 @@ class Mobile extends React.Component {
         this.onCloseChange = this.onCloseChange.bind(this);
     }
 
-    componentDidUpdate(prevProps) {
-        if (this.props.location !== prevProps.location) {
-            window.scrollTo(0, 0)
-        }
-    }
-
     onSwipe(swipeObj){
         const { onOpen } = this.state;
         if(onOpen){
@@ -102,7 +96,7 @@ class Mobile extends React.Component {
 
         return (
             <Gesture
-                direction='all'
+                direction='horizontal'
                 onSwipe = {this.onSwipe}
                 >
                 <div className="mobile-container">
@@ -113,6 +107,8 @@ class Mobile extends React.Component {
                             <MobileWrapper {...this.props} swipeObj={swipeObj}>
                                 <WrapperContainer {...this.props}/>
                             </MobileWrapper>
+
+                            <FooterNavigation {...this.props}/>
                         </StickyContainer>
 
                         <FooterContainer />
