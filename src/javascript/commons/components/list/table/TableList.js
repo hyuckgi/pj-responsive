@@ -100,8 +100,6 @@ class TableList extends React.Component {
         const { list, pagination } = data;
         const { dataSource, hasMore } = this.state;
 
-        console.log("this.props", this.props);
-
         return (
             <div className="table-list">
                 <DesktopLayout>
