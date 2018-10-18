@@ -75,7 +75,7 @@ class Profile extends React.Component {
                 const { profile } = this.props;
                 const profileUrl = service.getValue(profile, 'profileUrl', false);
 
-                this.setState({
+                return this.setState({
                     profileUrl
                 });
             })
@@ -164,22 +164,37 @@ class Profile extends React.Component {
 
             if(!errors){
                 const profileFile = service.getFileNo(service.getValue(value, 'profileFile.fileList', [])).find(item => item);
-                const profileFileNo = profileFile || service.getValue(profile, 'profileFile', 1);
+                const profileFileNo = profileFile || service.getValue(profile, 'profileFile', false);
+                let newParams = {};
 
-                const newParams = {
-                    userNo,
-                    profileFileNo,
-                    ...value
+                if(profileFileNo){
+                    newParams = {
+                        userNo,
+                        profileFileNo,
+                        ...value
+                    };
+                }else{
+                    newParams = {
+                        userNo,
+                        ...value
+                    };
                 }
 
                 delete newParams['profileFile'];
-                delete newParams['confirmPasswd'];
-
                 const obj = api.getProfile(newParams);
 
                 return APICaller.put(obj.url, obj.params)
-                    .then((...args) => {
-                        console.log("args", args);
+                    .then(({data}) => {
+                        const resultCode = service.getValue(data, 'resultCode', false);
+                        const resultMsg = service.getValue(data, 'resultMsg', '');
+                        if(resultCode === 200){
+                            this.getUser()
+                            .then(() => {
+                                this.onChangeMode(true);
+                            });
+                            return Toast.success('회원정보가 수정되었습니다.', 2);
+                        }
+                        return this.makeToast([resultMsg]);
                     });
             }
 
@@ -188,8 +203,6 @@ class Profile extends React.Component {
     }
 
     onClickButton(id){
-        console.log("id", id);
-
         switch (id) {
             case FormButton.CANCEL:
                 return this.onChangeMode(true);

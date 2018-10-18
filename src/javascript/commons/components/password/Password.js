@@ -1,9 +1,18 @@
 import React from 'react';
 import { createForm } from 'rc-form';
+import { connect } from 'react-redux';
 
 import { APICaller } from '../../../commons/api';
 import { Modal, List, InputItem, Toast, WhiteSpace } from 'antd-mobile';
 import { service, api } from '../../configs';
+
+const mapStateToProps = ({fetch}) => {
+    const profile = service.getValue(fetch, 'item.data', false);
+
+    return {
+        profile,
+    }
+};
 
 class Password extends React.Component {
 
@@ -66,7 +75,30 @@ class Password extends React.Component {
     }
 
     onSubmit(){
-        console.log('obj');
+        const { form, profile } = this.props;
+        const { passwd } = this.state;
+        const userNo = service.getValue(this.props, 'profile.userNo', false);
+
+        if(!userNo){
+            return;
+        }
+
+        form.validateFields((errors, value) => {
+            if(!errors){
+                const obj = api.getProfile({userNo, passwd : value.passwd});
+                return APICaller.put(obj.url, obj.params)
+                    .then(({data}) => {
+                        const resultCode = service.getValue(data, 'resultCode', false);
+                        const resultMsg = service.getValue(data, 'resultMsg', false);
+                        if(resultCode === 200){
+                            return this.makeToast(['비밀번호가 변경되었습니다.']);
+                        }
+                        return this.makeToast([resultMsg]);
+                    });
+            }
+
+            return this.errorToast(errors);
+        });
     }
 
     checkPass(key, value){
@@ -208,4 +240,4 @@ class Password extends React.Component {
 
 }
 
-export default createForm()(Password);
+export default connect(mapStateToProps)(createForm()(Password));
