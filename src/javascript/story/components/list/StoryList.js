@@ -8,12 +8,15 @@ import { fetch } from '../../../redux/actions';
 import { service, values, api, path } from '../../../commons/configs';
 
 import { Category } from './';
+import { Button } from 'antd';
 
 const mapStateToProps = ({fetch}) => {
     const stories = service.getValue(fetch, 'multipleList.stories', {});
+    const isFetching = fetch.isFetching || false;
 
     return {
-        stories
+        stories,
+        isFetching
     }
 };
 
@@ -107,7 +110,7 @@ class StoryList extends React.Component {
     }
 
     render() {
-        const { stories } = this.props;
+        const { stories, isFetching } = this.props;
         const { order } = this.state;
         const isEnded = service.getValue(stories, 'size', 20) >= service.getValue(stories, 'totalSize', 20);
 
@@ -117,7 +120,7 @@ class StoryList extends React.Component {
                 <StoryListTop order={order} onChange={this.onChangeParams} prefixUrl={path.storyList}/>
                 <List count={4} data={stories} prefixUrl={path.storyItem} prefix="story"/>
                 <div className="story-list-bottom">
-                    {isEnded ? (<p>마지막 리스트입니다.</p>) : (<p onClick={this.onClick}>More</p>)}
+                    {isEnded ? (<p>마지막 리스트입니다.</p>) : (<Button loading={isFetching} onClick={this.onClick} className="btn-more">More</Button>)}
                 </div>
             </div>
 

@@ -70,10 +70,42 @@
                         text-align:center;
 
                         .am-list{
-                            text-align:left;
-                            .am-list-item {
+
+                            .am-list-item{
+                                height:auto;
+
+                                .am-list-line{
+                                    flex-wrap:wrap;
+                                    margin-bottom:8px;
+                                }
+
                                 .am-input-label {
+                                    font-size:1.1em;
                                     text-align:left;
+                                    margin-bottom:5px;
+                                }
+
+                                .am-list-extra{
+                                    font-size:0.9em;
+                                }
+
+                                &.password{
+                                    .am-list-content{
+                                        font-size:1.1em;
+                                        max-width:90px;
+                                    }
+                                    .am-list-extra{
+                                        text-align:left;
+                                    }
+                                }
+                            }
+
+                            .am-list-item:not(.id){
+                                .am-input-label{
+                                    flex: 0 0 100%;
+                                }
+                                .am-input-control{
+                                    flex: 0 0 100%;
                                 }
                             }
                         }
@@ -96,10 +128,18 @@
                                 .ant-form-item{
                                     margin-bottom:0;
 
-                                    .ant-btn{
-                                        padding:5px 10px;
+                                    .am-button{
+                                        font-size:12px;
+                                        padding:10px;
+                                        height:auto;
                                         border:1px solid #fff;
                                         box-shadow:0px 0px 14px rgba(0, 0, 0, 0.4);
+
+                                        .am-button-icon{
+                                            margin-right:0;
+                                            width:14px;
+                                            height:14px;
+                                        }
                                     }
                                 }
 

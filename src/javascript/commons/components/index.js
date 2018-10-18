@@ -11,6 +11,7 @@ import { CommonSlider } from './slider';
 import { StoryListTop, StoryList, TableList, ADList,  CommentList, Comment, DonationList, AccountList } from './list';
 import { Report } from './report';
 import { VideoPlayer } from './video';
+import { Password } from './password';
 
 
 export{
@@ -43,4 +44,6 @@ export{
     Agreement,
     AccountContainer,
     AccountList,
+
+    Password
 }

@@ -8,31 +8,10 @@ import { service, api, values } from '../../../commons/configs';
 import { fetch } from '../../../redux/actions';
 
 import { FormButton } from '../../../commons/types';
-import { ButtonWrapper } from '../../../commons/components';
+import { ButtonWrapper, Password } from '../../../commons/components';
 
-import { List, InputItem, WhiteSpace, Toast } from 'antd-mobile';
-import { Upload, Icon, Form, Button } from 'antd';
-
-
-const formItemLayout = {
-	labelCol: {
-		xs: {
-			span: 24
-		},
-		sm: {
-			span: 4
-		}
-	},
-	wrapperCol: {
-		xs: {
-			span: 24
-		},
-		sm: {
-			span: 20
-		}
-	},
-	colon : false
-};
+import { List, InputItem, WhiteSpace, Toast, Button } from 'antd-mobile';
+import { Upload, Icon, Form } from 'antd';
 
 const mapStateToProps = ({ fetch,  router, layout, security }) => {
     const userInfo = security || {}
@@ -65,17 +44,20 @@ class Profile extends React.Component {
             loading : false,
             passwd : null,
             disabled : true,
+            visible : false
+
         }
 
         this.getUser = this.getUser.bind(this);
         this.onChangeMode = this.onChangeMode.bind(this);
         this.errorToast = this.errorToast.bind(this);
-        this.matchPass = this.matchPass.bind(this);
-        this.renderPass = this.renderPass.bind(this);
         this.onChangeImage = this.onChangeImage.bind(this);
+        this.onEvents = this.onEvents.bind(this);
 
         this.renderProfileImage = this.renderProfileImage.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+
+        this.onOpenPassWord = this.onOpenPassWord.bind(this);
     }
 
     componentDidMount() {
@@ -128,10 +110,6 @@ class Profile extends React.Component {
         return this.makeToast(messages);
     }
 
-    matchPass(){
-        console.log('obj');
-    }
-
     validateEmail(key, value){
         if(!value){
             return;
@@ -146,37 +124,18 @@ class Profile extends React.Component {
         }
     }
 
-    // checkPass(key, value){
-    //     const { form } = this.props;
-    //     const newValue = value.replace(/ /gi, "");
-    //     let txt;
-    //
-    //     switch (key) {
-    //         case 'passwd':
-    //             txt = '비밀번호';
-    //             break;
-    //         default:
-    //
-    //     }
-    //
-    //     if(newValue.trim()){
-    //         const obj = api.checkValidate(key, {[key] : newValue.trim()});
-    //
-    //         return APICaller.post(obj.url, obj.params)
-    //             .then(({data}) => {
-    //                 if(data.resultCode !== 200){
-    //                     Toast.fail(data.resultMsg, 1);
-    //                     form.resetFields(key);
-    //                     return this[key].focus();
-    //                 }else{
-    //                     Toast.success(`사용가능한 ${txt}입니다.`, 1);
-    //                     return this.setState({
-    //                         [key] : true,
-    //                     })
-    //                 }
-    //             });
-    //     }
-    // }
+    onEvents(params){
+        const { events } = params;
+
+        switch (events) {
+            case 'close':
+                return this.setState({
+                    visible : false,
+                });
+            default:
+
+        }
+    }
 
     onChangeMode(disabled){
         this.setState({
@@ -232,6 +191,8 @@ class Profile extends React.Component {
         console.log("id", id);
 
         switch (id) {
+            case FormButton.CANCEL:
+                return this.onChangeMode(true);
             case FormButton.UPDATE:
                 return this.onChangeMode(false);
             case FormButton.CONFIRM :
@@ -244,38 +205,7 @@ class Profile extends React.Component {
     getButtons(){
         const { disabled } = this.state;
 
-        if(disabled){
-            return [
-                { id : FormButton.UPDATE, label : '수정'}
-            ];
-        }
-        return [
-            { id : FormButton.CONFIRM, label : '저장'},
-        ];
-    }
-
-    renderPass(){
-        const { form } = this.props;
-        const { getFieldProps } = form;
-        const { confirmPasswd } = this.state;
-
-        return(
-            <List full="true">
-                <WhiteSpace size="sm"/>
-
-                <InputItem
-                    {...getFieldProps('confirmPasswd', {
-                        rules: [{ required: true, message: '비밀번호를 재입력하세요!'}],
-                    })}
-                    type="password"
-                    ref={el => this.confirmPasswd = el}
-                    placeholder="Confirm Password"
-                    className={confirmPasswd ? 'confirmation' : ''}
-                    clear
-                    onBlur={this.onBlur.bind(this, 'confirmPasswd')}
-                >Confirm Password</InputItem>
-            </List>
-        )
+        return disabled ? [{ id : FormButton.UPDATE, label : '수정'}] : [{ id : FormButton.CANCEL, label : '취소', type : 'ghost', style : {marginRight : 5} }, { id : FormButton.CONFIRM, label : '저장'}];
     }
 
     onChangeImage(info){
@@ -291,6 +221,12 @@ class Profile extends React.Component {
         }
     }
 
+    onOpenPassWord(){
+        this.setState({
+            visible : true,
+        })
+    }
+
     renderProfileImage(){
         const { form } = this.props;
         const { getFieldDecorator } = form;
@@ -302,9 +238,7 @@ class Profile extends React.Component {
 
                 {!disabled ?
                     (<Form className="btn-profile-image">
-                        <FormItem
-                            {...formItemLayout}
-                        >
+                        <FormItem>
                             {getFieldDecorator(`profileFile`, {
                             })(
                                 <Upload
@@ -319,9 +253,7 @@ class Profile extends React.Component {
                                         }
                                     )}
                                 >
-                                    <Button type="primary">
-                                        <Icon type="plus" />
-                                    </Button>
+                                    <Button type="primary" icon="plus" />
                                 </Upload>
                             )}
                         </FormItem>
@@ -335,18 +267,24 @@ class Profile extends React.Component {
     render() {
         const { form, profile } = this.props;
         const { getFieldProps, getFieldError } = form;
-        const { passwd, disabled, email } = this.state;
+        const { passwd, disabled, email, visible } = this.state;
 
         return (
             <div className="profile-wrapper">
                 {this.renderProfileImage()}
                 <List full="true">
                     <InputItem
+                        className="id"
                         value={service.getValue(profile, 'userid', '')}
                         disabled={true}
                     >ID</InputItem>
 
                     <WhiteSpace size="sm"/>
+
+                    <List.Item
+                        className="password"
+                        extra={<Button type="ghost" size="small" inline onClick={this.onOpenPassWord}>비밀번호 변경하기</Button>}
+                    >비밀번호</List.Item>
 
                     <InputItem
                         {...getFieldProps('nickname', {
@@ -398,28 +336,10 @@ class Profile extends React.Component {
                           alert(getFieldError('cellphone').join('、'));
                         }}
                     >Cellphone</InputItem>
-
-                    <InputItem
-                        {...getFieldProps('passwd', {
-                            rules: [{ required: true, message: '비밀번호를 입력하세요!'}],
-                        })}
-                        disabled={disabled}
-                        type="password"
-                        ref={el => this.passwd = el}
-                        placeholder="Password"
-                        className={passwd ? 'confirmation' : ''}
-                        clear
-                        onBlur={this.onBlur.bind(this, 'passwd')}
-                        error={!!getFieldError('passwd')}
-                        onErrorClick={() => {
-                          alert(getFieldError('passwd').join('、'));
-                        }}
-                    >Password</InputItem>
                 </List>
 
-                {!disabled ? this.renderPass() : null}
-
                 <ButtonWrapper buttons={this.getButtons()} onClickButton={this.onClickButton.bind(this)}/>
+                {visible ? (<Password onEvents={this.onEvents} />) : null}
             </div>
         );
     }
