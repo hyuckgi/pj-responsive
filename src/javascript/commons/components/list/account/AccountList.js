@@ -35,7 +35,7 @@ class AccountList extends React.Component {
 
     getList(){
         this.props.multipleList([
-            {id : 'accountList', url : api.getAccount(), params : {}},
+            {id : 'accountList', url : api.accountList(), params : {}},
         ])
     }
 

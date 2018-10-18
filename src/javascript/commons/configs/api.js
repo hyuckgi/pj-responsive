@@ -117,7 +117,11 @@ export const api = {
     }),
 
     // account
-    getAccount : () => `/api/account`,
+    account : (params = null) => ({
+        url : '/api/account',
+        params : {...params}
+    }),
+    accountList : () => `/api/member/account/list`,
 
     // review
     postReview : (params = null) => ({

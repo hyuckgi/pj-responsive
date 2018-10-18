@@ -198,6 +198,12 @@ class APICaller {
 
         return instance.put(fullUrl, notToConvert ? params : paramsToUnderscore(params), options).then(docsToCamelCase).catch((err) => errorModal(err, url, params));
 	}
+    static delete(url, params = {},  isPlainAxios = false) {
+        const fullUrl = getMakeURL(url);
+        const instance = isPlainAxios ? simpleAxios : axios;
+
+        return instance.delete(fullUrl, {data : paramsToUnderscore(params)}).then(docsToCamelCase).catch((err) => errorModal(err, url, params));
+    }
 	static get(url, params = null,  isPlainAxios = false) {
 		const fullUrl = getMakeURL(url);
 		const str = jsonToParams(paramsToUnderscore(params));
@@ -208,17 +214,6 @@ class APICaller {
 			})
 			.then(docs => docsToCamelCase(docs, params))
 			.then(docs => makeMock(docs, url, params))
-            .catch((err) => errorModal(err, url, params));
-	}
-    static delete(url, params = {},  isPlainAxios = false) {
-		const fullUrl = getMakeURL(url);
-		const str = jsonToParams(paramsToUnderscore(params));
-		const instance = isPlainAxios ? simpleAxios : axios;
-		return instance.delete(fullUrl + (str === '' ? '' : '?') + str)
-			.then((response)=> {
-				return response;
-			})
-			.then(docs => docsToCamelCase(docs, params))
             .catch((err) => errorModal(err, url, params));
 	}
 	static all(list) {
