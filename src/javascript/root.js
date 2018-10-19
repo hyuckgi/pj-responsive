@@ -31,6 +31,7 @@ const history = createBrowserHistory({basename: path.baseName});
 
 const middleware = routerMiddleware(history);
 const loggerMiddleware = createLogger({
+    predicate: (getState, action) => process.env.NODE_ENV !== 'production',
     collapsed: (getState, action, logEntry) => true
 });
 
