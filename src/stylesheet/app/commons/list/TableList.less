@@ -1,0 +1,27 @@
+.table-list{
+    margin-bottom:20px;
+    .am-list-view-scrollview{
+        .list-view-section-body{
+            border-top:1px solid #ddd;
+
+            .am-list-item{
+                border: 1px solid #ddd;
+                border-top: none;
+
+                .am-list-content{
+                    &::after{
+                        content:"";
+                        clear:both;
+                        display:block;
+                    }
+
+                    .content{
+                        margin-bottom:0.3em;
+                        float:left;
+                        width:50%;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -130,6 +130,7 @@ class RankListContainer extends React.Component {
     }
 
     onEvents(params){
+        console.log("params", params);
         const { events, payload } = params;
 
         switch (events) {
@@ -142,6 +143,7 @@ class RankListContainer extends React.Component {
 
     render() {
         const { ranks, match, data } = this.props;
+        const { size } = this.state;
         const type = service.getValue(match, 'params.type', 'user');
         const title = type === 'user' ? '기부 랭킹' : '스폰서 랭킹';
 
@@ -155,6 +157,7 @@ class RankListContainer extends React.Component {
                         </Flex.Item>
                     </Flex>
                     <TableList
+                        defaultSize={size}
                         data={data}
                         columns={this.getColumns()}
                         onEvents={this.onEvents}

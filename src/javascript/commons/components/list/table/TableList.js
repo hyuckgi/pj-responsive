@@ -6,47 +6,54 @@ import { withRouter } from 'react-router';
 import { DesktopLayout, MobileLayout } from '../../';
 import { service } from '../../../configs';
 
-import { Table } from 'antd';
+import { Table, Button } from 'antd';
 import { List, ListView , Icon, Badge } from 'antd-mobile';
 
-const dataSource = new ListView.DataSource({
-    rowHasChanged: (row1, row2) => row1 !== row2,
-});
+import { ListItem } from './';
+
 
 class TableList extends React.Component {
 
     constructor(props) {
         super(props);
 
+        const dataSource = new ListView.DataSource({
+            rowHasChanged: (row1, row2) => row1 !== row2,
+        });
+
+        console.log("dataSource", dataSource);
+
         this.state = {
             dataSource : dataSource,
             hasMore : true,
+            loading : false,
+            height: 400,
         };
 
         this.renderRow = this.renderRow.bind(this);
         this.renderFooter = this.renderFooter.bind(this);
-        this.onEndReached = this.onEndReached.bind(this);
 
+        this.onClick = this.onClick.bind(this);
         this.onChange = this.onChange.bind(this);
+        this.onEndReached = this.onEndReached.bind(this);
     }
 
-    // componentDidMount() {
-    //     console.log("document.documentElement.clientHeight", document.documentElement.clientHeight);
-    //     console.log("document.documentElement.dd", ReactDOM.findDOMNode(this.refs.listView).parentNode);
-    //     console.log("hei", hei);
-    //
-    //     this.setState({
-    //         height : hei,
-    //         loading : false,
-    //     });
-    // }
+    static getDerivedStateFromProps(nextProps, prevState){
+        const nextData = service.getValue(nextProps, 'data', false);
 
-    componentWillReceiveProps(nextProps) {
-        const nextList = service.getValue(nextProps, 'data.list', []);
+        if(nextData && service.getValue(prevState, 'dataSource._cachedRowCount', 0) !== service.getValue(nextData, 'list.length', 0)){
+            const hasMore = nextData.list.length < nextData.total;
 
-        return this.setState({
-            dataSource: this.state.dataSource.cloneWithRows(nextList)
-        });
+            return {
+                dataSource: prevState.dataSource.cloneWithRows(nextData.list),
+                hasMore,
+                loading : false,
+            };
+        }else{
+            return {
+                loading : false,
+            };
+        }
     }
 
     getRowKey(record){
@@ -66,6 +73,20 @@ class TableList extends React.Component {
         }
     }
 
+    onClick(e){
+        e && e.preventDefault();
+
+        const { data, onEvents, defaultSize } = this.props;
+        const size = service.getValue(data, 'pagination.pageSize', 10);
+
+        if(onEvents){
+            onEvents({
+                events : 'change',
+                payload : {size : size + defaultSize, page : 1}
+            })
+        };
+    }
+
     renderSeparator(sectionID, rowID){
         return(
             <div
@@ -76,29 +97,50 @@ class TableList extends React.Component {
     }
 
     renderRow(rowData, sectionID, rowID){
+        const { columns } = this.props;
+
         return(
-            <div>{sectionID}</div>
+            <ListItem item={rowData} columns={columns} />
         );
     }
 
-    onEndReached(e){
-        console.log("onEndReached", e);
-    }
-
     renderFooter(){
-        const { hasMore } = this.state;
+        const { loading } = this.state;
 
         return (
-            <div>
-                {hasMore ? (<Icon  type="loading" />) : null}
+            <div className="footer">
+                {loading ? (<Icon  type="loading" />) : null}
             </div>
         )
+    }
+
+    onEndReached(e){
+        e && e.preventDefault();
+        const { onEvents, data, defaultSize } = this.props;
+        const { hasMore, loading } = this.state;
+        const size = service.getValue(data, 'pagination.pageSize', 10);
+
+        if (loading || !hasMore) {
+            return;
+        }
+        this.setState({
+            loading: true
+        }, () => {
+            if(onEvents){
+                onEvents({
+                    events : 'change',
+                    payload : {size : size + defaultSize, page : 1}
+                })
+            };
+        });
     }
 
     render() {
         const { data, columns, size = 'middle'} = this.props;
         const { list, pagination } = data;
-        const { dataSource, hasMore } = this.state;
+        const { dataSource, height } = this.state;
+
+        console.log("height", height);
 
         return (
             <div className="table-list">
@@ -114,14 +156,20 @@ class TableList extends React.Component {
                 </DesktopLayout>
                 <MobileLayout>
                     <ListView
-                        useBodyScroll
+                        ref='view'
+                        pageSize={4}
+                        style={{
+                            height: height,
+                            overflow: 'auto',
+                        }}
                         dataSource={dataSource}
-                        pageSize={5}
+                        scrollRenderAheadDistance={500}
+                        onEndReachedThreshold={10}
                         renderRow={this.renderRow}
+                        onEndReached={this.onEndReached}
                         renderSeparator={this.renderSeparator}
                         renderFooter={this.renderFooter}
                     />
-                    {hasMore ? <p className="btn-more">More</p> : null}
                 </MobileLayout>
             </div>
         );
