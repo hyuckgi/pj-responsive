@@ -75,8 +75,7 @@ class Password extends React.Component {
     }
 
     onSubmit(){
-        const { form, profile } = this.props;
-        const { passwd } = this.state;
+        const { form } = this.props;
         const userNo = service.getValue(this.props, 'profile.userNo', false);
 
         if(!userNo){

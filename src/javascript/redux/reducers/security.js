@@ -5,7 +5,10 @@ import { service } from '../../commons/configs';
 
 const initialState = SessionService.userInfo || {};
 
+console.log("initialState", initialState);
+
 export const security = (state = initialState, action) => {
+    console.log("action", action);
     switch(action.type)	 {
         case type.LOGIN_REQUEST:
             return {

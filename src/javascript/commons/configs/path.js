@@ -46,6 +46,7 @@ export const path = {
     // mypage
     mypage : '/mypage',
     mypageList :  '/mypage/list',
+    defaultMypageList : '/mypage/list/support',
     withdrawal : '/mypage/withdrawal',
 
     // setting

@@ -35,14 +35,14 @@ class drawerContainer extends React.Component {
     }
 
     render() {
-        const { children, status } = this.props;
+        const { children, status, allMenu } = this.props;
 
         return (
             <Drawer
                 className="drawer-container"
                 style={{minHeight : document.documentElement.clientHeight}}
                 position="right"
-                sidebar={(<Wrapper />)}
+                sidebar={(<Wrapper onOpenChange={this.onOpenChange} allMenu={allMenu}/>)}
                 open={status}
                 onOpenChange={this.onOpenChange}
                 sidebarStyle={{width:'70%', backgroundColor : '#fff'}}

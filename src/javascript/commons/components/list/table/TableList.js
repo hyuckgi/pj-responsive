@@ -1,13 +1,12 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 
 import { DesktopLayout, MobileLayout } from '../../';
 import { service } from '../../../configs';
 
-import { Table, Button } from 'antd';
-import { List, ListView , Icon, Badge } from 'antd-mobile';
+import { Table } from 'antd';
+import { ListView , Icon } from 'antd-mobile';
 
 import { ListItem } from './';
 
@@ -20,8 +19,6 @@ class TableList extends React.Component {
         const dataSource = new ListView.DataSource({
             rowHasChanged: (row1, row2) => row1 !== row2,
         });
-
-        console.log("dataSource", dataSource);
 
         this.state = {
             dataSource : dataSource,
@@ -139,8 +136,6 @@ class TableList extends React.Component {
         const { data, columns, size = 'middle'} = this.props;
         const { list, pagination } = data;
         const { dataSource, height } = this.state;
-
-        console.log("height", height);
 
         return (
             <div className="table-list">

@@ -28,6 +28,7 @@ const mapStateToProps = ({ fetch, layout, router }) => {
         : false;
 
     return {
+        allMenu,
         currentPath,
         globalMenu,
         currentMenu,
@@ -91,7 +92,7 @@ class Mobile extends React.Component {
     }
 
     render() {
-        const { spinning, isGlobalMenu } = this.props;
+        const { spinning, isGlobalMenu, allMenu } = this.props;
         const { onOpen, swipeObj } = this.state;
 
         return (
@@ -100,7 +101,7 @@ class Mobile extends React.Component {
                 onSwipe = {this.onSwipe}
                 >
                 <div className="mobile-container">
-                    <DrawerContainer status={onOpen} onEvents={this.onEvents} >
+                    <DrawerContainer status={onOpen} onEvents={this.onEvents} allMenu={allMenu}>
                         <HeaderContainer onEvents={this.onEvents} isGlobalMenu={isGlobalMenu}/>
 
                         <StickyContainer className="section">

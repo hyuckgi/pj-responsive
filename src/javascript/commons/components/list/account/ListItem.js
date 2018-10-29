@@ -1,8 +1,7 @@
 import React from 'react';
-import moment from 'moment';
 
 import { APICaller } from '../../../api';
-import { api, service, values } from '../../../configs';
+import { api, service } from '../../../configs';
 
 import { CustomIcon, ButtonWrapper } from '../../../components';
 import { FormButton } from '../../../types';

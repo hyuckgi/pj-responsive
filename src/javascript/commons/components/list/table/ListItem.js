@@ -3,7 +3,6 @@ import { List } from 'antd-mobile';
 import { service } from '../../../configs';
 
 const Item = List.Item;
-const Brief = Item.Brief;
 
 class ListItem extends React.Component {
 

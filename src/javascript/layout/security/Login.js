@@ -46,13 +46,6 @@ class Login extends React.Component {
         this.onClick = this.onClick.bind(this);
     }
 
-    componentDidMount() {
-        const { token } = this.props;
-        if(token){
-            this.props.logout();
-        }
-    }
-
     login(params) {
         return this.props.login(params)
             .then(() => {

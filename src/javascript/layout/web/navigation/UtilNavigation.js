@@ -1,12 +1,12 @@
 import React from 'react';
-import { NavLink  } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import {connect} from 'react-redux';
 import { push } from 'react-router-redux';
 
 import { Menu } from 'antd';
 import { Modal } from 'antd-mobile';
 import { service, path } from '../../../commons/configs';
-import { CustomIcon } from '../../../commons/components'
+import { CustomIcon } from '../../../commons/components';
 
 import { security as action } from '../../../redux/actions';
 

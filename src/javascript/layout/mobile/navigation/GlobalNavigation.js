@@ -5,6 +5,7 @@ import { Tabs } from 'antd-mobile';
 import { Sticky } from 'react-sticky';
 
 import { service, path } from '../../../commons/configs';
+import { SubNavigation } from './';
 
 const mobileLayout = [
     {id: '1080000', name: 'Detail', link: '/story/item/detail', level: 1, },
@@ -35,10 +36,8 @@ class GlobalNavigation extends React.Component {
 
         this.renderTabBar = this.renderTabBar.bind(this);
         this.onChange = this.onChange.bind(this);
-        this.renderSubTabBar = this.renderSubTabBar.bind(this);
         this.moveTab = this.moveTab.bind(this);
         this.onSwipe = this.onSwipe.bind(this);
-        this.onChildChange = this.onChildChange.bind(this);
 
         this.getSubMenu = this.getSubMenu.bind(this);
     }
@@ -155,10 +154,6 @@ class GlobalNavigation extends React.Component {
         );
     }
 
-    onChildChange(layout, idx){
-        return this.moveTab(layout);
-    }
-
     onChange(layout){
         return this.moveTab(layout);
     }
@@ -175,15 +170,6 @@ class GlobalNavigation extends React.Component {
         return this.props.move(link);
     }
 
-    renderSubTabBar(props){
-        return(
-            <Tabs.DefaultTabBar
-                {...props}
-                renderTab={tab => <span className="navigation-menu">{tab.name}</span>}
-            />
-        );
-    }
-
     renderSubTab(){
         const { subMenu, subIndex } = this.state;
         if(!subMenu.length){
@@ -193,20 +179,7 @@ class GlobalNavigation extends React.Component {
         // if(subIndex < 0){
         //     return;
         // }
-
-        return(
-            <div className="sub-navigations" >
-                <Tabs
-                    tabs={subMenu}
-                    page={subIndex}
-                    swipeable={false}
-                    onChange={this.onChildChange}
-                    renderTabBar={this.renderSubTabBar}
-                    tabBarTextStyle={{fontSize:'12px'}}
-                    tabBarBackgroundColor="#f7f8f9"
-                />
-            </div>
-        );
+        return <SubNavigation tabs={subMenu} page={subIndex}/>
     }
 
     getSubMenu(subMenu, currentPath){
@@ -250,10 +223,10 @@ class GlobalNavigation extends React.Component {
 
     render() {
         const { globalMenu, currentMenu, children, isGlobalMenu } = this.props;
-
+        const menus = globalMenu.filter(item => item.idx >= 0)
         return (
             <Tabs
-                tabs={globalMenu}
+                tabs={menus}
                 page={isGlobalMenu ? currentMenu.idx : null}
                 onChange={this.onChange}
                 renderTabBar={this.renderTabBar}

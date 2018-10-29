@@ -11,7 +11,7 @@ import { FormButton } from '../../../commons/types';
 import { ButtonWrapper, Password } from '../../../commons/components';
 
 import { List, InputItem, WhiteSpace, Toast, Button } from 'antd-mobile';
-import { Upload, Icon, Form } from 'antd';
+import { Upload, Form } from 'antd';
 
 const mapStateToProps = ({ fetch,  router, layout, security }) => {
     const userInfo = security || {}
@@ -280,7 +280,7 @@ class Profile extends React.Component {
     render() {
         const { form, profile } = this.props;
         const { getFieldProps, getFieldError } = form;
-        const { passwd, disabled, email, visible } = this.state;
+        const { disabled, email, visible } = this.state;
 
         return (
             <div className="profile-wrapper">
