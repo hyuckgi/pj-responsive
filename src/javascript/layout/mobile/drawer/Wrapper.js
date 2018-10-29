@@ -6,8 +6,8 @@ import { service, path, api } from '../../../commons/configs';
 import { CustomIcon } from '../../../commons/components';
 import { fetch } from '../../../redux/actions';
 
-import { Button, List,  } from 'antd-mobile';
-import { Avatar, Menu, Icon } from 'antd';
+import { List,  } from 'antd-mobile';
+import { Avatar, Menu } from 'antd';
 
 const SubMenu = Menu.SubMenu;
 
