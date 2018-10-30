@@ -8,11 +8,15 @@ class ListItem extends React.Component {
 
     render() {
         const { columns, item } = this.props;
+        console.log("columns", columns);
 
         return (
             <Item wrap multipleLine>
                 {columns.map((col, idx) => {
                     const key = service.getValue(col, 'dataIndex', false);
+                    if(key === 'imageUrl' || key === 'thumbnailUrl'){
+                        return (<img key={idx} src={item[key]} alt={col.title}/>)
+                    }
                     if(key){
                         return (<p key={idx} className="content">{`${col.title} : ${item[key]}`}</p>)
                     }

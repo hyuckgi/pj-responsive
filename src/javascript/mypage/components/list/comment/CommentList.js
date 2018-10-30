@@ -8,7 +8,8 @@ import { push } from 'react-router-redux';
 import { fetch } from '../../../../redux/actions';
 
 import { api, service, path, values } from '../../../../commons/configs';
-import { CommonEditor } from '../../../../commons/components';
+import { CommonEditor, Comment, CustomIcon } from '../../../../commons/components';
+import { FormMode } from '../../../../commons/types';
 
 import { Avatar, Pagination } from 'antd';
 import { Flex, Badge } from 'antd-mobile';
@@ -154,26 +155,34 @@ class CommnetList extends React.Component {
 
             return (
                 <Flex className="comment" key={idx}>
-                    <Flex.Item style={{maxWidth : 60, textAlign : 'center'}}>
+                    <Flex.Item className="avatar-area">
                         {profile ? (<Avatar src={profile} />) : (<Avatar icon="user" />) }
                     </Flex.Item>
                     <Flex.Item>
-                        <p className="title">{item.storyTitle}</p>
+                        <p className="writer">{item.storyTitle}</p>
                         <div>
                             <CommonEditor value={item.contents} readOnly={true} />
                         </div>
-                        <Flex justify="between">
-                            <Flex.Item>
-                                {updateDate ? moment(updateDate).format(values.format.LOCALE_KOR) : null}
-                            </Flex.Item>
 
-                            <Flex.Item className="util-area">
-                                <Flex justify="end">
-                                    <Flex.Item className="count">좋아요<Badge text={10} overflowCount={99} style={{marginLeft: 4, top: -2}}/></Flex.Item>
-                                    <Flex.Item onClick={this.onDelete} className="delete">삭제하기</Flex.Item>
+                        <div className="bottom">
+                            <div className="time-area">
+                                {updateDate ? moment(updateDate).format(values.format.LOCALE_KOR) : null}
+                            </div>
+
+                            <div className="util-area">
+                                <Flex justify="end" align="top">
+                                    <Flex.Item >
+                                        <Badge text={10} overflowCount={99}>좋아요</Badge>
+                                    </Flex.Item>
+                                    <Flex.Item onClick={() => this.onDelete()} >
+                                        <CustomIcon
+                                            type="MdDeleteForever"
+                                            style={{marginRight: 3, color : '#2CB9CF', fontSize : '1.5em'}}
+                                        />{service.getWebText('삭제')}
+                                    </Flex.Item>
                                 </Flex>
-                            </Flex.Item>
-                        </Flex>
+                            </div>
+                        </div>
                     </Flex.Item>
                 </Flex>
             )

@@ -4,10 +4,10 @@ import { withRouter } from 'react-router';
 import { push } from 'react-router-redux';
 
 import { service, api, path } from '../../../commons/configs';
-import { fetch } from '../../../redux/actions';
+import { fetch, security } from '../../../redux/actions';
 
 import { Avatar } from 'antd';
-import { Tabs, Flex, Button } from 'antd-mobile';
+import { Tabs, Flex, Button, Modal } from 'antd-mobile';
 
 import { StoryList, CommentList, SupportList, SponList } from '../list';
 import { ADList } from '../../../commons/components';
@@ -37,6 +37,7 @@ const mapStateToProps = ({ fetch,  router, layout, security }) => {
 const mapDispatchProps = dispatch => ({
     move: (path) => dispatch(push(path)),
     getItem : (url) => dispatch(fetch.get(url)),
+    logout : () => dispatch(security.logout()),
 });
 
 class MypageTop extends React.Component {
@@ -53,13 +54,37 @@ class MypageTop extends React.Component {
 
         this.renderContent = this.renderContent.bind(this);
         this.renderText = this.renderText.bind(this);
+        this.onClick = this.onClick.bind(this);
     }
 
     componentDidMount() {
         const token = service.getValue(this.props, 'userInfo.token', false);
         if(token){
-            this.getUser();
+            return this.getUser();
         }
+        return this.props.move(path.main);
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        const token = service.getValue(this.props, 'userInfo.token', false);
+        if(token !== service.getValue(this.props, 'userInfo.token', false)){
+            if(token){
+                return this.getUser();
+            }
+            return this.props.move(path.main);
+        }
+    }
+
+    onLogout(){
+        this.props.logout()
+        return this.props.move(path.main);
+    }
+
+    onClick(){
+        return Modal.alert('로그아웃', '로그아웃 하시겠습니까?', [
+            { text : 'Cancel', onPress : () => console.log("cancel")},
+            { text : 'OK', onPress : () => this.onLogout() }
+        ]);
     }
 
     onMove(path){
@@ -132,14 +157,15 @@ class MypageTop extends React.Component {
             <div className="mypage-wrap">
                 <Flex className="mypage-wrap-top">
                     <Flex.Item className="profile-url" style={{textAlign : 'center'}}>
-                        {image ? (<Avatar src={image} />) : <Avatar icon="user" size={120} />}
+                        {image ? (<Avatar src={image} />) : <Avatar icon="user" size={service.isMobile() ? 60 : 120} />}
                     </Flex.Item>
                     <Flex.Item className="text-area">
                         {this.renderText()}
                     </Flex.Item>
                     <Flex.Item className="btn-area">
-                        <Button type="ghost" inline onClick={() => this.onMove(`${path.setting}/profile`)}>프로필 설정</Button>
-                        <Button type="ghost" inline style={{marginLeft : 10}} onClick={() => this.onMove(path.withdrawal)}>회원탈퇴</Button>
+                        <Button type="ghost" inline size={service.isMobile() ? 'small' : 'large'} onClick={() => this.onMove(`${path.setting}/profile`)}>프로필 설정</Button>
+                        <Button type="ghost" inline size={service.isMobile() ? 'small' : 'large'} style={{marginLeft : 10}} onClick={() => this.onMove(path.withdrawal)}>회원탈퇴</Button>
+                        {service.isMobile() ? (<Button type="ghost" inline size="small" style={{marginLeft : 10}} onClick={this.onClick}>로그아웃</Button>) : null}
                     </Flex.Item>
                 </Flex>
 
@@ -151,8 +177,8 @@ class MypageTop extends React.Component {
                     onTabClick={this.onTabClick}
                     prerenderingSiblingsNumber={0}
                     destroyInactiveTab={true}
-                    tabBarBackgroundColor={'#FF6E59'}
-                    tabBarUnderlineStyle={{display:'none'}}
+                    tabBarBackgroundColor={service.isMobile() ? '#f7f8f9' : '#FF6E59'}
+                    tabBarUnderlineStyle={service.isMobile() ? {} : {display:'none'}}
                 >
                     {this.renderContent}
                 </Tabs>

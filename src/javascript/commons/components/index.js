@@ -7,7 +7,7 @@ import { AccountContainer } from './account';
 import { DesktopLayout, MobileLayout } from './response';
 import { FooterUtil, BlankImage, CustomIcon } from './utils';
 
-import { CommonSlider } from './slider';
+import { CommonSlider, MainSlider } from './slider';
 import { StoryListTop, StoryList, TableList, ADList,  CommentList, Comment, DonationList, AccountList } from './list';
 import { Report } from './report';
 import { VideoPlayer } from './video';
@@ -16,6 +16,7 @@ import { Password } from './password';
 
 export{
     CommonSlider,
+    MainSlider,
     CommonEditor,
     CustomIcon,
     CustomPicker,

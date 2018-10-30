@@ -1,8 +1,50 @@
+.mypage-container{
+    .mypage-wrap{
+        &-top{
+            .text-area{
+                div{
+                    p{
+                        &:last-child{
+                            margin-bottom:0;
+                        }
+                    }
+                }
+            }
+        }
+
+        .am-tabs{
+            .am-tabs-content-wrap{
+                .list-wrap{
+                    &-top{
+                        margin-bottom:20px;
+
+                        .am-flexbox-item{
+                            h3{
+                                margin-bottom:0;
+                            }
+                        }
+                    }
+
+                    &.comment-wrap{
+                        .comment-list-top{
+                            margin-bottom:20px;
+
+                            h3{
+                                margin-bottom:0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+
 .web-container{
     .mypage-container{
-
         .mypage-wrap{
-
             &-top{
                 max-width: 980px;
                 margin: 0 auto;
@@ -11,32 +53,21 @@
                 .profile-url{
                     max-width:120px;
                 }
-
                 .text-area{
                     div{
                         padding:0 30px;
-
                         p{
                             font-size:1.3em;
-
-                            &:last-child{
-                                margin-bottom:0;
-                            }
                         }
-
                     }
                 }
-
                 .btn-area{
                     max-width:220px;
                 }
             }
 
             .am-tabs{
-
                 .am-tabs-tab-bar-wrap{
-                    background-color:#FF6E59;
-
                     .am-tabs-default-bar{
                         width:1040px;
                         margin:0 auto;
@@ -45,11 +76,8 @@
                             font-size:1.2em;
                             cursor:pointer;
                             color:#fff;
-                            background-color:#FF6E59;
-                            border-bottom:none;
 
                             &-active{
-                                color:#fff;
                                 background-color: #EC3F2E;
                             }
                         }
@@ -62,82 +90,71 @@
                     margin: 0 auto;
 
                     .list-wrap{
-
-                        &-top{
-                            margin-bottom:20px;
-                        }
-
                         &.comment-wrap{
                             max-width: 720px;
                             margin:0 auto;
 
-                            .comment-list-top{
-                                margin-bottom:20px;
-                            }
-
-                            .comment-list{
-
-                                .comment{
-                                    padding: 10px 0;
-                                    border-bottom: 1px solid #ddd;
-
-                                    &:first-child{
-                                        border-top: 1px solid #ddd;
-                                    }
-
-                                    .common-editor{
-                                        .spoons-editor-wrapper{
-                                            border: 1px solid #e0e0e0;
-                                            padding:10px;
-                                            border-radius:5px;
-                                            background-color:#fafafa;
-                                        }
-
-                                        &-read{
-                                            .spoons-editor-wrapper{
-                                                margin:0.5em 0;
-                                                background-color:#fafafa;
-                                                border:none;
-                                            }
-                                        }
-                                    }
-
-                                    .util-area{
-                                        max-width:154px;
-
-                                        .am-flexbox-item{
-
-                                            &.count{
-                                                text-align:center;
-                                            }
-
-                                            &.delete{
-                                                cursor:pointer;
-                                                position:relative;
-                                                text-align:center;
-
-                                                &::before{
-                                                    position:absolute;
-                                                    left:0;
-                                                    top:0;
-                                                    height:20px;
-                                                    content:"";
-                                                    width:1px;
-                                                    border-left:1px solid #ddd;
-                                                }
-                                            }
-                                        }
-                                    }
-
-                                    .title{
-                                        margin-bottom:0.5em;
-                                    }
-                                }
-                            }
-
                             .ant-pagination{
                                 margin:16px 0;
                                 float:right;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.mobile-container{
+    .mypage-container{
+        .mypage-wrap{
+            &-top{
+                padding:20px;
+                display:block;
+                text-align:center;
+
+                .am-flexbox-item{
+                    margin-left:0;
+                }
+
+                .profile-url{
+                    margin-bottom:20px;
+                }
+
+                .text-area{
+                    margin-bottom:10px;
+                    p{
+                        font-size:1em;
+                        margin-bottom:5px;
+                    }
+                }
+            }
+
+            .am-tabs{
+                border-top:1px solid #f1f1f1;
+
+                .am-tabs-content-wrap{
+
+                    .list-wrap{
+                        padding:20px 10px;
+
+                        &-top{
+                            margin-bottom:10px;
+                        }
+
+                        &.comment-wrap{
+
+                            .comment-list-top{
+                                margin-bottom:10px;
+                            }
+
+                            .comment-list{
+                                margin-bottom:20px;
+                            }
+
+                            .ant-pagination {
+                                text-align: center;
                             }
                         }
                     }

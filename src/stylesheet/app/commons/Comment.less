@@ -69,32 +69,13 @@
                     }
                 }
             }
-
-            // & > span{
-            //     vertical-align:middle;
-            //     display:inline-block;
-            //     padding:0 2%;
-            //
-            //     &:last-child{
-            //         margin-left:2%;
-            //     }
-            // }
-
-            // .am-flexbox-item{
-            //     cursor:pointer;
-            //     line-height:1em;
-            //
-            //     &.count{
-            //         max-width:33px;
-            //         text-align:center;
-            //         margin-left:4px;
-            //     }
-            //
-            //     &.report{
-            //         text-align:center;
-            //     }
-            // }
         }
+    }
+}
+
+.comment-list{
+    .comment{
+        border-bottom: 1px dashed #ddd;
     }
 }
 
@@ -104,12 +85,8 @@
 
     .comment-list{
         margin-bottom:30px;
-        padding-bottom:30px;
-        border-bottom:1px solid #ddd;
 
         .comment{
-            border-bottom: 1px dashed #ddd;
-
             .writer{
                 margin-bottom:0.5em;
             }
@@ -117,12 +94,6 @@
             &.comment-write{
                 border-top:1px solid #ddd;
                 border-bottom:1px solid #ddd;
-            }
-        }
-
-        & .comment-wrapper:last-child{
-            .comment{
-                border-bottom:none;
             }
         }
     }
@@ -206,12 +177,4 @@
             }
         }
     }
-
-    // .comments-wrapper{
-    //     .comment-list{
-    //         .comment{
-    //
-    //         }
-    //     }
-    // }
 }

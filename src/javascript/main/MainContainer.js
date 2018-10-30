@@ -19,7 +19,6 @@ const mapStateToProps = ({fetch}) => {
 
     return {
         mainStory,
-        storyList : service.getValue(mainStory, 'list', []),
         mainRank,
         events
     }
@@ -27,7 +26,7 @@ const mapStateToProps = ({fetch}) => {
 
 const mapDispatchProps = dispatch => ({
     multipleList: (list) => dispatch(fetch.multipleList(list)),
-    getItem :(url, params) => dispatch(fetch.get(url, params)),
+    getList :(url, params) => dispatch(fetch.list(url, params)),
 });
 
 
@@ -40,22 +39,23 @@ class MainContainer extends React.Component {
     getData(){
         const story = api.getList({page : 1, size : 10, status: 1, order : 0});
 
-        return this.props.multipleList([
-            {id : 'mainStory', url : story.url, params : story.params },
-            {id : 'mainRank', url : api.getRank('donate', 'month'), params : {}},
-            {id : `event`, url : api.getEventList({status : 'going', page : 1, size : 5}), params : {} },
-        ]);
+        return this.props.multipleList([{id : 'mainStory', url : story.url, params : story.params }])
+            .then(() => {
+                return this.props.multipleList([
+                    {id : 'mainRank', url : api.getRank('donate', 'month'), params : {}},
+                    {id : `event`, url : api.getEventList({status : 'going', page : 1, size : 5}), params : {} },
+                ]);
+            });
     }
 
     render() {
-        const { mainStory, storyList, mainRank, events } = this.props;
+        const { mainStory, mainRank, events } = this.props;
 
         return (
             <div className="main-container">
                 <div className="main-slider-area" >
-                    <CommonSlider list={storyList} prefixUrl={path.storyItem} prefix="story" path="main"/>
+                    <CommonSlider list={service.getValue(mainStory, 'list', [])} prefixUrl={path.storyItem} prefix="story" path="main"/>
                 </div>
-
 
                 <div className="rank-wrapper" >
                     <Flex  align="start" >

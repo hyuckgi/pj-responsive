@@ -61,6 +61,12 @@ class Wrapper extends React.Component {
         }
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        if(service.getValue(prevProps, 'userInfo.token', false) !== service.getValue(this.props, 'userInfo.token', false)){
+            this.getUser();
+        }
+    }
+
     getUser(){
         const obj = api.getProfile();
 
