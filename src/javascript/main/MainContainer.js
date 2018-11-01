@@ -37,7 +37,7 @@ class MainContainer extends React.Component {
     }
 
     getData(){
-        const story = api.getList({page : 1, size : 10, status: 1, order : 0});
+        const story = api.getList({status: 1, order : 0}, 1, 10);
 
         return this.props.multipleList([{id : 'mainStory', url : story.url, params : story.params }])
             .then(() => {

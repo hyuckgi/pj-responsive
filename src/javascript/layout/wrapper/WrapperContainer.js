@@ -24,7 +24,7 @@ class WrapperContainer extends React.Component {
                 <Route exact path={path.serverError} name="serverError" component={Page500}/>
                 <Route exact path={path.join} name="Join Page" component={Join}/>
                 <Route exact path={path.login} name="Login Page" component={Login}/>
-                <Route exact path={path.search} component={Search} />
+                <Route path={path.search} component={Search} />
                 <Route path={path.main} component={Main} />
                 <Route path={path.story} component={Story} />
                 <Route path={path.rank} component={Rank} />

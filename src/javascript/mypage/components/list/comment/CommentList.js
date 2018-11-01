@@ -8,8 +8,7 @@ import { push } from 'react-router-redux';
 import { fetch } from '../../../../redux/actions';
 
 import { api, service, path, values } from '../../../../commons/configs';
-import { CommonEditor, Comment, CustomIcon } from '../../../../commons/components';
-import { FormMode } from '../../../../commons/types';
+import { CommonEditor, CustomIcon } from '../../../../commons/components';
 
 import { Avatar, Pagination } from 'antd';
 import { Flex, Badge } from 'antd-mobile';

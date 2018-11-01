@@ -91,17 +91,29 @@ class StoryList extends React.Component {
         const { match, location } = this.props;
         const { order, page, size } = this.state;
         const query = queryString.parse(location.search);
-        const categoryNo = service.getValue(query, 'category', 0);
+        const categoryNo = service.getValue(query, 'category', false);
         const type = service.getValue(match, 'params.type', 'all');
-        const current = service.getValue(values,  'story.options')
+        const current = service.getValue(values, 'story.options')
             .filter(item => item.path === type)
             .find(item => item);
 
+        const categories = categoryNo ? categoryNo.split('/') : [];
+        const cateNo = categories.length > 0 ? parseInt(categories[categories.length - 1], 10) : null;
+
+        let params = {
+            status : current.status,
+            order,
+        }
+
+        if(service.getValue(query, 'hashtag', false)){
+            params = {...params, hashtag : service.getValue(query, 'hashtag')}
+        }
+
         const obj = api.getList(
-            {status : current.status, order : order},
+            params,
             page,
             size,
-            parseInt(categoryNo, 10)
+            cateNo
         );
 
         return this.props.multipleList([

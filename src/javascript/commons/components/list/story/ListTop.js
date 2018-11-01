@@ -45,13 +45,9 @@ class ListTop extends React.Component {
     onChange(value){
         const { prefixUrl, match } = this.props;
         const type = service.getValue(match, 'params.type', false);
-        let queryValue = value.reduce((result, item) => {
-            result = result.concat(`${item}/`);
-            return result;
-        }, '');
 
         if(type){
-            return this.props.move(`${path.moveCate(prefixUrl, type, queryValue.slice(0, -1))}`)
+            return this.props.move(`${path.moveParams(prefixUrl, type, {category : value.join('/')})}`)
         }
     }
 
@@ -84,7 +80,7 @@ class ListTop extends React.Component {
         const { order, match } = this.props;
         const options = service.getValue(values, 'story.order');
         const current = options.filter(item => item.value === order).find(item => item);
-        
+
         const { type } = match.params;
 
         if(type !== 'progress'){

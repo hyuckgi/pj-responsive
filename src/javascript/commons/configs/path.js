@@ -1,4 +1,5 @@
 import {service} from './';
+import queryString from 'query-string';
 
 export const path = {
     baseName : '/',
@@ -22,7 +23,10 @@ export const path = {
     },
 
     // move
-    moveCate : (prefix, type, categoryNo = 0) => (`${prefix}/${type}?category=${categoryNo}`),
+    moveParams : (prefix, type, params = null) => {
+        console.log("params", params);
+        return `${prefix}/${type}?${queryString.stringify(params)}`
+    },
     moveItem : (prefix, id, mode = 'read') => (`${prefix}/${id}/${mode}`),
     moveItemStory : (page = 'detail', id, mode = 'read') => (`/story/item/${page}/${id}/${mode}`),
 
@@ -57,7 +61,10 @@ export const path = {
     admin : '/admin',
     login : '/login',
     join : '/join',
+
     search : '/search',
+    result : '/search/result',
+
     notFound : '/notFound',
     serverError : '/serverError',
     logout : '/logout',
