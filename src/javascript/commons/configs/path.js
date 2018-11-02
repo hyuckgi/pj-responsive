@@ -24,7 +24,6 @@ export const path = {
 
     // move
     moveParams : (prefix, type, params = null) => {
-        console.log("params", params);
         return `${prefix}/${type}?${queryString.stringify(params)}`
     },
     moveItem : (prefix, id, mode = 'read') => (`${prefix}/${id}/${mode}`),

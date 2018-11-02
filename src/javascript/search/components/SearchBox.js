@@ -60,7 +60,7 @@ class SearchBox extends React.Component {
                     <Search
                         placeholder="Search"
                         onSearch={this.onSubmit}
-                        enterButton
+                        enterButton={true}
                         size="large"
                     />
                 </DesktopLayout>

@@ -6,8 +6,8 @@ import { service, api, path } from '../../commons/configs';
 import { fetch } from '../../redux/actions';
 
 import { Flex } from 'antd-mobile';
-import { Avatar, Tag } from 'antd';
-import { SearchBox } from './';
+import { Avatar } from 'antd';
+import { SearchBox, HashTag } from './';
 
 const getFlat = (list, parent= null) => {
     if(!Array.isArray(list)){
@@ -25,7 +25,7 @@ const getFlat = (list, parent= null) => {
 
 const mapStateToProps = ({code, fetch}) => {
     const categories = service.getValue(code, 'categories', []);
-    const hashTags = service.getValue(fetch, 'multipleList.hashTags.list', []);
+    const hashTags = service.getValue(fetch, 'list.list', []);
     const categoryList = getFlat(categories);
 
     return {
@@ -36,7 +36,7 @@ const mapStateToProps = ({code, fetch}) => {
 
 const mapDispatchProps = dispatch => ({
     move: (location) => dispatch(push(location)),
-    multipleList: (list) => dispatch(fetch.multipleList(list)),
+    getList: (list, params) => dispatch(fetch.list(list, params)),
 });
 
 class SearchContainer extends React.Component {
@@ -47,23 +47,17 @@ class SearchContainer extends React.Component {
         this.state = {
             page : 1,
             size : 100,
-
-            colors : [],
         }
 
         this.onEvents = this.onEvents.bind(this);
         this.renderCategory = this.renderCategory.bind(this);
 
         this.getHashTag = this.getHashTag.bind(this);
-        this.renderTag = this.renderTag.bind(this);
-        this.generateColor = this.generateColor.bind(this);
-
         this.onSearch = this.onSearch.bind(this);
     }
 
     componentDidMount() {
         this.getHashTag();
-        this.generateColor();
     }
 
     getHashTag(){
@@ -75,9 +69,7 @@ class SearchContainer extends React.Component {
         }
 
         const obj = api.getHash(page, size);
-        return this.props.multipleList([
-            {id : 'hashTags', url : obj.url, params : {}}
-        ]);
+        return this.props.getList(obj.url, obj.params);
     }
 
     onSearch(keyword){
@@ -85,34 +77,16 @@ class SearchContainer extends React.Component {
     }
 
     onEvents(params){
-        console.log("params", params);
         const { events } = params;
 
         switch (events) {
             case 'search':
-                return this.onSearch(service.getValue(params, 'payload.keyword', ''))
+                return this.onSearch(params.payload.keyword)
+            case 'hash' :
+                return this.onMove(params.payload);
             default:
                 break;
         }
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-        if(service.getValue(prevProps, 'hashTags.length') !== service.getValue(this.props, 'hashTags.length')){
-            this.generateColor();
-        }
-    }
-
-    generateColor () {
-        const { hashTags } = this.props;
-        const colors = hashTags.reduce((result, item) => {
-            item = `#${Math.random().toString(16).substr(-6)}`;
-            result.push(item);
-            return result;
-        }, []);
-
-        return this.setState({
-            colors
-        });
     }
 
     onMove(params){
@@ -125,15 +99,6 @@ class SearchContainer extends React.Component {
         if(cateNo){
             return this.onMove({category : cateNo});
         }
-    }
-
-    onClickTag(item, e){
-        e && e.preventDefault();
-        if(!Object.keys(item).length){
-            return;
-        }
-
-        return this.onMove({hashtag : item.tag});
     }
 
     renderCategory(){
@@ -154,20 +119,9 @@ class SearchContainer extends React.Component {
         )
     }
 
-    renderTag(){
-        const { colors } = this.state;
+    render() {
         const { hashTags } = this.props;
 
-        if(!hashTags.length || !colors.length){
-            return null;
-        }
-
-        return hashTags.map((item, idx) => {
-            return (<Flex.Item key={idx} onClick={this.onClickTag.bind(this, item)}><Tag color={colors[idx]}>{`#${item.tag}`}</Tag></Flex.Item>)
-        })
-    }
-
-    render() {
         return (
             <div className="search-container">
                 <SearchBox onEvents={this.onEvents}/>
@@ -181,16 +135,7 @@ class SearchContainer extends React.Component {
                     </Flex.Item>
                 </Flex>
 
-                <Flex direction="column" wrap="wrap" className="search-wrap tag-wrap" align="stretch">
-                    <Flex.Item className="title">
-                        태그로 찾기
-                    </Flex.Item>
-                    <Flex.Item className="list">
-                        <Flex wrap="wrap">
-                            {this.renderTag()}
-                        </Flex>
-                    </Flex.Item>
-                </Flex>
+                <HashTag title="태그로 찾기" onEvents={this.onEvents} tags={hashTags}/>
             </div>
         );
     }

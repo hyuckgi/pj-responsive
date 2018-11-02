@@ -1,32 +1,38 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import queryString from 'query-string';
+import { push } from 'react-router-redux';
 
 import { service, api, path } from '../../commons/configs';
 import { StoryList as List } from '../../commons/components';
 import { fetch } from '../../redux/actions';
 
 import { Button } from 'antd';
+import { SearchBox, HashTag } from './';
 
 const mapStateToProps = ({code, fetch}) => {
-    const stories = service.getValue(fetch, 'item', {});
+    const keyObj = service.getValue(fetch, 'multipleList.keyObj', {});
+    const hashs = service.getValue(fetch, 'multipleList.hashs.list', []);
     const isFetching = fetch.isFetching || false;
 
     return {
-        stories,
+        keyObj,
+        hashs,
         isFetching
     }
 };
 
 const mapDispatchProps = dispatch => ({
-    getItem : (url, params) => dispatch(fetch.get(url, params)),
-    reset : () => dispatch(fetch.reset())
+    move: (location) => dispatch(push(location)),
+    resetMultipleList : () => dispatch(fetch.resetMultipleList()),
+    multipleList: (list) => dispatch(fetch.multipleList(list)),
 });
 
 class Result extends React.Component {
 
     constructor(props) {
         super(props);
+
         this.state = {
             page : 1,
             size : 20,
@@ -34,14 +40,30 @@ class Result extends React.Component {
 
         this.onClick = this.onClick.bind(this);
         this.getList = this.getList.bind(this);
+        this.onEvents = this.onEvents.bind(this);
     }
 
     componentDidMount() {
-        this.getList();
+        return this.getList();
     }
 
-    componentWillUnmount() {
-        this.props.reset();
+    componentDidUpdate(prevProps, prevState) {
+        if(service.getValue(prevProps, 'location.search', '') !== service.getValue(this.props, 'location.search')){
+            return this.getList();
+        }
+    }
+
+    onEvents(params){
+        const { events } = params;
+
+        switch (events) {
+            case 'search':
+                return this.props.move(`${path.result}?keyword=${params.payload.keyword}`)
+            case 'hash':
+                return this.props.move(path.moveParams(path.storyList, 'all', params.payload));
+            default:
+                break;
+        }
     }
 
     getList(){
@@ -53,8 +75,16 @@ class Result extends React.Component {
         if(!keyword){
             return;
         }
-        const obj = api.getList({keyword : keyword}, page, size);
-        return this.props.getItem(obj.url, obj.params);
+        const key = api.getList({keyword : keyword, status : 0}, page, size);
+        const hash = api.getHash(1, 100, {keyword : keyword});
+        return this.props.multipleList([
+            {id : 'keyObj', url : key.url, params : key.params},
+            {id : 'hashs', url : hash.url, params : hash.params}
+        ]);
+    }
+
+    componentWillUnmount() {
+        this.props.resetMultipleList();
     }
 
     onClick(){
@@ -62,20 +92,30 @@ class Result extends React.Component {
             ...prevState,
             page : 1,
             size : prevState.size += 20,
-        }));
+        }), () => {
+            this.getList();
+        });
     }
 
     render() {
-        const { stories, isFetching } = this.props;
-        console.log("stories", stories);
-        const isEnded = service.getValue(stories, 'size', 20) >= service.getValue(stories, 'totalSize', 20);
+        const { isFetching, keyObj, hashs } = this.props;
+        const isEnded = service.getValue(keyObj, 'size', 20) >= service.getValue(keyObj, 'totalSize', 20);
 
         return (
-            <div className="story-list-wrapper search-result">
-                <List count={4} data={stories} prefixUrl={path.storyItem} prefix="story"/>
-                <div className="story-list-bottom">
-                    {isEnded ? (<p>마지막 리스트입니다.</p>) : (<Button loading={isFetching} onClick={this.onClick} className="btn-more">More</Button>)}
+            <div className="search-container">
+                <SearchBox onEvents={this.onEvents} />
+
+                <HashTag title={`태그검색 결과 : ${service.getValue(hashs, 'length', 0)}`} tags={hashs} onEvents={this.onEvents}/>
+
+                <div className="story-list-wrapper">
+                    <p className="title">{`스토리 검색 결과 : ${service.getValue(keyObj, 'totalSize', 0)}`} </p>
+                    <List count={4} data={keyObj} prefixUrl={path.storyItem} prefix="story"/>
+                    <div className="story-list-bottom">
+                        {isEnded ? (<p>마지막 리스트입니다.</p>) : (<Button loading={isFetching} onClick={this.onClick} className="btn-more">More</Button>)}
+                    </div>
                 </div>
+
+
             </div>
         );
     }
