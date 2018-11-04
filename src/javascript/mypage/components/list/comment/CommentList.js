@@ -191,7 +191,7 @@ class CommnetList extends React.Component {
     render() {
         const { data, resultObj } = this.props;
         const current = service.getValue(resultObj, 'page', 1);
-
+        
         return (
             <div className="list-wrap comment-wrap">
                 <Flex justify="between" className="comment-list-top ">

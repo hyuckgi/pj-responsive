@@ -95,8 +95,8 @@ class SettingTop extends React.Component {
                     onTabClick={this.onTabClick}
                     prerenderingSiblingsNumber={0}
                     destroyInactiveTab={true}
-                    tabBarBackgroundColor={'#FF6E59'}
-                    tabBarUnderlineStyle={{display:'none'}}
+                    tabBarBackgroundColor={service.isMobile() ? '#f7f8f9' : '#FF6E59'}
+                    tabBarUnderlineStyle={service.isMobile() ? {} : {display:'none'}}
                 >
                     {this.renderContent}
                 </Tabs>

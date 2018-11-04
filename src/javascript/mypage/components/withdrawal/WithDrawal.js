@@ -21,13 +21,13 @@ class WithDrawal extends React.Component {
 
     render() {
         return (
-            <div className="service-container">
-                <div className="service-wrapper-top">
+            <div className="setting-container withdrawal-container">
+                <div className="setting-wrap-top">
                     <h2 className="title">9spoons WithDrawal</h2>
                 </div>
 
-                <div className="service-wrapper-contents withdrawal-contents">
-                    <div className="withdrawal-wrapper">
+                <div className="withdrawal-wrapper">
+                    <div className="withdrawal-contents">
                         회원 탈퇴 내용
                     </div>
                 </div>

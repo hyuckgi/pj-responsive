@@ -2,7 +2,7 @@ import moment from 'moment';
 import queryString from 'query-string';
 import UAParser from 'ua-parser-js';
 
-const defaultPagination = {size: '', showSizeChanger:false, showQuickJumper: false, pageSizeOptions: ['10', '50', '100', '400']};
+const defaultPagination = {showSizeChanger:false, showQuickJumper: false, pageSizeOptions: ['10', '50', '100', '400']};
 const parser = new UAParser();
 
 export const service = {
@@ -59,7 +59,7 @@ export const service = {
             pagination.total = 0;
             return {pagination, list:[], total: 0};
         }
-
+        pagination.size = service.isMobile() ? 'small' : "";
         pagination.total = item.count;
         pagination.pageSize = item.pageSize;
         return { pagination,  total: item.count, list: item.results};

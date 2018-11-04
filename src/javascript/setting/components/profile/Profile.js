@@ -247,7 +247,7 @@ class Profile extends React.Component {
 
         return(
             <div className="profile-image">
-                {imageUrl ? (<Avatar src={imageUrl} size={120} />) : <Avatar icon="user" size={120} />}
+                {imageUrl ? (<Avatar src={imageUrl} size={service.isMobile() ? 80 : 120} />) : <Avatar icon="user" size={service.isMobile() ? 80 : 120} />}
 
                 {!disabled ?
                     (<Form className="btn-profile-image">
