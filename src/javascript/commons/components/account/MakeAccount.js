@@ -36,7 +36,7 @@ class MakeAccount extends React.Component {
                         {getFieldDecorator(`${decorator}.depositor`, {
                             rules: [{ required: true, message: '예금주명을 입력하세요.' }],
                         })(
-                            <Input type="text" placeholder="예금주명" />
+                            <Input type="text" placeholder={root === 'propose' ? '예금주명(스토리 주인공의 실명계좌)' : '예금주명'} />
                         )}
                     </FormItem>
                 </Form>

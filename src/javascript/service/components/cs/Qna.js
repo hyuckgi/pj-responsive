@@ -27,7 +27,7 @@ class Qna extends React.Component {
         const { disabled } = this.state;
 
         return [
-            { id : FormButton.CANCEL, label : 'cancel', type : 'default' },
+            { id : FormButton.CANCEL, label : 'cancel', type : 'ghost' },
             { id : FormButton.CONFIRM, label : 'confirm', style : { marginLeft: '5px'}, disabled : disabled },
         ];
     }

@@ -136,7 +136,7 @@ class JoinStep03 extends React.Component {
     getButtons(){
         const { disabled } = this.state;
         return [
-            { id : FormButton.PREV, label : '이전', type : 'default' },
+            { id : FormButton.PREV, label : '이전', type : 'ghost' },
             { id : FormButton.NEXT, label : '가입', style : { marginLeft: '5px'}, disabled : disabled  },
         ];
     }

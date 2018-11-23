@@ -137,7 +137,7 @@ class Step02 extends React.Component {
 
     getButtons(){
         return [
-            { id : FormButton.PREV, label : "이전", type : 'default'  },
+            { id : FormButton.PREV, label : "이전", type : 'ghost'  },
             { id : FormButton.NEXT, label : "다음", style : { marginLeft: '5px'}},
         ];
     }

@@ -77,7 +77,7 @@ class Content extends React.Component {
     getButtons(){
         const { inx, length } = this.props;
         const create = [{ id : FormButton.CREATE, label : "추가", type : 'primary', icon : (<CustomIcon type="MdAdd" />) }];
-        const remove = [{ id : FormButton.DELETE, label : "삭제", type : 'normal', icon : (<CustomIcon type="MdDeleteForever" />), style : { marginLeft: '5px'}}];
+        const remove = [{ id : FormButton.DELETE, label : "삭제", type : 'ghost', icon : (<CustomIcon type="MdDeleteForever" />), style : { marginLeft: '5px'}}];
 
         if(length === 1 && inx === 0){
             return create;

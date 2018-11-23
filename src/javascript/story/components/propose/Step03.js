@@ -81,7 +81,7 @@ class Step03 extends React.Component {
     getButtons(){
 
         return [
-			{ id : FormButton.PREV, label : '이전', type : 'default' },
+			{ id : FormButton.PREV, label : '이전', type : 'ghost' },
             { id : FormButton.CONFIRM, label : "설정완료",  style : { marginLeft: '5px'}},
         ];
     }

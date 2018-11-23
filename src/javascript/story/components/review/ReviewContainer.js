@@ -73,7 +73,7 @@ class ReviewContainer extends React.Component {
 
     getButtons(){
         return [
-            { id : FormButton.CANCEL, label : "취소", type : 'default'  },
+            { id : FormButton.CANCEL, label : "취소", type : 'ghost'  },
             { id : FormButton.CONFIRM, label : "확인", style : { marginLeft: '5px'}},
         ];
     }
