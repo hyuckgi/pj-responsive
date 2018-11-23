@@ -16,10 +16,12 @@ class JoinStep02 extends React.Component {
         super(props);
         this.state = {
             disabled : true,
+            cofirmPass : ''
         };
 
         this.errorToast = this.errorToast.bind(this);
         this.matchPass = this.matchPass.bind(this);
+        this.onChange = this.onChange.bind(this);
     }
 
     makeToast(messages){
@@ -98,7 +100,7 @@ class JoinStep02 extends React.Component {
             return APICaller.post(obj.url, obj.params)
                 .then(({data}) => {
                     if(data.resultCode !== 200){
-                        Toast.fail(data.resultMsg, 1);
+                        this.makeToast([data.resultMsg]);
                         form.resetFields(key);
                         return this[key].focus();
                     }else{
@@ -109,6 +111,29 @@ class JoinStep02 extends React.Component {
                     }
                 });
         }
+    }
+
+    onChange(val){
+        const { form } = this.props;
+        const pass = form.getFieldValue('passwd');
+        const { cofirmPass } = this.state;
+
+        return this.setState({
+            cofirmPass : val
+        }, () => {
+            if(val === pass){
+                form.setFieldsValue({confirmPasswd : val});
+                return this.setState({
+                    disabled : false,
+                    confirmPasswd : true,
+                })
+            }else{
+                return this.setState({
+                    disabled : true,
+                    confirmPasswd : false
+                })
+            }
+        });
     }
 
     matchPass(key, value){
@@ -158,7 +183,7 @@ class JoinStep02 extends React.Component {
     render() {
         const { form, stepProps } = this.props;
         const { getFieldProps, getFieldError } = form;
-        const { passwd, confirmPasswd } = this.state;
+        const { passwd, confirmPasswd, cofirmPass } = this.state;
 
         return (
             <div className="join-step-wrapper step-02">
@@ -195,11 +220,13 @@ class JoinStep02 extends React.Component {
                             rules: [{ required: true, message: '비밀번호를 재입력하세요!'}],
                         })}
                         type="password"
+                        value={cofirmPass}
                         ref={el => this.confirmPasswd = el}
                         placeholder="Confirm Password"
                         className={confirmPasswd ? 'confirmation' : ''}
                         clear
                         onBlur={this.onBlur.bind(this, 'confirmPasswd')}
+                        onChange={this.onChange}
                     />
 
                     <WhiteSpace size="md"/>
