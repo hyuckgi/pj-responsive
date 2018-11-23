@@ -33,7 +33,7 @@ class JoinStep03 extends React.Component {
     }
 
     makeToast(messages){
-        const duration = messages.length;
+        const duration = messages.length * 2;
         return Toast.fail(
             (<div>
                 {messages.map((message, idx) => {
@@ -71,16 +71,16 @@ class JoinStep03 extends React.Component {
 
         form.validateFields((errors, value) => {
             const { userType } = this.state;
-            const { nickname, email, cellphone, countryCode, username, businessNumber, countryMobileCode } = value;
+            const { nickname, email, cellphone, countryCode, username, businessNumber } = value;
 
-            if(!countryCode || !countryMobileCode){
+            if(!countryCode){
                 return;
             }
 
             if(!errors){
                 return stepProps.onSubmit({
                     cellphone : cellphone.replace(/ /gi, ""),
-                    countryCode : countryCode || countryMobileCode[1],
+                    countryCode : countryCode,
                     email : email,
                     nickname : nickname,
                     username : username,

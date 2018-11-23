@@ -3,7 +3,7 @@ import { createForm } from 'rc-form';
 
 import { APICaller } from '../../commons/api';
 
-import { Toast, List, InputItem, WhiteSpace } from 'antd-mobile';
+import { Toast, List, InputItem, WhiteSpace, Badge } from 'antd-mobile';
 
 import { FormButton } from '../../commons/types';
 import { Agreement, ButtonWrapper } from '../../commons/components';
@@ -109,7 +109,7 @@ class JoinStep01 extends React.Component {
     }
 
     makeToast(messages){
-        const duration = messages.length;
+        const duration = messages.length * 2;
         return Toast.fail(
             (<div>
                 {messages.map((message, idx) => {
@@ -130,6 +130,7 @@ class JoinStep01 extends React.Component {
             <div className="join-step-wrapper step-01">
                 <List full="true">
                     <WhiteSpace size="md"/>
+                    <p className="title" style={{'textAlign': 'left', 'paddingLeft' : 15, 'marginBottom' : 0}}><Badge dot>사용하실 ID를 정하세요</Badge></p>
                     <InputItem
                         {...getFieldProps('userid', {
                             rules: [{ required: true, message: 'ID를 입력하세요'}],

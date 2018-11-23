@@ -23,7 +23,7 @@ class JoinStep02 extends React.Component {
     }
 
     makeToast(messages){
-        const duration = messages.length;
+        const duration = messages.length * 2;
         return Toast.fail(
             (<div>
                 {messages.map((message, idx) => {
@@ -178,7 +178,7 @@ class JoinStep02 extends React.Component {
                         })}
                         type="password"
                         ref={el => this.passwd = el}
-                        placeholder="Password"
+                        placeholder="Password(영문, 숫자, 기호 8자리 이상)"
                         className={passwd ? 'confirmation' : ''}
                         clear
                         onBlur={this.onBlur.bind(this, 'passwd')}
