@@ -91,7 +91,7 @@ class Step03 extends React.Component {
         const { getFieldDecorator } = form;
 
         return (
-            <div className="propose-step-wrapper step-02">
+            <div className="propose-step-wrapper step-03">
                 <Form>
                     <FormItem
                         {...formItemLayout}
@@ -128,11 +128,12 @@ class Step03 extends React.Component {
                 </Form>
                 <Row
                     align="middle"
+                    className="bank-account"
                 >
                     <Col
                         xs={{span: 24}}
                         sm={{span: 6}}
-                        style={{textAlign : 'right', paddingRight: 10}}
+                        className="title"
                     >
                         계좌번호
                     </Col>
@@ -140,7 +141,7 @@ class Step03 extends React.Component {
                         xs={{span: 24}}
                         sm={{span: 18}}
                     >
-                        <AccountContainer form={form} decorator="accountData" />
+                        <AccountContainer form={form} decorator="accountData" root="propose"/>
                     </Col>
                 </Row>
                 <Form>

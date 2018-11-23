@@ -26,20 +26,24 @@ class AccountContainer extends React.Component {
     }
 
     render() {
-        const { form, decorator } = this.props;
+        const { form, decorator, root } = this.props;
         const { isNew } = this.state;
 
         return (
             <div className="account-container">
-                <RadioGroup
-                    onChange={this.onChange}
-                    defaultValue={isNew}
-                >
-                    <Radio value={true}>새로운 계좌 사용</Radio>
-                    <Radio value={false}>자주쓰는 계좌 사용</Radio>
-                </RadioGroup>
+                {!root
+                    ? (<RadioGroup
+                        onChange={this.onChange}
+                        defaultValue={isNew}
+                    >
+                        <Radio value={true}>새로운 계좌 사용</Radio>
+                        <Radio value={false}>자주쓰는 계좌 사용</Radio>
+                    </RadioGroup>)
+                    : null
+                }
+
                 {isNew
-                ? (<MakeAccount form={form} decorator={decorator}/>)
+                ? (<MakeAccount form={form} decorator={decorator} root={root}/>)
                 : (<AccountList />)
                 }
             </div>

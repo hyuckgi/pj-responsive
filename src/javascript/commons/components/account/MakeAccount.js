@@ -8,7 +8,7 @@ const FormItem = Form.Item;
 class MakeAccount extends React.Component {
 
     render() {
-        const { form, decorator } = this.props;
+        const { form, decorator, root } = this.props;
         const { getFieldDecorator } = form;
 
         return (
@@ -51,13 +51,16 @@ class MakeAccount extends React.Component {
                             <Input placeholder="계좌번호(-생략)" />
                         )}
                     </FormItem>
-                    <FormItem>
-                        {getFieldDecorator(`${decorator}.IsFrequent`, {
-                            initialValue : false,
-                        })(
-                            <Checkbox >자주 쓰는 계좌로 등록</Checkbox>
-                        )}
-                    </FormItem>
+                    {!root
+                        ? (<FormItem>
+                            {getFieldDecorator(`${decorator}.IsFrequent`, {
+                                initialValue : false,
+                            })(
+                                <Checkbox >자주 쓰는 계좌로 등록</Checkbox>
+                            )}
+                        </FormItem>)
+                        : null
+                    }
                 </Form>
             </div>
         );
