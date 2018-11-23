@@ -94,7 +94,7 @@ class JoinStep01 extends React.Component {
             return APICaller.post(obj.url, obj.params)
                 .then(({data}) => {
                     if(data.resultCode !== 200){
-                        Toast.fail(data.resultMsg, 1);
+                        this.makeToast([data.resultMsg]);
                         form.resetFields(key);
                         return this[key].focus();
                     }else{
@@ -109,7 +109,7 @@ class JoinStep01 extends React.Component {
     }
 
     makeToast(messages){
-        const duration = messages.length * 2;
+        const duration = messages.length * 3;
         return Toast.fail(
             (<div>
                 {messages.map((message, idx) => {
@@ -138,7 +138,7 @@ class JoinStep01 extends React.Component {
                         })}
                         className={confirmation ? 'confirmation' : ''}
                         ref={el => this.userid = el}
-                        placeholder="UserID"
+                        placeholder="UserID(영문, 숫자 5자리 이상)"
                         clear
                         onBlur={this.onBlur.bind(this, 'userid')}
                         error={!!getFieldError('userid')}

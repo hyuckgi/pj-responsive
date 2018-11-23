@@ -23,7 +23,7 @@ class JoinStep02 extends React.Component {
     }
 
     makeToast(messages){
-        const duration = messages.length * 2;
+        const duration = messages.length * 3;
         return Toast.fail(
             (<div>
                 {messages.map((message, idx) => {
@@ -102,7 +102,7 @@ class JoinStep02 extends React.Component {
                         form.resetFields(key);
                         return this[key].focus();
                     }else{
-                        Toast.success(`사용가능한 ${txt}입니다.`, 1);
+                        Toast.success(`사용가능한 ${txt}입니다.`, 3);
                         return this.setState({
                             [key] : true,
                         })
@@ -125,7 +125,7 @@ class JoinStep02 extends React.Component {
                 [key] : true,
             })
         }else{
-            Toast.fail('비밀번호가 일치하지 않습니다.', 1);
+            Toast.fail('비밀번호가 일치하지 않습니다.', 3);
             this.setState({
                 disabled : true,
                 [key] : false,

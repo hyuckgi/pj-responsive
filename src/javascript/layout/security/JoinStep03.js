@@ -33,7 +33,7 @@ class JoinStep03 extends React.Component {
     }
 
     makeToast(messages){
-        const duration = messages.length * 2;
+        const duration = messages.length * 3;
         return Toast.fail(
             (<div>
                 {messages.map((message, idx) => {
@@ -109,13 +109,13 @@ class JoinStep03 extends React.Component {
         }
 
         if(values.validateEmail.test(value)){
-            Toast.success(`사용가능한 이메일입니다.`, 1);
+            Toast.success(`사용가능한 이메일입니다.`, 3);
             return this.setState({
                 disabled: false,
                 [key] : true,
             })
         }else{
-            Toast.fail('올바른 이메일 주소를 입력해주세요', 1);
+            Toast.fail('올바른 이메일 주소를 입력해주세요', 3);
             this.setState({
                 disabled: true,
                 [key] : false,
