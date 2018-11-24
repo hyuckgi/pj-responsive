@@ -12,10 +12,19 @@ import { Avatar, Menu } from 'antd';
 const SubMenu = Menu.SubMenu;
 
 const icons = {
-    '100' : (<CustomIcon type="FaHeartO" roots="FontAwesome"/>),
-    '1000000' : (<CustomIcon type="FaHome" roots="FontAwesome"/>),
-    '2000000' : (<CustomIcon type="FaTrophy" roots="FontAwesome"/>),
-    '3000000' : (<CustomIcon type="FaBullhorn" roots="FontAwesome"/>),
+    '100' : (<CustomIcon type="FaHome" roots="FontAwesome"/>),
+    '10000' : (<CustomIcon type="MdSchool" />),
+    '20000' : (<CustomIcon type="MdBuild" />),
+    '30000' : (<CustomIcon type="MdChildCare" />),
+    '40000' : (<CustomIcon type="MdFilterVintage" />),
+    '50000' : (<CustomIcon type="MdNaturePeople" />),
+
+    '4030000' : (<CustomIcon type="FaTrophy" roots="FontAwesome"/>),
+    '4030100' : (<CustomIcon type="FaUser" roots="FontAwesome"/>),
+    '4030200' : (<CustomIcon type="MdBusiness" />),
+    '4040000' : (<CustomIcon type="FaBullhorn" roots="FontAwesome"/>),
+    '4040100' : (<CustomIcon type="MdCake" />),
+    '4040200' : (<CustomIcon type="FaMicrophone" roots="FontAwesome"/>),
     '4000000' : (<CustomIcon type="FaPlusSquareO" roots="FontAwesome"/>),
     '4010000' : (<CustomIcon type="FaCommentingO" roots="FontAwesome"/>),
     '4010100' : (<CustomIcon type="FaListAlt" roots="FontAwesome"/>),

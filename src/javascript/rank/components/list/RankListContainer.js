@@ -7,10 +7,14 @@ import { fetch } from '../../../redux/actions';
 import { api, service, columns, path } from '../../../commons/configs';
 import { TableList} from '../../../commons/components';
 
+import { values } from '../../configs'
+
 import { ListTop } from '../common';
 
-import { Avatar } from 'antd';
+import { Avatar, Select } from 'antd';
 import { Flex } from 'antd-mobile';
+
+const Option = Select.Option;
 
 const mapStateToProps = ({fetch}) => {
     const ranks = service.getValue(fetch, 'multipleList.rankTop.data', {});
@@ -59,6 +63,7 @@ class RankListContainer extends React.Component {
         this.onEvents = this.onEvents.bind(this);
 
         this.search = this.search.bind(this);
+        this.onSelect = this.onSelect.bind(this);
     }
 
     search(params) {
@@ -130,7 +135,6 @@ class RankListContainer extends React.Component {
     }
 
     onEvents(params){
-        console.log("params", params);
         const { events, payload } = params;
 
         switch (events) {
@@ -139,6 +143,39 @@ class RankListContainer extends React.Component {
             default:
                 break;
         }
+    }
+
+    onSelect(value){
+        console.log("value", value);
+    }
+
+    renderSelect(type){
+        if(type === 'user'){
+            return null;
+        }
+
+        const options = service.getValue(values, 'rank.sponsorOptions', []);
+
+        return (
+            <Flex.Item style={{textAlign : 'right'}}>
+                <Select
+                    ref='select'
+                    defaultValue="전체"
+                    onSelect={this.onSelect}
+                    style={{ minWidth: 150 }}
+                >
+                    {options.map((item, inx) => {
+                        return (
+                            <Option
+                                key={item.value}
+                                title={item.label}
+                                value={item.value}
+                            >{item.label}</Option>
+                        )
+                    })}
+                </Select>
+            </Flex.Item>
+        )
     }
 
     render() {
@@ -155,6 +192,7 @@ class RankListContainer extends React.Component {
                         <Flex.Item >
                             <h3>{title} {data.total > 0 && `(${data.total} 건)`}</h3>
                         </Flex.Item>
+                        {this.renderSelect(type)}
                     </Flex>
                     <TableList
                         defaultSize={size}

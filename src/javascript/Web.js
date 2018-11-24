@@ -44,7 +44,8 @@ class Web extends React.Component {
         const { currentMenu, allMenu, globalMenu } = this.props;
         const parent = service.getValue(currentMenu, 'parent', false);
         const parentMenu = globalMenu.filter(item => item.id === parent).find(item => item);
-        const subMenu = (!service.getValue(parentMenu, 'hasChild', false))
+
+        const subMenu = (parent && parent !== '500000000' && !service.getValue(parentMenu, 'hasChild', false))
             ? allMenu.filter(item => item.parent === service.getValue(currentMenu, 'parent'))
             : [];
 
