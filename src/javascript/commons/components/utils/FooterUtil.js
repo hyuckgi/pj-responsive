@@ -8,7 +8,7 @@ import { APICaller } from '../../api';
 import { service, api, path} from '../../configs';
 
 import { Flex, Button, Modal, Badge } from 'antd-mobile';
-import { CustomIcon, DonationList, Report, ADList } from '../';
+import { CustomIcon, Report, ADList } from '../';
 import { Share } from './';
 
 const mapStateToProps = ({ fetch, security }) => {
@@ -48,7 +48,6 @@ class FooterUtil extends React.Component {
         this.onCloseModal = this.onCloseModal.bind(this);
         this.onOpenModal = this.onOpenModal.bind(this);
         this.onClickLike = this.onClickLike.bind(this);
-        this.onClickDonate = this.onClickDonate.bind(this);
         this.onClickReport = this.onClickReport.bind(this);
         this.getFooter = this.getFooter.bind(this);
         this.onPress = this.onPress.bind(this);
@@ -119,25 +118,25 @@ class FooterUtil extends React.Component {
         }
     }
 
-    onClickDonate(e){
-        e && e.preventDefault();
-        const { userInfo } = this.props;
-        const token = service.getValue(userInfo, 'token', false);
-
-        if(!token){
-            return this.onOpenModal({
-                type : 'token',
-                title : '로그인이 필요한 기능입니다.',
-                contents : '로그인 하시겠습니까?'
-            });
-        }
-
-        return this.onOpenModal({
-            type : null,
-            title : '스폰서 광고 목록',
-            contents : (<DonationList />)
-        })
-    }
+    // onClickDonate(e){
+    //     e && e.preventDefault();
+    //     const { userInfo } = this.props;
+    //     const token = service.getValue(userInfo, 'token', false);
+    //
+    //     if(!token){
+    //         return this.onOpenModal({
+    //             type : 'token',
+    //             title : '로그인이 필요한 기능입니다.',
+    //             contents : '로그인 하시겠습니까?'
+    //         });
+    //     }
+    //
+    //     return this.onOpenModal({
+    //         type : null,
+    //         title : '스폰서 광고 목록',
+    //         contents : (<DonationList />)
+    //     })
+    // }
 
     onClickReport(e){
         e && e.preventDefault();
@@ -244,12 +243,6 @@ class FooterUtil extends React.Component {
                             icon={(<CustomIcon type="MdShare"/>)}
                             onClick={this.onClickShare}
                         >Share</Button>
-                    </Flex.Item>
-                    <Flex.Item>
-                        <Button
-                            icon={(<CustomIcon type="FaHeartbeat" roots="FontAwesome"/>)}
-                            onClick={this.onClickDonate}
-                        >Donation</Button>
                     </Flex.Item>
                     <Flex.Item className="report">
                         <Button

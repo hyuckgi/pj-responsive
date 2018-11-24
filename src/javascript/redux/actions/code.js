@@ -10,7 +10,7 @@ export const tag = (cookies) => {
             .then(docs => {
                 const result = docs || {};
                 const data = Object.keys(result).reduce((result, key) => {
-                    result[list[key].id] = docs[key].data;
+                    result[list[key].id] = docs[key].data || null;
                     return result;
                 }, {});
                 dispatch(creator.code(data));

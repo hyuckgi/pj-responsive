@@ -1,5 +1,14 @@
 .story-detail{
 
+
+    .am-tabs{
+        .am-tabs-tab-bar-wrap{
+            width:700px;
+            margin:0 auto;
+            overflow:visible;
+        }
+    }
+
     .story-top{
         position:relative;
         display:flex;
@@ -50,9 +59,6 @@
     }
 
     .am-tabs{
-        width:700px;
-        margin:0 auto;
-        overflow:visible;
 
         .am-tabs-default-bar-tab{
             cursor:pointer;
@@ -104,6 +110,32 @@
             }
         }
     }
+
+    .detail-wrppper{
+        .contents-wrppper,
+        .story-info-wrapper,
+        .comment-wrapper,
+        .comments-wrapper{
+            width:700px;
+            margin:0 auto;
+            overflow:visible;
+        }
+    }
+
+    .donation-wrppper{
+        padding:40px 0;
+        background: #F1F3F4;
+
+        &-inner{
+            background:#fff;
+        }
+
+        &-area{
+            width:700px;
+            padding:20px 10px 10px;
+            margin: 0 auto;
+        }
+    }
 }
 
 
@@ -116,7 +148,7 @@
                 &-sticky{
                     .am-tabs-default-bar{
                         transition:all 0.2s;
-                        
+
                         .am-tabs-default-bar-tab{
                             transition:all 0.2s;
                             color:#fff;

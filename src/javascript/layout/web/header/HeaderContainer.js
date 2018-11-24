@@ -44,7 +44,7 @@ class HeaderContainer extends React.Component {
                                     <Col span={10} offset={1} className="global-navigation-wrap">
                                         {this.renderTabBar()}
                                     </Col>
-                                    <Col className="dropdown" span={7} offset={2}>
+                                    <Col className="dropdown" span={6} offset={3}>
                                         {this.renderUtils()}
                                     </Col>
                                 </Row>

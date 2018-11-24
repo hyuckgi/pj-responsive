@@ -1,8 +1,10 @@
 import React from 'react';
 import moment from 'moment';
+import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 
 import { APICaller } from '../../../api';
-import { api, service } from '../../../configs';
+import { api, service, path } from '../../../configs';
 import { FormButton } from '../../../types';
 import { CustomIcon, ButtonWrapper, VideoPlayer } from '../../../components';
 
@@ -11,6 +13,19 @@ import { Flex, List, Modal } from 'antd-mobile';
 import NoImg from '../../../../../resource/commons/no_image_available.png';
 
 const alert = Modal.alert;
+
+const mapStateToProps = ({ security }) => {
+    const userInfo = security || {};
+
+    return{
+        userInfo,
+    }
+}
+
+const mapDispatchProps = dispatch => ({
+    move: (location) => dispatch(push(location)),
+});
+
 
 class Item extends React.Component {
 
@@ -41,6 +56,16 @@ class Item extends React.Component {
     }
 
     onOpenModal(){
+        const { userInfo } = this.props;
+        const token = service.getValue(userInfo, 'token', false);
+
+        if(!token){
+            return alert('로그인이 필요한 기능입니다.', `로그인 하시겠습니까?`, [
+                { text: 'Cancel'},
+                { text: 'Ok', onPress: () => this.props.move(path.login) },
+            ]);
+        }
+
         this.setState({
             visible : true,
         });
@@ -157,4 +182,4 @@ class Item extends React.Component {
 
 }
 
-export default Item;
+export default connect(mapStateToProps, mapDispatchProps)(Item);

@@ -6,7 +6,7 @@ const list = [
     {id: '1020000', name: 'Fund-raising', link: '/story/list/progress', level: 1, parent: '1000000'},
     {id: '1030000', name: 'Completion', link: '/story/list/complete', level: 1, parent: '1000000'},
 
-    {id: '2000000', name: 'Rank',  level: 0, link:'/rank', idx : 2, defaultLink : '/rank/list/user', mobile : true},
+    {id: '2000000', name: 'Donation Rank',  level: 0, link:'/rank', idx : 2, defaultLink : '/rank/list/user', mobile : true},
     {id: '2010000', name: 'User Rank',  level: 1, link:'/rank/list/user', parent: '2000000'},
     {id: '2020000', name: 'Sponsor Rank',  level: 1, link:'/rank/list/sponsor', parent: '2000000'},
 

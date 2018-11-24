@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { fetch } from '../../../redux/actions';
 import { service } from '../../../commons/configs';
 
-import { CommentList, Comment } from '../../../commons/components';
+import { CommentList, Comment, DonationList } from '../../../commons/components';
 import { FormMode } from '../../../commons/types';
 
 import { Info, Contents } from './';
@@ -51,6 +51,21 @@ class Detail extends React.Component {
         }
     }
 
+    renderDonation(item){
+        const list = service.getValue(item, 'adList', []);
+
+        return(
+            <div className="donation-wrppper">
+                <div className="donation-wrppper-inner">
+                    <div className="donation-wrppper-area">
+                        <p>{`스폰서 광고 ${list.length}개`}</p>
+                        {list.length === 0 ? (<p className="list-none">스폰서 광고 목록이 없습니다.</p>) : (<DonationList  />)}
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
     render() {
         const { item } = this.props;
         const { status } = this.state;
@@ -59,6 +74,9 @@ class Detail extends React.Component {
             <div className="detail-wrppper">
                 <Contents item={item}/>
                 <Info item={item}/>
+
+                {Object.keys(item).length && this.renderDonation(item)}
+
                 <Comment item={item} onEvents={this.onEvents} mode={FormMode.WRITE}/>
                 <CommentList item={item} onEvents={this.onEvents} status={status}/>
             </div>
