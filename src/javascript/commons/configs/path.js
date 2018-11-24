@@ -17,6 +17,9 @@ export const path = {
         return `${prefix}/:type/${service.toQuery(params)}`;
     },
     itemStory : `/story/item/:page/:id/:mode`,
+    listStory : (prefix, params = null) => {
+        return `${prefix}/:category/:type/${service.toQuery(params)}`;
+    },
     item : (prefix) => (`${prefix}/:id/:mode`),
     fullList : (prefix, params = null) => {
         return `${prefix}${service.toQuery(params)}`;

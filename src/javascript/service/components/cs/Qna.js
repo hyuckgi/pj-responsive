@@ -46,7 +46,7 @@ class Qna extends React.Component {
 
         return (
             <div className="qna-wrapper">
-                <p className="title">이용문의</p>
+                <p className="sub-title">이용문의</p>
                 <List full="true">
                     <InputItem
                         {...getFieldProps('itemNo', {

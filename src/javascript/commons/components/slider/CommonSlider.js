@@ -142,9 +142,7 @@ class CommonSlider extends React.Component {
     }
 
     onTouchStart(e){
-        console.log("e", e);
         e && e.stopPropagation();
-
     }
 
     render() {

@@ -31,94 +31,70 @@
 .web-container{
     .service-wrapper{
 
-        &-contents{
-            &.withdrawal-contents{
-                border-top: 43.5px solid #FF6E59;
-
-                .withdrawal-wrapper{
-                    width:1040px;
-                    margin:0 auto;
-                    padding:20px 0;
-                }
-            }
-        }
-
         &-top{
-            & > .title{
-                max-width: 1040px;
-                margin: 0 auto;
+            border-bottom:1px solid #FF6E59;
+
+            .title{
                 height:180px;
                 font-size:28px;
                 line-height:180px;
                 text-indent:20px;
+                width:1040px;
+                margin:0 auto;
             }
+        }
 
-            .am-tabs{
+        .sub-title,
+        .ant-table-title{
+            padding: 16px 0;
+            text-align: center;
+            position: relative;
+            border-radius: 0;
+            font-size:1.2em;
+            font-weight:bold;
+            margin:0;
+        }
 
-                .am-tabs-tab-bar-wrap{
-                    background-color:#FF6E59;
+        .faq-wrapper{
+            width:1040px;
+            margin:0 auto;
+            padding:20px 0;
 
-                    .am-tabs-default-bar{
-                        width:1040px;
-                        margin:0 auto;
+            .faq-navigation{
+                flex-basis:25%;
 
-                        .am-tabs-default-bar-tab{
-                            font-size:1.2em;
-                            color:#fff;
-                            background-color:#FF6E59;
-                            border-bottom:none;
-
-                            &-active{
-                                color:#fff;
-                                background-color: #EC3F2E;
-                            }
-                        }
-                    }
-
+                .ant-menu-vertical{
+                    border-right:none;
                 }
-                .am-tabs-content-wrap{
-                    max-width: 1040px;
-                    margin: 0 auto;
-                    padding:20px 0;
+            }
+            .faq{
+                flex-basis:75%;
+                margin-left:20px;
 
-                    .faq-wrapper{
-                        .faq-navigation{
-                            flex-basis:25%;
-
-                            .ant-menu-vertical{
-                                border-right:none;
-                            }
+                .ant-table{
+                    .ant-table-body{
+                        .ant-table-row{
+                            cursor:pointer;
                         }
-                        .faq{
-                            flex-basis:75%;
-                            margin-left:20px;
-
-                            .ant-table{
-                                .ant-table-body{
-                                    .ant-table-row{
-                                        cursor:pointer;
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    .title,
-                    .ant-table-title{
-                        padding: 16px 0;
-                        position: relative;
-                        border-radius: 0;
-                        font-size:1.2em;
-                        font-weight:bold;
-                        margin:0;
-                    }
-
-                    .qna-wrapper{
-                        max-width:540px;
-                        margin:0 auto;
                     }
                 }
             }
+        }
+
+        .qna-wrapper{
+            max-width:540px;
+            margin:0 auto;
+            padding:30px 0 50px;
+
+            .sub-title{
+                text-indent:50px;
+            }
+        }
+
+        .rule-wrapper{
+            width:960px;
+            margin:0 auto;
+            padding:20px 0 50px;
         }
     }
 }

@@ -15,11 +15,6 @@ class StoryTop extends React.Component {
         return (
             <div className="story-top" style={{backgroundImage : src ? `url(${src})` : 'none'}}>
                 {src ? <div className="overlay"></div> : null}
-                <div className="top-contents">
-                    <h2>{item.title}</h2>
-                    <p><CustomIcon type="MdMonetizationOn" />{service.amount(item.totalDonation)}원 / {percent}</p>
-                    <p><CustomIcon type="MdFlag" />{service.amount(item.goalDonation)}원</p>
-                </div>
             </div>
         );
     }

@@ -20,7 +20,9 @@ const mapStateToProps = ({ fetch, layout, router }) => {
 
     const globalMenu = service.getValue(layout, 'list', []).filter(item => item.level === 0).concat(mobileLayout).filter(item => item.mobile).sort((a, b) => a.id - b.id);
     const currentPath = service.getValue(router, 'location.pathname', "/main");
-    const currentMenu = allMenu.filter(item => item.link.indexOf(currentPath.split("/")[1]) === 1).find(item => item);
+    const keyword = currentPath.split("/")[1] === 'story' ? `${currentPath.split("/")[1]}/${currentPath.split("/")[2]}/${currentPath.split("/")[3]}` : currentPath.split("/")[1];
+    const currentMenu = allMenu.filter(item => item.link.indexOf(keyword) === 1).find(item => item);
+
     const isGlobalMenu = globalMenu.some(item => item.id === service.getValue(currentMenu, 'id', 0));
 
     const subMenu = isGlobalMenu && service.getValue(currentMenu, 'defaultLink', false)

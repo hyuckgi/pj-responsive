@@ -13,37 +13,12 @@
         position:relative;
         display:flex;
         flex-flow:row nowrap;
-        height:380px;
-        background-position:center 0;
-        background-size:contain;
+        height:280px;
+        background-position:center center;
+        background-size:cover;
         justify-content:center;
-
-
-        .top-contents{
-            flex: 0 0 40%;
-            align-self: center;
-            text-align:center;
-            z-index:3;
-            padding:50px 0 20px;
-            background-color:rgba(0,0,0,0.45);
-            border-radius:30px;
-            border:2px solid #777;
-            color:#fff;
-            box-shadow: 5px 3px 3px rgba(0, 0, 0, 0.18);
-
-            h2{
-                margin-bottom:1em;
-                text-align:center;
-                color:#fff;
-            }
-            p{
-                .am-icon{
-                    font-size:1.8em;
-                    margin-right:5px;
-                    color:#fff;
-                }
-            }
-        }
+        border-radius: 0 0 10% 10%;
+        overflow:hidden;
 
         .overlay{
             position:absolute;
@@ -54,7 +29,7 @@
             width:100%;
             height:100%;
             z-index:1;
-            background-color:rgba(255, 255, 255, 0.4);
+            background-color:rgba(195, 190, 190, 0.4);
         }
     }
 
