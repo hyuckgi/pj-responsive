@@ -41,10 +41,10 @@ class HeaderContainer extends React.Component {
                                     <Col span={4} className="logo" onClick={this.onClick.bind(this)}>
                                         <img src={imgLogo} alt="logo"/> 9Spoons
                                     </Col>
-                                    <Col span={11} offset={1} className="global-navigation-wrap">
+                                    <Col span={14} className="global-navigation-wrap">
                                         {this.renderTabBar()}
                                     </Col>
-                                    <Col className="dropdown" span={6} offset={2}>
+                                    <Col className="dropdown" span={5} offset={1}>
                                         {this.renderUtils()}
                                     </Col>
                                 </Row>

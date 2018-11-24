@@ -3,30 +3,40 @@ import {layout as type, security as securityType} from '../types';
 // // TODO:  defaultLink progress로 수정
 
 const list = [
-    {id: '10000', name: '교육지원',  level: 0,  link:'/story/list/education', defaultLink: '/story/list/education/ready', idx : 1, mobile : true},
-    {id: '10100', name: 'Prepare', link: '/story/list/education/ready', level: 1, parent: '10000'},
-    {id: '10200', name: 'Fund-raising', link: '/story/list/education/progress', level: 1, parent: '10000'},
-    {id: '10300', name: 'Completion', link: '/story/list/education/complete', level: 1, parent: '10000'},
 
-    {id: '20000', name: '재난',  level: 0,  link:'/story/list/disaster', defaultLink: '/story/list/disaster/progress', idx : 2, mobile : true},
-    {id: '20100', name: 'Prepare', link: '/story/list/disaster/ready', level: 1, parent: '20000'},
-    {id: '20200', name: 'Fund-raising', link: '/story/list/disaster/progress', level: 1, parent: '20000'},
-    {id: '20300', name: 'Completion', link: '/story/list/disaster/complete', level: 1, parent: '20000'},
+    {id: '10000', name: '아동',  level: 0,  link:'/story/list/children', defaultLink: '/story/list/children/ready', idx : 1, mobile : true},
+    {id: '10100', name: 'Prepare', link: '/story/list/children/ready', level: 1, parent: '10000'},
+    {id: '10200', name: 'Fund-raising', link: '/story/list/children/progress', level: 1, parent: '10000'},
+    {id: '10300', name: 'Completion', link: '/story/list/children/complete', level: 1, parent: '10000'},
 
-    {id: '30000', name: '아동',  level: 0,  link:'/story/list/children', defaultLink: '/story/list/children/ready', idx : 3, mobile : true},
-    {id: '30100', name: 'Prepare', link: '/story/list/children/ready', level: 1, parent: '30000'},
-    {id: '30200', name: 'Fund-raising', link: '/story/list/children/progress', level: 1, parent: '30000'},
-    {id: '30300', name: 'Completion', link: '/story/list/children/complete', level: 1, parent: '30000'},
+    {id: '20000', name: '난치병',  level: 0,  link:'/story/list/disease', defaultLink: '/story/list/disease/progress', idx : 2, mobile : true},
+    {id: '20100', name: 'Prepare', link: '/story/list/disease/ready', level: 1, parent: '20000'},
+    {id: '20200', name: 'Fund-raising', link: '/story/list/disease/progress', level: 1, parent: '20000'},
+    {id: '20300', name: 'Completion', link: '/story/list/disease/complete', level: 1, parent: '20000'},
 
-    {id: '40000', name: '저소득층',  level: 0,  link: '/story/list/group', defaultLink: '/story/list/group/progress', idx : 4, mobile : true},
-    {id: '40100', name: 'Prepare', link: '/story/list/group/ready', level: 1, parent: '40000'},
-    {id: '40200', name: 'Fund-raising', link: '/story/list/group/progress', level: 1, parent: '40000'},
-    {id: '40300', name: 'Completion', link: '/story/list/group/complete', level: 1, parent: '40000'},
+    {id: '30000', name: '저소득층',  level: 0,  link: '/story/list/group', defaultLink: '/story/list/group/progress', idx : 3, mobile : true},
+    {id: '30100', name: 'Prepare', link: '/story/list/group/ready', level: 1, parent: '30000'},
+    {id: '30200', name: 'Fund-raising', link: '/story/list/group/progress', level: 1, parent: '30000'},
+    {id: '30300', name: 'Completion', link: '/story/list/group/complete', level: 1, parent: '30000'},
 
-    {id: '50000', name: '캠페인',  level: 0,  link: '/story/list/campaign', defaultLink: '/story/list/campaign/complete', idx : 5, mobile : true},
-    {id: '50100', name: 'Prepare', link: '/story/list/campaign/ready', level: 1, parent: '50000'},
-    {id: '50200', name: 'Fund-raising', link: '/story/list/campaign/progress', level: 1, parent: '50000'},
-    {id: '50300', name: 'Completion', link: '/story/list/campaign/complete', level: 1, parent: '50000'},
+    {id: '40000', name: '교육지원',  level: 0,  link:'/story/list/education', defaultLink: '/story/list/education/ready', idx : 4, mobile : true},
+    {id: '40100', name: 'Prepare', link: '/story/list/education/ready', level: 1, parent: '40000'},
+    {id: '40200', name: 'Fund-raising', link: '/story/list/education/progress', level: 1, parent: '40000'},
+    {id: '40300', name: 'Completion', link: '/story/list/education/complete', level: 1, parent: '40000'},
+
+    {id: '50000', name: '재난',  level: 0,  link:'/story/list/disaster', defaultLink: '/story/list/disaster/progress', idx : 5, mobile : true},
+    {id: '50100', name: 'Prepare', link: '/story/list/disaster/ready', level: 1, parent: '50000'},
+    {id: '50200', name: 'Fund-raising', link: '/story/list/disaster/progress', level: 1, parent: '50000'},
+    {id: '50300', name: 'Completion', link: '/story/list/disaster/complete', level: 1, parent: '50000'},
+
+    {id: '60000', name: '캠페인',  level: 0,  link: '/story/list/campaign', defaultLink: '/story/list/campaign/complete', idx : 6, mobile : true},
+    {id: '60100', name: 'Prepare', link: '/story/list/campaign/ready', level: 1, parent: '60000'},
+    {id: '60200', name: 'Fund-raising', link: '/story/list/campaign/progress', level: 1, parent: '60000'},
+    {id: '60300', name: 'Completion', link: '/story/list/campaign/complete', level: 1, parent: '60000'},
+
+    {id: '70000', name: 'Donation Rank',  level: 0, link:'/rank', defaultLink : '/rank/list/user', idx : 7, mobile : true},
+    {id: '70100', name: 'User Rank',  level: 1, link:'/rank/list/user', parent: '70000'},
+    {id: '70200', name: 'Sponsor Rank',  level: 1, link:'/rank/list/sponsor', parent: '70000'},
 
     {id: '4000000', name: 'More',  level: 0, link:'/service', defaultLink: '/service/cs', hasChild:true},
 
@@ -37,10 +47,6 @@ const list = [
     {id: '4020000', name: 'Terms / Policy', level: 1, link : '/service/rules',  defaultLink : '/service/rules/terms', parent: '4000000', hasChild:true},
     {id: '4020100', name: 'Terms', level: 2, link : '/service/rules/terms', parent: '4020000'},
     {id: '4020200', name: 'Policy', level: 2, link : '/service/rules/policy', parent: '4020000'},
-
-    {id: '4030000', name: 'Donation Rank',  level: 1, link:'/rank', defaultLink : '/rank/list/user', hasChild:true, parent: '4000000',},
-    {id: '4030100', name: 'User Rank',  level: 2, link:'/rank/list/user', parent: '4030000'},
-    {id: '4030200', name: 'Sponsor Rank',  level: 2, link:'/rank/list/sponsor', parent: '4030000'},
 
     {id: '4040000', name: 'Event / Notice',  level: 1, link:'/board/list', defaultLink: '/board/list/event',  hasChild:true, parent: '4000000',},
     {id: '4040100', name: 'Event', level: 2, link : '/board/list/event', parent: '4040000'},
