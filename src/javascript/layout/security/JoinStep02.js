@@ -131,7 +131,7 @@ class JoinStep02 extends React.Component {
                 return this.setState({
                     disabled : true,
                     confirmPasswd : false
-                })
+                });
             }
         });
     }
@@ -150,7 +150,7 @@ class JoinStep02 extends React.Component {
                 [key] : true,
             })
         }else{
-            Toast.fail('비밀번호가 일치하지 않습니다.', 3);
+            Toast.fail('비밀번호가 일치하지 않습니다.', 1);
             this.setState({
                 disabled : true,
                 [key] : false,

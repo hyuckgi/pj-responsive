@@ -34,7 +34,7 @@ const list = [
     {id: '60200', name: 'Fund-raising', link: '/story/list/campaign/progress', level: 1, parent: '60000'},
     {id: '60300', name: 'Completion', link: '/story/list/campaign/complete', level: 1, parent: '60000'},
 
-    {id: '70000', name: 'Donation Rank',  level: 0, link:'/rank', defaultLink : '/rank/list/user', idx : 7, mobile : true},
+    {id: '70000', name: 'Rank',  level: 0, link:'/rank', defaultLink : '/rank/list/user', idx : 7, mobile : true},
     {id: '70100', name: 'User Rank',  level: 1, link:'/rank/list/user', parent: '70000'},
     {id: '70200', name: 'Sponsor Rank',  level: 1, link:'/rank/list/sponsor', parent: '70000'},
 
@@ -48,9 +48,18 @@ const list = [
     {id: '4020100', name: 'Terms', level: 2, link : '/service/rules/terms', parent: '4020000'},
     {id: '4020200', name: 'Policy', level: 2, link : '/service/rules/policy', parent: '4020000'},
 
-    {id: '4040000', name: 'Event / Notice',  level: 1, link:'/board/list', defaultLink: '/board/list/event',  hasChild:true, parent: '4000000',},
-    {id: '4040100', name: 'Event', level: 2, link : '/board/list/event', parent: '4040000'},
-    {id: '4040200', name: 'Notice', level: 2, link : '/board/list/notice', parent: '4040000'},
+    {id: '4040000', name: '9Spoons',  level: 1, link:'/service/company', defaultLink: '/service/company/intro',  hasChild:true, parent: '4000000',},
+    {id: '4040100', name: '9Spoons 소개', level: 2, link : '/service/company/intro', parent: '4040000'},
+    {id: '4040200', name: '9Spoons 정신', level: 2, link : '/service/company/spirit', parent: '4040000'},
+
+    {id: '4050000', name: '투명성',  level: 1, link:'/service/integrity', defaultLink: '/service/integrity',  parent: '4000000',},
+
+    {id: '4060000', name: '자체 기부 & 봉사 내역',  level: 1, link:'/service/charity', defaultLink: '/service/charity',  parent: '4000000',},
+
+    {id: '4070000', name: 'Event / Notice',  level: 1, link:'/board/list', defaultLink: '/board/list/event',  hasChild:true, parent: '4000000',},
+    {id: '4070100', name: 'Event', level: 2, link : '/board/list/event', parent: '4070000'},
+    {id: '4070200', name: 'Notice', level: 2, link : '/board/list/notice', parent: '4070000'},
+
 ];
 
 const mypageMenus = [
