@@ -177,7 +177,6 @@ class StoryContainer extends React.Component {
         return (
             <div className="story-detail" ref="detail">
                 <DesktopLayout>
-                    <StoryTop item={item}/>
 
                     <StickyContainer>
                         {this.renderTab(reviewData)}

@@ -13,7 +13,8 @@
                 background-color: transparent;
                 border-bottom:none;
 
-                .ant-menu-item{
+                .ant-menu-item,
+                .ant-menu-submenu{
                     color:#fff;
                     top:0;
                     margin-top:0;
@@ -34,6 +35,20 @@
 
                         &::before{
                             display:none;
+                        }
+                    }
+                }
+
+                .ant-menu-submenu{
+
+                    .ant-menu-submenu-title{
+                        display:block;
+
+                        &:hover,
+                        &-active,
+                        &.on{
+                            color:#fff;
+                            background-color:#EC3F2E;
                         }
                     }
                 }

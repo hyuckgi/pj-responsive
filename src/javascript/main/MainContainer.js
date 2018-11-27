@@ -72,11 +72,6 @@ class MainContainer extends React.Component {
                     </Flex>
                 </div>
 
-                <div className="event-wrapper">
-                    이벤트 등록시 배너 이미지 추가 등록??
-                    <CommonSlider list={events} prefixUrl={path.boardItem} prefix="event" path="event"/>
-                </div>
-
                 <div className="list-wrapper">
                     <Flex justify="between">
                         <Flex.Item className="main-title">프로젝트 모금함</Flex.Item>

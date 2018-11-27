@@ -104,7 +104,7 @@ class UtilNavigation extends React.Component {
                 className="util-navigation"
             >
                 <Menu.Item>
-                    <NavLink to={path.propose}>Submit</NavLink>
+                    <NavLink to={path.propose}>Up-load</NavLink>
                 </Menu.Item>
                 <Menu.Item className="btn-search">
                     <NavLink to={path.search}>

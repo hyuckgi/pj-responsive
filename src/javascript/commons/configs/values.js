@@ -167,8 +167,8 @@ const rank = {
     'user' : {
         types : [
             {type : 'all', title : '전체 기부왕', inx : 0},
-            {type : 'year', title : '올해의 기부왕', inx : 1},
-            {type : 'month', title : '이달의 기부왕', inx : 2},
+            {type : 'year', title : '이번달 기부왕', inx : 1},
+            {type : 'month', title : '지난달 기부왕', inx : 2},
             {type : 'week', title : '금주의 기부왕', inx : 3},
         ]
     },
@@ -187,6 +187,12 @@ const join = {
         { value : 11, label : '사용자'},
         { value : 12, label : '스폰서'}
     ],
+    'options' : [
+        {value : '', label : '직접입력'},
+        {value : 'gmail.com', label : 'goole'},
+        {value : 'naver.com', label : 'naver'},
+        {value : 'daum.com', label : 'daum'},
+    ]
 }
 
 const report = {

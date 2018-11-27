@@ -8,6 +8,7 @@ import { APICaller } from '../../api';
 import { service, api, path} from '../../configs';
 
 import { Flex, Button, Modal, Badge } from 'antd-mobile';
+import { Popover } from 'antd';
 import { CustomIcon, Report, ADList } from '../';
 import { Share } from './';
 
@@ -226,6 +227,11 @@ class FooterUtil extends React.Component {
         const color = isMobile ? '#fff' : (isLike ? '#eb1010' : '#ff6d59');
         const role = service.getValue(userInfo, 'role', 9);
         const mobilePopup = modalType === 'token' ? false : (isMobile ? true : false);
+        const content = (
+            <div>
+                {`1회 공유가 될 때 마다 9Spoons본사에서 100원씩의 추가 기부가 됩니다.`}
+            </div>
+        );
 
         return (
             <div className="footer-utils-wapper">
@@ -235,14 +241,16 @@ class FooterUtil extends React.Component {
                             icon={(<CustomIcon type={isLike ? 'FaHeart' : 'FaHeartO'} roots="FontAwesome" style={{color : color}}/>)}
                             onClick={this.onClickLike}
                         >
-                            <Badge text={likeCount} style={{ marginLeft: isMobile ? -3 : 18, backgroundColor: color, color : isMobile ? '#333' : '#fff'}} overflowCount={99}><span style={{color:color}}>Likes</span></Badge>
+                            <Badge text={likeCount} style={{ marginLeft: isMobile ? -3 : 18, backgroundColor: color, color : isMobile ? '#333' : '#fff'}} overflowCount={99}><span style={{color:color}}>Recommend</span></Badge>
                         </Button>
                     </Flex.Item>
                     <Flex.Item>
-                        <Button
-                            icon={(<CustomIcon type="MdShare"/>)}
-                            onClick={this.onClickShare}
-                        >Share</Button>
+                        <Popover content={content}>
+                            <Button
+                                icon={(<CustomIcon type="MdShare"/>)}
+                                onClick={this.onClickShare}
+                            >Share</Button>
+                        </Popover>
                     </Flex.Item>
                     <Flex.Item className="report">
                         <Button

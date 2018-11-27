@@ -131,7 +131,6 @@ class ListTop extends React.Component {
     render() {
         return (
             <Flex justify="between" className="list-top-wrapper">
-                {this.renderCategory()}
                 {this.renderOrder()}
             </Flex>
         );

@@ -133,7 +133,7 @@ class CommonSlider extends React.Component {
                                                     </Flex.Item>
                                                     {this.renderProgressBar(item)}
                                                     <Flex.Item>
-                                                        <span className="link" onClick={this.onClick.bind(this, item)}>참여하기</span>
+                                                        <span className="link" onClick={this.onClick.bind(this, item)}>기부하기</span>
                                                     </Flex.Item>
                                                 </Flex>
                                             </div>

@@ -94,9 +94,7 @@ export const service = {
             return;
         }
         const noPattern = str.slice(0, number);
-        const isPattern = str.slice(number, -1).replace(/\w/g, "*");
-
-        return `${noPattern}${isPattern}`
+        return `${noPattern}${'*'.repeat(str.length - number)}`
     },
 
     makeMdn : (mdn) => {

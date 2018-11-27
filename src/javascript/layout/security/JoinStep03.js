@@ -6,19 +6,26 @@ import { FormButton } from '../../commons/types';
 
 import { ButtonWrapper, SelectCountry } from '../../commons/components';
 import { List, InputItem, WhiteSpace, Toast, WingBlank, Button, Flex } from 'antd-mobile';
+import { Select } from 'antd';
+
+const Option = Select.Option;
 
 class JoinStep03 extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            disabled : true,
+            disabled : false,
             userType : 11,
+            domain : '',
         };
 
         this.errorToast = this.errorToast.bind(this);
         this.validateEmail = this.validateEmail.bind(this);
+        this.validateBusiness = this.validateBusiness.bind(this);
         this.onChange = this.onChange.bind(this);
+
+        this.onChangeSelect = this.onChangeSelect.bind(this);
     }
 
     onChange(item, e){
@@ -70,8 +77,10 @@ class JoinStep03 extends React.Component {
         const { stepProps, form } = this.props;
 
         form.validateFields((errors, value) => {
+
+            console.log("value", value);
             const { userType } = this.state;
-            const { nickname, email, cellphone, countryCode, username, businessNumber } = value;
+            const { nickname, emailStep1, emailStep2, cellphone, countryCode, username, businessNumber } = value;
 
             if(!countryCode){
                 return;
@@ -81,7 +90,7 @@ class JoinStep03 extends React.Component {
                 return stepProps.onSubmit({
                     cellphone : cellphone.replace(/ /gi, ""),
                     countryCode : countryCode,
-                    email : email,
+                    email : `${emailStep1}@${emailStep2}`,
                     nickname : nickname,
                     username : username,
                     userType : userType,
@@ -104,30 +113,53 @@ class JoinStep03 extends React.Component {
     }
 
     validateEmail(key, value){
-        if(!value){
-            return;
+        const { form } = this.props;
+        const rest = key === 'emailStep1' ? 'emailStep2' : 'emailStep1';
+        const restAddress = form.getFieldValue(rest);
+
+        console.log("value", rest, value, restAddress);
+
+        if(!value || !restAddress){
+            return this.setState({
+                disabled : true,
+                email : false,
+            });
         }
 
-        if(values.validateEmail.test(value)){
+        const join = key === 'emailStep1' ? `${value}@${restAddress}` : `${restAddress}@${value}`;
+
+        console.log("join", join);
+
+        if(values.validateEmail.test(join)){
             Toast.success(`사용가능한 이메일입니다.`, 3);
             return this.setState({
                 disabled: false,
-                [key] : true,
+                email : true,
             })
         }else{
             Toast.fail('올바른 이메일 주소를 입력해주세요', 3);
             this.setState({
                 disabled: true,
-                [key] : false,
+                email : false,
             });
-            return this[key].focus();
+        }
+    }
+
+    validateBusiness(key, value){
+        // 중복체크
+        if(value.length < 10){
+            Toast.fail('올바른 사업자 번호를 입력해주세요', 3);
         }
     }
 
     onBlur(key, value){
         switch (key) {
-            case 'email':
+            case 'emailStep1':
+            case 'emailStep2':
                 this.validateEmail(key, value);
+                break;
+            case 'businessNumber' :
+                this.validateBusiness(key, value);
                 break;
             default:
         }
@@ -141,14 +173,30 @@ class JoinStep03 extends React.Component {
         ];
     }
 
+    onChangeSelect(value){
+        const { form } = this.props;
+        value ? form.setFieldsValue({'emailStep2' : value}) : form.setFieldsValue({'emailStep2' : ''});
+        if(!value){
+            return this.setState({
+                email : false,
+            });
+        }
+        this.validateEmail('emailStep2', value);
+        return this.setState({
+            domain : value
+        });
+    }
+
     render() {
         const { form, stepProps } = this.props;
         const { getFieldProps, getFieldError } = form;
-        const { email, userType } = this.state;
-        const data = service.getValue(values, 'join.userType')
+        const { email, userType, domain } = this.state;
+        const data = service.getValue(values, 'join.userType');
+
+        console.log("domain", domain);
 
         return (
-            <div className="join-step-wrapper step-02">
+            <div className="join-step-wrapper step-03">
                 <List full="true">
                     <WhiteSpace size="md"/>
 
@@ -216,20 +264,44 @@ class JoinStep03 extends React.Component {
 
                     <WhiteSpace size="sm"/>
 
-                    <InputItem
-                        {...getFieldProps('email', {
-                            rules: [{ required: true, message: '이메일을 입력하세요'}],
-                        })}
-                        ref={el => this.email = el}
-                        placeholder="E-mail"
-                        className={email ? 'confirmation' : ''}
-                        onBlur={this.onBlur.bind(this, 'email')}
-                        clear
-                        error={!!getFieldError('email')}
-                        onErrorClick={() => {
-                          alert(getFieldError('email').join('、'));
-                        }}
-                    />
+                    <Flex className="email-area" align="center">
+                        <Flex.Item>
+                            <InputItem
+                                {...getFieldProps('emailStep1', {
+                                    rules: [{ required: true, message: '이메일을 입력하세요'}],
+                                })}
+                                ref={el => this.email = el}
+                                placeholder="E-mail"
+                                className={email ? 'confirmation' : ''}
+                                onBlur={this.onBlur.bind(this, 'emailStep1')}
+                                clear={false}
+                                error={!!getFieldError('emailStep1')}
+                                onErrorClick={() => {
+                                  alert(getFieldError('emailStep1').join('、'));
+                                }}
+                            />
+                        </Flex.Item>
+                        <Flex.Item className="mark">@</Flex.Item>
+                        <Flex.Item>
+                            <InputItem
+                                {...getFieldProps('emailStep2', {
+                                    rules: [{ required: true, message: '이메일을 입력하세요'}],
+                                })}
+                                placeholder="gmail.com"
+                                className={email ? 'confirmation' : ''}
+                                onBlur={this.onBlur.bind(this, 'emailStep2')}
+                                clear={false}
+                            />
+                        </Flex.Item>
+                        <Flex.Item className="select-area">
+                            <Select defaultValue={domain} onSelect={this.onChangeSelect}>
+                                {values.join.options.map((item, idx) => {
+                                    return (<Option key={idx} value={item.value}>{item.label}</Option>)
+                                })}
+                            </Select>
+                        </Flex.Item>
+                    </Flex>
+
 
                     <WhiteSpace size="md"/>
 
@@ -258,10 +330,11 @@ class JoinStep03 extends React.Component {
                             {...getFieldProps('businessNumber', {
                                 rules: [{ required: userType === 12 ? true : false, message: '사업자등록번호를 입력하세요'}]
                             })}
-                            type="text"
+                            type="number"
                             placeholder="BusinessNumber"
                             clear
                             error={!!getFieldError('businessNumber')}
+                            onBlur={this.onBlur.bind(this, 'businessNumber')}
                             onErrorClick={() => {
                               alert(getFieldError('businessNumber').join('、'));
                             }}

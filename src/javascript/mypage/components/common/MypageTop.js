@@ -129,12 +129,15 @@ class MypageTop extends React.Component {
 
     renderText(){
         const { profile, userInfo } = this.props;
+
         const userId = service.getMasking(service.getValue(profile, 'userid', false), 3);
         const nickName = service.getValue(profile, 'nickname', false);
+        const role = service.getValue(userInfo, 'role', 0);
 
-        if(userInfo ===  3){
+        if(role ===  3){
             return (
                 <div>
+                    <p>[스폰서회원]</p>
                     <p>{userId ? `${userId} (${nickName})` : nickName}</p>
                     <p>참여 {service.getValue(profile, 'donateCount', 0)}회 | 기부 {service.amount(service.getValue(profile, 'totalDonation', 0))}원</p>
                 </div>
@@ -150,8 +153,10 @@ class MypageTop extends React.Component {
     }
 
     render() {
-        const { subMenu, currentMenu, profile } = this.props;
+        const { subMenu, currentMenu, profile, userInfo } = this.props;
         const image = service.getValue(profile, 'profileUrl', false);
+        const role = service.getValue(userInfo, 'role', 0);
+        const permitMenu = role === 3 ? subMenu.filter(item => item.id !== '504000000' && item.id !== '505000000') : subMenu;
 
         return (
             <div className="mypage-wrap">
@@ -170,8 +175,8 @@ class MypageTop extends React.Component {
                 </Flex>
 
                 <Tabs
-                    tabs={subMenu}
-                    page={subMenu.findIndex(item => item.id === currentMenu.id)}
+                    tabs={permitMenu}
+                    page={permitMenu.findIndex(item => item.id === currentMenu.id)}
                     swipeable={false}
                     onChange={this.onChange}
                     onTabClick={this.onTabClick}

@@ -4,39 +4,45 @@ import {layout as type, security as securityType} from '../types';
 
 const list = [
 
-    {id: '10000', name: '아동',  level: 0,  link:'/story/list/children', defaultLink: '/story/list/children/ready', idx : 1, mobile : true},
+    {id: '10000', name: 'Children',  level: 0,  link:'/story/list/children', defaultLink: '/story/list/children/ready', idx : 1, mobile : true},
     {id: '10100', name: 'Prepare', link: '/story/list/children/ready', level: 1, parent: '10000'},
     {id: '10200', name: 'Fund-raising', link: '/story/list/children/progress', level: 1, parent: '10000'},
     {id: '10300', name: 'Completion', link: '/story/list/children/complete', level: 1, parent: '10000'},
 
-    {id: '20000', name: '난치병',  level: 0,  link:'/story/list/disease', defaultLink: '/story/list/disease/progress', idx : 2, mobile : true},
+    {id: '20000', name: 'Disease',  level: 0,  link:'/story/list/disease', defaultLink: '/story/list/disease/progress', idx : 2, mobile : true},
     {id: '20100', name: 'Prepare', link: '/story/list/disease/ready', level: 1, parent: '20000'},
     {id: '20200', name: 'Fund-raising', link: '/story/list/disease/progress', level: 1, parent: '20000'},
     {id: '20300', name: 'Completion', link: '/story/list/disease/complete', level: 1, parent: '20000'},
 
-    {id: '30000', name: '저소득층',  level: 0,  link: '/story/list/group', defaultLink: '/story/list/group/progress', idx : 3, mobile : true},
+    {id: '30000', name: 'Poor',  level: 0,  link: '/story/list/group', defaultLink: '/story/list/group/progress', idx : 3, mobile : true},
     {id: '30100', name: 'Prepare', link: '/story/list/group/ready', level: 1, parent: '30000'},
     {id: '30200', name: 'Fund-raising', link: '/story/list/group/progress', level: 1, parent: '30000'},
     {id: '30300', name: 'Completion', link: '/story/list/group/complete', level: 1, parent: '30000'},
 
-    {id: '40000', name: '교육지원',  level: 0,  link:'/story/list/education', defaultLink: '/story/list/education/ready', idx : 4, mobile : true},
+    {id: '40000', name: 'Education',  level: 0,  link:'/story/list/education', defaultLink: '/story/list/education/ready', idx : 4, mobile : true},
     {id: '40100', name: 'Prepare', link: '/story/list/education/ready', level: 1, parent: '40000'},
     {id: '40200', name: 'Fund-raising', link: '/story/list/education/progress', level: 1, parent: '40000'},
     {id: '40300', name: 'Completion', link: '/story/list/education/complete', level: 1, parent: '40000'},
 
-    {id: '50000', name: '재난',  level: 0,  link:'/story/list/disaster', defaultLink: '/story/list/disaster/progress', idx : 5, mobile : true},
+    {id: '50000', name: 'Disaster',  level: 0,  link:'/story/list/disaster', defaultLink: '/story/list/disaster/progress', idx : 5, mobile : true},
     {id: '50100', name: 'Prepare', link: '/story/list/disaster/ready', level: 1, parent: '50000'},
     {id: '50200', name: 'Fund-raising', link: '/story/list/disaster/progress', level: 1, parent: '50000'},
     {id: '50300', name: 'Completion', link: '/story/list/disaster/complete', level: 1, parent: '50000'},
 
-    {id: '60000', name: '캠페인',  level: 0,  link: '/story/list/campaign', defaultLink: '/story/list/campaign/complete', idx : 6, mobile : true},
+    {id: '60000', name: 'Campaign',  level: 0,  link: '/story/list/campaign', defaultLink: '/story/list/campaign/complete', idx : 6, mobile : true},
     {id: '60100', name: 'Prepare', link: '/story/list/campaign/ready', level: 1, parent: '60000'},
     {id: '60200', name: 'Fund-raising', link: '/story/list/campaign/progress', level: 1, parent: '60000'},
     {id: '60300', name: 'Completion', link: '/story/list/campaign/complete', level: 1, parent: '60000'},
 
     {id: '70000', name: 'Rank',  level: 0, link:'/rank', defaultLink : '/rank/list/user', idx : 7, mobile : true},
     {id: '70100', name: 'User Rank',  level: 1, link:'/rank/list/user', parent: '70000'},
-    {id: '70200', name: 'Sponsor Rank',  level: 1, link:'/rank/list/sponsor', parent: '70000'},
+    {id: '70200', name: 'Sponsor Rank',  level: 1, link:'/rank/list/sponsor', parent: '70000', hasChild:true},
+
+    {id: '70201', name: '대기업',  level: 2, link:'/rank/list/sponsor', parent: '70200'},
+    {id: '70202', name: '중견기업',  level: 2, link:'/rank/list/sponsor', parent: '70200'},
+    {id: '70203', name: '중소기업',  level: 2, link:'/rank/list/sponsor', parent: '70200'},
+    {id: '70204', name: '벤처기업',  level: 2, link:'/rank/list/sponsor', parent: '70200'},
+    {id: '70205', name: '스타트업',  level: 2, link:'/rank/list/sponsor', parent: '70200'},
 
     {id: '4000000', name: 'More',  level: 0, link:'/service', defaultLink: '/service/cs', hasChild:true},
 
@@ -49,12 +55,12 @@ const list = [
     {id: '4020200', name: 'Policy', level: 2, link : '/service/rules/policy', parent: '4020000'},
 
     {id: '4040000', name: '9Spoons',  level: 1, link:'/service/company', defaultLink: '/service/company/intro',  hasChild:true, parent: '4000000',},
-    {id: '4040100', name: '9Spoons 소개', level: 2, link : '/service/company/intro', parent: '4040000'},
-    {id: '4040200', name: '9Spoons 정신', level: 2, link : '/service/company/spirit', parent: '4040000'},
+    {id: '4040100', name: '9Spoons is..', level: 2, link : '/service/company/intro', parent: '4040000'},
+    {id: '4040200', name: '9Spoons Mind', level: 2, link : '/service/company/spirit', parent: '4040000'},
 
-    {id: '4050000', name: '투명성',  level: 1, link:'/service/integrity', defaultLink: '/service/integrity',  parent: '4000000',},
+    {id: '4050000', name: 'Transparent Management',  level: 1, link:'/service/integrity', defaultLink: '/service/integrity',  parent: '4000000',},
 
-    {id: '4060000', name: '자체 기부 & 봉사 내역',  level: 1, link:'/service/charity', defaultLink: '/service/charity',  parent: '4000000',},
+    {id: '4060000', name: 'Donation & Volunteer',  level: 1, link:'/service/charity', defaultLink: '/service/charity',  parent: '4000000',},
 
     {id: '4070000', name: 'Event / Notice',  level: 1, link:'/board/list', defaultLink: '/board/list/event',  hasChild:true, parent: '4000000',},
     {id: '4070100', name: 'Event', level: 2, link : '/board/list/event', parent: '4070000'},
