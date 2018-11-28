@@ -8,7 +8,8 @@ import { api, service, path } from '../../../configs';
 import { FormButton } from '../../../types';
 import { CustomIcon, ButtonWrapper, VideoPlayer } from '../../../components';
 
-import { Flex, List, Modal } from 'antd-mobile';
+import { Flex, List, Modal, Button } from 'antd-mobile';
+import { Popover } from 'antd';
 
 import NoImg from '../../../../../resource/commons/no_image_available.png';
 
@@ -35,6 +36,7 @@ class Item extends React.Component {
             visible : false,
         }
 
+        this.renderButton = this.renderButton.bind(this);
         this.getButtons = this.getButtons.bind(this);
         this.onClickButton = this.onClickButton.bind(this);
 
@@ -137,7 +139,27 @@ class Item extends React.Component {
     }
 
     getButtons(){
-        return [{ id : FormButton.CONFIRM, label : service.getWebText('기부하기'), icon : (<CustomIcon type="FaHeartbeat" roots="FontAwesome"/>), size : 'small', inline : true}];
+        return [{ id : FormButton.CONFIRM, label : 'd', icon : (<CustomIcon type="FaHeartbeat" roots="FontAwesome"/>), size : 'small', inline : true}];
+    }
+
+    renderButton(){
+        const content = (
+            <div>
+                {`광고를 끝까지 보셔야 기부가 됩니다.`}
+            </div>
+        );
+
+        return(
+            <Popover content={content}>
+                <Button
+                    type="primary"
+                    size="small"
+                    inline={true}
+                    icon={(<CustomIcon type="FaHeartbeat" roots="FontAwesome"/>)}
+                    onClick={() => this.onOpenModal()}
+                >{service.getWebText('기부하기')}</Button>
+            </Popover>
+        )
     }
 
     render() {
@@ -150,7 +172,7 @@ class Item extends React.Component {
         return (
             <List.Item
                 thumb={service.getValue(item, 'imageUrl', NoImg)}
-                extra={(<ButtonWrapper buttons={this.getButtons()} onClickButton={this.onClickButton.bind(this)}/>)}
+                extra={this.renderButton()}
             >
                 <Flex direction="column" justify="between" className="donation-item">
                     <Flex.Item className="title-area">

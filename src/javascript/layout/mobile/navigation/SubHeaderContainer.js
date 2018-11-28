@@ -7,7 +7,10 @@ import { SubHeader } from '../header';
 class SubHeaderContainer extends React.Component {
 
     renderNavBar(){
-        const { currentMenu } = this.props;
+        const { currentMenu, currentPath } = this.props;
+        const title = currentPath.includes('/story/item/detail/') ? 'detail' : service.getValue(currentMenu, 'name', '');
+
+        console.log("currentMenu", currentMenu, this.props, title);
 
         return(
             <Sticky topOffset={70}>
@@ -15,7 +18,7 @@ class SubHeaderContainer extends React.Component {
                     return(
                         <div style={{...style, zIndex: 100}} className={`sub-header-container ${isSticky ? 'navigations-sticky' : 'navigations-relative'}`}>
                             <SubHeader
-                                title={service.getValue(currentMenu, 'name')}
+                                title={title}
                             />
                         </div>
                     );

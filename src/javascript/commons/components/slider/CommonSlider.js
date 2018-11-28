@@ -121,7 +121,7 @@ class CommonSlider extends React.Component {
                                 </Flex.Item>
                                 {this.renderProgressBar(item)}
                                 <Flex.Item>
-                                    <span className="link" onClick={this.onClick.bind(this, item)}>참여하기</span>
+                                    <span className="link" onClick={this.onClick.bind(this, item)}>기부하기</span>
                                 </Flex.Item>
                             </Flex>
                         </div>
@@ -186,7 +186,7 @@ class CommonSlider extends React.Component {
                                                     <p>{`${service.getValue(item, 'title', '')}`}</p>
                                                 </Flex.Item>
                                                 <Flex.Item className="link">
-                                                    <span>참여하기</span>
+                                                    <span>기부하기</span>
                                                 </Flex.Item>
                                             </Flex>
                                         )

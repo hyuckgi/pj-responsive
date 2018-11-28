@@ -165,7 +165,7 @@ class CommonSlider extends React.Component {
                                             <p>{`${service.getValue(item, 'title', '')}`}</p>
                                         </Flex.Item>
                                         <Flex.Item className="link">
-                                            <span>참여하기</span>
+                                            <span>기부하기</span>
                                         </Flex.Item>
                                     </Flex>
                                 </div>

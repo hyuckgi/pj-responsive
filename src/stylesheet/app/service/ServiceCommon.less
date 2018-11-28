@@ -101,53 +101,49 @@
 
 .mobile-container{
     .service-wrapper{
-        &-top{
-            & > .title{
-                display:none;
-            }
+        padding:10px;
 
-            .am-tabs{
-                .am-tabs-tab-bar-wrap{
-                    display:none;
+        .am-flexbox{
+            &.faq-wrapper{
+                flex-flow:row wrap;
+
+                .am-flexbox-item{
+                    flex: 0 0 100%;
+                    margin:0;
                 }
 
-                .am-tabs-content-wrap{
-                    .am-flexbox{
-                        &.faq-wrapper{
-                            flex-flow:row wrap;
+                .faq-navigation{
+                    border-bottom:1px solid #ddd;
 
-                            .am-flexbox-item{
-                                flex: 0 0 100%;
-                                margin:0;
-                            }
-
-                            .faq-navigation{
-                                border-bottom:1px solid #ddd;
-
-                                .ant-menu{
-                                    .ant-menu-item{
-                                        margin:0;
-                                    }
-                                }
-                            }
-
-                            .faq{
-                                padding:10px;
-                                .title,
-                                .ant-table-title{
-                                    text-align:center;
-                                    font-size:1em;
-                                    font-weight:bold;
-                                }
-                                .ant-table-body{
-                                    table{
-                                        border-top:1px solid #e8e8e8;
-                                    }
-                                }
-                            }
+                    .ant-menu{
+                        .ant-menu-item{
+                            margin:0;
                         }
                     }
                 }
+
+                .faq{
+                    padding:10px;
+                    .title,
+                    .ant-table-title{
+                        text-align:center;
+                        font-size:1em;
+                        font-weight:bold;
+                    }
+                    .ant-table-body{
+                        table{
+                            border-top:1px solid #e8e8e8;
+                        }
+                    }
+                }
+            }
+        }
+
+        .rule-wrapper,
+        .qna-wrapper{
+            .sub-title{
+                font-size:1.2em;
+                text-align:center;
             }
         }
     }
