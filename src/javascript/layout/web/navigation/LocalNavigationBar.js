@@ -11,7 +11,7 @@ const mapStateToProps = ({layout}) => {
     const allMenu = layout;
 
     return {
-        layout
+        allMenu
     };
 }
 

@@ -3,7 +3,6 @@ import { Switch, Route } from 'react-router-dom';
 
 import { path } from '../commons/configs';
 import { ServiceContainer } from '../service/components';
-import { RankListContainer, RankItemContainer } from '../rank/components';
 
 class Service extends React.Component {
 

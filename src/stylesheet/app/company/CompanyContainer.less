@@ -1,0 +1,76 @@
+.company-container{
+    p{
+        word-break:keep-all;
+        span{
+            color:#FF6E59;
+        }
+    }
+
+    &-head{
+        h2{
+            margin-bottom:0;
+            word-break:keep-all;
+        }
+    }
+}
+
+.web-container{
+    .company-container{
+
+        p{
+            font-size:1.2em;
+        }
+
+        &-head{
+            padding:30px 0;
+            min-height:220px;
+
+            h2{
+                font-size:1.4em;
+                line-height:1.8em;
+            }
+        }
+
+        &-body{
+            width: 760px;
+            margin: 0 auto;
+            padding: 40px 0;
+        }
+
+        &.spirit,
+        &.integrity{
+            h2{
+                width:650px;
+            }
+        }
+
+        &.intro{
+            h2{
+                width:620px;
+            }
+        }
+
+        &.charity{
+            h2{
+                width:500px;
+            }
+        }
+    }
+}
+
+.mobile-container{
+    .company-container{
+        &-head{
+            padding:20px;
+
+            h2{
+                font-size: 1.3em;
+                text-align: center;
+            }
+        }
+
+        &-body{
+            padding:10px;
+        }
+    }
+}

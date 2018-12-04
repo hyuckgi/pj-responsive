@@ -116,7 +116,6 @@ class JoinStep02 extends React.Component {
     onChange(val){
         const { form } = this.props;
         const pass = form.getFieldValue('passwd');
-        const { cofirmPass } = this.state;
 
         return this.setState({
             cofirmPass : val

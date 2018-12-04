@@ -8,7 +8,6 @@ import { service, api, path } from '../../../commons/configs';
 import { fetch } from '../../../redux/actions';
 import { Tabs } from 'antd-mobile';
 
-import { StoryTop } from './';
 import Detail from './Detail';
 import Review from './Review';
 

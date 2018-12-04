@@ -6,7 +6,7 @@ import { push } from 'react-router-redux';
 import { APICaller } from '../../../api';
 import { api, service, path } from '../../../configs';
 import { FormButton } from '../../../types';
-import { CustomIcon, ButtonWrapper, VideoPlayer } from '../../../components';
+import { CustomIcon, VideoPlayer } from '../../../components';
 
 import { Flex, List, Modal, Button } from 'antd-mobile';
 import { Popover } from 'antd';

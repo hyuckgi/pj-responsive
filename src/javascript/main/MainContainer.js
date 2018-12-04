@@ -49,7 +49,7 @@ class MainContainer extends React.Component {
     }
 
     render() {
-        const { mainStory, mainRank, events } = this.props;
+        const { mainStory, mainRank } = this.props;
 
         return (
             <div className="main-container">
