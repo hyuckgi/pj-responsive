@@ -34,18 +34,33 @@ class SubHeader extends React.Component {
         return this.props.move(path.main);
     }
 
+    onOpenClick(){
+        const { onEvents } = this.props;
+
+        if(onEvents){
+            onEvents({
+                events : 'open',
+                payload : {
+                    name : 'drawer'
+                }
+            })
+        }
+    }
+
     render() {
         const { title } = this.props;
 
         return (
             <NavBar
-             mode="light"
-             icon={<CustomIcon type="FaAngleLeft" roots="FontAwesome" style={{fontSize : '1.5em', verticalAlign : 'top' }}/>}
-             onLeftClick={this.onLeftClick.bind(this)}
-             rightContent={[
-               <CustomIcon key="1" type="FaHome" roots="FontAwesome" onClick={this.onRightClick.bind(this)} style={{fontSize : '1.4em', verticalAlign : 'top' }}/>
-             ]}
-           >
+                 mode="light"
+                 className="header-wrap"
+                 icon={<CustomIcon type="FaAngleLeft" roots="FontAwesome" style={{fontSize : '1.5em', verticalAlign : 'top' }}/>}
+                 onLeftClick={this.onLeftClick.bind(this)}
+                 rightContent={[
+                   <CustomIcon type="FaHome" sizes="lg" key="1" className="am-icon-right" roots="FontAwesome" onClick={this.onRightClick.bind(this)} style={{fontSize : '1.5em', marginTop: 5}}/>,
+                   <CustomIcon type="MdDehaze" sizes="lg" key="2" className="am-icon-right"  onClick={this.onOpenClick.bind(this, 'mypage')} style={{fontSize : '1.5em', marginTop: 5}}/>
+                 ]}
+            >
             <span>{title}</span>
            </NavBar>
         );

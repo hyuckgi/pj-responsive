@@ -23,7 +23,7 @@ class ServiceTop extends React.Component {
 
     render() {
         const { parentMenu } = this.props;
-        const title = service.getValue(parentMenu, 'id', false) === "4040000" ? service.getValue(parentMenu, 'name', '') : `${values.spoons.serviceName} ${service.getValue(parentMenu, 'name', '')}`
+        const title = service.getValue(parentMenu, 'id', false) === "4001000" ? service.getValue(parentMenu, 'name', '') : `${values.spoons.serviceName} ${service.getValue(parentMenu, 'name', '')}`
 
         return (
             <div className="service-wrapper-top">

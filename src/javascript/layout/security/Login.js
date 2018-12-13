@@ -5,10 +5,13 @@ import { createForm } from 'rc-form';
 
 import { security as action } from '../../redux/actions';
 
-import { Flex, WhiteSpace, InputItem, Button, List, WingBlank, Toast} from 'antd-mobile';
+import { Input, Form, Icon } from 'antd';
+import { Flex, WhiteSpace, Button, WingBlank, Toast} from 'antd-mobile';
 import { service, path } from '../../commons/configs';
 
 import logo from '../../../resource/commons/logo2.png';
+
+const FormItem = Form.Item;
 
 const mapStateToProps = ({ fetch, security }) => {
     const token = service.getValue(security, 'token', false);
@@ -44,9 +47,11 @@ class Login extends React.Component {
         this.makeToast = this.makeToast.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.onClick = this.onClick.bind(this);
+        this.onPressEnter = this.onPressEnter.bind(this);
     }
 
     login(params) {
+        console.log("params", params);
         return this.props.login(params)
             .then(() => {
                 const { token } = this.props;
@@ -93,7 +98,7 @@ class Login extends React.Component {
     }
 
     onSubmit(e) {
-        e.preventDefault();
+        e && e.preventDefault();
         const { form } = this.props;
 
         form.validateFields((errors, values) => {
@@ -105,15 +110,18 @@ class Login extends React.Component {
         });
     }
 
+    onPressEnter(){
+        return this.onSubmit();
+    }
+
     onClick(e){
         e && e.preventDefault();
-
         return this.props.move(path.join);
     }
 
     render() {
         const { form } = this.props;
-        const { getFieldProps } = form;
+        const { getFieldDecorator } = form;
 
         return (
             <WingBlank>
@@ -123,27 +131,34 @@ class Login extends React.Component {
                             <p className="logo">
                                 <img src={logo} alt="logo" /> 9Spoons
                             </p>
-                            <div>
-                                <WhiteSpace size="lg"/>
-                                <List>
-                                    <InputItem
-                                        {...getFieldProps('userid', {
-                                            rules: [{ required: true, message: '아이디를 입력하세요!'}]
-                                        })}
-                                        placeholder="UserID"
-                                    />
-                                    <InputItem
-                                        {...getFieldProps('passwd', {
-                                            rules: [{ required: true, message: '비밀번호를 입력하세요!'}]
-                                        })}
-                                        type="password"
-                                        placeholder="Password"
-                                    />
-                                </List>
-                                <WhiteSpace size="lg"/>
-                                <Button type="primary" onClick={this.onSubmit}>로그인</Button>
-                                <Button onClick={this.onClick} >회원가입</Button>
-                            </div>
+                            <WhiteSpace size="lg"/>
+                            <Form className="login-form">
+                                <FormItem>
+                                    {getFieldDecorator('userid', {
+                                        rules: [{ required: true, message: '아이디를 입력하세요!' }],
+                                    })(
+                                        <Input
+                                            prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                                            placeholder="UserID"
+                                        />
+                                    )}
+                                </FormItem>
+                                <FormItem>
+                                    {getFieldDecorator('passwd', {
+                                        rules: [{ required: true, message: '비밀번호를 입력하세요!' }],
+                                    })(
+                                        <Input
+                                            prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                                            type="password"
+                                            placeholder="Password"
+                                            onPressEnter={this.onPressEnter}
+                                        />
+                                    )}
+                                </FormItem>
+                            </Form>
+                            <WhiteSpace />
+                            <Button type="primary" onClick={this.onSubmit}>로그인</Button>
+                            <Button onClick={this.onClick} >회원가입</Button>
                         </div>
                     </Flex.Item>
                 </Flex>

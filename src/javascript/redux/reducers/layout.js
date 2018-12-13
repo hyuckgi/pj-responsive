@@ -46,6 +46,12 @@ const list = [
 
     {id: '4000000', name: 'More',  level: 0, link:'/service', defaultLink: '/service/cs', hasChild:true},
 
+    {id: '4001000', name: '9Spoons is',  level: 1, link:'/service/company', defaultLink: '/service/company/intro',  hasChild:true, parent: '4000000',},
+    {id: '4001100', name: '9Spoons is..', level: 2, link : '/service/company/intro', parent: '4001000'},
+    {id: '4001200', name: '9Spoons Mind', level: 2, link : '/service/company/spirit', parent: '4001000'},
+    {id: '4001300', name: 'Transparent Management',  level: 2, link:'/service/company/integrity',  parent: '4001000'},
+    {id: '4001400', name: 'Donation & Volunteer',  level: 2, link:'/service/company/charity',  parent: '4001000'},
+
     {id: '4010000', name: 'Support', link : '/service/cs', defaultLink : '/service/cs/faq', level: 1,  parent: '4000000', hasChild:true},
     {id: '4010100', name: 'FAQ', link : '/service/cs/faq',  level: 2,  parent: '4010000'},
     {id: '4010200', name: 'QNA', link : '/service/cs/qna',  level: 2,  parent: '4010000'},
@@ -53,12 +59,6 @@ const list = [
     {id: '4020000', name: 'Terms / Policy', level: 1, link : '/service/rules',  defaultLink : '/service/rules/terms', parent: '4000000', hasChild:true},
     {id: '4020100', name: 'Terms', level: 2, link : '/service/rules/terms', parent: '4020000'},
     {id: '4020200', name: 'Policy', level: 2, link : '/service/rules/policy', parent: '4020000'},
-
-    {id: '4040000', name: '9Spoons',  level: 1, link:'/service/company', defaultLink: '/service/company/intro',  hasChild:true, parent: '4000000',},
-    {id: '4040100', name: '9Spoons is..', level: 2, link : '/service/company/intro', parent: '4040000'},
-    {id: '4040200', name: '9Spoons Mind', level: 2, link : '/service/company/spirit', parent: '4040000'},
-    {id: '4040300', name: 'Transparent Management',  level: 2, link:'/service/company/integrity',  parent: '4040000'},
-    {id: '4040400', name: 'Donation & Volunteer',  level: 2, link:'/service/company/charity',  parent: '4040000'},
 
     {id: '4070000', name: 'Event / Notice',  level: 1, link:'/board/list', defaultLink: '/board/list/event',  hasChild:true, parent: '4000000',},
     {id: '4070100', name: 'Event', level: 2, link : '/board/list/event', parent: '4070000'},

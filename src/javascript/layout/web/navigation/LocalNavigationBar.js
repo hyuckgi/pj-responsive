@@ -8,7 +8,10 @@ import { service } from '../../../commons/configs';
 const SubMenu = Menu.SubMenu;
 
 const mapStateToProps = ({layout}) => {
-    const allMenu = layout;
+    const allMenu = Object.keys(layout).reduce((result, item) => {
+        result = result.concat(layout[item]);
+        return result;
+    }, []);
 
     return {
         allMenu

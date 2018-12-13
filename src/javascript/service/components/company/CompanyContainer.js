@@ -15,7 +15,7 @@ class CompanyContainer extends React.Component {
         this.renderText = this.renderText.bind(this);
     }
 
-    renderText(txt, idx = 0){
+    renderText(txt, idx = Math.random()){
         if(typeof txt === 'object'){
             return <Col key={idx}>{txt}</Col>;
         }

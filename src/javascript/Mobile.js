@@ -107,7 +107,7 @@ class Mobile extends React.Component {
                         <HeaderContainer onEvents={this.onEvents} isGlobalMenu={isGlobalMenu}/>
 
                         <StickyContainer className="section">
-                            <MobileWrapper {...this.props} swipeObj={swipeObj}>
+                            <MobileWrapper {...this.props} swipeObj={swipeObj} onEvents={this.onEvents}>
                                 <WrapperContainer {...this.props}/>
                             </MobileWrapper>
 
