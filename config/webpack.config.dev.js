@@ -185,7 +185,7 @@ module.exports = {
                   cacheDirectory: true,
                   plugins: [
                       'react-hot-loader/babel',
-                      ["transform-runtime", { polyfill: false }],
+                      ["transform-runtime", { polyfill: true }],
                       ["import", babelImportOptions],
                   ],
                 // This is a feature of `babel-loader` for webpack (not Babel itself).

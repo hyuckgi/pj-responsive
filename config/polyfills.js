@@ -10,6 +10,7 @@ if (typeof Promise === 'undefined') {
 
 // fetch() polyfill for making API calls.
 require('whatwg-fetch');
+
 require('@babel/polyfill');
 
 
