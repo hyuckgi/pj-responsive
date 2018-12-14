@@ -174,16 +174,16 @@ module.exports = {
           {
             test: /\.(js|jsx)$/,
             include: paths.appSrc,
-            loader: require.resolve('babel-loader'),
+            loader: 'babel-loader',
             options: {
+                presets : ['env'],
                 plugins: [
-                      ['import', babelImportOptions],
                       ["transform-runtime", {
                           'helpers' : true,
                           'polyfill': true,
                           'regenerator' : true,
-                          'moduleName' : 'babel-runtime'
                       }],
+                      ['import', babelImportOptions],
                   ],
                 compact: true,
             },

@@ -180,12 +180,16 @@ module.exports = {
             {
               test: /\.(js|jsx)$/,
               include: paths.appSrc,
-              loader: require.resolve('babel-loader'),
+              loader: 'babel-loader',
               options: {
                   cacheDirectory: true,
                   plugins: [
                       'react-hot-loader/babel',
-                      ["transform-runtime", { polyfill: true }],
+                      ["transform-runtime", {
+                          'helpers' : true,
+                          'polyfill': true,
+                          'regenerator' : true,
+                      }],
                       ["import", babelImportOptions],
                   ],
                 // This is a feature of `babel-loader` for webpack (not Babel itself).
