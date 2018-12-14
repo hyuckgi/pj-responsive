@@ -12,6 +12,15 @@
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
     <title>9Spoons</title>
+    <script src="https://as.alipayobjects.com/g/component/??es6-shim/0.35.1/es6-sham.min.js,es6-shim/0.35.1/es6-shim.min.js"></script>
+    <script src="https://as.alipayobjects.com/g/component/fastclick/1.0.6/fastclick.js"></script>
+    <script>
+        if ('addEventListener' in document) {
+          document.addEventListener('DOMContentLoaded', function() {
+            FastClick.attach(document.body);
+          }, false);
+        }
+  </script>
   </head>
   <body>
     <div id="root"></div>

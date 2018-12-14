@@ -177,8 +177,8 @@ module.exports = {
             loader: require.resolve('babel-loader'),
             options: {
                 plugins: [
-                      ["transform-runtime", { polyfill: true }],
                       ['import', babelImportOptions],
+                      ["transform-runtime", { polyfill: true }],
                   ],
                 compact: true,
             },
