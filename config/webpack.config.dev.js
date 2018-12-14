@@ -186,9 +186,7 @@ module.exports = {
                   plugins: [
                       'react-hot-loader/babel',
                       ["transform-runtime", {
-                          'helpers' : true,
-                          'polyfill': true,
-                          'regenerator' : true,
+                          'polyfill': false,
                       }],
                       ["import", babelImportOptions],
                   ],
