@@ -184,6 +184,9 @@ module.exports = {
               options: {
                   presets: ['env', 'react', 'stage-0'],
                   plugins: [
+                      "transform-decorators-legacy",
+                      "transform-class-properties",
+                      "syntax-class-properties",
                       ["transform-runtime", {
                           'polyfill': false,
                       }],
