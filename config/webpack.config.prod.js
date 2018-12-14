@@ -174,9 +174,8 @@ module.exports = {
           {
             test: /\.(js|jsx)$/,
             include: paths.appSrc,
-            loader: 'babel-loader',
+            loader: require.resolve('babel-loader'),
             options: {
-                presets : ['env'],
                 plugins: [
                       ["transform-runtime", {
                           'helpers' : true,

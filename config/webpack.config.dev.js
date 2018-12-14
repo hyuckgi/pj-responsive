@@ -180,7 +180,7 @@ module.exports = {
             {
               test: /\.(js|jsx)$/,
               include: paths.appSrc,
-              loader: 'babel-loader',
+              loader: require.resolve('babel-loader'),
               options: {
                   cacheDirectory: true,
                   plugins: [
