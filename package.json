@@ -15,7 +15,6 @@
     "webpack-visualizer-plugin": "^0.1.11"
   },
   "dependencies": {
-    "@babel/polyfill": "^7.0.0",
     "antd": "^3.4.0",
     "antd-mobile": "^2.1.8",
     "autoprefixer": "7.1.6",
@@ -24,6 +23,7 @@
     "babel-eslint": "7.2.3",
     "babel-jest": "20.0.3",
     "babel-loader": "7.1.2",
+    "babel-polyfill": "^6.26.0",
     "babel-preset-react-app": "^3.1.1",
     "babel-runtime": "6.26.0",
     "case-sensitive-paths-webpack-plugin": "2.1.1",
