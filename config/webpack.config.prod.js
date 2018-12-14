@@ -177,12 +177,34 @@ module.exports = {
             include: paths.appSrc,
             loader: require.resolve('babel-loader'),
             options: {
+                presets : [
+                    ["env", {
+                      "targets": {
+                        "browsers": [
+                          "Chrome >= 52",
+                          "FireFox >= 44",
+                          "Safari >= 7",
+                          "Explorer 11",
+                          "last 4 Edge versions"
+                        ]
+                      },
+                      "useBuiltIns": true
+                    }],
+                    "react",
+                    "stage-1"
+                ],
+                ignore: [
+                    "node_modules"
+                ],
                 plugins: [
-                      ["transform-runtime", {
-                          'polyfill': false,
-                      }],
-                      ['import', babelImportOptions],
-                  ],
+                    "transform-decorators-legacy",
+                    "transform-class-properties",
+                    "syntax-class-properties",
+                    ["transform-runtime", {
+                        'polyfill': false,
+                    }],
+                    ['import', babelImportOptions],
+                ],
                 compact: true,
             },
           },
