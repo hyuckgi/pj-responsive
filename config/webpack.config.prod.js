@@ -173,6 +173,7 @@ module.exports = {
           // Process JS with Babel.
           {
             test: /\.(js|jsx)$/,
+            exclude: /node_modules/,
             include: paths.appSrc,
             loader: require.resolve('babel-loader'),
             options: {
