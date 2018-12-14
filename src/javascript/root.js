@@ -1,4 +1,5 @@
 import '../stylesheet/root.less';
+import 'babel-polyfill';
 import 'react-app-polyfill/ie11';
 
 import React from 'react';
