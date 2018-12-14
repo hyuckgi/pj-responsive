@@ -178,7 +178,12 @@ module.exports = {
             options: {
                 plugins: [
                       ['import', babelImportOptions],
-                      ["transform-runtime", { polyfill: true }],
+                      ["transform-runtime", {
+                          'helpers' : true,
+                          'polyfill': true,
+                          'regenerator' : true,
+                          'moduleName' : 'babel-runtime'
+                      }],
                   ],
                 compact: true,
             },
