@@ -173,29 +173,10 @@ module.exports = {
           // Process JS with Babel.
           {
             test: /\.(js|jsx)$/,
-            exclude: /node_modules/,
             include: paths.appSrc,
             loader: require.resolve('babel-loader'),
             options: {
-                presets : [
-                    ["env", {
-                      "targets": {
-                        "browsers": [
-                          "Chrome >= 52",
-                          "FireFox >= 44",
-                          "Safari >= 7",
-                          "Explorer 11",
-                          "last 4 Edge versions"
-                        ]
-                      },
-                      "useBuiltIns": true
-                    }],
-                    "react",
-                    "stage-1"
-                ],
-                ignore: [
-                    "node_modules"
-                ],
+                presets: ['env', 'react', 'stage-0'],
                 plugins: [
                     "transform-decorators-legacy",
                     "transform-class-properties",
@@ -205,7 +186,6 @@ module.exports = {
                     }],
                     ['import', babelImportOptions],
                 ],
-                compact: true,
             },
           },
           {
